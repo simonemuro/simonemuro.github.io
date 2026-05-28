@@ -472,6 +472,25 @@ h3 {
   font-weight: 650;
 }
 
+.case-visual {
+  margin: 1.35rem 0 0;
+}
+
+.case-visual img {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.case-visual figcaption {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
 .case-section {
   border-top: 1px solid var(--line);
   padding: 56px 0;
@@ -489,6 +508,10 @@ h3 {
 
 .case-meta-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.case-meta-grid.four-up {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .case-meta-grid article,
@@ -763,6 +786,7 @@ h3 {
   }
 
   .case-meta-grid,
+  .case-meta-grid.four-up,
   .evidence-grid,
   .flow-steps,
   .decision-grid,
@@ -806,6 +830,7 @@ h3 {
 
   .build-grid,
   .case-meta-grid,
+  .case-meta-grid.four-up,
   .evidence-grid,
   .flow-steps,
   .decision-grid,
