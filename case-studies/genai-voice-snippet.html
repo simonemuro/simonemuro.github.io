@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GenAI Voice Snippet - Simone Muro</title>
+    <meta
+      name="description"
+      content="Case study: shipped GenAI voice support experience with concise generated summaries, structured output, disambiguation, and response evaluation."
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="wordmark" href="../index.html">SIMONE MURO</a>
+        <div class="nav-links">
+          <a href="../index.html#work">Work</a>
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#contact">Contact</a>
+          <a href="mailto:simonermuro@gmail.com?subject=Resume%20request">Resume</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main" class="case-study-main">
+      <section class="case-hero">
+        <div class="case-shell">
+          <p class="case-type">Voice AI · Conversation Design · Model UX</p>
+          <h1>Shipping GenAI voice support with concise, measurable answers</h1>
+          <p class="case-dek">
+            I co-designed one of Intuit’s first GenAI voice support experiences, defining disambiguation, voice-friendly
+            generated summaries, structured model output, handoff behavior, and response-quality criteria for a high-volume
+            support channel.
+          </p>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell case-meta-grid">
+          <article>
+            <h2>Role</h2>
+            <p>Conversation designer, model UX writer, prompt designer, evaluation-rubric designer.</p>
+          </article>
+          <article>
+            <h2>Scale</h2>
+            <p>Inbound voice support represented about 30% of contact volume, with a 36% baseline containment rate.</p>
+          </article>
+          <article>
+            <h2>Outcome</h2>
+            <p>Reached Bayesian significance with a +3.9 percentage-point containment lift on tested intents.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell case-two-column">
+          <div>
+            <h2>Context</h2>
+            <p>
+              Traditional voice assistant flows were constrained by rigid NLU paths and scripted responses. Customers
+              with specific support questions often heard generic answers, repeated themselves, or transferred without
+              enough context for the next support step.
+            </p>
+            <p>
+              GenAI created a real opportunity, but voice raised the stakes. A generated answer that looks acceptable on
+              a screen can feel long, evasive, or risky when a customer has to listen to it in real time.
+            </p>
+          </div>
+          <div class="artifact-panel voice-panel">
+            <span>Design constraint</span>
+            <strong>Voice has to earn every second.</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Approach</h2>
+          <p class="section-lede">
+            I designed the experience around structured behavior: clarify when needed, generate only what belongs in a
+            spoken answer, and preserve context for routing and evaluation.
+          </p>
+          <div class="flow-steps">
+            <article>
+              <span>01</span>
+              <h3>Clarify before generating</h3>
+              <p>Use disambiguation when the caller’s question is vague or the system cannot safely infer intent.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Generate spoken summaries</h3>
+              <p>Favor brief, action-oriented guidance over long support-article readouts.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Structure the output</h3>
+              <p>Capture fields for question, action type, disambiguation, response, complexity, and off-topic detection.</p>
+            </article>
+            <article>
+              <span>04</span>
+              <h3>Escalate with context</h3>
+              <p>Hand off when the system cannot confidently help, while preserving what the customer already said.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Key decisions</h2>
+          <div class="decision-grid">
+            <article>
+              <h3>Make brevity a quality requirement</h3>
+              <p>
+                The response needed to be short enough to hear and remember. That changed the prompt strategy and the
+                evaluation bar.
+              </p>
+            </article>
+            <article>
+              <h3>Separate answer quality from routing quality</h3>
+              <p>
+                A generated answer could be useful, but the system also needed to know whether to continue, clarify, or
+                transfer.
+              </p>
+            </article>
+            <article>
+              <h3>Design for unsupported questions</h3>
+              <p>
+                Off-topic detection and handoff criteria reduced the risk of the model producing confident but unhelpful
+                voice responses.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Artifact Snapshot</h2>
+          <div class="artifact-gallery">
+            <article>
+              <span>Transcript</span>
+              <h3>Before/after voice response</h3>
+              <p>A redacted transcript showing scripted support behavior compared with concise generated guidance.</p>
+            </article>
+            <article>
+              <span>Schema</span>
+              <h3>Structured model output</h3>
+              <p>A simplified diagram of the fields the experience needed for routing, handoff, and evaluation.</p>
+            </article>
+            <article>
+              <span>Rubric</span>
+              <h3>Voice response quality</h3>
+              <p>A recreated rubric for accuracy, brevity, specificity, safety, and handoff readiness.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell metric-strip">
+          <article>
+            <strong>+3.9 pp</strong>
+            <span>containment lift on tested intents</span>
+          </article>
+          <article>
+            <strong>36%</strong>
+            <span>baseline containment context</span>
+          </article>
+          <article>
+            <strong>30%</strong>
+            <span>contact-volume channel context</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell evidence-grid">
+          <article>
+            <h2>Result</h2>
+            <p>
+              The experience reached Bayesian significance in testing and helped establish the team as credible builders
+              of GenAI voice experiences, not only scripted conversation flows.
+            </p>
+          </article>
+          <article>
+            <h2>What this proves</h2>
+            <p>
+              I can design for voice, not just screens. I understand how response structure, prompt constraints, routing,
+              and evaluation shape the customer experience.
+            </p>
+          </article>
+          <article>
+            <h2>Confidentiality</h2>
+            <p>
+              Public examples are redacted or recreated. Raw audio/video, internal launch material, and implementation
+              details are reserved for a private walkthrough.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Interview talking points</h2>
+          <ul class="talking-points">
+            <li>How to write for a generated voice response versus an on-screen answer.</li>
+            <li>How disambiguation, output structure, and handoff protect a real-time AI support experience.</li>
+            <li>How I evaluate whether a spoken AI response actually helped.</li>
+          </ul>
+        </div>
+      </section>
+
+      <nav class="case-nav-footer" aria-label="Case study navigation">
+        <a href="./account-aware-subscription-support.html">Previous: Account-aware support</a>
+        <a href="./omni-quality-evaluation.html">Next: Omni Quality Evaluation</a>
+      </nav>
+    </main>
+
+    <footer class="site-footer">
+      <p>© 2026 Simone Muro.</p>
+    </footer>
+  </body>
+</html>

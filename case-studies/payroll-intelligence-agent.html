@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Payroll Intelligence Agent - Simone Muro</title>
+    <meta
+      name="description"
+      content="Case study: diagnostic golden dataset and reusable prompt framework for a high-stakes payroll intelligence agent."
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="wordmark" href="../index.html">SIMONE MURO</a>
+        <div class="nav-links">
+          <a href="../index.html#work">Work</a>
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#contact">Contact</a>
+          <a href="mailto:simonermuro@gmail.com?subject=Resume%20request">Resume</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main" class="case-study-main">
+      <section class="case-hero">
+        <div class="case-shell">
+          <p class="case-type">Ground Truth · Diagnostic AI · Regulated Workflows</p>
+          <h1>Defining what good looks like for a high-stakes payroll agent</h1>
+          <p class="case-dek">
+            I led a sprint to create a 51-question diagnostic golden dataset and reusable prompt framework for a payroll
+            agent that needed to answer complex, data-dependent customer questions safely.
+          </p>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell case-meta-grid">
+          <article>
+            <h2>Role</h2>
+            <p>Golden dataset architect, model UX writer, prompt engineer, cross-functional lead.</p>
+          </article>
+          <article>
+            <h2>Scope</h2>
+            <p>51 high-value payroll questions, diagnostic paths, data dependencies, and source-of-truth answers.</p>
+          </article>
+          <article>
+            <h2>Outcome</h2>
+            <p>Delivered the full dataset in about 10 days with a reusable framework for future agent work.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell case-two-column">
+          <div>
+            <h2>Context</h2>
+            <p>
+              A partner team needed ground truth for a payroll agent, but the request was not just “write answers.” They
+              needed a concrete definition of good behavior: what data the agent should retrieve, what it should ask the
+              user, which root causes were plausible, and when the experience should hand off.
+            </p>
+            <p>
+              Payroll support is high anxiety and data-dependent. A generic answer can sound reasonable and still fail
+              the customer if it does not diagnose the right issue.
+            </p>
+          </div>
+          <div class="artifact-panel payroll-panel">
+            <span>Design shift</span>
+            <strong>Treat payroll support as diagnosis, not generic Q&amp;A.</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Approach</h2>
+          <p class="section-lede">
+            I converted the request into a diagnostic framework that product, design, content, domain experts, and agent
+            builders could all work from.
+          </p>
+          <div class="flow-steps">
+            <article>
+              <span>01</span>
+              <h3>Understand the question</h3>
+              <p>Capture the customer question, scope, sub-variants, and critical context.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Map data dependencies</h3>
+              <p>Separate retrievable data from must-ask questions and unsupported assumptions.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Define diagnostic paths</h3>
+              <p>Document root causes, likely branches, tool needs, reference content, and handoff triggers.</p>
+            </article>
+            <article>
+              <span>04</span>
+              <h3>Write ideal behavior</h3>
+              <p>Turn domain expertise into source-of-truth answers and reusable prompt patterns.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Key decisions</h2>
+          <div class="decision-grid">
+            <article>
+              <h3>Make data dependency explicit</h3>
+              <p>
+                Each answer needed to say what the system could know, what it needed to retrieve, and what it should ask
+                the customer rather than assume.
+              </p>
+            </article>
+            <article>
+              <h3>Use a generator to scale expert judgment</h3>
+              <p>
+                I built a reusable prompt framework so domain expertise could be translated into consistent answer
+                anatomy, not one-off prose.
+              </p>
+            </article>
+            <article>
+              <h3>Design for escalation as a feature</h3>
+              <p>
+                For regulated, account-sensitive issues, a good AI answer sometimes means knowing when not to answer and
+                handing off with context.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Artifact Snapshot</h2>
+          <div class="artifact-gallery">
+            <article>
+              <span>Dataset</span>
+              <h3>51-question golden set</h3>
+              <p>Source-of-truth answers, tool requirements, data dependencies, diagnostic paths, and handoff triggers.</p>
+            </article>
+            <article>
+              <span>Framework</span>
+              <h3>Prompt generator pattern</h3>
+              <p>A reusable structure for turning payroll domain expertise into agent-ready ground truth.</p>
+            </article>
+            <article>
+              <span>Flow</span>
+              <h3>Diagnostic decision tree</h3>
+              <p>A recreated fake-data example showing how the agent narrows root cause before answering.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell sample-block">
+          <h2>Answer anatomy</h2>
+          <div class="sample-table" role="table" aria-label="Payroll agent answer anatomy">
+            <div role="row">
+              <strong role="cell">Customer problem</strong>
+              <span role="cell">What the user is trying to resolve, including likely sub-variants.</span>
+            </div>
+            <div role="row">
+              <strong role="cell">Needed context</strong>
+              <span role="cell">The account, payroll, or product state the agent must verify before answering.</span>
+            </div>
+            <div role="row">
+              <strong role="cell">Diagnostic path</strong>
+              <span role="cell">Likely root causes, decision branches, tool calls, and clarification questions.</span>
+            </div>
+            <div role="row">
+              <strong role="cell">Safe response</strong>
+              <span role="cell">Grounded explanation, next step, and handoff trigger when confidence or permissions are low.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell metric-strip">
+          <article>
+            <strong>51</strong>
+            <span>high-value questions covered</span>
+          </article>
+          <article>
+            <strong>~10 days</strong>
+            <span>from urgent ask to full delivery</span>
+          </article>
+          <article>
+            <strong>1 framework</strong>
+            <span>reusable generator for future work</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell evidence-grid">
+          <article>
+            <h2>Result</h2>
+            <p>
+              The work delivered the full requested set and helped reposition the design team as embedded contributors in
+              the agent-build cycle, not downstream consultants.
+            </p>
+          </article>
+          <article>
+            <h2>What this proves</h2>
+            <p>
+              I can turn ambiguous partner requests into model-training and evaluation artifacts that engineering,
+              product, and subject-matter experts can actually use.
+            </p>
+          </article>
+          <article>
+            <h2>Confidentiality</h2>
+            <p>
+              Public artifacts use fake examples. Raw payroll datasets, customer scenarios, internal tools, and domain
+              documentation are reserved for a redacted private walkthrough.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Interview talking points</h2>
+          <ul class="talking-points">
+            <li>How I define ground truth for high-stakes, data-dependent AI workflows.</li>
+            <li>How to structure a golden dataset so it drives model behavior, not just test coverage.</li>
+            <li>How I use prompt frameworks to scale domain expertise across teams.</li>
+          </ul>
+        </div>
+      </section>
+
+      <nav class="case-nav-footer" aria-label="Case study navigation">
+        <a href="./omni-quality-evaluation.html">Previous: Omni Quality Evaluation</a>
+        <a href="./conversational-ai-design-blueprint.html">Next: Conversational AI Blueprint</a>
+      </nav>
+    </main>
+
+    <footer class="site-footer">
+      <p>© 2026 Simone Muro.</p>
+    </footer>
+  </body>
+</html>

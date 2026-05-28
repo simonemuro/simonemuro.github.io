@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Omni Quality Evaluation - Simone Muro</title>
+    <meta
+      name="description"
+      content="Case study: agentic AI quality evaluation system using golden datasets, human labeling, LLM-as-judge, rubrics, and model-improvement loops."
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="wordmark" href="../index.html">SIMONE MURO</a>
+        <div class="nav-links">
+          <a href="../index.html#work">Work</a>
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#contact">Contact</a>
+          <a href="mailto:simonermuro@gmail.com?subject=Resume%20request">Resume</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main" class="case-study-main">
+      <section class="case-hero">
+        <div class="case-shell">
+          <p class="case-type">AI Quality · Evaluation Systems · Agentic AI</p>
+          <h1>Building the quality loop for agentic AI</h1>
+          <p class="case-dek">
+            I led and expanded a quality-evaluation practice that connected golden datasets, source-of-truth answers,
+            LLM-as-judge workflows, human labeling, production samples, and product readouts into a model-improvement loop.
+          </p>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell case-meta-grid">
+          <article>
+            <h2>Role</h2>
+            <p>Quality methodology lead, model UX writer, evaluation framework owner, team lead.</p>
+          </article>
+          <article>
+            <h2>Methods</h2>
+            <p>Golden datasets, human labeling, LLM-as-judge, rubrics, production samples, failure analysis.</p>
+          </article>
+          <article>
+            <h2>Outcomes</h2>
+            <p>Quality score lifts across Help (+8 pp), Payroll (+9.8 pp), and Insights (+13 pp).</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell case-two-column">
+          <div>
+            <h2>Context</h2>
+            <p>
+              As agentic AI scaled across support skills, teams needed a reliable way to define and measure response
+              quality. LLM-as-judge was useful, but not enough for product, financial, and account-sensitive workflows.
+            </p>
+            <p>
+              The organization needed a shared system for ground truth, human review, quality gates, and a way to move
+              failures back into prompts, tools, support content, and evaluation datasets.
+            </p>
+          </div>
+          <div class="artifact-panel quality-panel">
+            <span>Quality principle</span>
+            <strong>Evaluation is not reporting. It is how the model gets better.</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Approach</h2>
+          <p class="section-lede">
+            I helped turn response quality from a subjective conversation into a repeatable operating loop that product,
+            design, data science, and domain experts could use together.
+          </p>
+          <div class="flow-steps">
+            <article>
+              <span>01</span>
+              <h3>Define scenarios</h3>
+              <p>Translate agent capabilities and customer scenarios into representative evaluation rows.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Write ground truth</h3>
+              <p>Capture expected answers, actions, constraints, data requirements, and handoff triggers.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Judge and label</h3>
+              <p>Combine LLM-as-judge with human review where nuance, correctness, or risk requires judgment.</p>
+            </article>
+            <article>
+              <span>04</span>
+              <h3>Fix behavior</h3>
+              <p>Route failures back into prompts, tools, ground truth, product requirements, or support content.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Key decisions</h2>
+          <div class="decision-grid">
+            <article>
+              <h3>Separate correctness from conversation quality</h3>
+              <p>
+                A response can be factually correct and still be too generic, too verbose, poorly sequenced, or missing a
+                required next step.
+              </p>
+            </article>
+            <article>
+              <h3>Use human labeling where judgment matters</h3>
+              <p>
+                Human review helped catch nuance the judge could miss: tone, unsupported assumptions, missing context,
+                and whether a customer could actually act on the answer.
+              </p>
+            </article>
+            <article>
+              <h3>Treat disagreement as signal</h3>
+              <p>
+                Failures and judge-human disagreements became prompts for better rubrics, clearer ground truth, and
+                sharper model behavior.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Artifact Snapshot</h2>
+          <div class="artifact-gallery">
+            <article>
+              <span>Loop</span>
+              <h3>Evaluation operating model</h3>
+              <p>Golden dataset → offline judge → human labels → failure analysis → prompt/content/tool fix → retest.</p>
+            </article>
+            <article>
+              <span>Rubric</span>
+              <h3>Response quality criteria</h3>
+              <p>Correctness, relevance, specificity, tone, groundedness, actionability, and handoff judgment.</p>
+            </article>
+            <article>
+              <span>Readout</span>
+              <h3>Quality dashboard mock</h3>
+              <p>Public-safe quality lift numbers tied to product areas and model-behavior improvements.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell sample-block">
+          <h2>Failure taxonomy</h2>
+          <div class="sample-table" role="table" aria-label="AI response failure taxonomy">
+            <div role="row">
+              <strong role="cell">Correct but unhelpful</strong>
+              <span role="cell">The answer is true but too generic to solve the user’s actual problem.</span>
+            </div>
+            <div role="row">
+              <strong role="cell">Ungrounded</strong>
+              <span role="cell">The response implies customer-specific facts the system has not verified.</span>
+            </div>
+            <div role="row">
+              <strong role="cell">Missing action</strong>
+              <span role="cell">The user needs the system to ask, act, retrieve, route, or hand off, not only explain.</span>
+            </div>
+            <div role="row">
+              <strong role="cell">Poor recovery</strong>
+              <span role="cell">The AI keeps answering when it should clarify, refuse, or escalate with context.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell metric-strip">
+          <article>
+            <strong>+8 pp</strong>
+            <span>Help quality score lift</span>
+          </article>
+          <article>
+            <strong>+9.8 pp</strong>
+            <span>Payroll quality score lift</span>
+          </article>
+          <article>
+            <strong>+13 pp</strong>
+            <span>Insights quality score lift</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell evidence-grid">
+          <article>
+            <h2>Result</h2>
+            <p>
+              The quality process became a release and improvement mechanism for agent behavior, connecting measurement
+              to actual changes in prompts, tools, source content, and product requirements.
+            </p>
+          </article>
+          <article>
+            <h2>What this proves</h2>
+            <p>
+              I can make AI quality measurable without flattening the user experience. I can partner with product, data
+              science, engineering, and domain experts on model behavior.
+            </p>
+          </article>
+          <article>
+            <h2>Confidentiality</h2>
+            <p>
+              Public artifacts are recreated. Full labeling guides, internal datasets, platform mechanics, and review
+              details are reserved for a redacted private walkthrough.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Interview talking points</h2>
+          <ul class="talking-points">
+            <li>How I define ground truth when an AI answer depends on product state, account data, or policy.</li>
+            <li>How I combine LLM-as-judge and human review without treating either as magic.</li>
+            <li>How evaluation becomes a product improvement loop rather than a dashboard-only exercise.</li>
+          </ul>
+        </div>
+      </section>
+
+      <nav class="case-nav-footer" aria-label="Case study navigation">
+        <a href="./genai-voice-snippet.html">Previous: GenAI Voice Snippet</a>
+        <a href="./payroll-intelligence-agent.html">Next: Payroll Intelligence Agent</a>
+      </nav>
+    </main>
+
+    <footer class="site-footer">
+      <p>© 2026 Simone Muro.</p>
+    </footer>
+  </body>
+</html>

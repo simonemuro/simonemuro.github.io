@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Account-aware Subscription Support - Simone Muro</title>
+    <meta
+      name="description"
+      content="Case study: AI support prototype for account-aware subscription charge explanations, cancellation intent, model behavior, and safe handoff."
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="wordmark" href="../index.html">SIMONE MURO</a>
+        <div class="nav-links">
+          <a href="../index.html#work">Work</a>
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#contact">Contact</a>
+          <a href="mailto:simonermuro@gmail.com?subject=Resume%20request">Resume</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main" class="case-study-main">
+      <section class="case-hero">
+        <div class="case-shell">
+          <p class="case-type">Model UX · AI Prototyping · Subscription Support</p>
+          <h1>Building account-aware subscription support from the instruction layer up</h1>
+          <p class="case-dek">
+            I built an end-to-end AI support proof of concept that moved billing help from generic guidance to grounded
+            account-aware behavior: classify the intent, retrieve safe account context, explain the charge, and offer the
+            right next step when cancellation intent appears.
+          </p>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell case-meta-grid">
+          <article>
+            <h2>Role</h2>
+            <p>Solo POC builder, model UX writer, prompt/skill designer, conversation designer.</p>
+          </article>
+          <article>
+            <h2>Scope</h2>
+            <p>2026 prototype sprint for subscription billing, charge explanation, cancellation intent, and handoff.</p>
+          </article>
+          <article>
+            <h2>Proof</h2>
+            <p>Working prototype, 16-scenario golden dataset, skill instructions, tool-call plan, and demo flow.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell case-two-column">
+          <div>
+            <h2>Context</h2>
+            <p>
+              Customers asking about billing or subscription charges were getting generic help that pushed them away from
+              the support experience. That is risky in any subscription business: the customer is confused, worried about
+              money, and often one poor answer away from cancellation.
+            </p>
+            <p>
+              The problem was not only the visible response. The AI needed a better operating model for when to use
+              account context, when to ask for clarification, when to avoid inventing details, and when to route to a
+              human or product flow.
+            </p>
+          </div>
+          <div class="artifact-panel">
+            <span>Behavior goal</span>
+            <strong>Answer, explain, and route without hallucinating account facts.</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Approach</h2>
+          <p class="section-lede">
+            I treated the prototype as an agent-behavior problem. The experience needed a decision path before it needed
+            polished copy.
+          </p>
+          <div class="flow-steps">
+            <article>
+              <span>01</span>
+              <h3>Classify the billing question</h3>
+              <p>Separate charge explanation, plan detail, cancellation intent, unknown charge, and unsupported account requests.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Retrieve safe context</h3>
+              <p>Use account data only when grounded; ask or hand off when the system does not have the facts.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Explain the charge</h3>
+              <p>Say what changed, why it changed, and what the customer can do next in plain, non-defensive language.</p>
+            </article>
+            <article>
+              <span>04</span>
+              <h3>Confirm before acting</h3>
+              <p>When cancellation intent appears, confirm the customer’s goal and provide a safe path instead of rushing the action.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Key decisions</h2>
+          <div class="decision-grid">
+            <article>
+              <h3>Design the model’s permissions, not just its tone</h3>
+              <p>
+                I wrote instructions for what the skill was allowed to answer, when it needed account data, and when it
+                should say it could not verify a charge.
+              </p>
+            </article>
+            <article>
+              <h3>Use the golden dataset as a design artifact</h3>
+              <p>
+                The 16-scenario dataset forced the behavior to be testable: happy path, missing data, vague questions,
+                unsupported asks, and cancellation intent.
+              </p>
+            </article>
+            <article>
+              <h3>Make cancellation respectful</h3>
+              <p>
+                The flow did not trap the customer. It acknowledged intent, explained available options, and created a
+                clearer bridge to the next step.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Artifact Snapshot</h2>
+          <div class="artifact-gallery">
+            <article>
+              <span>Flow</span>
+              <h3>Intent → context → answer → action</h3>
+              <p>A recreated system flow showing how the skill classifies, retrieves, explains, and hands off.</p>
+            </article>
+            <article>
+              <span>Dataset</span>
+              <h3>16 public-safe scenarios</h3>
+              <p>Fake account data covering charge questions, plan confusion, unsupported asks, and cancel intent.</p>
+            </article>
+            <article>
+              <span>Response</span>
+              <h3>Before/after answer pattern</h3>
+              <p>Generic help becomes a grounded explanation with a customer-safe next step.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell sample-block">
+          <h2>Example behavior pattern</h2>
+          <div class="sample-table" role="table" aria-label="Example account-aware billing behavior pattern">
+            <div role="row">
+              <strong role="cell">Customer intent</strong>
+              <span role="cell">“Why was my subscription charge higher this month?”</span>
+            </div>
+            <div role="row">
+              <strong role="cell">System check</strong>
+              <span role="cell">Look for plan change, discount expiration, billing cycle change, or missing account data.</span>
+            </div>
+            <div role="row">
+              <strong role="cell">Response rule</strong>
+              <span role="cell">Explain only grounded facts; avoid guessing; offer plan review or expert handoff when needed.</span>
+            </div>
+            <div role="row">
+              <strong role="cell">Quality bar</strong>
+              <span role="cell">Specific, concise, non-defensive, and clear about what the customer can do next.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell evidence-grid">
+          <article>
+            <h2>Result</h2>
+            <p>
+              The POC showed that a designer could move beyond wireframes into the agent layer: skill instructions,
+              scenarios, tool-use logic, response strategy, and a demoable customer experience.
+            </p>
+          </article>
+          <article>
+            <h2>What this proves</h2>
+            <p>
+              I can design the instructions and evidence that shape AI behavior, then build enough of the experience for
+              teams to critique and improve it early.
+            </p>
+          </article>
+          <article>
+            <h2>Confidentiality</h2>
+            <p>
+              Public examples are recreated with fake data. Raw code, internal APIs, platform details, and internal
+              screenshots are reserved for a redacted private walkthrough.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="case-shell">
+          <h2>Interview talking points</h2>
+          <ul class="talking-points">
+            <li>How I decide when an AI support experience should answer, ask, act, refuse, or hand off.</li>
+            <li>How golden datasets make model behavior visible before launch.</li>
+            <li>How I use AI tools and lightweight prototypes to move from content strategy to working behavior.</li>
+          </ul>
+        </div>
+      </section>
+
+      <nav class="case-nav-footer" aria-label="Case study navigation">
+        <a href="../index.html#work">Back to work</a>
+        <a href="./genai-voice-snippet.html">Next: GenAI Voice Snippet</a>
+      </nav>
+    </main>
+
+    <footer class="site-footer">
+      <p>© 2026 Simone Muro.</p>
+    </footer>
+  </body>
+</html>
