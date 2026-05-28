@@ -517,8 +517,7 @@ h3 {
 .flow-steps p,
 .decision-grid p,
 .artifact-gallery p,
-.case-two-column p,
-.talking-points {
+.case-two-column p {
   color: var(--muted);
   font-weight: 600;
 }
@@ -650,15 +649,6 @@ h3 {
   margin-top: 0.7rem;
   color: var(--muted);
   font-weight: 800;
-}
-
-.talking-points {
-  margin: 1rem 0 0;
-  padding-left: 1.2rem;
-}
-
-.talking-points li + li {
-  margin-top: 0.65rem;
 }
 
 .case-nav-footer {
