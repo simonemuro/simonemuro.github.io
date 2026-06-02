@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Credit Karma: See Why &amp; Analyze My Wallet — Simone Muro</title>
+    <meta name="description" content="As Credit Karma's prompt engineer, Simone Muro authored and refined two LLM experiences that explain card recommendations and analyze a member's wallet — grounded in real data, plain-spoken, and shipped under hard legal constraints." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="wordmark" href="index.html">SIMONE MURO</a>
+        <div class="nav-links">
+          <a href="index.html#about">About</a>
+          <a href="index.html#work">Case Studies</a>
+          <a href="resume.html">Résumé</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <article>
+        <!-- HERO -->
+        <section class="case-hero">
+          <div class="wrap">
+            <a class="back-link" href="index.html#work"><span aria-hidden="true">←</span> All work</a>
+            <div class="tags">
+              <span class="tag">Prompt Engineering</span>
+              <span class="tag">LLM Response Quality</span>
+              <span class="tag">Regulated Finance</span>
+            </div>
+            <h1>Teaching an LLM to explain money — without overstepping the law.</h1>
+            <p class="deck">
+              As Credit Karma's prompt engineer, I authored and continuously refined two shipped LLM experiences:
+              <strong>"See Why"</strong>, which explains why a specific credit card is recommended, and
+              <strong>"Analyze My Wallet,"</strong> which reads a member's whole financial profile and suggests how to
+              improve it. Both had to be personalized, persuasive, plainly written — and legally airtight.
+            </p>
+          </div>
+        </section>
+
+        <!-- META -->
+        <section class="wrap">
+          <dl class="case-meta">
+            <div><dt>My role</dt><dd>Prompt Engineer (IC)</dd></div>
+            <div><dt>Surface</dt><dd>Card marketplace + embedded financial assistant</dd></div>
+            <div><dt>What I did</dt><dd>Prompt authoring &amp; versioning, structured output, tool-grounding, QE evaluation</dd></div>
+            <div><dt>Brand &amp; year</dt><dd>Credit Karma · 2024</dd></div>
+          </dl>
+        </section>
+
+        <!-- BODY -->
+        <section class="case-body-wrap">
+          <div class="wrap">
+
+            <!-- Problem -->
+            <div class="block">
+              <span class="kicker">The problem</span>
+              <h2>A recommendation a member can't understand isn't a recommendation.</h2>
+              <div class="prose">
+                <p>
+                  Credit Karma members were being shown credit-card recommendations they couldn't make sense of. Members
+                  couldn't easily see the strengths and weaknesses of the wallet they already had, and when a new card
+                  was suggested, the "why" was generic — the same benefits language anyone would see, disconnected from
+                  their actual finances.
+                </p>
+                <p>
+                  The fix had to be a genuinely personalized, generative explanation. But this is a regulated commerce
+                  surface, and that turned a writing problem into a model-behavior problem with three hard edges:
+                </p>
+                <ul>
+                  <li><b>Legal limits on claims.</b> Credit Karma is legally bound not to misrepresent approval odds. The model could <em>reason</em> over them, but could never state or guarantee them.</li>
+                  <li><b>No invented offers.</b> The model had to recommend only cards present in approved offer data — never a card it "knew about" from training.</li>
+                  <li><b>Real personalization, plainly said.</b> Answers had to reflect the member's true profile — score, utilization, the specific cards in their wallet — and explain APR, rewards categories, and fees in language a non-expert could act on.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- My role -->
+            <div class="block">
+              <span class="kicker">My role</span>
+              <h2>I owned the prompts end to end — and the discipline around them.</h2>
+              <ul class="role-list">
+                <li><b>Authored both system prompts</b> from the product's response requirements: the persona (a personal-finance analyst focused on card optimization), the step-by-step reasoning, and a strict JSON output schema (<span style="font-family:var(--mono);font-size:14px;">overview · details[] · summary</span>).</li>
+                <li><b>Versioned every change in my own Git repo</b>, tracking each prompt revision alongside its test inputs and the model's outputs, so every change was attributable rather than remembered.</li>
+                <li><b>Worked baseline-first:</b> I ran the unedited prompt against a member profile before changing anything, so I could isolate the effect of each revision instead of trusting a hunch.</li>
+                <li><b>Stress-tested edge cases</b> — members with no cards, no matched offer data, thin files, and prime members who shouldn't see secured-card offers — to find where the model hedged badly or broke.</li>
+                <li><b>Tuned tool-invocation reliability</b> so the model consistently called the offer tool instead of answering from memory.</li>
+                <li><b>Took the prompts through Quality-Engineering evaluation</b> against a multi-dimensional rubric and raised the production PRs that shipped them.</li>
+              </ul>
+            </div>
+
+            <!-- Key decision -->
+            <div class="block">
+              <span class="kicker">The key decision</span>
+              <h2>I made the model say less, on purpose.</h2>
+              <div class="prose">
+                <p>
+                  The sharpest decision was about grounding. In testing, I found that whenever offer data was missing,
+                  the model would cheerfully recommend cards anyway — pulling them from its own training knowledge,
+                  with details it had no way to verify. On a regulated commerce surface, a confident, unverifiable
+                  recommendation is worse than no recommendation at all.
+                </p>
+                <p>
+                  So I constrained the prompt and the tool-invocation behavior to a hard rule: <strong>recommend only
+                  cards present in the approved offer data, and say nothing when that data is absent.</strong> I
+                  deliberately traded breadth and apparent helpfulness for verifiable accuracy and compliance.
+                </p>
+                <p>
+                  The same instinct drove a later revision. Legal reviewed the comparison language the model used when
+                  it weighed a recommended card against the member's current cards. I rewrote it so the model can still
+                  make a comparison persuasive — but only with claims it can substantiate from the data in front of it,
+                  and never anything that reads as a guarantee.
+                </p>
+              </div>
+
+              <div class="snippet" role="img" aria-label="Sanitized excerpt of the output schema and legal guardrail">
+                <span class="c">// output contract — sanitized</span><br />
+                {<br />
+                &nbsp;&nbsp;<span class="k">"overview"</span>: <span class="s">"plain-language read of the member's situation, grounded in their data"</span>,<br />
+                &nbsp;&nbsp;<span class="k">"details"</span>: <span class="s">["2–3 specific, comparative reasons this card fits their gaps"]</span>,<br />
+                &nbsp;&nbsp;<span class="k">"summary"</span>: <span class="s">"one 'if… then…' line on what to do next"</span><br />
+                }<br /><br />
+                <span class="c">// hard guardrail</span><br />
+                <span class="c">// approval odds may inform reasoning — never stated, never guaranteed.</span><br />
+                <span class="c">// recommend only cards present in approved offer data. no data → no card.</span>
+              </div>
+
+              <div class="beforeafter" style="margin-top:26px;">
+                <div class="ba before">
+                  <span class="ba-label">Before — generic</span>
+                  <p>"The Discover it® Cash Back card is a great choice — it offers strong cash-back rewards and no annual fee, making it a versatile addition to your wallet."</p>
+                </div>
+                <div class="ba after">
+                  <span class="ba-label">After — grounded &amp; comparative</span>
+                  <p>"Unlike your Citi Double Cash® (a flat 2%), Discover it® earns 5% in rotating categories you activate. And while both your current cards charge a 3% foreign-transaction fee, this one charges none — useful if you travel."</p>
+                </div>
+              </div>
+              <p class="evidence-note">
+                <b>Note:</b> examples are reconstructed with representative card details to protect confidential prompts and member data. The structure — grounded, comparative, tied to the member's existing cards — mirrors the shipped behavior.
+              </p>
+            </div>
+
+            <!-- Outcome -->
+            <div class="block">
+              <span class="kicker">The outcome</span>
+              <h2>Shipped, evaluated, and validated with real members.</h2>
+              <div class="metrics-row">
+                <div class="metric"><strong>2</strong><span>LLM experiences shipped to production via merged PRs</span></div>
+                <div class="metric"><strong>4-dim</strong><span>QE rubric passed: safety, accuracy, structure, quality</span></div>
+                <div class="metric"><strong>10/10</strong><span>user-test participants reacted positively; several said it would save them time</span></div>
+              </div>
+              <div class="prose" style="margin-top:24px;">
+                <p>
+                  Both experiences shipped to production. They cleared a multi-dimensional Quality-Engineering review —
+                  scored pass/fail across safety, accuracy, structure, and quality — and validated in moderated user
+                  testing, where members found the wallet analysis easy to understand and a faster starting point than
+                  reading third-party card-review sites. Along the way I left behind a versioned prompt repository and a
+                  prompt-development lifecycle the team carried forward.
+                </p>
+                <p class="evidence-note" style="font-family:var(--sans);">
+                  <b>Honest scope:</b> these are the launch-readiness outcomes I owned as prompt engineer. Post-launch engagement and conversion metrics sat with the product team — happy to discuss what I know in an interview.
+                </p>
+              </div>
+            </div>
+
+            <!-- Reflection -->
+            <div class="block">
+              <span class="kicker">What I'd do differently</span>
+              <h2>Members didn't want a better paragraph. They wanted a conversation.</h2>
+              <div class="prose">
+                <p>
+                  Both experiences were single-shot: each answered one question well and then stopped. In testing, the
+                  most consistent request was for a follow-up — "what about this card instead?", "why not the one with
+                  the bigger bonus?" If I built it again, I'd design for multi-turn from the start, because the
+                  embedded answer was really the opening line of a conversation members wanted to keep having.
+                </p>
+                <p>
+                  The baseline-first habit is the thing I kept. Testing the unchanged prompt before every revision felt
+                  slow, but it's the only reason I could ever say a change <em>actually</em> improved the response
+                  rather than just changed it. That discipline is now the foundation of how I run evaluation at scale.
+                </p>
+              </div>
+            </div>
+
+            <div class="takeaway">
+              <span class="kicker" style="font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:12.5px;display:block;margin-bottom:10px;">Why it maps to Google Store &amp; Fi</span>
+              <p>
+                On a regulated commerce surface, the prompt engineer's job isn't to make the model sound smart — it's to
+                make it trustworthy: grounded in real data, honest about uncertainty, and clear enough that a customer
+                can act. That is exactly the job every time the Google Store explains a recommendation or Fi explains a
+                charge.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- NEXT -->
+        <section class="wrap">
+          <div class="case-next">
+            <a class="back-link" href="index.html#work" style="margin:0;"><span aria-hidden="true">←</span> All work</a>
+            <a class="nx" href="case-cancellation.html" style="text-align:right;">
+              <div class="nx-label">Next case</div>
+              <div class="nx-title">Cancellation Saves: an LLM that knows who's worth saving →</div>
+            </a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>© 2026 Simone Muro</p>
+        <p>Case studies are redacted to protect confidential company, customer, and platform information.</p>
+      </div>
+    </footer>
+  </body>
+</html>
