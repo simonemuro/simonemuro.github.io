@@ -1,56 +1,46 @@
-# Simone Muro Portfolio
+# Simone Muro — Portfolio
 
 Static portfolio site for `https://simonemuro.github.io/`.
+Targeted at the **Staff Content Designer & Model UX Writer, Google Fi** role: leads with refining LLM
+response quality, anchored in voice, and backed by judgment-first case studies.
 
-## Files
+## Structure
 
-- `index.html` - Homepage and portfolio content.
-- `styles.css` - Visual styling and responsive layout.
-- `.nojekyll` - Tells GitHub Pages to serve the static files directly.
+- `index.html` — homepage: thesis, proof bar, five case studies, career arc, six principles, contact.
+- `case-credit-karma.html` — "See Why" & "Analyze My Wallet" (prompt engineering, regulated finance).
+- `case-cancellation.html` — LLM savability classifier (retention, structured output).
+- `case-voice-snippet.html` — GenAI voice support (voice AI, response evaluation).
+- `case-quality-legacy.html` — agentic-AI quality evaluation at scale (the recruiter's ask + leadership).
+- `case-blueprint.html` — conversational AI design system (voice/tone + design patterns at scale).
+- `resume.html` — printable résumé (browser print → Save as PDF).
+- `styles.css` — shared visual system. `.nojekyll` — serve static files as-is.
 
-## GitHub Pages Setup
+## Local preview
 
-Create a public GitHub repository named exactly:
-
-```text
-simonemuro.github.io
+```bash
+cd simonemuro.github.io
+python3 -m http.server 8000      # open http://localhost:8000
 ```
 
-Then upload these files to the root of the repository:
+## Publish (GitHub Pages, deploy-from-branch on `main`)
 
-```text
-index.html
-styles.css
-.nojekyll
-README.md
+```bash
+git add -A
+git commit -m "Rebuild portfolio for Google Fi role"
+git push                          # Pages redeploys in ~1 minute
 ```
 
-In GitHub:
+## Revert to the previous version
 
-1. Open the `simonemuro.github.io` repository.
-2. Go to `Settings`.
-3. Go to `Pages`.
-4. Under `Build and deployment`, choose `Deploy from a branch`.
-5. Select branch `main`.
-6. Select folder `/root`.
-7. Save.
+The original launched site is preserved:
 
-GitHub will publish the site at:
-
-```text
-https://simonemuro.github.io/
+```bash
+git reset --hard original-launch     # local only; then `git push --force` to publish the revert
+# or inspect it:  git checkout backup-original-launch
 ```
 
-## Privacy Rule
+## Privacy rule (public-safe)
 
-This repository should stay public-safe. Do not add:
-
-- Raw internal datasets.
-- Internal URLs.
-- Customer data.
-- Internal screenshots with proprietary information.
-- Proprietary prompts or full system instructions.
-- Source code from internal work.
-- Credentials, API keys, or config files.
-
-Use recreated diagrams, fake data, approved metrics, and redacted artifacts only.
+No raw internal datasets, internal URLs, customer data, employee names, internal screenshots,
+proprietary prompts/system instructions, source code, or credentials. Use recreated examples,
+sanitized before/afters, and approved metrics only.

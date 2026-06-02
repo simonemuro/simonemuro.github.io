@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cancellation Saves: an LLM savability classifier — Simone Muro</title>
+    <meta name="description" content="Simone Muro built and tested the LLM classifier behind QuickBooks' first GenAI Digital Assistant experience — reading a cancellation request's reason, sentiment, and savability to route customers to a retention expert with empathy. 96.6% classification accuracy." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="wordmark" href="index.html">SIMONE MURO</a>
+        <div class="nav-links">
+          <a href="index.html#about">About</a>
+          <a href="index.html#work">Case Studies</a>
+          <a href="resume.html">Résumé</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <article>
+        <section class="case-hero">
+          <div class="wrap">
+            <a class="back-link" href="index.html#work"><span aria-hidden="true">←</span> All work</a>
+            <div class="tags">
+              <span class="tag">Prompt Engineering</span>
+              <span class="tag">LLM Classification</span>
+              <span class="tag">Retention</span>
+            </div>
+            <h1>An LLM that knows who's worth saving — and how to ask.</h1>
+            <p class="deck">
+              The first GenAI experience to ship in QuickBooks' Digital Assistant. I was the prompt engineer and tester
+              for an LLM that reads a cancellation request — its <strong>reason, sentiment, and savability</strong> — and
+              replaces a cold "here's how to cancel" with a disambiguating, empathetic handoff to a retention specialist.
+            </p>
+          </div>
+        </section>
+
+        <section class="wrap">
+          <dl class="case-meta">
+            <div><dt>My role</dt><dd>Prompt Engineer &amp; Tester (IC)</dd></div>
+            <div><dt>Surface</dt><dd>QuickBooks Digital Assistant (also Search, Intuit Intelligence)</dd></div>
+            <div><dt>What I did</dt><dd>Classification prompt, structured output, ~300-utterance tuning, empathetic handoff copy</dd></div>
+            <div><dt>Where it sits</dt><dd>Hybrid LLM + rules · GenAI in production support</dd></div>
+          </dl>
+        </section>
+
+        <section class="case-body-wrap">
+          <div class="wrap">
+
+            <div class="block">
+              <span class="kicker">The problem</span>
+              <h2>The old flow treated every "cancel" the same — and that was the bug.</h2>
+              <div class="prose">
+                <p>
+                  When a customer typed something like "cancel my subscription," the assistant assumed the worst,
+                  showed no empathy about losing them, and dropped straight into cancellation instructions. No attempt to
+                  understand why, and no attempt to help. For a subscription business, that's leaving retention on the
+                  floor.
+                </p>
+                <p>
+                  But the obvious fix — "always try to save them" — is its own trap. I sampled <strong>299 real
+                  utterances</strong> mapped to the cancel intent and found the population was mixed:
+                </p>
+                <ul>
+                  <li><b>65%</b> genuinely wanted to cancel</li>
+                  <li><b>14%</b> were unsure whether they even wanted to</li>
+                  <li><b>21%</b> had nothing to do with canceling an account at all</li>
+                </ul>
+                <p>
+                  So the design had a real ethical and UX constraint baked in, one the team named explicitly:
+                  <em>a concern about pushing people toward churn.</em> Strong-arming the 65% who'd decided, or
+                  mis-routing the 21% who weren't even canceling, would be worse than the cold flow. The system had to
+                  tell these groups apart before it did anything.
+                </p>
+              </div>
+            </div>
+
+            <div class="block">
+              <span class="kicker">My role</span>
+              <h2>I built and tuned the classifier — and wrote the words around it.</h2>
+              <ul class="role-list">
+                <li><b>Designed the classification prompt</b> with a structured JSON output that read more than a single flag: the <b>cancellation reason</b>, the customer's <b>sentiment</b> and level of frustration, and a <b>savability</b> judgment.</li>
+                <li><b>Tuned and tested it against ~300 real utterances</b>, measuring classification accuracy and chasing down the misses until the behavior was reliable.</li>
+                <li><b>Defined what "savable" actually means</b> — price, switching to another product, not using it — by working with the retention team on the cancellation reasons that a specialist can realistically address.</li>
+                <li><b>Wrote the conversation:</b> a gentle disambiguation for vague "cancel" utterances, a non-defensive probe into the reason, and — when savable — an empathetic offer to connect to a specialist by chat or callback.</li>
+                <li><b>Designed the graceful exit:</b> if the reason isn't savable or the customer declines, the flow shows them how to cancel cleanly and follows up with data-backup advice. No dark patterns.</li>
+              </ul>
+            </div>
+
+            <div class="block">
+              <span class="kicker">The key decision</span>
+              <h2>Classify the moment, not just the intent.</h2>
+              <div class="prose">
+                <p>
+                  The pivotal call was to make the model read several signals at once — reason, sentiment, savability —
+                  rather than emit a single "savable: yes/no." A boolean would have been simpler to build and evaluate.
+                  But a boolean can't tell the difference between an angry customer who's already gone and a hesitant one
+                  who just needs a better plan, and it would have steamrolled the 14% who were unsure and the 21% who
+                  weren't canceling at all.
+                </p>
+                <p>
+                  Reading the whole moment let the flow do the humane thing: disambiguate first, save only where saving
+                  is genuinely possible, and route everyone else respectfully. The tradeoff was a more complex prompt and
+                  a wider evaluation surface — which is exactly why I held it to a measured accuracy bar before it shipped.
+                </p>
+              </div>
+
+              <div class="beforeafter" style="margin-top:8px;">
+                <div class="ba before">
+                  <span class="ba-label">Before — assume &amp; instruct</span>
+                  <p><span class="speaker">Customer:</span> "I want to cancel my subscription."</p>
+                  <p><span class="speaker">Assistant:</span> "To cancel your subscription, go to Settings → Billing → Cancel. Your access ends at the end of the billing period."</p>
+                </div>
+                <div class="ba after">
+                  <span class="ba-label">After — read &amp; respond</span>
+                  <p><span class="speaker">Customer:</span> "I want to cancel my subscription."</p>
+                  <p><span class="speaker">Assistant:</span> "Happy to help with that. Can I ask what's prompting it — cost, a feature, something not working? If it's something a specialist could fix, I can connect you in a couple of minutes."</p>
+                </div>
+              </div>
+              <p class="evidence-note"><b>Note:</b> dialogue is reconstructed to illustrate the shipped flow's logic; exact copy and prompts are confidential.</p>
+            </div>
+
+            <div class="block">
+              <span class="kicker">The outcome</span>
+              <h2>Accurate enough to trust with a revenue-critical decision.</h2>
+              <div class="metrics-row">
+                <div class="metric"><strong>96.6%</strong><span>savability-classification accuracy across ~300 utterances</span></div>
+                <div class="metric"><strong>1st</strong><span>GenAI experience to ship in the QuickBooks Digital Assistant</span></div>
+                <div class="metric"><strong>$2.9M</strong><span>projected 90-day retention from the saves flow</span></div>
+              </div>
+              <div class="prose" style="margin-top:24px;">
+                <p>
+                  The classifier hit <strong>96.6% accuracy</strong> on savability across the test set, which is what made
+                  it safe to wire to a real routing decision: savable customers were handed to the retention team — by
+                  chat or callback, with the case context attached — instead of being shown a cancel button. It shipped
+                  as the Digital Assistant's first generative experience, with a projected $2.9M in 90-day retention.
+                </p>
+              </div>
+            </div>
+
+            <div class="block">
+              <span class="kicker">What the data taught me</span>
+              <h2>The empathy wasn't decoration — it was load-bearing.</h2>
+              <div class="prose">
+                <p>
+                  The most useful lesson came after launch, from measurement. In a later revision, cancellation handling
+                  was shifted off the generative flow toward more rules-based responses — and our conversation-quality
+                  scores fell. The drop was a measured reminder that the model's empathy and nuance in this moment were
+                  doing real work, not just sounding nice.
+                </p>
+                <p>
+                  My takeaway: in emotionally loaded moments, "technically correct" and "actually helpful" are different
+                  things, and only evaluation tells you which one you shipped. I'd argue harder, earlier, to keep the
+                  model in the loop precisely where the human read matters most.
+                </p>
+              </div>
+            </div>
+
+            <div class="takeaway">
+              <span class="kicker" style="font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:12.5px;display:block;margin-bottom:10px;">Why it maps to Google Fi</span>
+              <p>
+                Cancellations and downgrades are where a subscription business keeps or loses a customer. Reading the
+                real reason, responding with empathy, and routing to the right help — without ever feeling like a trap —
+                is precisely the conversation Fi has to get right at the edge of churn.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wrap">
+          <div class="case-next">
+            <a class="back-link" href="index.html#work" style="margin:0;"><span aria-hidden="true">←</span> All work</a>
+            <a class="nx" href="case-voice-snippet.html" style="text-align:right;">
+              <div class="nx-label">Next case</div>
+              <div class="nx-title">Intuit Assist Voice Snippet: GenAI on the phone line →</div>
+            </a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>© 2026 Simone Muro</p>
+        <p>Case studies are redacted to protect confidential company, customer, and platform information.</p>
+      </div>
+    </footer>
+  </body>
+</html>

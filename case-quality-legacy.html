@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Intuit Intelligence Quality Evaluation: making response quality measurable — Simone Muro</title>
+    <meta name="description" content="Simone Muro owns pre-launch quality for QuickBooks' agentic AI: golden datasets, ground truth, LLM-as-judge plus human labeling, and the readouts that turn failures into fixes — driving +8 to +13pp quality-score lifts, and stepping in to lead through a sudden leadership gap." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="wordmark" href="index.html">SIMONE MURO</a>
+        <div class="nav-links">
+          <a href="index.html#about">About</a>
+          <a href="index.html#work">Case Studies</a>
+          <a href="resume.html">Résumé</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <article>
+        <section class="case-hero">
+          <div class="wrap">
+            <a class="back-link" href="index.html#work"><span aria-hidden="true">←</span> All work</a>
+            <div class="tags">
+              <span class="tag">Response Quality at Scale</span>
+              <span class="tag">Evaluation Systems</span>
+              <span class="tag">Leadership</span>
+            </div>
+            <h1>Turning "the AI feels off" into a number you can fix.</h1>
+            <p class="deck">
+              I own pre-launch quality for QuickBooks' agentic assistant: the golden datasets that define what a good
+              answer is, the LLM-as-judge-plus-human-labeling program that scores real conversations, and the readouts
+              that turn failures back into prompts, ground truth, and content fixes. This is the recruiter's exact ask —
+              continuously refining the response quality of an LLM product — as an operating system.
+            </p>
+          </div>
+        </section>
+
+        <section class="wrap">
+          <dl class="case-meta">
+            <div><dt>My role</dt><dd>Quality methodology lead · named pre-launch driver · team lead</dd></div>
+            <div><dt>Surface</dt><dd>Intuit Intelligence — agentic AI across QuickBooks</dd></div>
+            <div><dt>What I did</dt><dd>Golden datasets, ground truth, rubrics, LLM-judge + human labeling, readouts</dd></div>
+            <div><dt>Scope</dt><dd>Led across Help, Payroll, and Insights skills</dd></div>
+          </dl>
+        </section>
+
+        <section class="case-body-wrap">
+          <div class="wrap">
+
+            <div class="block">
+              <span class="kicker">The problem</span>
+              <h2>You can't scale an assistant you can only judge by vibe.</h2>
+              <div class="prose">
+                <p>
+                  As agentic AI scaled across QuickBooks, quality was being measured ad hoc. Teams leaned on
+                  LLM-as-judge — having a model grade other models against golden datasets — which is useful but not
+                  sufficient on its own, especially for product and financial workflows where a wrong answer has real
+                  consequences.
+                </p>
+                <p>
+                  The stakes were concrete. In executive testing sessions, leaders found the assistant "arrogant" — it
+                  explained its own steps instead of just answering, over-narrated its thinking, and stopped short of
+                  taking action. Those aren't bugs in a single response; they're systemic response-quality problems. You
+                  can only catch and fix them with a rigorous, repeatable evaluation program — not spot checks.
+                </p>
+              </div>
+            </div>
+
+            <div class="block">
+              <span class="kicker">My role</span>
+              <h2>I built the pre-launch quality function — then ran the whole thing when it lost its lead.</h2>
+              <ul class="role-list">
+                <li><b>Named the pre-launch quality driver</b> in the team's official scope of work: building, expanding, and managing the golden datasets that define ground truth for the AI.</li>
+                <li><b>Standardized golden-dataset intake</b> across skills — a common schema spanning Help, Payroll, and Business Insights — and authored the source-of-truth answers, expected actions, and diagnostic paths.</li>
+                <li><b>Designed the audit framework</b> that validates the validators: hide the experts' original ground truth, have designers independently keep-or-cut it, and reconcile the disagreements.</li>
+                <li><b>Set the evaluation criteria</b> — correctness, completeness, relevance, routing accuracy, and conversation-quality scoring — and the multi-turn user-simulator instructions behind them.</li>
+                <li><b>Delivered the readouts</b> that turned scores into prioritized fixes for prompts, ground truth, tools, or support content — then re-tested.</li>
+                <li><b>Stepped in to lead the full function</b> when the peer who owned it went on sudden medical leave, keeping evaluation running across every skill without a pause.</li>
+              </ul>
+
+              <div class="pull">
+                <p>"Proactively stepping up to fill the leadership vacuum in Quality."</p>
+                <cite>— my manager, on the two weeks I picked up the function</cite>
+              </div>
+            </div>
+
+            <div class="block">
+              <span class="kicker">The key decision</span>
+              <h2>Don't let LLMs be the only judge of LLMs.</h2>
+              <div class="prose">
+                <p>
+                  The defining methodology call was to refuse a pure auto-eval shortcut. For financial workflows, I
+                  insisted on a loop that pairs <strong>LLM-as-judge with human labeling against frozen, versioned
+                  ground truth</strong> — and treats the experts' ground truth as something to audit, not assume.
+                </p>
+                <p>
+                  The tradeoff is real: it's slower and more expensive than letting a model grade itself. But when the
+                  answer is about someone's payroll or taxes, "a model said it was fine" isn't a standard you can ship
+                  on. Human-in-the-loop is what makes the score trustworthy enough to gate a release.
+                </p>
+                <ul>
+                  <li><b>Define</b> the capability and the real customer scenarios it must handle.</li>
+                  <li><b>Build</b> a representative golden dataset; author source-of-truth answers and expected actions.</li>
+                  <li><b>Judge</b> offline with LLM-as-judge; sample production with trained human labelers.</li>
+                  <li><b>Audit</b> the failures and the disagreements between model and humans.</li>
+                  <li><b>Fix &amp; re-test</b> — route issues to prompts, ground truth, tools, or content, then watch for drift.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="block">
+              <span class="kicker">The outcome</span>
+              <h2>Quality became a lever, not a report.</h2>
+              <div class="metrics-row">
+                <div class="metric"><strong>+8 pp</strong><span>quality-score lift — Help</span></div>
+                <div class="metric"><strong>+9.8 pp</strong><span>quality-score lift — Payroll</span></div>
+                <div class="metric"><strong>+13 pp</strong><span>quality-score lift — Insights</span></div>
+              </div>
+              <div class="prose" style="margin-top:24px;">
+                <p>
+                  The program drove measurable quality-score lifts across the skills it covered — <strong>+8 points on
+                  Help, +9.8 on Payroll, +13 on Insights</strong> — and, more importantly, changed what evaluation was
+                  for. It stopped being a backward-looking report and became the mechanism that decided whether agent
+                  behavior was good enough to ship, and what to fix when it wasn't.
+                </p>
+              </div>
+            </div>
+
+            <div class="block">
+              <span class="kicker">What I'd carry forward</span>
+              <h2>The rubric is the easy part. Calibration is the job.</h2>
+              <div class="prose">
+                <p>
+                  The hardest, most valuable work wasn't writing the rubric — it was keeping models and human labelers
+                  calibrated to the same bar over time, and translating "the assistant feels arrogant" into specific,
+                  scoreable dimensions a team could actually move. I'd invest even earlier in that shared language,
+                  because evaluation is only as good as the agreement underneath it.
+                </p>
+              </div>
+            </div>
+
+            <div class="takeaway">
+              <span class="kicker" style="font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:12.5px;display:block;margin-bottom:10px;">Why it maps to the role</span>
+              <p>
+                The job description's signature line is "drive the behavior of AI models by establishing model training
+                practices, writing content, and evaluating response quality." This is that line, run as a function — the
+                exact muscle Fi and the Store need to keep their AI helpful as it scales.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wrap">
+          <div class="case-next">
+            <a class="back-link" href="index.html#work" style="margin:0;"><span aria-hidden="true">←</span> All work</a>
+            <a class="nx" href="case-blueprint.html" style="text-align:right;">
+              <div class="nx-label">Next case</div>
+              <div class="nx-title">Conversational AI Design Blueprint: quality that scales past one designer →</div>
+            </a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>© 2026 Simone Muro</p>
+        <p>Case studies are redacted to protect confidential company, customer, and platform information.</p>
+      </div>
+    </footer>
+  </body>
+</html>
