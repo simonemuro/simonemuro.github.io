@@ -82,6 +82,30 @@
                 <li><b>Defined the handoff moments</b> — when the system should stop and route to an expert, carrying context with it.</li>
                 <li><b>Authored the response-quality rubric</b> for the generated answers — an early template that later seeded a broader auto-evaluation rubric used across the org.</li>
               </ul>
+
+              <figure class="three-category" role="img" aria-label="The voice classifier divides utterances into three categories. Categories one and two — standalone product names or standalone objects — trigger disambiguation. Category three, object plus action, triggers a voice-tuned summary with a handoff option.">
+                <figcaption>Three categories the classifier reads</figcaption>
+                <div class="cat-grid">
+                  <div class="cat ask">
+                    <span class="cat-num">01</span>
+                    <h4>Standalone product or general help</h4>
+                    <p class="cat-examples">"QuickBooks." "Help with payroll." "Tech support."</p>
+                    <p class="cat-action">→ Ask for details before answering</p>
+                  </div>
+                  <div class="cat ask">
+                    <span class="cat-num">02</span>
+                    <h4>Standalone object</h4>
+                    <p class="cat-examples">"Invoices." "Billing." "Manage subscription."</p>
+                    <p class="cat-action">→ Ask for details before answering</p>
+                  </div>
+                  <div class="cat answer">
+                    <span class="cat-num">03</span>
+                    <h4>Object + action</h4>
+                    <p class="cat-examples">"Cancel subscription." "Update billing info." "Dispute a charge."</p>
+                    <p class="cat-action">→ Voice-tuned answer + handoff option</p>
+                  </div>
+                </div>
+              </figure>
             </div>
 
             <div class="block">
@@ -103,27 +127,63 @@
                 </p>
               </div>
 
-              <div class="snippet" role="img" aria-label="Sanitized structured-output schema for the voice response">
-                <span class="c">// structured output — sanitized</span><br />
-                {<br />
-                &nbsp;&nbsp;<span class="k">"customer_question"</span>: <span class="s">"…"</span>,<br />
-                &nbsp;&nbsp;<span class="k">"action_type"</span>: <span class="s">"answer | disambiguate | handoff | off_topic"</span>,<br />
-                &nbsp;&nbsp;<span class="k">"disambiguation"</span>: <span class="s">"one spoken question to narrow intent"</span>,<br />
-                &nbsp;&nbsp;<span class="k">"response"</span>: <span class="s">"voice-tuned summary — short enough to hear, clear enough to act on"</span>,<br />
-                &nbsp;&nbsp;<span class="k">"task_complexity"</span>: <span class="s">"low | high → informs handoff"</span><br />
-                }
-              </div>
+              <figure class="schema-anatomy" role="img" aria-label="The structured output contract for the Voice Snippet response, showing each field and what it enables in the experience.">
+                <figcaption>The structured output — each field has a job</figcaption>
+                <div class="anatomy-grid">
+                  <div class="anatomy-row">
+                    <span class="field">customer_question</span>
+                    <span class="arrow" aria-hidden="true">→</span>
+                    <span class="purpose">What the caller actually asked, normalized.</span>
+                  </div>
+                  <div class="anatomy-row">
+                    <span class="field">action_type</span>
+                    <span class="arrow" aria-hidden="true">→</span>
+                    <span class="purpose"><code>answer</code> · <code>disambiguate</code> · <code>handoff</code> · <code>off_topic</code></span>
+                  </div>
+                  <div class="anatomy-row">
+                    <span class="field">disambiguation</span>
+                    <span class="arrow" aria-hidden="true">→</span>
+                    <span class="purpose">One spoken question to narrow vague intent.</span>
+                  </div>
+                  <div class="anatomy-row">
+                    <span class="field">response</span>
+                    <span class="arrow" aria-hidden="true">→</span>
+                    <span class="purpose">Voice-tuned summary — short enough to hear, clear enough to act on.</span>
+                  </div>
+                  <div class="anatomy-row">
+                    <span class="field">task_complexity</span>
+                    <span class="arrow" aria-hidden="true">→</span>
+                    <span class="purpose"><code>low</code> | <code>high</code> — informs whether to hand off.</span>
+                  </div>
+                  <div class="anatomy-row">
+                    <span class="field">off_topic</span>
+                    <span class="arrow" aria-hidden="true">→</span>
+                    <span class="purpose">Flag for unsupported or risky requests before the model generates.</span>
+                  </div>
+                </div>
+              </figure>
 
-              <div class="beforeafter" style="margin-top:26px;">
-                <div class="ba before">
-                  <span class="ba-label">Before — recite</span>
-                  <p>A long, scripted read-out of a help article, or a generic "I can help with that" that doesn't match the caller's actual problem.</p>
+              <figure class="audio-figure" aria-label="Voice Snippet sample audio with synced transcript showing the before-and-after experiences. Audio file is pending; only the transcript is published.">
+                <figcaption>Voice Snippet — before / after (audio sample)</figcaption>
+                <div class="audio-card">
+                  <div class="audio-controls">
+                    <span class="audio-play-btn" aria-hidden="true">▸</span>
+                    <div class="audio-progress" aria-hidden="true"><div class="audio-progress-fill"></div></div>
+                    <span class="audio-time">— / —</span>
+                  </div>
+                  <p class="audio-pending"><b>Audio sample pending.</b> Placeholder until a reviewed or synthetic clip is added — the transcript below is what you would hear.</p>
                 </div>
-                <div class="ba after">
-                  <span class="ba-label">After — clarify, then summarize</span>
-                  <p>"Sounds like this is about a payment that didn't go through — is that right?" → then a two-sentence, spoken summary of the exact fix, with the option to send the full steps or connect to an expert who already has the context.</p>
+                <div class="audio-transcript">
+                  <div class="transcript-block before">
+                    <span class="transcript-label">Before — recite</span>
+                    <p>A long, scripted read-out of a help article, or a generic "I can help with that" that doesn't match the caller's actual problem.</p>
+                  </div>
+                  <div class="transcript-block after">
+                    <span class="transcript-label">After — clarify, then summarize</span>
+                    <p>"Sounds like this is about a payment that didn't go through — is that right?" → then a two-sentence, spoken summary of the exact fix, with the option to send the full steps or connect to an expert who already has the context.</p>
+                  </div>
                 </div>
-              </div>
+              </figure>
             </div>
 
             <div class="block">
