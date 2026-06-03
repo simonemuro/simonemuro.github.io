@@ -1,18 +1,17 @@
 # Simone Muro — Portfolio
 
-Static portfolio site for `https://simonemuro.github.io/`.
-Targeted at the **Staff Content Designer & Model UX Writer, Google Fi** role: leads with refining LLM
-response quality, anchored in voice, and backed by judgment-first case studies.
+Static portfolio site for `https://simonemuro.github.io/`. A staff-level content design and model UX
+writing portfolio: leads with LLM response quality, anchored in voice, and backed by judgment-first
+case studies.
 
 ## Structure
 
-- `index.html` — homepage: thesis, proof bar, five case studies, career arc, six principles, contact.
+- `index.html` — homepage: thesis, proof bar, four case studies, career arc, principles, contact.
 - `case-credit-karma.html` — "See Why" & "Analyze My Wallet" (prompt engineering, regulated finance).
 - `case-cancellation.html` — LLM savability classifier (retention, structured output).
 - `case-voice-snippet.html` — GenAI voice support (voice AI, response evaluation).
-- `case-quality-legacy.html` — agentic-AI quality evaluation at scale (the recruiter's ask + leadership).
-- `case-blueprint.html` — conversational AI design system (voice/tone + design patterns at scale).
-- `resume.html` — printable résumé (browser print → Save as PDF).
+- `case-quality-legacy.html` — agentic-AI quality evaluation at scale (response quality + leadership).
+- `resume.html` — printable resume (browser print → Save as PDF).
 - `styles.css` — shared visual system. `.nojekyll` — serve static files as-is.
 
 ## Local preview
@@ -26,7 +25,7 @@ python3 -m http.server 8000      # open http://localhost:8000
 
 ```bash
 git add -A
-git commit -m "Rebuild portfolio for Google Fi role"
+git commit -m "Update portfolio"
 git push                          # Pages redeploys in ~1 minute
 ```
 
