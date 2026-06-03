@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Intuit Assist Voice Snippet: GenAI voice support — Simone Muro</title>
-    <meta name="description" content="Simone Muro co-designed one of Intuit's first GenAI voice experiences for phone support — disambiguation, voice-tuned summaries, structured output, and the response-quality rubric that judged them. +3.9pp containment lift at Bayesian significance." />
+    <title>Intuit Assist Voice Snippet: GenAI voice support · Simone Muro</title>
+    <meta name="description" content="Simone Muro co-designed one of Intuit's first GenAI voice experiences for phone support, disambiguation, voice-tuned summaries, structured output, and the response-quality rubric that judged them. +3.9pp containment lift at Bayesian significance." />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -13,7 +13,12 @@
     <header class="site-header">
       <nav class="nav-shell" aria-label="Primary navigation">
         <a class="wordmark" href="index.html">SIMONE MURO</a>
-        <div class="nav-links">
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <div class="nav-links" id="nav-menu">
           <a href="index.html#about">About</a>
           <a href="index.html#work">Case Studies</a>
           <a href="resume.html">Resume</a>
@@ -36,7 +41,7 @@
             <p class="deck">
               I co-designed one of Intuit's first GenAI voice experiences for phone support: the disambiguation that
               clarifies why someone called, the voice-tuned summaries that answer them, the structured output that lets
-              the system route and evaluate — and the response-quality rubric that decided whether any of it was good
+              the system route and evaluate, and the response-quality rubric that decided whether any of it was good
               enough to ship.
             </p>
           </div>
@@ -60,30 +65,30 @@
               <div class="prose">
                 <p>
                   Inbound calls were roughly <strong>30% of contact volume</strong> with a baseline containment around
-                  <strong>36%</strong> — a $70M-plus cost-saving opportunity if the experience actually helped people.
+                  <strong>36%</strong>, a $70M-plus cost-saving opportunity if the experience actually helped people.
                   But the voice assistant ran on rigid NLU flows and scripted responses. Callers with a specific problem
                   heard a generic answer, repeated themselves, or got transferred without any context traveling with them.
                 </p>
                 <p>
                   A new GenAI platform made it possible to generate personalized, voice-friendly answers. The catch:
                   voice is the hardest surface to write for. There's no screen to scan, the customer hears it exactly
-                  once, and it's a support context — so a wrong or risky answer isn't a bad sentence, it's a bad outcome.
+                  once, and it's a support context, so a wrong or risky answer isn't a bad sentence, it's a bad outcome.
                 </p>
               </div>
             </div>
 
             <div class="block">
               <span class="kicker">My role</span>
-              <h2>I designed what the model said — and how we'd know it was good.</h2>
+              <h2>I designed what the model said, and how we'd know it was good.</h2>
               <ul class="role-list">
-                <li><b>Designed the disambiguation logic</b> — the clarifying questions that pin down a vague reason for calling before the system commits to an answer.</li>
+                <li><b>Designed the disambiguation logic</b>, the clarifying questions that pin down a vague reason for calling before the system commits to an answer.</li>
                 <li><b>Wrote and tuned the system prompt</b> behind the customer-facing experience, including a structured JSON output: the customer question, action type, disambiguation message, the response itself, task complexity, and off-topic detection.</li>
-                <li><b>Designed voice-tuned summaries</b> — concise, speakable answers to a proposed solution, instead of reading a help article aloud.</li>
-                <li><b>Defined the handoff moments</b> — when the system should stop and route to an expert, carrying context with it.</li>
-                <li><b>Authored the response-quality rubric</b> for the generated answers — an early template that later seeded a broader auto-evaluation rubric used across the org.</li>
+                <li><b>Designed voice-tuned summaries</b>, concise, speakable answers to a proposed solution, instead of reading a help article aloud.</li>
+                <li><b>Defined the handoff moments</b>, when the system should stop and route to an expert, carrying context with it.</li>
+                <li><b>Authored the response-quality rubric</b> for the generated answers, an early template that later seeded a broader auto-evaluation rubric used across the org.</li>
               </ul>
 
-              <figure class="three-category" role="img" aria-label="The voice classifier divides utterances into three categories. Categories one and two — standalone product names or standalone objects — trigger disambiguation. Category three, object plus action, triggers a voice-tuned summary with a handoff option.">
+              <figure class="three-category" role="img" aria-label="The voice classifier divides utterances into three categories. Categories one and two, standalone product names or standalone objects, trigger disambiguation. Category three, object plus action, triggers a voice-tuned summary with a handoff option.">
                 <figcaption>Three categories the classifier reads</figcaption>
                 <div class="cat-grid">
                   <div class="cat ask">
@@ -110,7 +115,7 @@
 
             <div class="block">
               <span class="kicker">The key decision</span>
-              <h2>Design for being heard once — and keep the output structured.</h2>
+              <h2>Design for being heard once, and keep the output structured.</h2>
               <div class="prose">
                 <p>
                   The core decision was to treat the model's job as <strong>summarize, don't recite.</strong> Instead of
@@ -120,15 +125,15 @@
                 </p>
                 <p>
                   The second decision was to make the output <strong>structured rather than free text.</strong> By
-                  forcing the model to emit a typed object — intent, disambiguation, response, complexity, off-topic flag —
-                  the experience could reason about what to do next, detect when a request was out of scope before
+                  forcing the model to emit a typed object (intent, disambiguation, response, complexity, off-topic
+                  flag), the experience could reason about what to do next, detect when a request was out of scope before
                   generating a risky answer, and be evaluated consistently. Structure is what made the difference between
                   a demo and something safe to put on a phone line.
                 </p>
               </div>
 
               <figure class="schema-anatomy" role="img" aria-label="The structured output contract for the Voice Snippet response, showing each field and what it enables in the experience.">
-                <figcaption>The structured output — each field has a job</figcaption>
+                <figcaption>The structured output, each field has a job</figcaption>
                 <div class="anatomy-grid">
                   <div class="anatomy-row">
                     <span class="field">customer_question</span>
@@ -148,12 +153,12 @@
                   <div class="anatomy-row">
                     <span class="field">response</span>
                     <span class="arrow" aria-hidden="true">→</span>
-                    <span class="purpose">Voice-tuned summary — short enough to hear, clear enough to act on.</span>
+                    <span class="purpose">Voice-tuned summary, short enough to hear, clear enough to act on.</span>
                   </div>
                   <div class="anatomy-row">
                     <span class="field">task_complexity</span>
                     <span class="arrow" aria-hidden="true">→</span>
-                    <span class="purpose"><code>low</code> | <code>high</code> — informs whether to hand off.</span>
+                    <span class="purpose"><code>low</code> | <code>high</code>, informs whether to hand off.</span>
                   </div>
                   <div class="anatomy-row">
                     <span class="field">off_topic</span>
@@ -164,23 +169,23 @@
               </figure>
 
               <figure class="audio-figure" aria-label="Voice Snippet sample audio with synced transcript showing the before-and-after experiences. Audio file is pending; only the transcript is published.">
-                <figcaption>Voice Snippet — before / after (audio sample)</figcaption>
+                <figcaption>Voice Snippet, before / after (audio sample)</figcaption>
                 <div class="audio-card">
                   <div class="audio-controls">
                     <span class="audio-play-btn" aria-hidden="true">▸</span>
                     <div class="audio-progress" aria-hidden="true"><div class="audio-progress-fill"></div></div>
-                    <span class="audio-time">— / —</span>
+                    <span class="audio-time">0:00 / 0:00</span>
                   </div>
-                  <p class="audio-pending"><b>Audio sample pending.</b> Placeholder until a reviewed or synthetic clip is added — the transcript below is what you would hear.</p>
+                  <p class="audio-pending"><b>Audio sample pending.</b> Placeholder until a reviewed or synthetic clip is added, the transcript below is what you would hear.</p>
                 </div>
                 <div class="audio-transcript">
                   <div class="transcript-block before">
-                    <span class="transcript-label">Before — recite</span>
+                    <span class="transcript-label">Before, recite</span>
                     <p>A long, scripted read-out of a help article, or a generic "I can help with that" that doesn't match the caller's actual problem.</p>
                   </div>
                   <div class="transcript-block after">
-                    <span class="transcript-label">After — clarify, then summarize</span>
-                    <p>"Sounds like this is about a payment that didn't go through — is that right?" → then a two-sentence, spoken summary of the exact fix, with the option to send the full steps or connect to an expert who already has the context.</p>
+                    <span class="transcript-label">After, clarify, then summarize</span>
+                    <p>"Sounds like this is about a payment that didn't go through, is that right?" → then a two-sentence, spoken summary of the exact fix, with the option to send the full steps or connect to an expert who already has the context.</p>
                   </div>
                 </div>
               </figure>
@@ -192,12 +197,12 @@
               <div class="metrics-row">
                 <div class="metric"><strong>+3.9 pp</strong><span>containment lift on targeted intents</span></div>
                 <div class="metric"><strong>Bayesian</strong><span>reached statistical significance in testing</span></div>
-                <div class="metric"><strong>~30%</strong><span>of contact volume is this channel — a $70M-class opportunity</span></div>
+                <div class="metric"><strong>~30%</strong><span>of contact volume is this channel, a $70M-class opportunity</span></div>
               </div>
               <div class="prose" style="margin-top:24px;">
                 <p>
                   The experience reached Bayesian significance in testing with a <strong>+3.9 percentage-point
-                  containment lift</strong> on the targeted intents — a real movement on a channel where small percentages
+                  containment lift</strong> on the targeted intents, a real movement on a channel where small percentages
                   are large dollars. Beyond the number, it established the team as credible builders of GenAI voice
                   experiences, not just flow designers, and the response rubric I wrote became a reusable template for
                   evaluating generated answers elsewhere.
@@ -211,7 +216,7 @@
               <div class="prose">
                 <p>
                   The biggest lesson was that the output schema <em>was</em> the content design. Deciding what fields the
-                  model must produce — and that it must flag off-topic and complexity before answering — shaped the
+                  model must produce, and that it must flag off-topic and complexity before answering, shaped the
                   customer experience more than any single sentence did. I came out of this convinced that for AI, the
                   contract between the model and the product is a core part of the writer's job, and I've designed that
                   way ever since.
@@ -233,9 +238,9 @@
         <section class="wrap">
           <div class="case-next">
             <a class="back-link" href="index.html#work" style="margin:0;"><span aria-hidden="true">←</span> All work</a>
-            <a class="nx" href="case-quality-legacy.html" style="text-align:right;">
+            <a class="nx" href="case-quality-evaluation.html" style="text-align:right;">
               <div class="nx-label">Next case</div>
-              <div class="nx-title">Intuit Intelligence Quality Evaluation: making "good enough to ship" measurable →</div>
+              <div class="nx-title">Quality Evaluation for Intuit Intelligence →</div>
             </a>
           </div>
         </section>
@@ -250,6 +255,15 @@
     </footer>
     <script>
       (function () {
+        var t = document.querySelector(".nav-toggle");
+        var m = document.getElementById("nav-menu");
+        if (t && m) {
+          var close = function () { m.classList.remove("open"); t.setAttribute("aria-expanded", "false"); t.setAttribute("aria-label", "Open menu"); };
+          var open = function () { m.classList.add("open"); t.setAttribute("aria-expanded", "true"); t.setAttribute("aria-label", "Close menu"); };
+          t.addEventListener("click", function () { m.classList.contains("open") ? close() : open(); });
+          m.addEventListener("click", function (e) { if (e.target.tagName === "A") close(); });
+          document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+        }
         if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         var els = document.querySelectorAll(".block, figure");
         els.forEach(function (el) { el.classList.add("reveal"); });

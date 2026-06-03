@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Intuit Intelligence Quality Evaluation: making response quality measurable — Simone Muro</title>
-    <meta name="description" content="Simone Muro owns pre-launch quality for QuickBooks' agentic AI: golden datasets, ground truth, LLM-as-judge plus human labeling, and the readouts that turn failures into fixes — driving +8 to +13pp quality-score lifts, and stepping in to lead through a sudden leadership gap." />
+    <title>Quality Evaluation for Intuit Intelligence · Simone Muro</title>
+    <meta name="description" content="Simone Muro drove pre-launch quality for Intuit Intelligence: golden datasets, ground truth, LLM-as-judge plus human labeling, and the readouts that turn failures into fixes. Quality-score lifts of +8 to +13 points across the agent skills covered." />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -13,7 +13,12 @@
     <header class="site-header">
       <nav class="nav-shell" aria-label="Primary navigation">
         <a class="wordmark" href="index.html">SIMONE MURO</a>
-        <div class="nav-links">
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <div class="nav-links" id="nav-menu">
           <a href="index.html#about">About</a>
           <a href="index.html#work">Case Studies</a>
           <a href="resume.html">Resume</a>
@@ -34,9 +39,10 @@
             </div>
             <h1>Turning "the AI feels off" into a number you can fix.</h1>
             <p class="deck">
-              I own pre-launch quality for QuickBooks' agentic assistant: the golden datasets that define what a good
-              answer is, the LLM-as-judge-plus-human-labeling program that scores real conversations, and the readouts
-              that turn failures back into prompts, ground truth, and content fixes — continuous refinement of an LLM
+              I drove pre-launch quality for Intuit Intelligence, QuickBooks' agentic assistant, partnering with data
+              science and a team of designers: the golden datasets that define a good answer, the
+              LLM-as-judge-plus-human-labeling program that scores real conversations, and the readouts that turn
+              failures back into prompts, ground truth, and content fixes. It's continuous refinement of an LLM
               product's response quality, run as an operating system.
             </p>
           </div>
@@ -45,9 +51,9 @@
         <section class="wrap">
           <dl class="case-meta">
             <div><dt>My role</dt><dd>Quality methodology lead · named pre-launch driver · team lead</dd></div>
-            <div><dt>Surface</dt><dd>Intuit Intelligence — agentic AI across QuickBooks</dd></div>
-            <div><dt>What I did</dt><dd>Golden datasets, ground truth, rubrics, LLM-judge + human labeling, readouts</dd></div>
-            <div><dt>Scope</dt><dd>Led across Help, Payroll, and Insights skills</dd></div>
+            <div><dt>Surface</dt><dd>Intuit Intelligence, agentic AI in QuickBooks</dd></div>
+            <div><dt>What I did</dt><dd>Golden datasets, ground truth, rubrics, LLM-judge plus human labeling, readouts</dd></div>
+            <div><dt>Scope</dt><dd>Several agent skills across the platform</dd></div>
           </dl>
         </section>
 
@@ -60,34 +66,34 @@
               <div class="prose">
                 <p>
                   As agentic AI scaled across QuickBooks, quality was being measured ad hoc. Teams leaned on
-                  LLM-as-judge — having a model grade other models against golden datasets — which is useful but not
+                  LLM-as-judge (a model grading other models against golden datasets), which is useful but not
                   sufficient on its own, especially for product and financial workflows where a wrong answer has real
                   consequences.
                 </p>
                 <p>
-                  The stakes were concrete. In executive testing sessions, leaders found the assistant "arrogant" — it
+                  The stakes were concrete. In executive testing sessions, leaders found the assistant "arrogant": it
                   explained its own steps instead of just answering, over-narrated its thinking, and stopped short of
                   taking action. Those aren't bugs in a single response; they're systemic response-quality problems. You
-                  can only catch and fix them with a rigorous, repeatable evaluation program — not spot checks.
+                  can only catch and fix them with a rigorous, repeatable evaluation program, not spot checks.
                 </p>
               </div>
             </div>
 
             <div class="block">
               <span class="kicker">My role</span>
-              <h2>I built the pre-launch quality function — then ran the whole thing when it lost its lead.</h2>
+              <h2>I drove the pre-launch quality function, then ran the whole thing when it lost its lead.</h2>
               <ul class="role-list">
                 <li><b>Named the pre-launch quality driver</b> in the team's official scope of work: building, expanding, and managing the golden datasets that define ground truth for the AI.</li>
-                <li><b>Standardized golden-dataset intake</b> across skills — a common schema spanning Help, Payroll, and Business Insights — and authored the source-of-truth answers, expected actions, and diagnostic paths.</li>
+                <li><b>Standardized golden-dataset intake</b> across skills with a common schema, and authored the source-of-truth answers, expected actions, and diagnostic paths.</li>
                 <li><b>Designed the audit framework</b> that validates the validators: hide the experts' original ground truth, have designers independently keep-or-cut it, and reconcile the disagreements.</li>
-                <li><b>Set the evaluation criteria</b> — correctness, completeness, relevance, routing accuracy, and conversation-quality scoring — and the multi-turn user-simulator instructions behind them.</li>
-                <li><b>Delivered the readouts</b> that turned scores into prioritized fixes for prompts, ground truth, tools, or support content — then re-tested.</li>
+                <li><b>Set the evaluation criteria</b> (correctness, completeness, relevance, routing accuracy, and conversation-quality scoring) and the multi-turn user-simulator instructions behind them.</li>
+                <li><b>Delivered the readouts</b> that turned scores into prioritized fixes for prompts, ground truth, tools, or support content, then re-tested.</li>
                 <li><b>Stepped in to lead the full function</b> when the peer who owned it went on sudden medical leave, keeping evaluation running across every skill without a pause.</li>
               </ul>
 
               <div class="pull">
                 <p>"Proactively stepping up to fill the leadership vacuum in Quality."</p>
-                <cite>— my manager, on the two weeks I picked up the function</cite>
+                <cite>What my manager said when I stepped in to cover the function</cite>
               </div>
             </div>
 
@@ -103,7 +109,7 @@
                 </p>
               </div>
 
-              <figure class="loop-figure" role="img" aria-label="Six-step quality loop. Define and sample feeds into Curate ground truth, which feeds Evaluate (LLM-as-judge plus human labelers), which feeds Audit (KEEP DELETE decisions on disagreements), which feeds Fix (prompts, ground truth, tools, or content), which feeds Re-test and monitor drift. The loop returns continuously to Define and sample.">
+              <figure class="loop-figure" role="img" aria-label="Six-step quality loop. Define and sample feeds into Curate ground truth, which feeds Evaluate (LLM-as-judge plus human labelers), which feeds Audit (keep or delete decisions on disagreements), which feeds Fix (prompts, ground truth, tools, or content), which feeds Re-test and monitor drift. The loop returns continuously to Define and sample.">
                 <figcaption>The six-step quality loop</figcaption>
                 <svg class="loop-svg" viewBox="0 0 880 200" xmlns="http://www.w3.org/2000/svg">
                   <defs>
@@ -111,43 +117,35 @@
                       <path d="M 0 0 L 10 5 L 0 10 z" fill="#5f6368"/>
                     </marker>
                   </defs>
-                  <!-- 1 Define -->
                   <rect x="20" y="40" width="120" height="68" rx="8" fill="#fff" stroke="#5f6368" stroke-width="1.5"/>
                   <text x="80" y="68" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-weight="800" font-size="13">Define &amp; sample</text>
                   <text x="80" y="86" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="10.5">production · VOC · low CQ</text>
-                  <!-- 2 Curate -->
                   <rect x="165" y="40" width="120" height="68" rx="8" fill="#fff" stroke="#5f6368" stroke-width="1.5"/>
                   <text x="225" y="68" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-weight="800" font-size="13">Curate GT</text>
                   <text x="225" y="86" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="10.5">schema · priority rule</text>
-                  <!-- 3 Evaluate (highlight) -->
                   <rect x="310" y="40" width="120" height="68" rx="8" fill="#e8f0fe" stroke="#315bea" stroke-width="2"/>
                   <text x="370" y="68" text-anchor="middle" fill="#315bea" font-family="Inter, sans-serif" font-weight="900" font-size="13">Evaluate</text>
                   <text x="370" y="86" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="10.5">LLM-judge + human</text>
-                  <!-- 4 Audit -->
                   <rect x="455" y="40" width="120" height="68" rx="8" fill="#fff" stroke="#5f6368" stroke-width="1.5"/>
                   <text x="515" y="68" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-weight="800" font-size="13">Audit</text>
-                  <text x="515" y="86" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="10.5">KEEP / DELETE</text>
-                  <!-- 5 Fix -->
+                  <text x="515" y="86" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="10.5">keep / delete</text>
                   <rect x="600" y="40" width="120" height="68" rx="8" fill="#fff" stroke="#5f6368" stroke-width="1.5"/>
                   <text x="660" y="68" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-weight="800" font-size="13">Fix</text>
                   <text x="660" y="86" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="10.5">prompts · GT · content</text>
-                  <!-- 6 Re-test (highlight) -->
                   <rect x="745" y="40" width="120" height="68" rx="8" fill="#e6f4ea" stroke="#137333" stroke-width="1.5"/>
                   <text x="805" y="68" text-anchor="middle" fill="#137333" font-family="Inter, sans-serif" font-weight="900" font-size="13">Re-test</text>
                   <text x="805" y="86" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="10.5">monitor drift</text>
-                  <!-- Arrows -->
                   <line x1="140" y1="74" x2="165" y2="74" stroke="#5f6368" stroke-width="1.5" marker-end="url(#loop-arrow)"/>
                   <line x1="285" y1="74" x2="310" y2="74" stroke="#5f6368" stroke-width="1.5" marker-end="url(#loop-arrow)"/>
                   <line x1="430" y1="74" x2="455" y2="74" stroke="#5f6368" stroke-width="1.5" marker-end="url(#loop-arrow)"/>
                   <line x1="575" y1="74" x2="600" y2="74" stroke="#5f6368" stroke-width="1.5" marker-end="url(#loop-arrow)"/>
                   <line x1="720" y1="74" x2="745" y2="74" stroke="#5f6368" stroke-width="1.5" marker-end="url(#loop-arrow)"/>
-                  <!-- Loop-back arc -->
                   <path d="M 805 108 L 805 156 L 80 156 L 80 108" stroke="#5f6368" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#loop-arrow)"/>
-                  <text x="442" y="178" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-style="italic" font-size="11">continuous loop · 1-week SLA from production failure → golden set</text>
+                  <text x="442" y="178" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-style="italic" font-size="11">continuous loop · 1-week SLA from production failure to golden set</text>
                 </svg>
               </figure>
 
-              <figure class="gt-tree" role="img" aria-label="The Verified Ground Truth priority rule, expressed as a decision tree. If a Designer ground-truth correction exists, use it. Otherwise if an Expert ground truth exists, use it. Otherwise if Intuit Intelligence was marked accurate on this row, copy Intuit Intelligence's response into Verified GT. Otherwise delete the row.">
+              <figure class="gt-tree" role="img" aria-label="The Verified Ground Truth priority rule, as a decision tree. If a Designer ground-truth correction exists, use it. Otherwise if an Expert ground truth exists, use it. Otherwise if the assistant was marked accurate on this row, copy its response into Verified GT. Otherwise delete the row.">
                 <figcaption>The Verified GT priority rule</figcaption>
                 <div class="tree">
                   <div class="tree-step">
@@ -165,9 +163,9 @@
                     </div>
                   </div>
                   <div class="tree-step">
-                    <span class="step-q">Was Intuit Intelligence marked accurate on this row?</span>
+                    <span class="step-q">Was the assistant marked accurate on this row?</span>
                     <div class="branch">
-                      <div class="b-yes"><b>Yes</b> → copy Intuit Intelligence's response to Verified GT</div>
+                      <div class="b-yes"><b>Yes</b> → copy the assistant's response to Verified GT</div>
                       <div class="b-no b-delete"><b>No</b> → delete row (no usable GT)</div>
                     </div>
                   </div>
@@ -183,7 +181,7 @@
                 <p>
                   The defining methodology call was to refuse a pure auto-eval shortcut. For financial workflows, I
                   insisted on a loop that pairs <strong>LLM-as-judge with human labeling against frozen, versioned
-                  ground truth</strong> — and treats the experts' ground truth as something to audit, not assume.
+                  ground truth</strong>, and treats the experts' ground truth as something to audit, not assume.
                 </p>
                 <p>
                   The tradeoff is real: it's slower and more expensive than letting a model grade itself. But when the
@@ -195,7 +193,7 @@
                   <li><b>Build</b> a representative golden dataset; author source-of-truth answers and expected actions.</li>
                   <li><b>Judge</b> offline with LLM-as-judge; sample production with trained human labelers.</li>
                   <li><b>Audit</b> the failures and the disagreements between model and humans.</li>
-                  <li><b>Fix &amp; re-test</b> — route issues to prompts, ground truth, tools, or content, then watch for drift.</li>
+                  <li><b>Fix and re-test:</b> route issues to prompts, ground truth, tools, or content, then watch for drift.</li>
                 </ul>
               </div>
             </div>
@@ -203,21 +201,21 @@
             <div class="block">
               <span class="kicker">The outcome</span>
               <h2>Quality became a lever, not a report.</h2>
-              <figure class="lift-chart" role="img" aria-label="Quality-score lift across the three skills the program covered: Help plus 8 percentage points, Payroll plus 9.8 percentage points, Insights plus 13 percentage points.">
-                <figcaption>Quality-score lift across the skills the program covered</figcaption>
+              <figure class="lift-chart" role="img" aria-label="Quality-score lift across three agent skills the program covered: plus 8, plus 9.8, and plus 13 percentage points.">
+                <figcaption>Quality-score lift across the agent skills the program covered</figcaption>
                 <div class="chart">
                   <div class="chart-row">
-                    <span class="chart-label">Help</span>
+                    <span class="chart-label">Skill A</span>
                     <div class="chart-bar-track"><div class="chart-bar" style="width:61.5%"></div></div>
                     <span class="chart-value">+8 pp</span>
                   </div>
                   <div class="chart-row">
-                    <span class="chart-label">Payroll</span>
+                    <span class="chart-label">Skill B</span>
                     <div class="chart-bar-track"><div class="chart-bar" style="width:75.4%"></div></div>
                     <span class="chart-value">+9.8 pp</span>
                   </div>
                   <div class="chart-row">
-                    <span class="chart-label">Insights</span>
+                    <span class="chart-label">Skill C</span>
                     <div class="chart-bar-track"><div class="chart-bar" style="width:100%"></div></div>
                     <span class="chart-value">+13 pp</span>
                   </div>
@@ -225,10 +223,10 @@
               </figure>
               <div class="prose" style="margin-top:24px;">
                 <p>
-                  The program drove measurable quality-score lifts across the skills it covered — <strong>+8 points on
-                  Help, +9.8 on Payroll, +13 on Insights</strong> — and, more importantly, changed what evaluation was
-                  for. It stopped being a backward-looking report and became the mechanism that decided whether agent
-                  behavior was good enough to ship, and what to fix when it wasn't.
+                  The program drove measurable quality-score lifts across the skills it covered, from +8 to +13
+                  percentage points, and, more importantly, changed what evaluation was for. It stopped being a
+                  backward-looking report and became the mechanism that decided whether agent behavior was good enough
+                  to ship, and what to fix when it wasn't.
                 </p>
               </div>
             </div>
@@ -238,7 +236,7 @@
               <h2>The rubric is the easy part. Calibration is the job.</h2>
               <div class="prose">
                 <p>
-                  The hardest, most valuable work wasn't writing the rubric — it was keeping models and human labelers
+                  The hardest, most valuable work wasn't writing the rubric. It was keeping models and human labelers
                   calibrated to the same bar over time, and translating "the assistant feels arrogant" into specific,
                   scoreable dimensions a team could actually move. I'd invest even earlier in that shared language,
                   because evaluation is only as good as the agreement underneath it.
@@ -249,8 +247,8 @@
             <div class="takeaway">
               <span class="kicker" style="font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:12.5px;display:block;margin-bottom:10px;">The transferable principle</span>
               <p>
-                Driving the behavior of AI models — through training practices, the content they learn from, and rigorous
-                response-quality evaluation — is the muscle any team needs to keep an AI product helpful as it scales.
+                Driving the behavior of AI models (through training practices, the content they learn from, and rigorous
+                response-quality evaluation) is the muscle any team needs to keep an AI product helpful as it scales.
                 This is that work, run as a function.
               </p>
             </div>
@@ -277,6 +275,15 @@
     </footer>
     <script>
       (function () {
+        var t = document.querySelector(".nav-toggle");
+        var m = document.getElementById("nav-menu");
+        if (t && m) {
+          var close = function () { m.classList.remove("open"); t.setAttribute("aria-expanded", "false"); t.setAttribute("aria-label", "Open menu"); };
+          var open = function () { m.classList.add("open"); t.setAttribute("aria-expanded", "true"); t.setAttribute("aria-label", "Close menu"); };
+          t.addEventListener("click", function () { m.classList.contains("open") ? close() : open(); });
+          m.addEventListener("click", function (e) { if (e.target.tagName === "A") close(); });
+          document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+        }
         if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         var els = document.querySelectorAll(".block, figure");
         els.forEach(function (el) { el.classList.add("reveal"); });
