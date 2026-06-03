@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Simone Muro — Staff Content Designer &amp; Model UX Writer</title>
+    <title>Simone Muro · Conversational AI &amp; Agentic UX Designer</title>
     <meta
       name="description"
-      content="Staff content designer and model UX writer. I design the behavior of AI support experiences — voice, billing, and subscriber lifecycle — across nine years from Apple Siri to Credit Karma and Intuit."
+      content="Conversational AI and agentic UX designer. I design, build, and evaluate AI-powered experiences end to end, from NLU chatbots to LLM-powered and agentic systems, with nine years across companies like Apple, Credit Karma, and Intuit."
     />
-    <meta property="og:title" content="Simone Muro — Staff Content Designer & Model UX Writer" />
-    <meta property="og:description" content="Designing the behavior of AI support experiences — the words, patterns, training data, and quality rubrics behind voice, billing, and subscriber-lifecycle journeys." />
+    <meta property="og:title" content="Simone Muro · Conversational AI & Agentic UX Designer" />
+    <meta property="og:description" content="I design, build, and evaluate AI experiences end to end, from conversational interfaces to agentic systems. Problem first, then the technology." />
     <meta property="og:type" content="website" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
@@ -19,7 +19,12 @@
     <header class="site-header">
       <nav class="nav-shell" aria-label="Primary navigation">
         <a class="wordmark" href="#top">SIMONE MURO</a>
-        <div class="nav-links">
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <div class="nav-links" id="nav-menu">
           <a href="#about">About</a>
           <a href="#work">Case Studies</a>
           <a href="resume.html">Resume</a>
@@ -33,21 +38,21 @@
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="hero-shell">
           <div class="portrait-card">
-            <img src="assets/portrait.jpg" alt="Simone Muro, staff content designer and model UX writer" />
+            <img src="assets/portrait.jpg" alt="Simone Muro, conversational AI and agentic UX designer" />
           </div>
 
           <div class="hero-copy">
             <h1 id="hero-title">Simone Muro</h1>
-            <p class="role-line" aria-label="Staff Content Designer and Model UX Writer">
-              <span class="rotating-role" id="role-term">Content</span>
+            <p class="role-line" aria-label="Conversational AI Designer">
+              <span class="rotating-role" id="role-term">Conversational AI</span>
               <span class="role-divider" aria-hidden="true"></span>
               <strong>Designer</strong>
             </p>
             <p class="hero-thesis">
-              I design the behavior of AI support experiences — the words, patterns, training data, quality rubrics, and decision systems that help customers resolve complex account issues with confidence.
+              I'm a conversational AI designer. I take AI-powered experiences from research and prototyping through building, shipping, and measuring how they perform with real customers.
             </p>
             <p class="hero-body">
-              Nine years across Meta, Apple Siri, Sam's Club, and Intuit / Credit Karma. I grew from conversation designer through senior, staff, and conversational AI lead — leading a team while writing production system prompts, building POCs, and serving as PM-for-IVA. The through-line: AI support that ships, gets measured, and actually resolves the customer's problem.
+              Across nine years and three generations of the technology (NLU, LLMs, and agentic AI), my approach has stayed the same: understand the problem first, then use what the tech can genuinely do to solve it.
             </p>
             <div class="hero-actions">
               <a class="button primary" href="#work">View case studies</a>
@@ -63,10 +68,13 @@
           <h2 id="about-title">About</h2>
           <div class="about-copy">
             <p>
-              I'm a staff content designer and model UX writer who thinks in systems. Language isn't the frosting on an AI product — it's part of the system. My job is to design the behavior of AI support experiences for billing, voice, subscriber lifecycle, and account-sensitive workflows: the words customers hear, the patterns and personas behind them, the training data that teaches the model what "good" means, the rubrics that measure it, and the decision logic that routes when AI should hand off to a human.
+              Conversational AI design is a niche craft, and I've worked the full arc of it. I research and frame the problem, ideate, prototype with whatever tools fit the project, then build, test, ship, and track how the experience performs once it's live. That's a wider span than content design alone. It's design, strategy, research, and the technical work to get something into production and keep improving it.
             </p>
             <p>
-              Different companies, one job: closing the gap between what an AI product can do and what it actually says to a person. I trained language models at Meta, taught Siri to speak at Apple, owned retail support assistants at Sam's Club, engineered shipped consumer LLM experiences at Credit Karma, and at Intuit grew from conversation designer through senior, staff, and conversational AI lead — now leading AI response-quality evaluation for QuickBooks' agentic assistant, managing a team of designers, and serving as PM-for-IVA across classification, contact-driver, and agentic-skill work.
+              The work pulled me deep into the technology. Designing for NLU-based chatbots, I became an expert in how those models are trained, tuned, and optimized, and in how that shows up in the customer experience. I wrote the fulfillment logic behind the flows, built prototypes so product managers and customers could validate ideas before launch, and tracked what shipped through conversational analytics.
+            </p>
+            <p>
+              When LLMs arrived, I didn't treat them as the shiny new thing. I saw a way past the stubborn limits of deterministic NLU systems, and I put LLMs into production flows in early 2023, before the tooling for it really existed. From there I went deep on prompt design, then on how to build and evaluate agentic AI. The through-line never changed: understand the problem, learn what the technology can really do, and bring the two together for the customer.
             </p>
           </div>
         </div>
@@ -101,68 +109,6 @@
         </div>
       </section>
 
-      <!-- EXPERIENCE -->
-      <section class="experience-section" aria-labelledby="experience-title">
-        <div class="content-shell">
-          <h2 id="experience-title">Experience</h2>
-          <div class="experience-list">
-            <article>
-              <div>
-                <h3>Intuit / Credit Karma — Conversation Designer → Conversational AI Lead</h3>
-                <p>Six years across four levels: conversation designer, senior, staff, and now manager II / lead. Designed and shipped DA, IVA, and Omni experiences across QuickBooks — cancellation saves, voice support, billing-driver classification, login/password redesign, agentic skills. As Credit Karma's prompt engineer, authored and continuously refined the "See Why" and "Analyze My Wallet" LLM experiences. Now lead AI response-quality evaluation, manage a team of designers, and serve as PM for IVA across BRDs (AIO Intent Classification &amp; Gated Support), production system prompts, and POCs.</p>
-              </div>
-              <time>2020–Present</time>
-            </article>
-            <article>
-              <div>
-                <h3>Lead Conversation Designer — Sam's Club (Walmart)</h3>
-                <p>Sole design owner of retail-membership voice and chat support: dialogue architecture, escalation paths, and production quality practices.</p>
-              </div>
-              <time>2019–2020</time>
-            </article>
-            <article>
-              <div>
-                <h3>Language Engineer, Siri — Apple</h3>
-                <p>Improved Siri's ASR and TTS, pronunciation, lexicon, and naturalness for Brazilian Portuguese in a production voice assistant.</p>
-              </div>
-              <time>2018–2019</time>
-            </article>
-            <article>
-              <div>
-                <h3>Content &amp; Language Analyst — Meta</h3>
-                <p>Language-model training for content-policy detection: taxonomy refinement, labeling quality, and emerging-language trend analysis.</p>
-              </div>
-              <time>2016–2018</time>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- SKILLS -->
-      <section class="skills-section" aria-labelledby="skills-title">
-        <div class="content-shell">
-          <h2 id="skills-title">Skills</h2>
-          <div class="skills-grid">
-            <article>
-              <h3>Content Design &amp; UX Writing</h3>
-              <p>Voice and tone systems, translating technical concepts to plain language, support flows, error states, handoff, and end-to-end journeys.</p>
-            </article>
-            <article>
-              <h3>Model UX &amp; AI Quality</h3>
-              <p>Prompt engineering, model-behavior design, training &amp; tuning, golden datasets, evaluation rubrics, LLM-as-judge, human-in-the-loop, Responsible AI.</p>
-            </article>
-            <article>
-              <h3>Conversational &amp; Multimodal</h3>
-              <p>Voice/IVA, text chat, agentic AI, structured output, interactive widgets, expert handoff, and account-aware personalization.</p>
-            </article>
-            <article>
-              <h3>Tools</h3>
-              <p>Voiceflow, Figma, NotebookLM, Cursor, Claude Code, Langfuse, GenOS, Workbench, GenStudio, Dialogflow, Python.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
       <!-- CASE STUDIES -->
       <section class="work-section" id="work" aria-labelledby="work-title">
         <div class="content-shell">
@@ -172,9 +118,9 @@
               <div class="case-artifact payroll-artifact" aria-hidden="true"><span>01</span></div>
               <div>
                 <p class="case-type">LLM Classification · Retention</p>
-                <h3>Cancellation Saves: an LLM that knows who's worth saving</h3>
-                <p>QuickBooks' first GenAI Digital Assistant experience. I built and tested the LLM classifier that reads a cancellation's reason, sentiment, and savability — replacing a cold "here's how to cancel" with an empathetic, well-routed handoff.</p>
-                <strong>96.6% savability-classification accuracy · ~300 real utterances</strong>
+                <h3>Cancellation Saves: spotting which customers a specialist can still help</h3>
+                <p>QuickBooks' first GenAI Digital Assistant experience. I drove it from ideation to launch and built the LLM classifier that reads a cancellation's reason and sentiment to gauge how likely a save is, then routes the savable ones to a specialist with empathy instead of a cold "here's how to cancel."</p>
+                <strong>96.6% savability-classification accuracy · about 300 real utterances</strong>
                 <span class="case-read">Read case study →</span>
               </div>
             </a>
@@ -184,19 +130,19 @@
               <div>
                 <p class="case-type">Voice AI · Model UX Writing</p>
                 <h3>Intuit Assist Voice Snippet: GenAI on the phone line</h3>
-                <p>Co-designed one of Intuit's first GenAI voice experiences: disambiguation, voice-tuned summaries, structured output, and the response-quality rubric that judged them — for a channel where every second of audio has to earn its place.</p>
+                <p>Co-designed one of Intuit's first GenAI voice experiences: disambiguation, voice-tuned summaries, structured output, and the response-quality rubric that judged them, for a channel where every second of audio has to earn its place.</p>
                 <strong>+3.9 pp containment lift · in production · reached Bayesian significance</strong>
                 <span class="case-read">Read case study →</span>
               </div>
             </a>
 
-            <a class="case-card" href="case-omni-quality.html">
+            <a class="case-card" href="case-quality-evaluation.html">
               <div class="case-artifact quality-artifact" aria-hidden="true"><span>03</span></div>
               <div>
                 <p class="case-type">Response Quality at Scale · Leadership</p>
-                <h3>Omni Quality Evaluation: making "good enough to ship" measurable</h3>
-                <p>I own pre-launch quality for QuickBooks' agentic AI: golden datasets, ground truth, LLM-as-judge plus human labeling, and the readouts that turn failures into fixes — and I stepped in to run it when the quality lead went on sudden leave.</p>
-                <strong>+8 / +9.8 / +13 pp quality-score lifts (Help / Payroll / Insights)</strong>
+                <h3>Quality Evaluation for Intuit Intelligence: making "good enough to ship" measurable</h3>
+                <p>I drove pre-launch quality for Intuit Intelligence, the agentic AI assistant, partnering with data science and a team of designers: golden datasets, ground truth, LLM-as-judge plus human labeling, and the readouts that turn failures into fixes. When the quality lead went on sudden leave, I stepped in and kept it running.</p>
+                <strong>+8 to +13 pp quality-score lift across the agent skills covered</strong>
                 <span class="case-read">Read case study →</span>
               </div>
             </a>
@@ -206,7 +152,7 @@
               <div>
                 <p class="case-type">Prompt Engineering · Response Quality</p>
                 <h3>Credit Karma: "See Why" &amp; "Analyze My Wallet"</h3>
-                <p>As Credit Karma's prompt engineer, I authored and continuously refined two LLM experiences that explain card recommendations and analyze a member's wallet — grounded in approved data, plainly written, and shipped under hard legal limits.</p>
+                <p>As Credit Karma's prompt engineer, I authored and continuously refined two LLM experiences that explain card recommendations and analyze a member's wallet, all grounded in approved data, plainly written, and shipped under hard legal limits.</p>
                 <strong>Shipped via merged PRs · multi-dimensional QE · regulated finance</strong>
                 <span class="case-read">Read case study →</span>
               </div>
@@ -215,62 +161,59 @@
         </div>
       </section>
 
-      <!-- APPROACH -->
+      <!-- HOW I WORK -->
       <section class="approach-section" aria-labelledby="approach-title">
         <div class="content-shell">
           <h2 id="approach-title">How I Work</h2>
-          <p class="approach-lede">Six principles I design AI conversations against — the backbone of a design blueprint I authored so a team could review and validate AI responses against a shared bar, not by taste.</p>
+          <p class="approach-lede">I find the problem worth solving, build a clear path to it, and bring the right people together to get there. I'm happiest owning an outcome end to end, from the first research question to the metric we move after launch. My superpowers are curiosity and ownership.</p>
           <div class="principles">
-            <div class="p"><span class="pn">01</span><h3>Cooperative by default</h3><p>Every response has to move the customer's actual goal forward — not just be technically correct.</p></div>
-            <div class="p"><span class="pn">02</span><h3>Contextual continuity</h3><p>The system remembers the journey: the session, the account, and the moment the customer is in.</p></div>
-            <div class="p"><span class="pn">03</span><h3>Asymmetric expertise</h3><p>The customer is the expert on their intent; the system is the expert on what it can actually do.</p></div>
-            <div class="p"><span class="pn">04</span><h3>Progressive disclosure</h3><p>Start with the minimum useful answer; expand only when the customer signals they want more.</p></div>
-            <div class="p"><span class="pn">05</span><h3>Repair-ready</h3><p>Misunderstanding is expected, not exceptional. Every path has a graceful way to recover.</p></div>
-            <div class="p"><span class="pn">06</span><h3>Emotionally attuned</h3><p>Tone adapts to the moment — urgency, confusion, frustration, relief — without losing clarity.</p></div>
+            <div class="p"><span class="pn">01</span><h3>Start with the problem, not the technology</h3><p>I understand the customer's real goal before reaching for a tool. New tech is only useful once I know what the customer is actually trying to do.</p></div>
+            <div class="p"><span class="pn">02</span><h3>Data and actions decide everything</h3><p>An agentic system is only as good as the data it can reach and the actions it can take. So I map the customer's goal, the data, and the actions early.</p></div>
+            <div class="p"><span class="pn">03</span><h3>Reliable data is non-negotiable</h3><p>A model reasoning over wrong or missing data fails quietly, and at scale. I treat data quality as part of the design, not an afterthought.</p></div>
+            <div class="p"><span class="pn">04</span><h3>Build fast, test honestly, iterate</h3><p>I would rather ship something testable early and learn from real cases than polish in a vacuum.</p></div>
+            <div class="p"><span class="pn">05</span><h3>The best work is cross-functional</h3><p>Strong AI experiences come from design, product, engineering, data science, and domain experts pulling as one. I put real effort into those partnerships.</p></div>
+            <div class="p"><span class="pn">06</span><h3>Curiosity and ownership</h3><p>Curiosity pulled me from design into NLU tuning, prompt design, and agentic systems. Ownership is what carries a problem all the way to a shipped, measured result.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SKILLS & TOOLS -->
+      <section class="skills-section" aria-labelledby="skills-title">
+        <div class="content-shell">
+          <h2 id="skills-title">Skills &amp; Tools</h2>
+          <div class="skills-grid">
+            <article>
+              <h3>Content Design &amp; UX Writing</h3>
+              <p>Voice and tone systems, translating technical concepts into plain language, support and error flows, handoff, and end-to-end journeys.</p>
+            </article>
+            <article>
+              <h3>Model UX &amp; AI Quality</h3>
+              <p>Prompt design, model-behavior design, training and tuning, golden datasets, evaluation rubrics, LLM-as-judge, human-in-the-loop, Responsible AI.</p>
+            </article>
+            <article>
+              <h3>Conversational &amp; Agentic AI</h3>
+              <p>NLU design and tuning, voice and chat assistants, agentic systems, structured output, tool use, and account-aware personalization.</p>
+            </article>
           </div>
 
-          <!-- Lifecycle timeline -->
-          <figure class="lifecycle" role="img" aria-label="The conversation design lifecycle I work to, as a horizontal timeline of nine phases: Understand, Ideate, Decide, Prototype, Develop, Test and evaluate, Deploy, Monitor, and Maintain. Each phase names its tools — from Figma and Voiceflow in early design to golden datasets, IXP experiments, and quality dashboards in evaluation and monitoring.">
-            <figcaption>A lifecycle I've run end to end — design through evaluation and monitoring</figcaption>
-            <div class="timeline">
-              <div class="tl-phase"><span class="tl-dot"></span><span class="tl-name">Understand</span><span class="tl-tool">problem space</span></div>
-              <div class="tl-phase"><span class="tl-dot"></span><span class="tl-name">Ideate</span><span class="tl-tool">Figma · Miro</span></div>
-              <div class="tl-phase"><span class="tl-dot"></span><span class="tl-name">Decide</span><span class="tl-tool">solution scope</span></div>
-              <div class="tl-phase"><span class="tl-dot"></span><span class="tl-name">Prototype</span><span class="tl-tool">Voiceflow</span></div>
-              <div class="tl-phase"><span class="tl-dot"></span><span class="tl-name">Develop</span><span class="tl-tool">prompts · skills</span></div>
-              <div class="tl-phase tl-accent"><span class="tl-dot"></span><span class="tl-name">Test &amp; evals</span><span class="tl-tool">golden sets · IXP</span></div>
-              <div class="tl-phase"><span class="tl-dot"></span><span class="tl-name">Deploy</span><span class="tl-tool">staged rollout</span></div>
-              <div class="tl-phase tl-accent"><span class="tl-dot"></span><span class="tl-name">Monitor</span><span class="tl-tool">quality dashboards</span></div>
-              <div class="tl-phase"><span class="tl-dot"></span><span class="tl-name">Maintain</span><span class="tl-tool">drift &amp; VOC</span></div>
+          <div class="tools-inventory">
+            <div class="tools-group">
+              <span class="tools-label">AI &amp; LLM</span>
+              <div class="chips"><span>Claude Code (desktop + CLI)</span><span>Cursor</span><span>NotebookLM</span><span>Prompt design</span><span>LLM evaluation</span></div>
             </div>
-          </figure>
-
-          <!-- NLU -> Agentic evolution -->
-          <figure class="evolution" role="img" aria-label="A diagram of how conversational AI architecture evolved across the technology generations I've designed through. Traditional CUI: a customer request hits an NLU intent classifier, routes to fixed intents, an orchestrator checks a whitelist, and returns predefined flows or hardcoded responses. Agentic: the same request routes to specialized agents — login, payroll, billing — each with its own tool set, producing grounded genAI responses.">
-            <figcaption>What I've designed across three technology generations</figcaption>
-            <div class="evo-grid">
-              <div class="evo-col evo-old">
-                <span class="evo-tag">Traditional CUI · NLU</span>
-                <div class="evo-step">Customer request</div>
-                <div class="evo-arrow" aria-hidden="true">↓</div>
-                <div class="evo-step">NLU intent classifier</div>
-                <div class="evo-arrow" aria-hidden="true">↓</div>
-                <div class="evo-step">Fixed intents → orchestrator → whitelist</div>
-                <div class="evo-arrow" aria-hidden="true">↓</div>
-                <div class="evo-step evo-end-old">Predefined flows · hardcoded responses</div>
-              </div>
-              <div class="evo-col evo-new">
-                <span class="evo-tag">Agentic</span>
-                <div class="evo-step">Customer request</div>
-                <div class="evo-arrow" aria-hidden="true">↓</div>
-                <div class="evo-step">Router → specialized agents</div>
-                <div class="evo-agents"><span>login</span><span>payroll</span><span>billing</span></div>
-                <div class="evo-arrow" aria-hidden="true">↓</div>
-                <div class="evo-step evo-end-new">Tool sets → grounded genAI responses</div>
-              </div>
+            <div class="tools-group">
+              <span class="tools-label">Conversational platforms</span>
+              <div class="chips"><span>NLU design &amp; tuning</span><span>Dialogflow</span><span>Amazon Lex</span><span>Voiceflow</span></div>
             </div>
-            <p class="evo-foot">I designed conversational AI through NLU, prompt-engineered LLMs, and agentic systems — so I understand not just how today's AI should sound, but why the architecture beneath it changed.</p>
-          </figure>
+            <div class="tools-group">
+              <span class="tools-label">Build &amp; data</span>
+              <div class="chips"><span>Python</span><span>Git &amp; GitHub</span><span>Tableau</span><span>Qlik</span><span>Splunk</span></div>
+            </div>
+            <div class="tools-group">
+              <span class="tools-label">Design &amp; prototyping</span>
+              <div class="chips"><span>Lucidchart</span><span>Miro</span><span>Figma <em>(working knowledge)</em></span></div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -278,24 +221,24 @@
       <section class="more-work-section" aria-labelledby="more-work-title">
         <div class="content-shell">
           <h2 id="more-work-title">More Work</h2>
-          <p class="approach-lede">Six more workstreams that span the broader arc — hands-on prototypes, PM-for-IVA artifacts, iterative IVA redesigns, governance patterns, and people leadership.</p>
+          <p class="approach-lede">Six more workstreams across the broader arc: hands-on prototypes, PM-for-IVA artifacts, iterative IVA redesigns, governance patterns, and people leadership.</p>
           <div class="more-work-grid">
             <article>
               <span class="badge">Hackathon · MCP</span>
               <h3>BillingSkill</h3>
-              <p>End-to-end Omni AI billing skill built solo without engineering support — account-aware charge explanation and a cancel-intercept widget.</p>
+              <p>End-to-end Intuit Intelligence billing skill built solo without engineering support: account-aware charge explanation and a cancel-intercept widget.</p>
               <span class="metric-line">AI prototype · built end-to-end</span>
             </article>
             <article>
               <span class="badge">Sprint · Regulated</span>
               <h3>Payroll Intelligence Agent</h3>
               <p>Turned a vague partner ask into a 51-question diagnostic golden dataset and reusable system-prompt framework in about 10 days.</p>
-              <span class="metric-line">51 questions · ~10 days</span>
+              <span class="metric-line">51 questions · about 10 days</span>
             </article>
             <article>
               <span class="badge">IVA · Iteration</span>
               <h3>Login &amp; Password voice redesign</h3>
-              <p>Four iterative experiments on a top phone-support flow — the highest-performing IVA redesign in the product line that year.</p>
+              <p>Four iterative experiments on a top phone-support flow, the highest-performing IVA redesign in the product line that year.</p>
               <span class="metric-line">35% → 57% self-help · 17% → 29% containment</span>
             </article>
             <article>
@@ -323,10 +266,9 @@
       <!-- CONTACT -->
       <section class="contact-section" id="contact" aria-labelledby="contact-title">
         <div class="center-shell">
-          <h2 id="contact-title">Let's talk about how AI should sound.</h2>
+          <h2 id="contact-title">Let's build AI that actually works.</h2>
           <p>
-            I'm exploring staff-level content design and model UX writing roles — especially work that makes LLM
-            products genuinely helpful, trustworthy, and measurably good across voice, chat, and commerce.
+            I design, build, and evaluate AI experiences end to end, from conversational interfaces to agentic systems. I'm drawn to work where that full range matters: making AI genuinely helpful, trustworthy, and measurably good for the people who use it.
           </p>
           <div class="hero-actions centered-actions">
             <a class="button primary" href="mailto:googsicle@gmail.com">Email me</a>
@@ -342,7 +284,8 @@
     </footer>
 
     <script>
-      const roleTerms = ["Content", "Conversational AI", "Model UX", "Voice AI", "Prompt"];
+      // Rotating role line
+      const roleTerms = ["Conversational AI", "Voice AI", "Prompt", "Agentic UX"];
       const roleTerm = document.getElementById("role-term");
       let roleIndex = 0;
       window.setInterval(() => {
@@ -353,6 +296,18 @@
           roleTerm.classList.remove("is-changing");
         }, 180);
       }, 2200);
+
+      // Mobile nav toggle
+      (function () {
+        var t = document.querySelector(".nav-toggle");
+        var m = document.getElementById("nav-menu");
+        if (!t || !m) return;
+        function close() { m.classList.remove("open"); t.setAttribute("aria-expanded", "false"); t.setAttribute("aria-label", "Open menu"); }
+        function open() { m.classList.add("open"); t.setAttribute("aria-expanded", "true"); t.setAttribute("aria-label", "Close menu"); }
+        t.addEventListener("click", function () { m.classList.contains("open") ? close() : open(); });
+        m.addEventListener("click", function (e) { if (e.target.tagName === "A") close(); });
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+      })();
     </script>
   </body>
 </html>
