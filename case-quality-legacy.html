@@ -92,6 +92,91 @@
             </div>
 
             <div class="block">
+              <span class="kicker">The quality loop</span>
+              <h2>An operating system, not a dashboard.</h2>
+              <div class="prose">
+                <p>
+                  The function I built runs as a continuous loop. Each lap turns the abstract question
+                  <em>"is the assistant good enough?"</em> into concrete signal: a frozen ground-truth dataset, an LLM
+                  judge that grades against it, human labelers that judge the judges, and an audit that routes failures
+                  back into prompts, ground truth, tools, or support content.
+                </p>
+              </div>
+
+              <figure class="loop-figure" role="img" aria-label="Six-step quality loop. Define and sample feeds into Curate ground truth, which feeds Evaluate (LLM-as-judge plus human labelers), which feeds Audit (KEEP DELETE decisions on disagreements), which feeds Fix (prompts, ground truth, tools, or content), which feeds Re-test and monitor drift. The loop returns continuously to Define and sample.">
+                <figcaption>The six-step quality loop</figcaption>
+                <svg class="loop-svg" viewBox="0 0 880 200" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <marker id="loop-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5f6368"/>
+                    </marker>
+                  </defs>
+                  <!-- 1 Define -->
+                  <rect x="20" y="40" width="120" height="68" rx="8" fill="#fff" stroke="#5f6368" stroke-width="1.5"/>
+                  <text x="80" y="68" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-weight="800" font-size="13">Define &amp; sample</text>
+                  <text x="80" y="86" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="10.5">production · VOC · low CQ</text>
+                  <!-- 2 Curate -->
+                  <rect x="165" y="40" width="120" height="68" rx="8" fill="#fff" stroke="#5f6368" stroke-width="1.5"/>
+                  <text x="225" y="68" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-weight="800" font-size="13">Curate GT</text>
+                  <text x="225" y="86" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="10.5">schema · priority rule</text>
+                  <!-- 3 Evaluate (highlight) -->
+                  <rect x="310" y="40" width="120" height="68" rx="8" fill="#e8f0fe" stroke="#315bea" stroke-width="2"/>
+                  <text x="370" y="68" text-anchor="middle" fill="#315bea" font-family="Inter, sans-serif" font-weight="900" font-size="13">Evaluate</text>
+                  <text x="370" y="86" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="10.5">LLM-judge + human</text>
+                  <!-- 4 Audit -->
+                  <rect x="455" y="40" width="120" height="68" rx="8" fill="#fff" stroke="#5f6368" stroke-width="1.5"/>
+                  <text x="515" y="68" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-weight="800" font-size="13">Audit</text>
+                  <text x="515" y="86" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="10.5">KEEP / DELETE</text>
+                  <!-- 5 Fix -->
+                  <rect x="600" y="40" width="120" height="68" rx="8" fill="#fff" stroke="#5f6368" stroke-width="1.5"/>
+                  <text x="660" y="68" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-weight="800" font-size="13">Fix</text>
+                  <text x="660" y="86" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="10.5">prompts · GT · content</text>
+                  <!-- 6 Re-test (highlight) -->
+                  <rect x="745" y="40" width="120" height="68" rx="8" fill="#e6f4ea" stroke="#137333" stroke-width="1.5"/>
+                  <text x="805" y="68" text-anchor="middle" fill="#137333" font-family="Inter, sans-serif" font-weight="900" font-size="13">Re-test</text>
+                  <text x="805" y="86" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="10.5">monitor drift</text>
+                  <!-- Arrows -->
+                  <line x1="140" y1="74" x2="165" y2="74" stroke="#5f6368" stroke-width="1.5" marker-end="url(#loop-arrow)"/>
+                  <line x1="285" y1="74" x2="310" y2="74" stroke="#5f6368" stroke-width="1.5" marker-end="url(#loop-arrow)"/>
+                  <line x1="430" y1="74" x2="455" y2="74" stroke="#5f6368" stroke-width="1.5" marker-end="url(#loop-arrow)"/>
+                  <line x1="575" y1="74" x2="600" y2="74" stroke="#5f6368" stroke-width="1.5" marker-end="url(#loop-arrow)"/>
+                  <line x1="720" y1="74" x2="745" y2="74" stroke="#5f6368" stroke-width="1.5" marker-end="url(#loop-arrow)"/>
+                  <!-- Loop-back arc -->
+                  <path d="M 805 108 L 805 156 L 80 156 L 80 108" stroke="#5f6368" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#loop-arrow)"/>
+                  <text x="442" y="178" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-style="italic" font-size="11">continuous loop · 1-week SLA from production failure → golden set</text>
+                </svg>
+              </figure>
+
+              <figure class="gt-tree" role="img" aria-label="The Verified Ground Truth priority rule, expressed as a decision tree. If a Designer ground-truth correction exists, use it. Otherwise if an Expert ground truth exists, use it. Otherwise if Intuit Intelligence was marked accurate on this row, copy Intuit Intelligence's response into Verified GT. Otherwise delete the row.">
+                <figcaption>The Verified GT priority rule</figcaption>
+                <div class="tree">
+                  <div class="tree-step">
+                    <span class="step-q">Does the row have a Designer GT correction?</span>
+                    <div class="branch">
+                      <div class="b-yes"><b>Yes</b> → use Designer GT as Verified GT</div>
+                      <div class="b-no"><b>No</b> ↓</div>
+                    </div>
+                  </div>
+                  <div class="tree-step">
+                    <span class="step-q">Does the row have an Expert GT?</span>
+                    <div class="branch">
+                      <div class="b-yes"><b>Yes</b> → use Expert GT as Verified GT</div>
+                      <div class="b-no"><b>No</b> ↓</div>
+                    </div>
+                  </div>
+                  <div class="tree-step">
+                    <span class="step-q">Was Intuit Intelligence marked accurate on this row?</span>
+                    <div class="branch">
+                      <div class="b-yes"><b>Yes</b> → copy Intuit Intelligence's response to Verified GT</div>
+                      <div class="b-no b-delete"><b>No</b> → delete row (no usable GT)</div>
+                    </div>
+                  </div>
+                </div>
+                <p class="evidence-note" style="margin-top:0.8rem;"><b>Why it matters:</b> the LLM judge always reads the same column. Rows without GT artificially inflate scores. Every single row must have a Verified GT, or it gets cut.</p>
+              </figure>
+            </div>
+
+            <div class="block">
               <span class="kicker">The key decision</span>
               <h2>Don't let LLMs be the only judge of LLMs.</h2>
               <div class="prose">
@@ -118,11 +203,26 @@
             <div class="block">
               <span class="kicker">The outcome</span>
               <h2>Quality became a lever, not a report.</h2>
-              <div class="metrics-row">
-                <div class="metric"><strong>+8 pp</strong><span>quality-score lift — Help</span></div>
-                <div class="metric"><strong>+9.8 pp</strong><span>quality-score lift — Payroll</span></div>
-                <div class="metric"><strong>+13 pp</strong><span>quality-score lift — Insights</span></div>
-              </div>
+              <figure class="lift-chart" role="img" aria-label="Quality-score lift across the three skills the program covered: Help plus 8 percentage points, Payroll plus 9.8 percentage points, Insights plus 13 percentage points.">
+                <figcaption>Quality-score lift across the skills the program covered</figcaption>
+                <div class="chart">
+                  <div class="chart-row">
+                    <span class="chart-label">Help</span>
+                    <div class="chart-bar-track"><div class="chart-bar" style="width:61.5%"></div></div>
+                    <span class="chart-value">+8 pp</span>
+                  </div>
+                  <div class="chart-row">
+                    <span class="chart-label">Payroll</span>
+                    <div class="chart-bar-track"><div class="chart-bar" style="width:75.4%"></div></div>
+                    <span class="chart-value">+9.8 pp</span>
+                  </div>
+                  <div class="chart-row">
+                    <span class="chart-label">Insights</span>
+                    <div class="chart-bar-track"><div class="chart-bar" style="width:100%"></div></div>
+                    <span class="chart-value">+13 pp</span>
+                  </div>
+                </div>
+              </figure>
               <div class="prose" style="margin-top:24px;">
                 <p>
                   The program drove measurable quality-score lifts across the skills it covered — <strong>+8 points on
