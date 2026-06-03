@@ -1848,3 +1848,182 @@ a.case-card:hover .case-read {
 @media (max-width: 720px) {
   .mockup-grid { grid-template-columns: 1fr; }
 }
+
+/* =========================================================================
+   HOMEPAGE APPROACH: lifecycle timeline + NLU→agentic evolution
+   ========================================================================= */
+
+.lifecycle {
+  margin: 2.4rem 0 0;
+}
+.lifecycle figcaption,
+.evolution figcaption {
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 0;
+  position: relative;
+  border-top: 2px solid var(--line);
+  padding-top: 1.2rem;
+}
+.tl-phase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 0.3rem;
+  position: relative;
+}
+.tl-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--blue);
+  position: absolute;
+  top: -1.85rem;
+}
+.tl-phase.tl-accent .tl-dot {
+  background: var(--blue);
+}
+.tl-name {
+  font-weight: 800;
+  font-size: 0.86rem;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+.tl-tool {
+  font-size: 0.74rem;
+  color: var(--muted);
+  font-weight: 600;
+  line-height: 1.3;
+}
+@media (max-width: 820px) {
+  .timeline {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.6rem 0.5rem;
+    border-top: 0;
+    padding-top: 0;
+  }
+  .tl-dot { position: static; margin-bottom: 0.4rem; }
+  .tl-phase { padding-top: 0; }
+}
+@media (max-width: 480px) {
+  .timeline { grid-template-columns: 1fr 1fr; }
+}
+
+.evolution {
+  margin: 2.6rem 0 0;
+}
+.evo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.evo-col {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.2rem 1.2rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.evo-col.evo-old { background: var(--page); }
+.evo-col.evo-new { background: var(--soft-blue); border-color: #c5d6fb; }
+.evo-tag {
+  align-self: center;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+.evo-old .evo-tag { background: #ece9e2; color: var(--muted); }
+.evo-new .evo-tag { background: var(--blue); color: #fff; }
+.evo-step {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  width: 100%;
+  max-width: 320px;
+}
+.evo-end-old { border-color: #d2c9b0; background: var(--soft-gold); color: #6b3a00; font-weight: 800; }
+.evo-end-new { border-color: var(--green); background: var(--soft-green); color: var(--green); font-weight: 800; }
+.evo-arrow {
+  color: var(--muted);
+  font-weight: 700;
+  margin: 0.4rem 0;
+  font-size: 1rem;
+}
+.evo-agents {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0.2rem 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.evo-agents span {
+  font-size: 0.78rem;
+  font-weight: 800;
+  background: var(--paper);
+  border: 1px solid #c5d6fb;
+  color: var(--blue);
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+}
+.evo-foot {
+  margin: 1.1rem 0 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+  font-weight: 600;
+  line-height: 1.55;
+  max-width: 70ch;
+}
+@media (max-width: 720px) {
+  .evo-grid { grid-template-columns: 1fr; }
+}
+
+/* =========================================================================
+   MOTION + HOVER POLISH
+   ========================================================================= */
+
+.metric {
+  transition: box-shadow 0.15s ease, transform 0.12s ease;
+}
+.metric:hover {
+  box-shadow: 0 10px 26px rgba(31, 31, 31, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
