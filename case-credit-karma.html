@@ -92,6 +92,26 @@
                 <li><b>Tuned tool-invocation reliability</b> so the model consistently called the offer tool instead of answering from memory.</li>
                 <li><b>Took the prompts through Quality-Engineering evaluation</b> against a multi-dimensional rubric and raised the production PRs that shipped them.</li>
               </ul>
+
+              <figure class="rev-timeline" role="img" aria-label="Three prompt revisions. Version 1 established the persona, reasoning steps, and a strict JSON schema. Version 2 added matched-card data so explanations compared against the member's current cards. Version 3 rewrote comparison language to satisfy legal review — substantiated claims only, no guarantees.">
+                <figcaption>How the prompt evolved — each version versioned and re-tested</figcaption>
+                <div class="rev-track">
+                  <div class="rev">
+                    <span class="rev-tag">v1 · baseline</span>
+                    <p>Persona (a card-optimization analyst), step-by-step reasoning, and a strict JSON schema. Run unedited first, to set the bar.</p>
+                  </div>
+                  <div class="rev-arrow" aria-hidden="true">→</div>
+                  <div class="rev">
+                    <span class="rev-tag">v2 · grounded</span>
+                    <p>Added matched-card data so the model compared a recommendation against the member's <em>actual</em> cards — not generic benefits.</p>
+                  </div>
+                  <div class="rev-arrow" aria-hidden="true">→</div>
+                  <div class="rev">
+                    <span class="rev-tag">v3 · legal-cleared</span>
+                    <p>Rewrote comparison language after legal review: persuasive, but only claims the model can substantiate. No guarantees.</p>
+                  </div>
+                </div>
+              </figure>
             </div>
 
             <!-- Key decision -->
@@ -118,6 +138,45 @@
                 </p>
               </div>
 
+              <figure class="flow-figure" role="img" aria-label="The grounding gate. The member profile and the approved offer-data tool call both feed a gate. If approved offer data is present, the model produces a grounded, comparative recommendation. If it is absent, the model recommends no card rather than inventing one from training knowledge.">
+                <figcaption>The grounding gate — the model's anti-hallucination forcing function</figcaption>
+                <svg class="flow-diagram" viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <marker id="ck-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5f6368"/>
+                    </marker>
+                  </defs>
+                  <!-- Inputs -->
+                  <rect x="30" y="40" width="200" height="58" rx="8" fill="#fff" stroke="#5f6368" stroke-width="1.5"/>
+                  <text x="130" y="64" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-weight="700" font-size="13">Member profile</text>
+                  <text x="130" y="83" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="11">score · utilization · current cards</text>
+                  <rect x="30" y="118" width="200" height="58" rx="8" fill="#fff" stroke="#5f6368" stroke-width="1.5"/>
+                  <text x="130" y="142" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-weight="700" font-size="13">Offer-data tool call</text>
+                  <text x="130" y="161" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="11">approved cards only</text>
+                  <!-- Gate (diamond) -->
+                  <polygon points="430,108 510,158 430,208 350,158" fill="#e8f0fe" stroke="#315bea" stroke-width="2"/>
+                  <text x="430" y="152" text-anchor="middle" fill="#315bea" font-family="Inter, sans-serif" font-weight="900" font-size="13">Offer data</text>
+                  <text x="430" y="170" text-anchor="middle" fill="#315bea" font-family="Inter, sans-serif" font-weight="900" font-size="13">present?</text>
+                  <!-- Input arrows to gate -->
+                  <line x1="230" y1="69" x2="352" y2="140" stroke="#5f6368" stroke-width="1.5" marker-end="url(#ck-arrow)"/>
+                  <line x1="230" y1="147" x2="352" y2="158" stroke="#5f6368" stroke-width="1.5" marker-end="url(#ck-arrow)"/>
+                  <!-- Yes branch -->
+                  <line x1="510" y1="158" x2="640" y2="92" stroke="#137333" stroke-width="2" marker-end="url(#ck-arrow)"/>
+                  <text x="560" y="108" text-anchor="middle" fill="#137333" font-family="Inter, sans-serif" font-weight="800" font-size="12">YES</text>
+                  <rect x="640" y="56" width="210" height="74" rx="8" fill="#e6f4ea" stroke="#137333" stroke-width="1.5"/>
+                  <text x="745" y="84" text-anchor="middle" fill="#137333" font-family="Inter, sans-serif" font-weight="800" font-size="13">Grounded recommendation</text>
+                  <text x="745" y="105" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="11">comparative · tied to their</text>
+                  <text x="745" y="120" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="11">real cards · plain language</text>
+                  <!-- No branch -->
+                  <line x1="510" y1="158" x2="640" y2="224" stroke="#9a5b00" stroke-width="2" marker-end="url(#ck-arrow)"/>
+                  <text x="560" y="208" text-anchor="middle" fill="#9a5b00" font-family="Inter, sans-serif" font-weight="800" font-size="12">NO</text>
+                  <rect x="640" y="190" width="210" height="74" rx="8" fill="#fef7e0" stroke="#9a5b00" stroke-width="1.5"/>
+                  <text x="745" y="222" text-anchor="middle" fill="#9a5b00" font-family="Inter, sans-serif" font-weight="800" font-size="13">Recommend no card</text>
+                  <text x="745" y="243" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="11">never invent from training</text>
+                  <text x="440" y="300" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-style="italic" font-size="11">A confident, unverifiable recommendation is worse than none on a regulated surface.</text>
+                </svg>
+              </figure>
+
               <div class="snippet" role="img" aria-label="Sanitized excerpt of the output schema and legal guardrail">
                 <span class="c">// output contract — sanitized</span><br />
                 {<br />
@@ -143,6 +202,43 @@
               <p class="evidence-note">
                 <b>Note:</b> examples are reconstructed with representative card details to protect confidential prompts and member data. The structure — grounded, comparative, tied to the member's existing cards — mirrors the shipped behavior.
               </p>
+
+              <figure class="mockups" aria-label="Two recreated product surfaces with fabricated data: the See Why card, which explains a single recommendation, and the Analyze My Wallet panel, which reads a member's whole profile.">
+                <figcaption>The two surfaces, recreated with fabricated data</figcaption>
+                <div class="mockup-grid">
+                  <!-- See Why card -->
+                  <div class="ui-mockup">
+                    <div class="ui-chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="ui-title">See Why</span></div>
+                    <div class="ui-body">
+                      <div class="ui-card-name">Discover it® Cash Back</div>
+                      <p class="ui-overview">Recommended because it fills the gaps in your current rewards — without adding an annual fee.</p>
+                      <ul class="ui-reasons">
+                        <li><b>Higher category rewards.</b> Unlike your Citi Double Cash® (flat 2%), this earns 5% in rotating categories you activate.</li>
+                        <li><b>No foreign-transaction fee.</b> Both your current cards charge 3%; this one charges none.</li>
+                      </ul>
+                      <p class="ui-summary">If you spend in the quarterly categories, this could out-earn your current setup.</p>
+                    </div>
+                  </div>
+                  <!-- Analyze My Wallet panel -->
+                  <div class="ui-mockup">
+                    <div class="ui-chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="ui-title">Analyze My Wallet</span></div>
+                    <div class="ui-body">
+                      <div class="ui-section">
+                        <span class="ui-section-label good">Strengths</span>
+                        <p>Strong 760 score and low utilization — you qualify for top-tier rewards cards.</p>
+                      </div>
+                      <div class="ui-section">
+                        <span class="ui-section-label warn">Areas to improve</span>
+                        <p>Two cards in the same rewards category — you're leaving dining and travel rewards on the table.</p>
+                      </div>
+                      <div class="ui-section">
+                        <span class="ui-section-label rec">Recommended</span>
+                        <p>A flat-rate card to cover everyday spend your category cards miss.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </figure>
             </div>
 
             <!-- Outcome -->
