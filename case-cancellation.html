@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Cancellation Saves: an LLM savability classifier · Simone Muro</title>
-    <meta name="description" content="As Lead Conversation Designer and Prompt Engineer, Simone Muro led the design of QuickBooks' GenAI Cancel Saves experience and built it end to end: a survey ~80% of customers answered, an LLM that identified savable cancellations at 96.6% accuracy, and routing to a retention specialist. The retention team projected ~$2.9M in retention revenue." />
+    <meta name="description" content="As Lead Conversation Designer and Prompt Engineer, Simone Muro led the design of QuickBooks' GenAI Cancel Saves experience and built it end to end: an LLM that classified cancellation reasons and identified savable customers at 96.6% accuracy with zero hallucinations, then offered them a retention specialist. The retention team projected ~$2.9M in retention revenue." />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -35,14 +35,14 @@
             <div class="tags">
               <span class="tag">Prompt Engineering</span>
               <span class="tag">LLM Classification</span>
+              <span class="tag">Responsible AI</span>
               <span class="tag">Retention</span>
             </div>
-            <h1>An LLM that spots a savable cancellation, and routes it with empathy.</h1>
+            <h1>An LLM that spots a savable cancellation and offers real help, not a dead-end.</h1>
             <p class="deck">
               In early 2023, before LLMs were standard tooling for this work, I led the design of QuickBooks' GenAI Cancel
               Saves experience and built it end to end. The old flow only ever showed people how to cancel. The new one
-              understands why they are leaving and routes the customers a specialist can actually help to a human who can
-              act.
+              understands why they're leaving, and when a specialist could still help, it offers to connect them.
             </p>
           </div>
         </section>
@@ -51,7 +51,7 @@
           <dl class="case-meta">
             <div><dt>My role</dt><dd>Lead Conversation Designer &amp; Prompt Engineer. Led the design; built the flow end to end</dd></div>
             <div><dt>Surface</dt><dd>QuickBooks Digital Assistant and Intelligent Voice Assistant (the voice assistant)</dd></div>
-            <div><dt>What I did</dt><dd>Flow design, intent architecture, classification prompt, routing logic, Responsible AI, build, test, ship</dd></div>
+            <div><dt>What I did</dt><dd>Flow design, classification prompt, routing logic, model evaluation, Responsible AI, build, test, ship</dd></div>
             <div><dt>Context</dt><dd>One workstream of a larger Saves &amp; Retention program; I owned the conversation-AI piece</dd></div>
           </dl>
         </section>
@@ -62,22 +62,34 @@
             <div class="block">
               <span class="kicker">The problem</span>
               <h2>The old flow treated every subscription cancellation request the same, and that was the bug.</h2>
-              <div class="prose">
-                <p>
-                  When someone asked to cancel, the assistant did exactly one thing: it showed them how to cancel. No
-                  attempt to understand why they were leaving, and no attempt to keep them. Cancellation was a top
-                  contact driver, high-traffic across both the phone line and the Digital Assistant, so handling it as a
-                  dead-end was a large, repeated missed opportunity to serve the customer better and retain more of the
-                  customers who were likely to stay.
-                </p>
-                <p>
-                  This started in 2022, before LLMs were an option, and that first version leaned entirely on NLU.
-                  Training intents to capture cancellation reasons worked to a point, but it was limited and slow to
-                  build, and about 40% of reasons still came back classified as "unknown." That gap was expensive:
-                  when the reason <em>was</em> captured, the saves teams retained a meaningful share of those customers
-                  (the mature retention teams ran 20 to 35%). We were losing savable customers for the simple reason that
-                  we could not reliably read why they were leaving.
-                </p>
+              <div class="problem-split">
+                <div class="prose">
+                  <p>
+                    When someone asked to cancel, the outcome was always the same: the assistant pointed them to the
+                    cancel steps. Cancellation was a top contact driver, high-traffic across both the phone line and the Digital
+                    Assistant, so handling every case the same way was a large, repeated missed opportunity, both to
+                    serve the customer better and to keep the ones who were likely to stay.
+                  </p>
+                  <p>
+                    By 2022 the flow did try to read <em>why</em>, using an NLU model to classify the cancellation reason,
+                    and it left two gaps. About 40% of the time it returned "unknown" because no trained intent matched
+                    what the customer said, a coverage gap. And on the roughly 60% it could label, it was only about 80%
+                    accurate, so even when it produced a reason, nearly one in five was wrong, a precision gap. Any
+                    routing built on that would inherit both: customers it misread, and customers it could not read at
+                    all. Yet when the reason <em>was</em> captured correctly, the saves teams retained a meaningful share
+                    of those customers (the mature retention teams ran 20 to 35%). We were losing savable customers for
+                    the simple reason that we could not reliably read why they were leaving.
+                  </p>
+                </div>
+                <div class="oldflow" role="img" aria-label="The old flow. A customer says 'I want to cancel.' The assistant shows how to cancel. The customer is gone. The same single path ran for everyone; the reason was captured but changed nothing, with no help offered and no routing.">
+                  <div class="oldflow-cap">The old flow</div>
+                  <div class="oldflow-step user"><span class="step-label">Customer</span>"I want to cancel."</div>
+                  <div class="oldflow-arrow" aria-hidden="true">↓</div>
+                  <div class="oldflow-step"><span class="step-label">Assistant</span>"Here's how to cancel: Settings → Billing → Cancel."</div>
+                  <div class="oldflow-arrow" aria-hidden="true">↓</div>
+                  <div class="oldflow-step"><span class="step-label">Result</span>Customer gone.</div>
+                  <div class="oldflow-end">One path for everyone. The reason was captured, but it changed nothing: no help offered, no routing.</div>
+                </div>
               </div>
             </div>
 
@@ -87,51 +99,79 @@
               <div class="prose">
                 <p>
                   Before designing anything, I ran a competitive teardown of how leading assistants handle cancellation,
-                  from Bank of America's Erica to Amazon to Capital One's Eno. Four principles carried into the design:
-                  disambiguate before acting, ask for the reason with empathy, never leave a dead-end, and prefer a soft,
-                  respectful retention offer over a hard stop.
+                  from Bank of America's Erica to Amazon to Capital One's Eno. Three principles carried into the design.
+                  Confirm what the customer actually means before acting. Read the reason and respond to it, instead of
+                  pretending the cancel request never happened. And keep the exit honest: offer real help, but never hide
+                  the cancel button or trap anyone in a retention maze the way a hard "are you sure?" wall does.
                 </p>
                 <p>
                   The first real design problem was disambiguation. "Cancel payroll" is genuinely ambiguous: it could
-                  mean the Payroll subscription, a single payroll run, or a one-off payment to a worker. Defaulting to
-                  "cancel the subscription" would be the most expensive possible mistake, so I designed the flow to
-                  confirm what the customer actually meant before it did anything irreversible.
+                  mean the Payroll subscription, a single scheduled payroll run, or a one-off payment to a worker.
+                  Defaulting to "cancel the subscription" would be the most expensive possible misread, so I designed the
+                  flow to confirm what the customer actually meant before doing anything irreversible.
                 </p>
               </div>
+
+              <figure class="three-category" role="img" aria-label="One phrase, 'cancel payroll,' maps to three different intents: the Payroll subscription (the only true subscription cancellation), a single scheduled payroll run, or a one-off payment to a worker. The flow confirms which before acting.">
+                <figcaption>One phrase, three different intents</figcaption>
+                <div class="cat-grid">
+                  <div class="cat danger">
+                    <span class="cat-num">"cancel payroll" →</span>
+                    <h4>The Payroll subscription</h4>
+                    <p class="cat-examples">Stop paying for the Payroll product entirely.</p>
+                    <p class="cat-action">The only true cancellation</p>
+                  </div>
+                  <div class="cat">
+                    <span class="cat-num">"cancel payroll" →</span>
+                    <h4>A single payroll run</h4>
+                    <p class="cat-examples">Undo or skip one scheduled pay run, but keep the product.</p>
+                    <p class="cat-action">Not a cancellation</p>
+                  </div>
+                  <div class="cat">
+                    <span class="cat-num">"cancel payroll" →</span>
+                    <h4>A one-off payment</h4>
+                    <p class="cat-examples">Reverse a single payment to a worker, but keep the product.</p>
+                    <p class="cat-action">Not a cancellation</p>
+                  </div>
+                </div>
+              </figure>
             </div>
 
             <div class="block">
               <span class="kicker">The build</span>
-              <h2>I shipped it in two phases, on purpose.</h2>
+              <h2>An LLM that reads the reason, judges savability, and earns the right to route.</h2>
               <div class="prose">
                 <p>
-                  <strong>Phase 1: prove customers will tell us why.</strong> The assistant had never asked for a reason,
-                  and an LLM cannot classify a reason it never hears. So before building any classification, I embedded a
-                  single, natural, empathetic question ("We're sad to see you go. Can you tell me why you're cancelling
-                  today?") and shipped just that, to learn whether customers would answer or bristle. About 80% offered a
-                  reason. The win was in keeping it short, human, and non-defensive, not in interrogating anyone.
+                  I reframed the task from intent-matching to classification with reasoning. Each cancellation reason now
+                  goes to an LLM that classifies the reason and sentiment and returns the one judgment the routing
+                  depends on: is this customer savable, someone a trained specialist could realistically still help? I
+                  defined savability with analytics and PM partners, wrote the LLM system instructions that produced the
+                  structured output, and built the routing in Intuit's low-code platform: the classification, the
+                  scripted fallbacks, the rules that offered savable customers a specialist and sent everyone else to a
+                  clean cancel path, and the tests. A conversation designer owning the full stack, with minimal
+                  engineering support.
                 </p>
                 <p>
-                  <strong>Phase 2: read the reason and route on it.</strong> With reasons coming in, I handed each one to
-                  an LLM to classify the reason and sentiment and return a savability judgment. I worked with the
-                  analytics and PM partners to define savability itself, which reasons a trained specialist could
-                  realistically act on, then wrote the LLM system instructions and built the routing in Intuit's low-code
-                  conversation platform: the intents, the classification, the scripted fallbacks, the rules that sent
-                  savable customers to a specialist and everyone else to a clean cancel path, and the tests. A
-                  conversation designer owning the full stack, with minimal engineering. Moving off the old NLU model
-                  lifted reason classification from about 60% to 96% and cut model development from six-plus months to
-                  days.
+                  Against the old NLU model the gains were not incremental. Known-reason coverage rose from about 60% to
+                  96%, and savability, the decision the routing actually turns on, reached 96.6% accuracy. Just as
+                  important for a model that speaks to customers at their most frustrated, it cleared the full Responsible
+                  AI evaluation suite I ran: 0% hallucinations, 0% toxicity, safety-approved. And because the logic lived
+                  in a prompt rather than a trained intent model, development went from six-plus months to days.
                 </p>
                 <p>
-                  Wiring a model to a routing decision raised the bar, because the errors are not equal. A false
-                  "savable" wastes a leaving customer's time and risks feeling like a trap; a false "not savable" quietly
-                  loses someone we could have kept. So I treated the two as different costs when I tuned and tested it,
-                  not just one headline accuracy number, and I designed it as an offer rather than a trap: the clean path
-                  to cancel was always one step away, never buried.
+                  Wiring a model to a routing decision raises the bar, because the errors are not equal. A false
+                  "savable" wastes a leaving customer's time and pulls specialists onto calls they cannot save, dragging
+                  down the save rate they are measured on. A false "not savable" quietly loses someone the team could
+                  have kept. So I tuned and tested against both costs, not one headline accuracy number. The routing
+                  stayed an offer, never a forced transfer, with the clean cancel path always one step away. And the
+                  offer carried value beyond retention: customers who are leaving often have things in motion, active
+                  payroll runs, scheduled payments, connected products, and a specialist makes sure those close out
+                  correctly. Even when someone still chose to go, getting them to a person who could handle it properly
+                  was the better experience.
                 </p>
               </div>
 
-              <figure class="flow-figure" role="img" aria-label="Cancellation classifier flow. A user utterance flows into the LLM classifier, which emits structured JSON: cancellation reason, sentiment, anger, is_savable, and an acknowledgment. The flow branches into a Save-likely path (empathetic acknowledgment, route to a retention specialist by chat or callback with reason and context attached) or a Save-unlikely-or-declined path that shows the customer how to cancel cleanly and follows up with data-backup advice.">
+              <figure class="flow-figure" role="img" aria-label="Cancellation classifier flow. A customer's stated reason flows into the LLM classifier, which emits structured JSON with three fields: reason, sentiment, and is_savable. The flow branches into a save-likely path that offers to connect the customer to a retention specialist and, if accepted, routes the call with the reason and context attached, or a save-unlikely-or-declined path that shows the customer how to cancel cleanly and offers data-backup help.">
                 <figcaption class="flow-caption">The classifier-driven flow</figcaption>
                 <svg class="flow-diagram" viewBox="0 0 880 540" xmlns="http://www.w3.org/2000/svg">
                   <defs>
@@ -140,50 +180,50 @@
                     </marker>
                   </defs>
                   <rect x="310" y="20" width="260" height="68" rx="10" fill="#fff" stroke="#5f6368" stroke-width="1.5"/>
-                  <text x="440" y="48" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-weight="700" font-size="14">User gives a reason</text>
-                  <text x="440" y="72" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-style="italic" font-size="13">"I haven't used the product yet"</text>
+                  <text x="440" y="48" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-weight="700" font-size="14">Customer gives a reason</text>
+                  <text x="440" y="72" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-style="italic" font-size="13">"The price is just too high right now"</text>
                   <line x1="440" y1="90" x2="440" y2="128" stroke="#5f6368" stroke-width="2" marker-end="url(#cancel-arrow)"/>
-                  <rect x="270" y="140" width="340" height="130" rx="10" fill="#e8f0fe" stroke="#315bea" stroke-width="2"/>
-                  <text x="440" y="170" text-anchor="middle" fill="#315bea" font-family="Inter, sans-serif" font-weight="900" font-size="16">LLM classifier</text>
-                  <text x="440" y="196" text-anchor="middle" fill="#1f1f1f" font-family="ui-monospace, Menlo, monospace" font-size="13">reason · sentiment · anger</text>
-                  <text x="440" y="216" text-anchor="middle" fill="#1f1f1f" font-family="ui-monospace, Menlo, monospace" font-size="13">is_savable · acknowledgment</text>
-                  <text x="440" y="252" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="11">structured JSON output</text>
-                  <line x1="440" y1="270" x2="440" y2="306" stroke="#5f6368" stroke-width="2"/>
-                  <line x1="180" y1="306" x2="700" y2="306" stroke="#5f6368" stroke-width="2"/>
-                  <line x1="180" y1="306" x2="180" y2="336" stroke="#5f6368" stroke-width="2" marker-end="url(#cancel-arrow)"/>
-                  <line x1="700" y1="306" x2="700" y2="336" stroke="#5f6368" stroke-width="2" marker-end="url(#cancel-arrow)"/>
+                  <rect x="285" y="140" width="310" height="118" rx="10" fill="#e8f0fe" stroke="#315bea" stroke-width="2"/>
+                  <text x="440" y="172" text-anchor="middle" fill="#315bea" font-family="Inter, sans-serif" font-weight="900" font-size="16">LLM classifier</text>
+                  <text x="440" y="200" text-anchor="middle" fill="#1f1f1f" font-family="ui-monospace, Menlo, monospace" font-size="14">reason · sentiment · is_savable</text>
+                  <text x="440" y="234" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="11">structured JSON output</text>
+                  <line x1="440" y1="258" x2="440" y2="296" stroke="#5f6368" stroke-width="2"/>
+                  <line x1="180" y1="296" x2="700" y2="296" stroke="#5f6368" stroke-width="2"/>
+                  <line x1="180" y1="296" x2="180" y2="336" stroke="#5f6368" stroke-width="2" marker-end="url(#cancel-arrow)"/>
+                  <line x1="700" y1="296" x2="700" y2="336" stroke="#5f6368" stroke-width="2" marker-end="url(#cancel-arrow)"/>
                   <rect x="40" y="346" width="280" height="180" rx="10" fill="#e6f4ea" stroke="#137333" stroke-width="1.5"/>
                   <text x="180" y="374" text-anchor="middle" fill="#137333" font-family="Inter, sans-serif" font-weight="900" font-size="13" letter-spacing="0.06em">SAVE LIKELY</text>
-                  <text x="180" y="402" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-size="13">Empathetic acknowledgment</text>
+                  <text x="180" y="402" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-size="13">Offer a retention specialist</text>
                   <text x="180" y="426" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="14">↓</text>
-                  <text x="180" y="448" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-size="13">Route to retention specialist</text>
+                  <text x="180" y="448" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-size="13">If accepted, connect the call</text>
                   <text x="180" y="472" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="14">↓</text>
-                  <text x="180" y="494" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-size="13">Connect by chat or callback</text>
-                  <text x="180" y="514" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="12" font-style="italic">(reason + context attached)</text>
+                  <text x="180" y="494" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-size="13">with reason + context attached</text>
+                  <text x="180" y="514" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="12" font-style="italic">Never a forced transfer.</text>
                   <rect x="560" y="346" width="280" height="180" rx="10" fill="#fef7e0" stroke="#9a5b00" stroke-width="1.5"/>
                   <text x="700" y="374" text-anchor="middle" fill="#9a5b00" font-family="Inter, sans-serif" font-weight="900" font-size="13" letter-spacing="0.06em">SAVE UNLIKELY / DECLINED</text>
                   <text x="700" y="402" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-size="13">Show how to cancel cleanly</text>
                   <text x="700" y="426" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="14">↓</text>
-                  <text x="700" y="448" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-size="13">Follow up with</text>
-                  <text x="700" y="468" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-size="13">data-backup advice</text>
-                  <text x="700" y="500" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="12" font-style="italic">No dark patterns.</text>
+                  <text x="700" y="448" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-size="13">Offer data-backup help</text>
+                  <text x="700" y="476" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="14">↓</text>
+                  <text x="700" y="498" text-anchor="middle" fill="#1f1f1f" font-family="Inter, sans-serif" font-size="13">Clean, respectful exit</text>
+                  <text x="700" y="518" text-anchor="middle" fill="#5f6368" font-family="Inter, sans-serif" font-size="12" font-style="italic">No dark patterns.</text>
                 </svg>
               </figure>
 
               <div class="chat-mockup-grid">
                 <div class="chat-mockup chat-before">
-                  <div class="chat-header">Before: assume &amp; instruct</div>
+                  <div class="chat-header">Before: the reason went nowhere</div>
                   <div class="chat-thread">
-                    <div class="chat-bubble user">I want to cancel my subscription.</div>
-                    <div class="chat-bubble assistant">To cancel your subscription, go to Settings → Billing → Cancel. Your access ends at the end of the billing period.</div>
+                    <div class="chat-bubble user">I want to cancel. The price is just too high right now.</div>
+                    <div class="chat-bubble assistant">To cancel, go to Settings → Billing → Cancel. Your access ends at the end of the billing period.</div>
                   </div>
                 </div>
                 <div class="chat-mockup chat-after">
-                  <div class="chat-header">After: ask, read, route</div>
+                  <div class="chat-header">After: read it, then offer real help</div>
                   <div class="chat-thread">
-                    <div class="chat-bubble assistant">We're sad to see you go, and we really value your feedback. Can you tell me why you're cancelling today?</div>
-                    <div class="chat-bubble user">I haven't really used the product yet.</div>
-                    <div class="chat-bubble assistant">I understand. I'm connecting you with a specialist who can help. One moment please.</div>
+                    <div class="chat-bubble user">I want to cancel. The price is just too high right now.</div>
+                    <div class="chat-bubble assistant">I hear you, and cost shouldn't be the reason you lose your data and setup. I can connect you with a specialist who can review your plan and options. Want me to set that up?</div>
+                    <div class="chat-bubble user">Okay, sure.</div>
                   </div>
                 </div>
               </div>
@@ -194,35 +234,55 @@
               <span class="kicker">The outcome</span>
               <h2>It shipped, and it was accurate enough to route a revenue-critical decision.</h2>
               <div class="metrics-row">
-                <div class="metric"><strong>~80%</strong><span>of customers offered a reason when the assistant asked</span></div>
                 <div class="metric"><strong>96.6%</strong><span>accuracy identifying savable cancellations</span></div>
-                <div class="metric"><strong>60% → 96%</strong><span>reason-classification rate, NLU to GenAI</span></div>
+                <div class="metric"><strong>0%</strong><span>hallucinations or toxicity, Responsible AI approved</span></div>
+                <div class="metric"><strong>60% → 96%</strong><span>cancellations resolved to a known reason</span></div>
                 <div class="metric"><strong>~$2.9M</strong><span>projected retention revenue, 3 months</span></div>
               </div>
               <div class="prose" style="margin-top:24px;">
                 <p>
-                  The experience shipped to production. The customers it flagged as savable were routed to the Saves and
-                  Retention team, who retained them at rates they tracked week over week, and that team's analysts
-                  projected about $2.9M in retention revenue over three months. My piece sat at the top of that funnel:
-                  turning cancellations the old system could not read into accurately classified, routable reasons. The
-                  saves conversion and the dollar model belonged to the retention team; the reason-capture and routing
-                  that fed them were mine.
+                  It shipped to production across the Digital Assistant and the voice line. The model identified savable
+                  customers accurately enough that the Saves and Retention team trusted it to route on, and their
+                  analysts projected roughly $2.9M in retention revenue over the next three months. The conversions and
+                  the dollar model were theirs; the classification that decided who reached a specialist was mine, and it
+                  was the input everything downstream depended on.
                 </p>
               </div>
             </div>
 
             <div class="block">
               <span class="kicker">What I'd carry forward</span>
-              <h2>The unlock was the question, not the model.</h2>
+              <h2>The biggest gain after launch came from how the offer was framed.</h2>
               <div class="prose">
                 <p>
-                  Two lessons stuck. The first: the unlock was never the classifier. It was getting customers to answer
-                  at all, and a short, human question did more than a smarter model could have. The second came from
-                  working next to the analytics team: anchor a design's value in the metric that pays for it, retained
-                  revenue, not only the metric I could move directly, classification accuracy. The model was the easy
-                  part. Knowing what "good" was worth, and asking in a way people would answer, was the work.
+                  The classifier did its job, but the routing taught me the rest. The first version simply offered to
+                  connect: "I can connect you with a specialist who can help." Many customers declined. After launch I
+                  tested leading with the value, using what the model already knew to make the stakes concrete before
+                  offering: "I see you have active payroll and payments scheduled, I can connect you with a specialist
+                  who'll make sure those are handled correctly before anything changes." Far more customers accepted.
+                  That is the principle I carry forward: an accurate model earns the right to make an offer, but people
+                  only say yes when they can see what is in it for them. The classification and the framing are one
+                  design, not two.
                 </p>
               </div>
+
+              <div class="chat-mockup-grid">
+                <div class="chat-mockup chat-before">
+                  <div class="chat-header">First version: a generic offer</div>
+                  <div class="chat-thread">
+                    <div class="chat-bubble assistant">Before you go, I can connect you with a specialist who can help. Would you like that?</div>
+                    <div class="chat-bubble user">No thanks, just cancel.</div>
+                  </div>
+                </div>
+                <div class="chat-mockup chat-after">
+                  <div class="chat-header">After the experiment: lead with the value</div>
+                  <div class="chat-thread">
+                    <div class="chat-bubble assistant">I see you have active payroll and payments scheduled. I can connect you with a specialist who'll make sure those are handled correctly before anything changes. Want me to set that up?</div>
+                    <div class="chat-bubble user">Yes, please do.</div>
+                  </div>
+                </div>
+              </div>
+              <p class="evidence-note"><b>Note:</b> illustrative of the offer's framing before and after the post-launch experiment; exact production copy is confidential.</p>
             </div>
 
             <div class="takeaway">
