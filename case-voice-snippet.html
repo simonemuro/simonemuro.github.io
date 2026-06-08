@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Intuit Assist Voice Snippet: GenAI voice support · Simone Muro</title>
-    <meta name="description" content="Simone Muro co-designed one of Intuit's first GenAI voice experiences for phone support, disambiguation, voice-tuned summaries, structured output, and the response-quality rubric that judged them. +3.9pp containment lift at Bayesian significance." />
+    <title>Intuit Assist Voice Snippet: GenAI on the phone line · Simone Muro</title>
+    <meta name="description" content="Simone Muro put one of Intuit's first GenAI experiences on the phone line, the hardest channel to get right, by treating structure as a writing decision. She designed the disambiguation flow, wrote the system prompt, defined the JSON output, and authored the response rubric. +3.9 pp containment lift on targeted intents at Bayesian significance." />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -37,22 +37,25 @@
               <span class="tag">Model UX Writing</span>
               <span class="tag">Response Evaluation</span>
             </div>
-            <h1>Writing GenAI for the ear, where every second has to earn its place.</h1>
+            <h1>GenAI on the phone line, the one channel where a wrong answer is a wrong outcome.</h1>
             <p class="deck">
-              I co-designed one of Intuit's first GenAI voice experiences for phone support: the disambiguation that
-              clarifies why someone called, the voice-tuned summaries that answer them, the structured output that lets
-              the system route and evaluate, and the response-quality rubric that decided whether any of it was good
-              enough to ship.
+              In late 2024, when putting GenAI on a live support phone line still felt risky to most teams, I bet it was
+              exactly where it could pay off. Inbound calls were a third of all contact volume and the costliest place to
+              give a bad answer. Voice is also the hardest surface to write for: there's no screen, the caller hears it
+              once, and a wrong answer isn't a bad sentence, it's a bad outcome. I designed the disambiguation flow, wrote
+              the system prompt, defined the structured output the experience runs on, and authored the rubric that
+              decided whether any of it was good enough to ship. The bet that made it work: treat structure as a writing
+              decision.
             </p>
           </div>
         </section>
 
         <section class="wrap">
           <dl class="case-meta">
-            <div><dt>My role</dt><dd>Conversation designer · model UX writer · prompt &amp; rubric designer</dd></div>
-            <div><dt>Surface</dt><dd>Intuit 1-800 telephony / Intelligent Voice Assistant</dd></div>
-            <div><dt>What I did</dt><dd>Disambiguation logic, voice-tuned summaries, structured JSON output, eval rubric</dd></div>
-            <div><dt>Shipped</dt><dd>Production · reached Bayesian significance</dd></div>
+            <div><dt>My role</dt><dd>Conversation Designer &amp; Prompt Engineer. I owned what the model said and how we judged it</dd></div>
+            <div><dt>Surface</dt><dd>Intuit phone support (Intelligent Voice Assistant)</dd></div>
+            <div><dt>What I did</dt><dd>Disambiguation flow, system prompt, structured JSON output, voice-tuned summaries, response-evaluation rubric</dd></div>
+            <div><dt>Context</dt><dd>One of Intuit's first GenAI voice experiences; I owned the conversation-AI and evaluation design</dd></div>
           </dl>
         </section>
 
@@ -65,14 +68,15 @@
               <div class="prose">
                 <p>
                   Inbound calls were roughly <strong>30% of contact volume</strong> with a baseline containment around
-                  <strong>36%</strong>, a $70M-plus cost-saving opportunity if the experience actually helped people.
-                  But the voice assistant ran on rigid NLU flows and scripted responses. Callers with a specific problem
-                  heard a generic answer, repeated themselves, or got transferred without any context traveling with them.
+                  <strong>36%</strong>, a $70M-plus cost-saving opportunity if the experience actually helped people. But
+                  the voice assistant ran on rigid NLU flows and scripted responses. A caller with a specific problem
+                  heard a generic answer, repeated themselves, or got transferred with no context traveling with them.
                 </p>
                 <p>
-                  A new GenAI platform made it possible to generate personalized, voice-friendly answers. The catch:
-                  voice is the hardest surface to write for. There's no screen to scan, the customer hears it exactly
-                  once, and it's a support context, so a wrong or risky answer isn't a bad sentence, it's a bad outcome.
+                  When a GenAI platform landed internally, the easy move was to point it at chat, where a clumsy answer is
+                  just a line you can scroll past. I argued for the harder, higher-value bet: voice. There's no screen to
+                  scan, the caller hears it once, and in support a wrong or risky answer isn't a bad sentence, it's a bad
+                  outcome.
                 </p>
               </div>
             </div>
@@ -81,11 +85,11 @@
               <span class="kicker">My role</span>
               <h2>I designed what the model said, and how we'd know it was good.</h2>
               <ul class="role-list">
-                <li><b>Designed the disambiguation logic</b>, the clarifying questions that pin down a vague reason for calling before the system commits to an answer.</li>
-                <li><b>Wrote and tuned the system prompt</b> behind the customer-facing experience, including a structured JSON output: the customer question, action type, disambiguation message, the response itself, task complexity, and off-topic detection.</li>
-                <li><b>Designed voice-tuned summaries</b>, concise, speakable answers to a proposed solution, instead of reading a help article aloud.</li>
+                <li><b>Designed the disambiguation flow</b>, the clarifying questions that pin down a vague reason for calling before the system commits to an answer.</li>
+                <li><b>Wrote the system prompt</b> behind the live experience and <b>defined its structured JSON output</b>: the customer's question, the action to take, a clarifying question, the spoken response, task complexity, and an off-topic flag. On a phone line, that contract is what keeps a generated answer safe to say out loud.</li>
+                <li><b>Designed the voice-tuned summaries</b>, concise, speakable answers to a proposed fix, instead of reading a help article aloud.</li>
                 <li><b>Defined the handoff moments</b>, when the system should stop and route to an expert, carrying context with it.</li>
-                <li><b>Authored the response-quality rubric</b> for the generated answers, an early template that later seeded a broader auto-evaluation rubric used across the org.</li>
+                <li><b>Authored the response-evaluation rubric</b> that decided whether a generated answer was good enough to ship. It became one of the early templates the org's automated-evaluation rubric was built from.</li>
               </ul>
 
               <figure class="three-category" role="img" aria-label="The voice classifier divides utterances into three categories. Categories one and two, standalone product names or standalone objects, trigger disambiguation. Category three, object plus action, triggers a voice-tuned summary with a handoff option.">
@@ -107,7 +111,7 @@
                     <span class="cat-num">03</span>
                     <h4>Object + action</h4>
                     <p class="cat-examples">"Cancel subscription." "Update billing info." "Dispute a charge."</p>
-                    <p class="cat-action">→ Voice-tuned answer + handoff option</p>
+                    <p class="cat-action">→ Voice-tuned summary + handoff option</p>
                   </div>
                 </div>
               </figure>
@@ -119,20 +123,21 @@
               <div class="prose">
                 <p>
                   The core decision was to treat the model's job as <strong>summarize, don't recite.</strong> Instead of
-                  reading a solution article aloud, the system generates a short, voice-tuned summary of the proposed
-                  fix. That meant deliberately trading completeness for comprehension: a caller can hold one clear next
-                  step in their head, not a four-paragraph article.
+                  reading a solution article aloud, the system generates a short, voice-tuned summary of the proposed fix.
+                  That meant deliberately trading completeness for comprehension: a caller can hold one clear next step in
+                  their head, not a four-paragraph article.
                 </p>
                 <p>
-                  The second decision was to make the output <strong>structured rather than free text.</strong> By
-                  forcing the model to emit a typed object (intent, disambiguation, response, complexity, off-topic
-                  flag), the experience could reason about what to do next, detect when a request was out of scope before
-                  generating a risky answer, and be evaluated consistently. Structure is what made the difference between
-                  a demo and something safe to put on a phone line.
+                  The second decision was to make the output <strong>structured rather than free text.</strong> Forcing
+                  the model to emit a typed object let the experience decide what to do next, catch an out-of-scope
+                  request before it generated a risky answer, and be judged the same way every time. Structure is what
+                  made the difference between a demo and something safe to put on a phone line. It is also what made the
+                  answers measurable, and the measurable version is the one that moved containment: the +3.9 point lift
+                  was downstream of that decision, not separate from it.
                 </p>
               </div>
 
-              <figure class="schema-anatomy" role="img" aria-label="The structured output contract for the Voice Snippet response, showing each field and what it enables in the experience.">
+              <figure class="schema-anatomy" role="img" aria-label="The structured output contract for the Voice Snippet response, showing each field and what it controls in the spoken experience.">
                 <figcaption>The structured output, each field has a job</figcaption>
                 <div class="anatomy-grid">
                   <div class="anatomy-row">
@@ -143,17 +148,17 @@
                   <div class="anatomy-row">
                     <span class="field">action_type</span>
                     <span class="arrow" aria-hidden="true">→</span>
-                    <span class="purpose"><code>answer</code> · <code>disambiguate</code> · <code>handoff</code> · <code>off_topic</code></span>
+                    <span class="purpose">Decides what the caller hears next: <code>answer</code> · <code>disambiguate</code> · <code>handoff</code> · <code>off_topic</code></span>
                   </div>
                   <div class="anatomy-row">
                     <span class="field">disambiguation</span>
                     <span class="arrow" aria-hidden="true">→</span>
-                    <span class="purpose">One spoken question to narrow vague intent.</span>
+                    <span class="purpose">One spoken question to narrow a vague intent.</span>
                   </div>
                   <div class="anatomy-row">
                     <span class="field">response</span>
                     <span class="arrow" aria-hidden="true">→</span>
-                    <span class="purpose">Voice-tuned summary, short enough to hear, clear enough to act on.</span>
+                    <span class="purpose">The spoken summary. Two sentences, because the caller hears it once.</span>
                   </div>
                   <div class="anatomy-row">
                     <span class="field">task_complexity</span>
@@ -163,31 +168,33 @@
                   <div class="anatomy-row">
                     <span class="field">off_topic</span>
                     <span class="arrow" aria-hidden="true">→</span>
-                    <span class="purpose">Flag for unsupported or risky requests before the model generates.</span>
+                    <span class="purpose">Caught before generation, so a risky request never becomes a spoken answer.</span>
                   </div>
                 </div>
               </figure>
 
-              <figure class="audio-figure" aria-label="Voice Snippet sample audio with synced transcript showing the before-and-after experiences. Audio file is pending; only the transcript is published.">
-                <figcaption>Voice Snippet, before / after (audio sample)</figcaption>
-                <div class="audio-card">
-                  <div class="audio-controls">
-                    <span class="audio-play-btn" aria-hidden="true">▸</span>
-                    <div class="audio-progress" aria-hidden="true"><div class="audio-progress-fill"></div></div>
-                    <span class="audio-time">0:00 / 0:00</span>
-                  </div>
-                  <p class="audio-pending"><b>Audio sample pending.</b> Placeholder until a reviewed or synthetic clip is added, the transcript below is what you would hear.</p>
+              <div class="prose">
+                <p>
+                  Everything the caller hears is one of those fields. In the clip below, the clarifying question is the
+                  <code>disambiguation</code> field and the two-sentence fix is <code>response</code>, the same contract,
+                  running in production.
+                </p>
+              </div>
+
+              <figure class="media-figure">
+                <figcaption>Before and after, on the phone line</figcaption>
+                <div class="media-embed">
+                  <video controls preload="metadata" playsinline>
+                    <source src="assets/voice-snippet-before-after.mp4" type="video/mp4" />
+                    <p class="media-fallback">Your browser can't play this clip. <a href="assets/voice-snippet-before-after.mp4" download>Download the before-and-after demo</a> instead.</p>
+                  </video>
                 </div>
-                <div class="audio-transcript">
-                  <div class="transcript-block before">
-                    <span class="transcript-label">Before, recite</span>
-                    <p>A long, scripted read-out of a help article, or a generic "I can help with that" that doesn't match the caller's actual problem.</p>
-                  </div>
-                  <div class="transcript-block after">
-                    <span class="transcript-label">After, clarify, then summarize</span>
-                    <p>"Sounds like this is about a payment that didn't go through, is that right?" → then a two-sentence, spoken summary of the exact fix, with the option to send the full steps or connect to an expert who already has the context.</p>
-                  </div>
+                <div class="media-transcript">
+                  <p class="mt-cap">What the clip shows</p>
+                  <p class="mt-turn"><span class="mt-spk">Before:</span> a long, scripted read-out of a help article, the same answer regardless of the caller's actual problem.</p>
+                  <p class="mt-turn"><span class="mt-spk">After:</span> one clarifying question, then a two-sentence spoken summary of the fix, with the option to send the full steps or hand off to an expert who already has the context.</p>
                 </div>
+                <p class="evidence-note"><b>Note:</b> a sanitized before-and-after demo. Production prompts, exact copy, and customer data are confidential.</p>
               </figure>
             </div>
 
@@ -201,11 +208,10 @@
               </div>
               <div class="prose" style="margin-top:24px;">
                 <p>
-                  The experience reached Bayesian significance in testing with a <strong>+3.9 percentage-point
-                  containment lift</strong> on the targeted intents, a real movement on a channel where small percentages
-                  are large dollars. Beyond the number, it established the team as credible builders of GenAI voice
-                  experiences, not just flow designers, and the response rubric I wrote became a reusable template for
-                  evaluating generated answers elsewhere.
+                  The lift landed on a channel where small percentages are large dollars, against a roughly 36%
+                  containment baseline on about a third of all contacts. It also changed how the team was seen: credible
+                  builders of GenAI voice, not only flow designers. And the rubric I wrote to judge these answers became
+                  one of the templates the org's later automated evaluation was seeded from.
                 </p>
               </div>
             </div>
@@ -217,9 +223,10 @@
                 <p>
                   The biggest lesson was that the output schema <em>was</em> the content design. Deciding what fields the
                   model must produce, and that it must flag off-topic and complexity before answering, shaped the
-                  customer experience more than any single sentence did. I came out of this convinced that for AI, the
-                  contract between the model and the product is a core part of the writer's job, and I've designed that
-                  way ever since.
+                  customer experience more than any single sentence did. The hard part was choosing what to leave out:
+                  comprehension over completeness, one clear next step over a full article, and the schema is where I
+                  enforced that decision. I came out of this convinced that for AI, the contract between the model and the
+                  product is a core part of the writer's job, and I've designed that way ever since.
                 </p>
               </div>
             </div>
@@ -227,9 +234,10 @@
             <div class="takeaway">
               <span class="kicker" style="font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:12.5px;display:block;margin-bottom:10px;">The transferable principle</span>
               <p>
-                Any voice product lives or dies on this: AI that's heard once, has to be concise and correct, knows when
-                to hand off to a person, and can be measured for quality on a high-volume support line. Writing for the
-                ear is a different discipline from writing for a screen.
+                Writing for the ear is a different discipline from writing for a screen. An answer heard once has to be
+                concise and correct, the system has to know when to hand off to a person, and the whole thing has to be
+                measurable on a high-volume line. Get that right and voice stops being the channel teams fear and becomes
+                one a model can be trusted with.
               </p>
             </div>
           </div>

@@ -1595,6 +1595,49 @@ a.case-card:hover .case-read {
 .vc-btn svg { width: 16px; height: 16px; }
 .vc-btn.end { background: #d8412f; border-color: #d8412f; color: #fff; }
 
+/* Media embed (real before/after clip) */
+.media-figure { margin: 1.4rem 0 0.5rem; max-width: 880px; }
+.media-figure figcaption {
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+.media-embed {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  line-height: 0;
+}
+.media-embed video { display: block; width: 100%; height: auto; max-height: 540px; }
+.media-embed.audio-embed { background: var(--paper); }
+.media-embed audio { display: block; width: 100%; padding: 14px; background: var(--paper); box-sizing: border-box; }
+.media-fallback { padding: 1rem 1.1rem; margin: 0; color: var(--muted); font-size: 0.9rem; line-height: 1.5; background: var(--paper); }
+.media-fallback a { color: var(--blue); font-weight: 700; }
+.media-transcript {
+  margin-top: 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+  padding: 0.95rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.media-transcript .mt-cap {
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.1rem;
+}
+.media-transcript .mt-turn { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--ink); }
+.media-transcript .mt-spk { font-weight: 800; }
+
 /* Three-category classifier visual */
 .three-category {
   margin: 1.2rem 0 0.5rem;
