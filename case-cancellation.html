@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Cancellation Saves: an LLM savability classifier · Simone Muro</title>
-    <meta name="description" content="As Lead Conversation Designer and Prompt Engineer, Simone Muro drove a GenAI savable-cancellations experience from ideation to launch: a survey ~80% of customers answered, an LLM that classified the reason at 96.6% accuracy, and routing that sent savable customers to a retention specialist." />
+    <meta name="description" content="As Lead Conversation Designer and Prompt Engineer, Simone Muro led the design of QuickBooks' GenAI Cancel Saves experience and built it end to end: a survey ~80% of customers answered, an LLM that identified savable cancellations at 96.6% accuracy, and routing to a retention specialist. The retention team projected ~$2.9M in retention revenue." />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -39,19 +39,20 @@
             </div>
             <h1>An LLM that spots a savable cancellation, and routes it with empathy.</h1>
             <p class="deck">
-              QuickBooks' cancellation flow used to treat every request the same: it just showed people how to cancel.
-              I drove a two-phase GenAI rebuild from ideation to launch, first proving customers would tell us why they
-              were leaving, then using an LLM to read the reason and route the savable ones to a retention specialist.
+              In early 2023, before LLMs were standard tooling for this work, I led the design of QuickBooks' GenAI Cancel
+              Saves experience and built it end to end. The old flow only ever showed people how to cancel. The new one
+              understands why they are leaving and routes the customers a specialist can actually help to a human who can
+              act.
             </p>
           </div>
         </section>
 
         <section class="wrap">
           <dl class="case-meta">
-            <div><dt>My role</dt><dd>Lead Conversation Designer &amp; Prompt Engineer; drove it end to end, ideation to launch</dd></div>
+            <div><dt>My role</dt><dd>Lead Conversation Designer &amp; Prompt Engineer. Led the design; built the flow end to end</dd></div>
             <div><dt>Surface</dt><dd>QuickBooks Digital Assistant and Intelligent Voice Assistant (IVA)</dd></div>
-            <div><dt>What I did</dt><dd>Flow design, classification prompt, Responsible AI, build, testing, shipping</dd></div>
-            <div><dt>Where it sits</dt><dd>Hybrid LLM + rules · GenAI in production support</dd></div>
+            <div><dt>What I did</dt><dd>Flow design, intent architecture, classification prompt, routing logic, Responsible AI, build, test, ship</dd></div>
+            <div><dt>Context</dt><dd>One workstream of a larger Saves &amp; Retention program; I owned the conversation-AI piece</dd></div>
           </dl>
         </section>
 
@@ -65,17 +66,17 @@
                 <p>
                   When someone asked to cancel, the assistant did exactly one thing: it showed them how to cancel. No
                   attempt to understand why they were leaving, and no attempt to keep them. Cancellation was a top
-                  contact driver, a high-traffic intent across both the phone line and the Digital Assistant, so handling
-                  it as a dead-end was a large, repeated missed opportunity to serve the customer better and retain more
-                  of the customers who were likely to stay.
+                  contact driver, high-traffic across both the phone line and the Digital Assistant, so handling it as a
+                  dead-end was a large, repeated missed opportunity to serve the customer better and retain more of the
+                  customers who were likely to stay.
                 </p>
                 <p>
-                  This started back in 2022, before LLMs were an option, and that first version leaned entirely on NLU.
+                  This started in 2022, before LLMs were an option, and that first version leaned entirely on NLU.
                   Training intents to capture cancellation reasons worked to a point, but it was limited and slow to
                   build, and about 40% of reasons still came back classified as "unknown." That gap was expensive:
-                  when the reason <em>was</em> captured, retention specialists saved as many as 35% of those customers.
-                  We were losing savable customers for the simple reason that we could not reliably read why they were
-                  leaving.
+                  when the reason <em>was</em> captured, the saves teams retained a meaningful share of those customers
+                  (the mature retention teams ran 20 to 35%). We were losing savable customers for the simple reason that
+                  we could not reliably read why they were leaving.
                 </p>
               </div>
             </div>
@@ -86,15 +87,15 @@
               <div class="prose">
                 <p>
                   Before designing anything, I ran a competitive teardown of how leading assistants handle cancellation,
-                  from Bank of America's Erica to Amazon to Capital One's Eno. Four principles carried straight into my
-                  design: disambiguate before acting, ask for the reason with empathy, never leave a dead-end, and prefer
-                  a soft, respectful retention offer over a hard stop.
+                  from Bank of America's Erica to Amazon to Capital One's Eno. Four principles carried into the design:
+                  disambiguate before acting, ask for the reason with empathy, never leave a dead-end, and prefer a soft,
+                  respectful retention offer over a hard stop.
                 </p>
                 <p>
-                  The first fix was disambiguation. A request like "cancel payroll" is genuinely ambiguous: it could mean
-                  the Payroll subscription, a single payroll run, or a one-off payment to someone. I designed the flow so
-                  it never defaulted to cancelling a subscription unless the customer said so, because the most expensive
-                  mistake here is confidently cancelling the wrong thing.
+                  The first real design problem was disambiguation. "Cancel payroll" is genuinely ambiguous: it could
+                  mean the Payroll subscription, a single payroll run, or a one-off payment to a worker. Defaulting to
+                  "cancel the subscription" would be the most expensive possible mistake, so I designed the flow to
+                  confirm what the customer actually meant before it did anything irreversible.
                 </p>
               </div>
             </div>
@@ -106,23 +107,31 @@
                 <p>
                   <strong>Phase 1: prove customers will tell us why.</strong> The assistant had never asked for a reason,
                   and an LLM cannot classify a reason it never hears. So before building any classification, I embedded a
-                  single, natural, empathetic question into the flow ("We're sad to see you go. Can you tell me why you're
-                  cancelling today?") and shipped just that, to test whether customers would answer or bristle. About 80%
-                  offered a reason. The win came from keeping it short, human, and non-defensive, not from interrogating
-                  anyone.
+                  single, natural, empathetic question ("We're sad to see you go. Can you tell me why you're cancelling
+                  today?") and shipped just that, to learn whether customers would answer or bristle. About 80% offered a
+                  reason. The win was in keeping it short, human, and non-defensive, not in interrogating anyone.
                 </p>
                 <p>
-                  <strong>Phase 2: read the reason and route on it.</strong> With reasons now flowing in, I handed each
-                  one to an LLM to classify the reason and sentiment and return a savability judgment. I worked with
-                  Analytics and PMs to define savability itself, which reasons a trained retention specialist could
-                  realistically act on, then wrote the LLM system instructions that returned that classification and the
-                  backend rules and fulfillment logic that routed savable customers to a specialist and everyone else to
-                  clean cancellation steps. Moving from the old NLU model to GenAI lifted reason classification from about
-                  60% to 96% and cut model development from six-plus months to days.
+                  <strong>Phase 2: read the reason and route on it.</strong> With reasons coming in, I handed each one to
+                  an LLM to classify the reason and sentiment and return a savability judgment. I worked with the
+                  analytics and PM partners to define savability itself, which reasons a trained specialist could
+                  realistically act on, then wrote the LLM system instructions and built the routing in Intuit's low-code
+                  conversation platform: the intents, the classification, the scripted fallbacks, the rules that sent
+                  savable customers to a specialist and everyone else to a clean cancel path, and the tests. A
+                  conversation designer owning the full stack, with minimal engineering. Moving off the old NLU model
+                  lifted reason classification from about 60% to 96% and cut model development from six-plus months to
+                  days.
+                </p>
+                <p>
+                  Wiring a model to a routing decision raised the bar, because the errors are not equal. A false
+                  "savable" wastes a leaving customer's time and risks feeling like a trap; a false "not savable" quietly
+                  loses someone we could have kept. So I treated the two as different costs when I tuned and tested it,
+                  not just one headline accuracy number, and I designed it as an offer rather than a trap: the clean path
+                  to cancel was always one step away, never buried.
                 </p>
               </div>
 
-              <figure class="flow-figure" role="img" aria-label="Cancellation classifier flow. A user utterance flows into the LLM classifier, which emits structured JSON: cancellation reason, sentiment, anger, is_savable, and an acknowledgment. The flow branches into a Save-likely path (empathetic disambiguation, reason probe, offer to connect to a retention specialist by chat or callback) or a Save-unlikely-or-declined path that shows the customer how to cancel cleanly and follows up with data-backup advice.">
+              <figure class="flow-figure" role="img" aria-label="Cancellation classifier flow. A user utterance flows into the LLM classifier, which emits structured JSON: cancellation reason, sentiment, anger, is_savable, and an acknowledgment. The flow branches into a Save-likely path (empathetic acknowledgment, route to a retention specialist by chat or callback with reason and context attached) or a Save-unlikely-or-declined path that shows the customer how to cancel cleanly and follows up with data-backup advice.">
                 <figcaption class="flow-caption">The classifier-driven flow</figcaption>
                 <svg class="flow-diagram" viewBox="0 0 880 540" xmlns="http://www.w3.org/2000/svg">
                   <defs>
@@ -178,42 +187,40 @@
                   </div>
                 </div>
               </div>
-              <p class="evidence-note"><b>Note:</b> dialogue is reconstructed from the shipped flow's logic; the production prompt, ground-truth data, and exact copy are confidential.</p>
+              <p class="evidence-note"><b>Note:</b> shown as the Digital Assistant (chat) version; the IVA voice flow mirrors it. Dialogue is reconstructed from the shipped flow's logic; the production prompt, ground-truth data, and exact copy are confidential.</p>
             </div>
 
             <div class="block">
               <span class="kicker">The outcome</span>
-              <h2>Accurate enough to route a revenue-critical decision.</h2>
+              <h2>It shipped, and it was accurate enough to route a revenue-critical decision.</h2>
               <div class="metrics-row">
                 <div class="metric"><strong>~80%</strong><span>of customers offered a reason when the assistant asked</span></div>
-                <div class="metric"><strong>96.6%</strong><span>savability-classification accuracy</span></div>
+                <div class="metric"><strong>96.6%</strong><span>accuracy identifying savable cancellations</span></div>
                 <div class="metric"><strong>60% → 96%</strong><span>reason-classification rate, NLU to GenAI</span></div>
-                <div class="metric"><strong>6+ mo → days</strong><span>model development time with GenAI</span></div>
+                <div class="metric"><strong>~$2.9M</strong><span>projected retention revenue, 3 months</span></div>
               </div>
               <div class="prose" style="margin-top:24px;">
                 <p>
-                  Hitting 96.6% accuracy on savability is what made it safe to wire the classifier to a real routing
-                  decision instead of a guess. Customers a specialist could realistically help were handed off with their
-                  reason and context attached; everyone else got a clean, respectful path to cancel. It shipped as one of
-                  the first GenAI experiences in QuickBooks' support stack.
+                  The experience shipped to production. The customers it flagged as savable were routed to the Saves and
+                  Retention team, who retained them at rates they tracked week over week, and that team's analysts
+                  projected about $2.9M in retention revenue over three months. My piece sat at the top of that funnel:
+                  turning cancellations the old system could not read into accurately classified, routable reasons. The
+                  saves conversion and the dollar model belonged to the retention team; the reason-capture and routing
+                  that fed them were mine.
                 </p>
               </div>
             </div>
 
             <div class="block">
-              <span class="kicker">What the data taught me</span>
-              <h2>The empathy wasn't decoration. It was load-bearing.</h2>
+              <span class="kicker">What I'd carry forward</span>
+              <h2>The unlock was the question, not the model.</h2>
               <div class="prose">
                 <p>
-                  The most useful lesson came after launch, from measurement. In a later revision, cancellation handling
-                  was shifted off the generative flow toward more rules-based responses, and the team's
-                  conversation-quality scores fell. The drop was a measured reminder that the model's empathy and nuance
-                  in this moment were doing real work, not just sounding nice.
-                </p>
-                <p>
-                  My takeaway: in emotionally loaded moments, "technically correct" and "actually helpful" are different
-                  things, and only evaluation tells you which one you shipped. I'd argue harder, earlier, to keep the
-                  model in the loop precisely where the human read matters most.
+                  Two lessons stuck. The first: the unlock was never the classifier. It was getting customers to answer
+                  at all, and a short, human question did more than a smarter model could have. The second came from
+                  working next to the analytics team: anchor a design's value in the metric that pays for it, retained
+                  revenue, not only the metric I could move directly, classification accuracy. The model was the easy
+                  part. Knowing what "good" was worth, and asking in a way people would answer, was the work.
                 </p>
               </div>
             </div>
