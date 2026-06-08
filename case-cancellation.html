@@ -51,7 +51,7 @@
           <dl class="case-meta">
             <div><dt>My role</dt><dd>Lead Conversation Designer &amp; Prompt Engineer. Led the design; built the flow end to end</dd></div>
             <div><dt>Surface</dt><dd>QuickBooks Digital Assistant and Intelligent Voice Assistant (the voice assistant)</dd></div>
-            <div><dt>What I did</dt><dd>Flow design, classification prompt, routing logic, model evaluation, Responsible AI, build, test, ship</dd></div>
+            <div><dt>What I did</dt><dd>Classification prompt, savability criteria, JSON output schema, routing logic, model evaluation, Responsible AI, build, ship</dd></div>
             <div><dt>Context</dt><dd>One workstream of a larger Saves &amp; Retention program; I owned the conversation-AI piece</dd></div>
           </dl>
         </section>
@@ -94,69 +94,49 @@
             </div>
 
             <div class="block">
-              <span class="kicker">How I framed it</span>
-              <h2>Study the landscape, then fix what "cancel" even means.</h2>
+              <span class="kicker">The prompt</span>
+              <h2>The accuracy lived in the prompt, so the prompt was the design work.</h2>
               <div class="prose">
                 <p>
-                  Before designing anything, I ran a competitive teardown of how leading assistants handle cancellation,
-                  from Bank of America's Erica to Amazon to Capital One's Eno. Three principles carried into the design.
-                  Confirm what the customer actually means before acting. Read the reason and respond to it, instead of
-                  pretending the cancel request never happened. And keep the exit honest: offer real help, but never hide
-                  the cancel button or trap anyone in a retention maze the way a hard "are you sure?" wall does.
+                  Reframing the task from intent-matching to classification with reasoning meant the core design work was
+                  prompt engineering. I started with the analytics team to pin down savability itself: which cancellation
+                  reasons a trained specialist could realistically still act on, like price or a missing feature, and
+                  which were genuinely final, like a business that had closed. That shared definition became the standard
+                  the classifier had to meet, not my own guess at what "savable" meant.
                 </p>
                 <p>
-                  The first real design problem was disambiguation. "Cancel payroll" is genuinely ambiguous: it could
-                  mean the Payroll subscription, a single scheduled payroll run, or a one-off payment to a worker.
-                  Defaulting to "cancel the subscription" would be the most expensive possible misread, so I designed the
-                  flow to confirm what the customer actually meant before doing anything irreversible.
+                  From there I wrote the classifier as a precise persona. I gave it a clear role and task, the rules it
+                  had to follow, and a strictly defined JSON output, because that output was never meant for a person to
+                  read; it was parsed downstream to make the routing decision. I added few-shot examples so it could
+                  handle the messy, real ways people explain why they are leaving, not just tidy test cases. Then I
+                  iterated: tightening instructions, adding examples where it slipped, and re-testing each version
+                  against our Responsible AI requirements. That loop is what took savability classification to 96.6%
+                  accuracy with zero hallucinations or toxicity.
                 </p>
               </div>
 
-              <figure class="three-category" role="img" aria-label="One phrase, 'cancel payroll,' maps to three different intents: the Payroll subscription (the only true subscription cancellation), a single scheduled payroll run, or a one-off payment to a worker. The flow confirms which before acting.">
-                <figcaption>One phrase, three different intents</figcaption>
-                <div class="cat-grid">
-                  <div class="cat danger">
-                    <span class="cat-num">"cancel payroll" →</span>
-                    <h4>The Payroll subscription</h4>
-                    <p class="cat-examples">Stop paying for the Payroll product entirely.</p>
-                    <p class="cat-action">The only true cancellation</p>
-                  </div>
-                  <div class="cat">
-                    <span class="cat-num">"cancel payroll" →</span>
-                    <h4>A single payroll run</h4>
-                    <p class="cat-examples">Undo or skip one scheduled pay run, but keep the product.</p>
-                    <p class="cat-action">Not a cancellation</p>
-                  </div>
-                  <div class="cat">
-                    <span class="cat-num">"cancel payroll" →</span>
-                    <h4>A one-off payment</h4>
-                    <p class="cat-examples">Reverse a single payment to a worker, but keep the product.</p>
-                    <p class="cat-action">Not a cancellation</p>
-                  </div>
+              <figure class="prompt-card" role="img" aria-label="Anatomy of the classifier prompt. Role: a cancellation-reason classifier for QuickBooks support. Task: read the customer's stated reason, classify the reason and sentiment, and decide whether a specialist could still help. Rules: classify only what the customer actually said, never invent a reason, and return unknown when it is not clear. Output: strict JSON with reason, sentiment, and is_savable fields, parsed downstream to make the routing decision. Few-shot examples teach it to map real phrasings to the right classification: 'It's just too expensive right now' maps to reason price and is_savable true; 'I sold the business' maps to reason no longer needed and is_savable false.">
+                <figcaption>Anatomy of the classifier prompt</figcaption>
+                <div class="prompt-rows">
+                  <div class="prompt-row"><span class="p-label">Role</span><span class="p-body">A cancellation-reason classifier for QuickBooks support.</span></div>
+                  <div class="prompt-row"><span class="p-label">Task</span><span class="p-body">Read the customer's stated reason. Classify the reason and sentiment, then decide whether a specialist could still help.</span></div>
+                  <div class="prompt-row"><span class="p-label">Rules</span><span class="p-body">Classify only what the customer actually said. Never invent a reason. If it isn't clear, return <code>unknown</code> instead of guessing.</span></div>
+                  <div class="prompt-row output"><span class="p-label">Output</span><span class="p-body"><code>{ reason, sentiment, is_savable }</code> as strict JSON, parsed downstream to make the routing decision.</span></div>
+                  <div class="prompt-row"><span class="p-label">Few-shot</span><span class="p-body"><span class="p-eg">"It's just too expensive right now" → reason: price · is_savable: true</span><br /><span class="p-eg">"I sold the business" → reason: no longer needed · is_savable: false</span></span></div>
                 </div>
               </figure>
             </div>
 
             <div class="block">
               <span class="kicker">The build</span>
-              <h2>An LLM that reads the reason, judges savability, and earns the right to route.</h2>
+              <h2>Routing on the model's call, without ever feeling like a trap.</h2>
               <div class="prose">
                 <p>
-                  I reframed the task from intent-matching to classification with reasoning. Each cancellation reason now
-                  goes to an LLM that classifies the reason and sentiment and returns the one judgment the routing
-                  depends on: is this customer savable, someone a trained specialist could realistically still help? I
-                  defined savability with analytics and PM partners, wrote the LLM system instructions that produced the
-                  structured output, and built the routing in Intuit's low-code platform: the classification, the
-                  scripted fallbacks, the rules that offered savable customers a specialist and sent everyone else to a
-                  clean cancel path, and the tests. A conversation designer owning the full stack, with minimal
-                  engineering support.
-                </p>
-                <p>
-                  Against the old NLU model the gains were not incremental. Known-reason coverage rose from about 60% to
-                  96%, and savability, the decision the routing actually turns on, reached 96.6% accuracy. Just as
-                  important for a model that speaks to customers at their most frustrated, it cleared the full Responsible
-                  AI evaluation suite I ran: 0% hallucinations, 0% toxicity, safety-approved. And because the logic lived
-                  in a prompt rather than a trained intent model, development went from six-plus months to days.
+                  With a classification I could trust, I built the experience around it in Intuit's low-code platform:
+                  the rules that offered savable customers a specialist and sent everyone else to a clean cancel path,
+                  the scripted fallbacks, and the tests. A conversation designer owning the full stack, with minimal
+                  engineering support. And because the logic lived in a prompt rather than a trained intent model, what
+                  used to take six-plus months of NLU training now took days.
                 </p>
                 <p>
                   Wiring a model to a routing decision raises the bar, because the errors are not equal. A false
