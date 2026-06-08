@@ -66,13 +66,16 @@
                   When someone asked to cancel, the assistant did exactly one thing: it showed them how to cancel. No
                   attempt to understand why they were leaving, and no attempt to keep them. Cancellation was a top
                   contact driver, a high-traffic intent across both the phone line and the Digital Assistant, so handling
-                  it as a dead-end was a large, repeated missed opportunity to serve the customer better and retain the
-                  ones worth keeping.
+                  it as a dead-end was a large, repeated missed opportunity to serve the customer better and retain more
+                  of the customers who were likely to stay.
                 </p>
                 <p>
-                  The technology was part of the problem too. The deterministic NLU model that classified cancellation
-                  reasons took six-plus months to train, had limited range, and still left about 40% of reasons bucketed
-                  as "unknown." You cannot route on a reason you cannot read.
+                  This started back in 2022, before LLMs were an option, and that first version leaned entirely on NLU.
+                  Training intents to capture cancellation reasons worked to a point, but it was limited and slow to
+                  build, and about 40% of reasons still came back classified as "unknown." That gap was expensive:
+                  when the reason <em>was</em> captured, retention specialists saved as many as 35% of those customers.
+                  We were losing savable customers for the simple reason that we could not reliably read why they were
+                  leaving.
                 </p>
               </div>
             </div>
