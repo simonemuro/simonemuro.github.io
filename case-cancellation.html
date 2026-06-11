@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Cancellation Saves: teaching the system to hear why customers leave · Simone Muro</title>
-    <meta name="description" content="From an NLU-era retention flow that beat its saves target more than 2x, to a GenAI savability classifier at 96.6% accuracy — prototyped before the platform could deploy it, proven anyway, and shipped later through approved channels." />
+    <meta name="description" content="From an NLU-era retention flow that beat its saves target more than 2x, to a GenAI savability classifier at 96.6% accuracy, prototyped before the platform could deploy it, proven anyway, and shipped later through approved channels." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -35,7 +35,7 @@
         <div class="shell-narrow">
           <p class="eyebrow">Case study 05 · LLM classification · Retention · 2022–23</p>
           <h1>Cancellation Saves: teaching the system to hear why customers leave</h1>
-          <p class="lede">A customer who says "I want to cancel" is not one problem — they're a dozen, and only some of them are losses you have to accept. This is the story of teaching a support system to hear the difference: first with the tools of 2022, then with a prompt that <b>beat months of NLU work in hours</b> — and an honest account of what shipped when.</p>
+          <p class="lede">A customer who says "I want to cancel" is not one problem. They're a dozen, and only some of them are losses you have to accept. This is the story of teaching a support system to hear the difference: first with the tools of 2022, then with a prompt that <b>beat months of NLU work in hours</b>, with an honest account of what shipped when.</p>
           <dl class="at-a-glance">
             <div><dt>Role</dt><dd>Lead conversation designer &amp; prompt engineer</dd></div>
             <div><dt>Surface</dt><dd>The voice assistant; pattern later shipped across voice and chat</dd></div>
@@ -49,60 +49,60 @@
         <div class="shell-narrow">
           <h2>December 2022: route on the reason, not the request</h2>
           <p>
-            Cancellation was one of the highest-volume reasons customers called, and the flow treated every request identically: hand over the cancel steps, let them go. The reason — the one piece of signal that decides whether a customer is savable — was spoken out loud on every call and acted on in none of them.
+            Cancellation was one of the highest-volume reasons customers called, and the flow treated every request identically: hand over the cancel steps, let them go. The reason, the one piece of signal that decides whether a customer is savable, was spoken out loud on every call and acted on in none of them.
           </p>
           <p>
-            I designed the savable-cancellation routing for the voice assistant. The flow disambiguated the cancel intent, probed for the reason, and split the path: customers leaving for <b>price, switching products, or not using the product</b> — the three reasons the saves team validated as genuinely winnable — were routed to dedicated retention experts with the case context pre-populated, so nobody repeated themselves. Everyone else got a clean, respectful cancel path. No dark patterns, no hostage negotiation — if the business closed, we helped them leave well.
+            I designed the savable-cancellation routing for the voice assistant. The flow disambiguated the cancel intent, probed for the reason, and split the path: customers leaving for <b>price, switching products, or not using the product</b> (the three reasons the saves team validated as genuinely winnable) were routed to dedicated retention experts with the case context pre-populated, so nobody repeated themselves. Everyone else got a clean, respectful cancel path. No dark patterns, no hostage negotiation. If the business closed, we helped them leave well.
           </p>
 
           <div class="transcript">
             <div class="transcript-head">Before → after · reconstructed</div>
             <div class="transcript-body">
               <div class="msg user">I want to cancel, it's gotten too expensive.</div>
-              <div class="msg bot">BEFORE — "Here's how to cancel: go to Settings → Billing → Cancel subscription…" <span class="src">same answer for every reason · a savable customer, gone</span></div>
-              <div class="msg bot">AFTER — "I hear you — I don't want cost to be the reason you go. I can connect you with a specialist who can review your plan and pricing before anything changes. Want me to do that?" <span class="src">reason heard · routed to a retention specialist who can actually fix price · context attached</span></div>
+              <div class="msg bot">BEFORE: "Here's how to cancel: go to Settings → Billing → Cancel subscription…" <span class="src">same answer for every reason · a savable customer, gone</span></div>
+              <div class="msg bot">AFTER: "I hear you. I don't want cost to be the reason you go. I can connect you with a specialist who can review your plan and pricing before anything changes. Want me to do that?" <span class="src">reason heard · routed to a retention specialist who can actually fix price · context attached</span></div>
             </div>
-            <p class="note">Dialogue reconstructed from the shipped flow; production copy is confidential. The design is real: hear the reason, judge savability, route with context — and keep the cancel path one step away.</p>
+            <p class="note">Dialogue reconstructed from the shipped flow; production copy is confidential. The design is real: hear the reason, judge savability, route with context, and keep the cancel path one step away.</p>
           </div>
 
           <p>
-            It worked, and we measured it. Across <b>8,814 cancellation calls from December 2022 through March 2023</b>, the flow saved <b>12% of customers against a 5% target</b>. Calls where the reason was price — the reason a specialist has the most room to fix — saved at <b>43%</b>.
+            It worked, and we measured it. Across <b>8,814 cancellation calls from December 2022 through March 2023</b>, the flow saved <b>12% of customers against a 5% target</b>. Calls where the reason was price, the reason a specialist has the most room to fix, saved at <b>43%</b>.
           </p>
 
           <h2>The ceiling: a model that couldn't hear</h2>
           <p>
-            The routing was only as good as the classification feeding it, and the NLU-era intent model had a hard ceiling. It returned <b>"unknown" on roughly 40% of cancellation reasons</b> — no trained intent matched the real, messy ways people explain why they're leaving. And when it did produce a label, it was right about <b>80%</b> of the time, so downstream routing inherited both the blindness and the errors. Meanwhile the saves teams kept <b>20–35% of customers when they knew the real reason</b>. Every "unknown" was money left on the table, and training new intents took months per iteration.
+            The routing was only as good as the classification feeding it, and the NLU-era intent model had a hard ceiling. It returned <b>"unknown" on roughly 40% of cancellation reasons</b>: no trained intent matched the real, messy ways people explain why they're leaving. And when it did produce a label, it was right about <b>80%</b> of the time, so downstream routing inherited both the blindness and the errors. Meanwhile the saves teams kept <b>20–35% of customers when they knew the real reason</b>. Every "unknown" was money left on the table, and training new intents took months per iteration.
           </p>
 
           <h2>May–June 2023: replace the intent model with a prompt</h2>
           <p>
-            So I prompt-engineered a GenAI savability classifier. The design was the prompt: a tightly specified classifier persona — a clear role, a precise task, and the rules it had to hold — emitting <b>strict JSON</b> (intent, reason, sentiment, savability) that was never read by a human; it was parsed downstream to make the routing call. The few-shot examples came from real customer language, in all its mess. And the iteration loop was the one that actually moves accuracy: find the failure, add the example that kills that class of error, re-test the whole set.
+            So I prompt-engineered a GenAI savability classifier. The design was the prompt: a tightly specified classifier persona (a clear role, a precise task, and the rules it had to hold) emitting <b>strict JSON</b> (intent, reason, sentiment, savability) that was never read by a human; it was parsed downstream to make the routing call. The few-shot examples came from real customer language, in all its mess. And the iteration loop was the one that actually moves accuracy: find the failure, add the example that kills that class of error, re-test the whole set.
           </p>
 
           <div class="prompt-block" role="img" aria-label="Anatomy of the savability classifier prompt: role, task, rules, output schema, and few-shot examples">
             <div class="row"><span class="key">role</span><span class="val">A cancellation-reason classifier for subscription support.</span></div>
             <div class="row"><span class="key">task</span><span class="val">Read the customer's stated reason. Classify intent, reason, and sentiment; decide whether a specialist could still help.</span></div>
             <div class="row"><span class="key">rules</span><span class="val">Classify only what the customer actually said. <b>Never invent a reason; if unclear, return <code>unknown</code></b> instead of guessing.</span></div>
-            <div class="row"><span class="key">output</span><span class="val"><code>{ intent, reason, sentiment, savability }</code> — strict JSON, parsed downstream to make the routing decision. No prose, ever.</span></div>
+            <div class="row"><span class="key">output</span><span class="val"><code>{ intent, reason, sentiment, savability }</code>. Strict JSON, parsed downstream to make the routing decision. No prose, ever.</span></div>
             <div class="row"><span class="key">few-shot</span><span class="val">"It's just too expensive right now" → reason: price · savability: true<br />"I sold the business" → reason: no longer needed · savability: false</span></div>
           </div>
 
           <p>
-            I tested it the way I'd want anyone to test a claim of mine: across <b>~300 real utterances</b>, a sample sized for 90% confidence. The classifier hit <b>96.6% savability accuracy</b>, lifted the share of cancellations resolved to a known reason from <b>60% to 96%</b>, and produced <b>zero hallucinations and zero toxicity</b> across the test set. Estimated run cost: about <b>$756 a year</b>. And the dev-time story might be the biggest number of all: what took months of NLU training per iteration collapsed into hours of prompt work.
+            I tested it the way I'd want anyone to test a claim of mine: across <b>hundreds of real customer utterances</b>. The classifier hit <b>96.6% savability accuracy</b>, lifted the share of cancellations resolved to a known reason from <b>60% to 96%</b>, and produced <b>zero hallucinations and zero toxicity</b> across the test set. Estimated run cost: about <b>$756 a year</b>. And the dev-time story might be the biggest number of all: what took months of NLU training per iteration collapsed into hours of prompt work.
           </p>
 
           <div class="callout">
             <span class="num">96.6% accuracy · 60% → 96% classified · 12% saves vs 5% target</span>
-            <p>Classifier accuracy across ~300 tested utterances (90% confidence), zero hallucinations or toxicity, ~$756/year to run — on top of an NLU-era flow that had already beaten its saves target by more than 2x.</p>
+            <p>Classifier accuracy measured across hundreds of real customer utterances, zero hallucinations or toxicity, ~$756/year to run. All on top of an NLU-era flow that had already beaten its saves target by more than 2x.</p>
           </div>
 
-          <h2>The part I didn't get to ship — and what happened instead</h2>
+          <h2>The part I didn't get to ship, and what happened instead</h2>
           <p>
-            Here's the honest twist: the classifier was <b>blocked from production</b>. The deployment path it needed wasn't approved platform infrastructure yet, and I wasn't going to route a revenue-critical decision through an unapproved one. I didn't fake my way around it. I documented the proof — the accuracy, the test methodology, the cost — and made the case.
+            Here's the honest twist: the classifier was <b>blocked from production</b>. The deployment path it needed wasn't approved platform infrastructure yet, and I wasn't going to route a revenue-critical decision through an unapproved one. I didn't fake my way around it. I documented the proof (the accuracy, the test methodology, the cost) and made the case.
           </p>
           <div class="callout mint">
             <span class="num">Blocked in 2023. Shipped in FY25.</span>
-            <p>When the platform caught up, the GenAI classification pattern shipped through approved channels, across voice and chat — and the Responsible AI approval pattern I helped establish became the team standard for LLM classification use cases.</p>
+            <p>When the platform caught up, the GenAI classification pattern shipped through approved channels, across voice and chat. The Responsible AI approval pattern I helped establish became the team standard for LLM classification use cases.</p>
           </div>
           <p>
             I won't claim the 2023 prototype shipped as-is, because it didn't. What I'll claim is what the evidence supports: I proved the pattern before the platform could carry it, kept the proof rigorous enough to survive scrutiny, and the production version that followed stood on it.
@@ -110,7 +110,7 @@
 
           <h2>What this proves</h2>
           <p>
-            Three things. First, <b>problem-first prompt craft under a real business constraint</b> — the prompt wasn't a demo, it was a routing decision with asymmetric costs on each kind of error. Second, <b>evaluation rigor</b>: every number on this page was measured, and the one famous number that wasn't defensible isn't here. Third, the pattern generalizes — fraud triage, escalation, any problem shaped like <i>read the messy human reason, then route the decision</i> is won the same way: a tightly ruled classifier, structured output, and an eval you'd stake the routing on.
+            Three things. First, <b>problem-first prompt craft under a real business constraint</b>: the prompt wasn't a demo, it was a routing decision with asymmetric costs on each kind of error. Second, <b>evaluation rigor</b>: every number on this page was measured, and the one famous number that wasn't defensible isn't here. Third, the pattern generalizes: fraud triage, escalation, any problem shaped like <i>read the messy human reason, then route the decision</i> is won the same way: a tightly ruled classifier, structured output, and an eval you'd stake the routing on.
           </p>
 
           <nav class="case-nav" aria-label="Case study navigation">
@@ -137,5 +137,6 @@
         document.addEventListener("keydown", function (e) { if (e.key === "Escape") m.classList.remove("open"); });
       })();
     </script>
+  <script src="./v2-agent.js" defer></script>
   </body>
 </html>

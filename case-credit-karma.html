@@ -37,7 +37,7 @@
           <h1>Credit Karma: prompt systems under hard legal constraints</h1>
           <p class="lede">From August to late 2024 I did a prompt-engineering rotation at Credit Karma (an Intuit company), working on production GenAI features in the most constrained writing environment I've encountered: <b>where the model is legally forbidden from saying things it knows.</b></p>
           <dl class="at-a-glance">
-            <div><dt>Role</dt><dd>Prompt engineer — rotation, Aug–late 2024</dd></div>
+            <div><dt>Role</dt><dd>Prompt engineer (rotation, Aug–late 2024)</dd></div>
             <div><dt>Surface</dt><dd>"See Why" card explanations · "Analyze My Wallet"</dd></div>
             <div><dt>What I did</dt><dd>Prompt authoring &amp; iteration, synthetic test profiles, rubric-graded evaluation</dd></div>
             <div><dt>Workflow</dt><dd>Prompts versioned in git, shipped through merged PRs</dd></div>
@@ -49,10 +49,10 @@
         <div class="shell-narrow">
           <h2>The setting</h2>
           <p>
-            Two production GenAI features: <b>"See Why,"</b> which explains why a specific credit card is recommended to a member, and <b>"Analyze My Wallet,"</b> which reads a member's whole card portfolio and suggests how to improve it. I authored and iterated prompts for both — joining work in motion, not inventing it from zero. The job was to make a model's explanation of someone's money personalized, plainly written, and legally airtight, all at once.
+            Two production GenAI features: <b>"See Why,"</b> which explains why a specific credit card is recommended to a member, and <b>"Analyze My Wallet,"</b> which reads a member's whole card portfolio and suggests how to improve it. I authored and iterated prompts for both, joining work in motion, not inventing it from zero. The job was to make a model's explanation of someone's money personalized, plainly written, and legally airtight, all at once.
           </p>
           <p>
-            To regression-test that personalization actually held, I built <b>persona-spanning synthetic test profiles</b> — invented members from sub-prime through prime — so every prompt revision could be checked across credit bands, not just against the happy-path member it was tuned on.
+            To regression-test that personalization actually held, I built <b>persona-spanning synthetic test profiles</b> (invented members from sub-prime through prime) so every prompt revision could be checked across credit bands, not just against the happy-path member it was tuned on.
           </p>
 
           <h2>Craft beat one: the same feature needed two different prompt architectures</h2>
@@ -62,31 +62,31 @@
 
           <div class="prompt-block" role="img" aria-label="Two prompt architectures for the same feature: the GPT-3.5-turbo variant uses heavy chain-of-thought scaffolding, the GPT-4o variant uses clean numbered instructions plus a response format">
             <div class="row"><span class="key">gpt-3.5-turbo</span><span class="val">Heavy chain-of-thought scaffolding: "devise a plan… solve step by step." The model had to be walked through its own reasoning or it skipped steps and drifted off the member's data.</span></div>
-            <div class="row"><span class="key">gpt-4o</span><span class="val">Restructured to clean numbered instructions + an explicit response format. The scaffolding that rescued 3.5 was dead weight here — clarity and format did the work.</span></div>
+            <div class="row"><span class="key">gpt-4o</span><span class="val">Restructured to clean numbered instructions + an explicit response format. The scaffolding that rescued 3.5 was dead weight here: clarity and format did the work.</span></div>
             <div class="row"><span class="key">the point</span><span class="val">Same feature, same constraints, two prompt architectures. Porting a prompt between models is a redesign, not a copy-paste.</span></div>
           </div>
 
           <h2>Craft beat two: reason, but don't say</h2>
           <p>
-            The sharpest constraint was legal. The model could <b>reason over approval-odds data</b> — it shaped which explanations made sense — but it was <b>legally forbidden from stating it</b>. No "you're likely to be approved," ever, even when the data said so. Writing that behavior is harder than a flat prohibition: the prompt has to let the signal inform the output while keeping it out of the words. That reason-but-don't-say pattern is, to me, the essence of regulated-domain prompting.
+            The sharpest constraint was legal. The model could <b>reason over approval-odds data</b> (it shaped which explanations made sense) but it was <b>legally forbidden from stating it</b>. No "you're likely to be approved," ever, even when the data said so. Writing that behavior is harder than a flat prohibition: the prompt has to let the signal inform the output while keeping it out of the words. That reason-but-don't-say pattern is, to me, the essence of regulated-domain prompting.
           </p>
 
           <h2>Craft beat three: hard output constraints as hallucination prevention</h2>
           <p>
-            The other guardrails were structural, and that's what made them reliable. <b>Strict JSON output.</b> <b>No arithmetic allowed</b> — the model never computes a number, because a model doing math about someone's money is a hallucination waiting to be screenshotted. And a <b>mandatory annual-fee disclosure, even when the fee is $0</b> — the constraint that's easy to forget is the one the rubric made impossible to forget.
+            The other guardrails were structural, and that's what made them reliable. <b>Strict JSON output.</b> <b>No arithmetic allowed</b>: the model never computes a number, because a model doing math about someone's money is a hallucination waiting to be screenshotted. And a <b>mandatory annual-fee disclosure, even when the fee is $0</b>. The constraint that's easy to forget is the one the rubric made impossible to forget.
           </p>
           <p>
             Every output was graded against a three-tier rubric:
           </p>
           <div class="prompt-block" role="img" aria-label="The graded evaluation rubric: Good, Acceptable, Unacceptable">
             <div class="row"><span class="key">good</span><span class="val">References the member's actual data · correct card category · genuine lifestyle fit · states the annual fee (even when $0) · no hallucinations, no math, no approval-odds mentions.</span></div>
-            <div class="row"><span class="key">acceptable</span><span class="val">Compliant and accurate, but generic — misses the personalization that makes the explanation worth reading.</span></div>
+            <div class="row"><span class="key">acceptable</span><span class="val">Compliant and accurate, but generic. It misses the personalization that makes the explanation worth reading.</span></div>
             <div class="row"><span class="key">unacceptable</span><span class="val">Any hallucinated detail, any arithmetic, any approval-odds statement, or a missing annual-fee disclosure. One strike fails the output.</span></div>
           </div>
 
           <h2>What a passing explanation looks like</h2>
           <div class="transcript">
-            <div class="transcript-head">"See Why" · synthetic example — invented card, invented member data</div>
+            <div class="transcript-head">"See Why" · synthetic example: invented card, invented member data</div>
             <div class="transcript-body">
               <div class="msg user">Why is the Meridian Everyday Cash card recommended for me?</div>
               <div class="msg bot">You spend most on groceries and gas, and your current card earns a flat 1% on both. Meridian Everyday Cash earns 3% in exactly those two categories, so it fits how you actually spend. It has a $0 annual fee. <span class="src">grounded in member data · category fit · fee stated even at $0 · no odds, no math</span></div>
@@ -96,12 +96,12 @@
 
           <h2>Prompts shipped like code, tested like a product</h2>
           <p>
-            The workflow was engineering, not vibes: prompts <b>versioned in git and shipped through merged PRs</b>, tested through the platform's prompt playground and internal fishfood before anything reached members. For Analyze My Wallet, a <b>10-participant unmoderated user study</b> drove the P0 changes: move the recommended cards earlier in the response, and shorten "tell me more" into scannable bullets — members wanted the answer first and the essay never.
+            The workflow was engineering, not vibes: prompts <b>versioned in git and shipped through merged PRs</b>, tested through the platform's prompt playground and internal fishfood before anything reached members. For Analyze My Wallet, a <b>10-participant unmoderated user study</b> drove the P0 changes: move the recommended cards earlier in the response, and shorten "tell me more" into scannable bullets. Members wanted the answer first and the essay never.
           </p>
 
           <h2>What this proves</h2>
           <p>
-            I won't dress this one up with outcome metrics, because none exist for my pieces — the rotation ended before post-launch numbers attached to anything I'd authored, and I don't claim numbers I can't show. What the work proves is craft under constraint: model-specific prompt architecture, behavior rules that thread a legal needle, structure as hallucination prevention, and an engineering-grade workflow around all of it. Regulated finance is where behavior design earns its keep — when the model genuinely can't say everything it knows, every word that remains has to be designed.
+            I won't dress this one up with outcome metrics, because none exist for my pieces. The rotation ended before post-launch numbers attached to anything I'd authored, and I don't claim numbers I can't show. What the work proves is craft under constraint: model-specific prompt architecture, behavior rules that thread a legal needle, structure as hallucination prevention, and an engineering-grade workflow around all of it. Regulated finance is where behavior design earns its keep: when the model genuinely can't say everything it knows, every word that remains has to be designed.
           </p>
 
           <nav class="case-nav" aria-label="Case study navigation">
@@ -128,5 +128,6 @@
         document.addEventListener("keydown", function (e) { if (e.key === "Escape") m.classList.remove("open"); });
       })();
     </script>
+  <script src="./v2-agent.js" defer></script>
   </body>
 </html>

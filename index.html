@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Simone Muro · AI Experience Designer &amp; Builder — Conversation &amp; Agentic Systems</title>
+    <title>Simone Muro · AI Experience Designer &amp; Builder | Conversation &amp; Agentic Systems</title>
     <meta
       name="description"
-      content="I design the behavior of AI systems — what they say, what they do, and how we prove they're good — and I build working versions myself. Nine years in conversational AI and language AI: NLU, LLMs, and agentic systems. Model UX, prompt engineering, golden datasets, evaluation."
+      content="I design the behavior of AI systems: what they say, what they do, and how we prove they're good. Then I build working versions myself. Nine years in conversational AI and language AI: NLU, LLMs, and agentic systems. Model UX, prompt engineering, golden datasets, evaluation."
     />
     <meta property="og:title" content="Simone Muro · AI Experience Designer &amp; Builder" />
-    <meta property="og:description" content="Conversation &amp; agentic AI: behavior design, prompts, golden datasets, evaluation — and working builds to prove it." />
+    <meta property="og:description" content="Conversation and agentic AI: behavior design, prompts, golden datasets, evaluation, and working builds to prove it." />
     <meta property="og:type" content="website" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,7 +28,6 @@
         </button>
         <div class="nav-links" id="nav-menu">
           <a href="#work">Case Studies</a>
-          <a href="#build">What I Build</a>
           <a href="#about">About</a>
           <a href="resume.html">Resume</a>
           <a class="nav-cta" href="#contact">Let's talk</a>
@@ -41,48 +40,33 @@
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="shell">
           <p class="hero-kicker"><span class="dot" aria-hidden="true"></span>Open to Agentic AI design · AI product · Conversation AI leadership</p>
-          <h1 id="hero-title">I design how AI systems <span class="gradient-text">behave</span> — and build working proof.</h1>
+          <h1 id="hero-title">I design how AI systems <span class="gradient-text">behave</span>. Then I build the proof.</h1>
           <p class="lede">
             What the model says, what it does, when it hands off to a person, and <b>how we prove it's good enough to ship</b>.
-            Nine years in language AI — Meta, Apple’s Siri — with the last six and a half designing and building conversation and agentic systems through every generation of the technology. I engineer the prompts, build the golden datasets, run the evaluation that holds it all to account, and have led a team of three doing the same.
+            Nine years in language AI, from Meta to Apple's Siri, with the last six and a half designing and building conversation and agentic systems through every generation of the technology. I engineer the prompts, build the golden datasets, run the evaluation that holds it all to account, and have led a team of three doing the same.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#work">See the work</a>
-            <a class="button secondary" href="#ask">Ask the agent about me</a>
+            <button class="button secondary" type="button" onclick="window.PortfolioAgent &amp;&amp; window.PortfolioAgent.open()">Talk to my agent</button>
           </div>
 
           <div class="proof-bar reveal" aria-label="Selected outcomes">
-            <div class="proof"><span class="num"><em>+3.9</em> pp</span><span class="lab">containment lift from GenAI voice on the targeted intents of Intuit's 1-800 line — Bayesian significance, in production</span></div>
-            <div class="proof"><span class="num"><em>96.6</em>%</span><span class="lab">savability accuracy of the LLM cancellation classifier I prompt-engineered, in offline testing (~300 utterances)</span></div>
-            <div class="proof"><span class="num"><em>+8–13</em> pp</span><span class="lab">agent quality-score lifts across three skill domains, via the eval program I helped build — and took over end to end</span></div>
-            <div class="proof"><span class="num"><em>5</em> days</span><span class="lab">to build a working agent skill solo — YAML, tool calls, and a 108-case eval dataset — without engineering support</span></div>
+            <div class="proof"><span class="num"><em>+3.9</em> pp</span><span class="lab">containment lift, measured in production, from the GenAI voice experience on Intuit's 1-800 line</span></div>
+            <div class="proof"><span class="num"><em>96.6</em>%</span><span class="lab">savability accuracy from the LLM cancellation classifier I prompt-engineered and validated in pre-launch evaluation</span></div>
+            <div class="proof"><span class="num"><em>+8–13</em> pp</span><span class="lab">agent quality-score lifts across three skill domains, through the golden-dataset and evaluation program I led</span></div>
+            <div class="proof"><span class="num"><em>5</em> days</span><span class="lab">to build a working agent skill solo: YAML, tool calls, and a 108-case eval dataset, no engineering support</span></div>
           </div>
-          <p class="brand-strip reveal" aria-label="Past employers">META &nbsp;·&nbsp; APPLE (SIRI) &nbsp;·&nbsp; SAM’S CLUB &nbsp;·&nbsp; INTUIT &nbsp;·&nbsp; CREDIT KARMA</p>
+          <p class="brand-strip reveal" aria-label="Past employers">META &nbsp;·&nbsp; APPLE (SIRI) &nbsp;·&nbsp; SAM'S CLUB &nbsp;·&nbsp; INTUIT &nbsp;·&nbsp; CREDIT KARMA</p>
         </div>
       </section>
 
-      <!-- ASK THE AGENT -->
+      <!-- AGENT TEASER -->
       <section class="agent-section" id="ask" aria-labelledby="ask-title">
         <div class="shell-narrow">
-          <p class="eyebrow mint">A small demonstration</p>
-          <h2 id="ask-title">Don't take my word for it. Interrogate it.</h2>
-          <p class="lede" style="margin-bottom:1.8rem;">I design agent behavior for a living, so this portfolio ships with an agent: scoped answers, grounded in my real case studies, with refusal boundaries for what it doesn't know.</p>
-          <div class="agent-frame">
-            <div class="agent-head">
-              <span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="agent-title">portfolio-agent <b>· grounded on the case studies &amp; bio · curated-response mode</b></span>
-            </div>
-            <div class="agent-log" id="agent-log" aria-live="polite"></div>
-            <form class="agent-input" id="agent-form">
-              <label class="sr-only" for="agent-q">Ask a question about Simone's work</label>
-              <input id="agent-q" type="text" autocomplete="off" maxlength="200" placeholder="Ask anything — off-scope questions get refused, by design…" />
-              <button type="submit" aria-label="Send question">→</button>
-            </form>
-            <div class="agent-chips" id="agent-chips" role="group" aria-label="Suggested questions"></div>
-            <div class="agent-foot">
-              <b>How this works:</b>
-              <span>deterministic retrieval over answers I wrote and tested — no live model call, no improvisation. Designing the scope, grounding, and refusal behavior <em>is</em> the craft. Same method, bigger stakes, in the case studies below.</span>
-            </div>
+          <div class="agent-teaser reveal">
+            <span class="pulse" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
+            <p id="ask-title"><b>Don't take my word for it. Interrogate it.</b><br />I design agent behavior for a living, so this portfolio ships with an agent: my twin, grounded in these case studies, with refusal boundaries I wrote and eval-tested. It travels with you on every page, bottom right.</p>
+            <button class="button primary" type="button" onclick="window.PortfolioAgent &amp;&amp; window.PortfolioAgent.open()">Open the agent</button>
           </div>
         </div>
       </section>
@@ -99,7 +83,7 @@
               <div>
                 <p class="case-type">Agentic AI · Built solo · 2026</p>
                 <h3>BillingSkill: a conversation designer walks into the agent repo</h3>
-                <p>I'd spent a year defining what good agent behavior looks like. The open question: could I build the thing being evaluated? Five days later, a working billing skill — YAML, a three-mode lookup tool, and its own eval dataset — submitted and judged at Intuit's builder hackathon.</p>
+                <p>I'd spent a year defining what good agent behavior looks like. The open question: could I build the thing being evaluated? Five days later I had a working billing skill (YAML, a three-mode lookup tool, and its own eval dataset), submitted and judged at Intuit's builder hackathon.</p>
                 <div class="case-metrics"><span class="metric-chip">108-case golden dataset</span><span class="metric-chip">skill YAML + 3-mode tool</span><span class="metric-chip mint">5 days, no engineering support</span></div>
                 <span class="case-read">Read the build story →</span>
               </div>
@@ -110,7 +94,7 @@
               <div>
                 <p class="case-type">Agent behavior design · Regulated domain · 2026</p>
                 <h3>Payroll Intelligence Agent: defining what "good" means before the agent exists</h3>
-                <p>A PM needed ground truth for the 51 highest-stakes payroll questions — and wasn't seeing it. I mobilized a team, built a reusable system prompt that generates diagnostic golden datasets, and delivered the full set above scope. The framework outlived the sprint.</p>
+                <p>A PM needed ground truth for the 51 highest-stakes payroll questions and wasn't seeing it. I mobilized a team, built a reusable system prompt that generates diagnostic golden datasets, and delivered the full set above scope. The framework outlived the sprint.</p>
                 <div class="case-metrics"><span class="metric-chip">51 questions, ~10 days</span><span class="metric-chip mint">reusable diagnostic framework</span><span class="metric-chip mint">adopted by the agent team</span></div>
                 <span class="case-read">Read case study →</span>
               </div>
@@ -121,7 +105,7 @@
               <div>
                 <p class="case-type">AI quality at scale · Leadership · 2025–26</p>
                 <h3>Making "good enough to ship" measurable for an agentic platform</h3>
-                <p>Golden datasets, LLM-as-judge, human labeling, multi-turn user simulators — and an LLM pipeline I built that cut dataset turnaround from three weeks to one. When its day-to-day owner went on sudden leave with two weeks' notice, I took the whole program over without dropping a release.</p>
+                <p>Golden datasets, LLM-as-judge, human labeling, multi-turn user simulators, and an LLM pipeline I built that cut dataset turnaround from three weeks to one. When the program's day-to-day owner went on sudden leave, I took the whole thing over without dropping a release.</p>
                 <div class="case-metrics"><span class="metric-chip">+8 to +13 pp quality lift</span><span class="metric-chip">3,000+ rows · 3wk → 1wk</span></div>
                 <span class="case-read">Read case study →</span>
               </div>
@@ -133,7 +117,7 @@
                 <p class="case-type">Voice AI · Production GenAI · 2023–24</p>
                 <h3>Voice Snippet: GenAI on the phone line, 18 months before the platform was ready</h3>
                 <p>I prototyped the concept in mid-2023, when there was no approved path to ship it. When the platform caught up, we shipped it: disambiguation, voice-tuned summaries, structured output, and the rubric that judged every response.</p>
-                <div class="case-metrics"><span class="metric-chip">+3.9 pp containment</span><span class="metric-chip mint">Bayesian significance</span><span class="metric-chip mint">in production</span></div>
+                <div class="case-metrics"><span class="metric-chip">+3.9 pp containment</span><span class="metric-chip mint">measured in production</span><span class="metric-chip mint">live since Dec 2024</span></div>
                 <span class="case-read">Read case study →</span>
               </div>
             </a>
@@ -143,7 +127,7 @@
               <div>
                 <p class="case-type">LLM classification · Retention · 2022–23</p>
                 <h3>Cancellation Saves: teaching the system to hear why customers leave</h3>
-                <p>The NLU model returned "unknown" on 40% of cancellations. I designed the saves flow that beat its target by 7 points, then prompt-engineered the LLM classifier that took reason-reading from 60% to 96% in offline testing — months of model training collapsed into hours of prompt work.</p>
+                <p>The NLU model returned "unknown" on 40% of cancellations. I designed the saves flow that beat its target by 7 points, then prompt-engineered the LLM classifier that took reason-reading from 60% to 96% in pre-launch evaluation. Months of model training collapsed into hours of prompt work.</p>
                 <div class="case-metrics"><span class="metric-chip">96.6% savability accuracy</span><span class="metric-chip">classification 60% → 96%</span><span class="metric-chip mint">12% saves rate vs 5% target</span></div>
                 <span class="case-read">Read case study →</span>
               </div>
@@ -154,7 +138,7 @@
               <div>
                 <p class="case-type">Prompt engineering · Regulated finance · 2024</p>
                 <h3>Credit Karma: prompt systems under hard legal constraints</h3>
-                <p>As a prompt engineer on Credit Karma's GenAI features, I iterated production prompts across GPT-3.5 and GPT-4o — including the guardrail that lets a model reason over approval odds it is legally forbidden to mention — with versioned prompts shipped through merged PRs.</p>
+                <p>As a prompt engineer on Credit Karma's GenAI features, I iterated production prompts across GPT-3.5 and GPT-4o, including the guardrail that lets a model reason over approval odds it is legally forbidden to mention. Prompts versioned in git, shipped through merged PRs.</p>
                 <div class="case-metrics"><span class="metric-chip">model-specific prompt systems</span><span class="metric-chip mint">graded eval rubric</span><span class="metric-chip mint">shipped via merged PRs</span></div>
                 <span class="case-read">Read case study →</span>
               </div>
@@ -172,7 +156,7 @@
             <article class="card reveal"><span class="num">01</span><h3>Prompts &amp; agent instructions</h3><p>System guidance, tool-use conditions, structured output, refusal boundaries, and tone rules that make model behavior explicit enough to test.</p></article>
             <article class="card reveal"><span class="num">02</span><h3>Golden datasets &amp; ground truth</h3><p>Source-of-truth answers, diagnostic decision trees, and judge-checkable gating criteria that give a team a shared definition of good.</p></article>
             <article class="card reveal"><span class="num">03</span><h3>Evaluation &amp; quality loops</h3><p>Rubrics, LLM-as-judge, human labeling, multi-turn simulators, and failure taxonomies that turn response quality into a release gate.</p></article>
-            <article class="card reveal"><span class="num">04</span><h3>Working prototypes</h3><p>Skills, tools, and demos built in Claude Code, Cursor, Vapi, and Voiceflow — so teams test the experience before they commit the quarter.</p></article>
+            <article class="card reveal"><span class="num">04</span><h3>Working prototypes</h3><p>Skills, tools, and demos built in Claude Code, Cursor, Vapi, and Voiceflow, so teams test the experience before they commit the quarter.</p></article>
           </div>
         </div>
       </section>
@@ -181,13 +165,13 @@
       <section id="about" aria-labelledby="about-title">
         <div class="shell-narrow">
           <p class="eyebrow">About</p>
-          <h2 id="about-title">Not an engineer. Not "just" a designer. The person in between — by choice.</h2>
+          <h2 id="about-title">The person between design and engineering. By choice.</h2>
           <div class="prose" style="padding:0.5rem 0 0;">
             <p>
-              I've spent nine years making AI genuinely useful to the person on the other side of the screen — at Meta, Apple (Siri), Sam's Club, and Intuit across QuickBooks and Credit Karma. I grew from hands-on conversation designer to leading the team and the discipline: what the AI says, when it acts, when it hands off to a human, and how we prove it's good enough to ship.
+              I've spent nine years making AI genuinely useful to the person on the other side of the screen: at Meta, Apple (Siri), Sam's Club, and Intuit across QuickBooks and Credit Karma. I grew from hands-on conversation designer to leading the team and the discipline: what the AI says, when it acts, when it hands off to a human, and how we prove it's good enough to ship.
             </p>
             <p>
-              My bias is action. When LLMs arrived, I didn't wait for a paved path — I prototyped GenAI classification a year before our platform approved it, and the concepts shipped when the platform caught up. When agentic systems arrived, I didn't stop at writing requirements — I learned the repo, wrote the YAML, built the tool, and shipped a working skill in five days. Strategy first, always: map the problem to what the technology can genuinely do — then prove it with a build.
+              My bias is action. When LLMs arrived, I didn't wait for a paved path. I prototyped GenAI classification a year before our platform approved it, and the concepts shipped when the platform caught up. When agentic systems arrived, I didn't stop at writing requirements. I learned the repo, wrote the YAML, built the tool, and shipped a working skill in five days. Strategy first, always: map the problem to what the technology can genuinely do, then prove it with a build.
             </p>
             <p>
               I've led that work end to end and led the people doing it: a team of three designers and design technologists, a promotion championed through, hiring loops run, and a craft standard the team still builds to.
@@ -203,11 +187,11 @@
           <h2 id="more-title">The supporting record</h2>
           <div class="more-grid" style="margin-top:2rem;">
             <article class="card reveal"><span class="badge">Top contact driver · LLM</span><h3>Billing-support redesign</h3><p>Owned the PRD and built the LLM billing-query classifier end to end for a ~800K-contact support area: issue-specific answers instead of one generic link.</p><span class="metric-line">+12 pt self-help resolution · containment 50% → 61%</span></article>
-            <article class="card reveal"><span class="badge">Eval infrastructure</span><h3>Golden-dataset pre-population pipeline</h3><p>LLM-powered pipeline that pre-fills evaluation data before designer review — manual authoring became human-in-the-loop review.</p><span class="metric-line">~3 weeks → ~1 week across 3,000+ rows</span></article>
-            <article class="card reveal"><span class="badge">Voice · Iteration</span><h3>Login &amp; password voice redesign</h3><p>Four iterative experiments on a top phone-support flow — the highest-performing voice redesign in the product line that year.</p><span class="metric-line">35% → 57% self-help · 17% → 29% containment</span></article>
+            <article class="card reveal"><span class="badge">Eval infrastructure</span><h3>Golden-dataset pre-population pipeline</h3><p>LLM-powered pipeline that pre-fills evaluation data before designer review. Manual authoring became human-in-the-loop review.</p><span class="metric-line">~3 weeks → ~1 week across 3,000+ rows</span></article>
+            <article class="card reveal"><span class="badge">Voice · Iteration</span><h3>Login &amp; password voice redesign</h3><p>Four iterative experiments on a top phone-support flow: the highest-performing voice redesign in the product line that year.</p><span class="metric-line">35% → 57% self-help · 17% → 29% containment</span></article>
             <article class="card reveal"><span class="badge">Governance · Responsible AI</span><h3>Reusable Responsible-AI approval pattern</h3><p>Refactored AI-safety approvals into an umbrella-plus-addendum pattern so new LLM classification use cases ship without a fresh weeks-long review.</p><span class="metric-line">Became the team standard</span></article>
             <article class="card reveal"><span class="badge">Team enablement</span><h3>AI tooling adoption</h3><p>Built queryable NotebookLM references for every assistant the team owned and an LLM deck generator; coached designers into Cursor, Claude Code, and prompt registration workflows.</p><span class="metric-line">Recognized with a team Spotlight award</span></article>
-            <article class="card reveal"><span class="badge">Leadership</span><h3>People &amp; hiring</h3><p>Managed three designers/design technologists; championed a promotion to Senior Design Technologist; ran senior-designer hiring screens and authored the craft exercise.</p><span class="metric-line">Manager · coach · hiring</span></article>
+            <article class="card reveal"><span class="badge">Leadership</span><h3>People &amp; hiring</h3><p>Managed three designers and design technologists; championed a promotion to Senior Design Technologist; ran senior-designer hiring screens and authored the craft exercise.</p><span class="metric-line">Manager · coach · hiring</span></article>
           </div>
         </div>
       </section>
@@ -221,7 +205,7 @@
             <div class="tools-group"><span class="tools-label">AI &amp; LLM craft</span><div class="chips"><span>Prompt engineering</span><span>Conversational AI / conversation design</span><span>Model UX</span><span>Agent &amp; skill design</span><span>Retrieval-grounded responses (RAG)</span><span>Golden datasets</span><span>LLM-as-judge</span><span>Human-in-the-loop evals</span><span>Multi-turn simulators</span><span>Responsible AI workflows</span><span>NLU design &amp; tuning</span></div></div>
             <div class="tools-group"><span class="tools-label">Build</span><div class="chips"><span>Claude Code</span><span>Cursor</span><span>Codex</span><span>MCP</span><span>Python</span><span>Git &amp; GitHub</span><span>JSON structured output</span><span>Streamlit <em>(test harness)</em></span></div></div>
             <div class="tools-group"><span class="tools-label">Voice &amp; conversation</span><div class="chips"><span>Vapi</span><span>Voiceflow</span><span>Dialogflow</span><span>Amazon Lex</span><span>IVR / telephony design</span></div></div>
-            <div class="tools-group"><span class="tools-label">Evidence &amp; analytics</span><div class="chips"><span>A/B &amp; IXP experimentation</span><span>Tableau</span><span>Qlik</span><span>Splunk</span><span>Langfuse</span></div></div>
+            <div class="tools-group"><span class="tools-label">Evidence &amp; analytics</span><div class="chips"><span>A/B experimentation</span><span>Tableau</span><span>Qlik</span><span>Splunk</span><span>Langfuse</span></div></div>
             <div class="tools-group"><span class="tools-label">Design &amp; collaboration</span><div class="chips"><span>Figma <em>(working knowledge)</em></span><span>Miro</span><span>Lucidchart</span><span>Jira &amp; Confluence</span></div></div>
           </div>
         </div>
@@ -232,7 +216,7 @@
         <div class="shell-narrow">
           <p class="eyebrow" style="justify-content:center;">Contact</p>
           <h2 id="contact-title">Building AI that has to be <span class="gradient-text">measurably good</span>? Let's talk.</h2>
-          <p>I'm looking for work where the full range matters: the strategy, the design, the model behavior, and the evaluation that proves it — as a designer, product lead, or the generalist who fills the gaps in between.</p>
+          <p>I'm looking for work where the full range matters: the strategy, the design, the model behavior, and the evaluation that proves it. As a designer, a product lead, or the generalist who fills the gaps in between.</p>
           <div class="hero-actions" style="justify-content:center;">
             <a class="button primary" href="mailto:[removed-private-contact]">Email me</a>
             <a class="button secondary" href="resume.html">Resume</a>
@@ -251,7 +235,7 @@
     </footer>
 
     <script>
-      // ---------- mobile nav ----------
+      // mobile nav
       (function () {
         var t = document.querySelector(".nav-toggle"), m = document.getElementById("nav-menu");
         if (!t || !m) return;
@@ -264,7 +248,7 @@
         document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
       })();
 
-      // ---------- reveal on scroll ----------
+      // reveal on scroll
       (function () {
         var els = document.querySelectorAll(".reveal");
         if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in"); }); return; }
@@ -273,137 +257,7 @@
         }, { threshold: 0.12 });
         els.forEach(function (e) { io.observe(e); });
       })();
-
-      // ---------- portfolio agent (curated-response mode) ----------
-      (function () {
-        var KB = [
-          {
-            id: "who",
-            chip: "Who is Simone?",
-            match: ["who", "about", "background", "introduce", "summary", "experience", "career", "story", "intuit", "history"],
-            a: "Simone is an AI experience designer and builder with nine years across three generations of conversation AI — NLU (Meta, Apple Siri, Sam's Club, early Intuit), LLM prompt engineering (QuickBooks GenAI, Credit Karma), and agentic systems (golden datasets, evaluation programs, and a working agent skill she built solo). She's led the work and the people doing it: a team of three designers and design technologists at Intuit.",
-            src: "source: About + career timeline"
-          },
-          {
-            id: "build",
-            chip: "Can she actually build?",
-            match: ["build", "built", "code", "coding", "technical", "engineer", "hands-on", "ship", "mcp", "yaml", "skill", "prototype", "billing"],
-            a: "Judge for yourself: in May 2026 she built a working agent skill in 5 days, solo — wrote the skill YAML, built a billing lookup tool with three environment modes (LIVE/EVAL/DEV), registered it in the agent repo, tested it locally through a Streamlit harness, and authored a 108-case golden dataset with judge-checkable gating criteria. She's not an engineer and doesn't claim to be — she's the person who makes the build real enough to test.",
-            src: "source: BillingSkill case study",
-            link: { href: "case-billing-skill.html", label: "Read the build story" }
-          },
-          {
-            id: "eval",
-            chip: "How does she think about AI quality?",
-            match: ["quality", "eval", "evaluation", "golden", "dataset", "judge", "measure", "rubric", "metric", "test", "ground truth", "label"],
-            a: "Her core belief: if you can't define what good looks like, you can't ship it. In practice that means golden datasets with ground truth and expected actions, LLM-as-judge validated against human labels (she used a 200-task human-labeled set to tune judges before scaling), multi-turn user simulators, and quality scores as release gates — not reports. That program lifted agent quality +8 to +13 points across three domains.",
-            src: "source: Quality Evaluation case study",
-            link: { href: "case-quality-evaluation.html", label: "See the quality loop" }
-          },
-          {
-            id: "voice",
-            chip: "What about voice?",
-            match: ["voice", "phone", "telephony", "ivr", "call", "speech", "audio", "snippet"],
-            a: "Voice is her home turf: five years on Intuit's telephony assistant, then one of Intuit's first GenAI voice experiences — which she prototyped in mid-2023 before the platform had an approved path, and co-shipped in December 2024. Result: +3.9 points of containment at Bayesian significance, on a channel carrying roughly 30% of contact volume. Her rule for the medium: a screen can show detail — voice has to earn every second.",
-            src: "source: Voice Snippet case study",
-            link: { href: "case-voice-snippet.html", label: "Voice Snippet, with video" }
-          },
-          {
-            id: "lead",
-            chip: "Designer, PM, or manager?",
-            match: ["manager", "lead", "leader", " pm", "product", "role", "title", "team", "fit", "hire", "hiring", "level", "designer"],
-            a: "Yes — deliberately. She's managed a team of three, authored PRDs and owned roadmap-facing deliverables, and stayed hands-on in the craft the whole time. She targets roles where that range is the point: agentic AI design, AI product, or the generalist seat on a team shipping AI that has to be measurably good. What she optimizes for is the outcome, not the org-chart label.",
-            src: "source: About + leadership record"
-          },
-          {
-            id: "agent",
-            chip: "How was this agent built?",
-            match: ["this agent", "this bot", "this chat", "how was this", "how does this work", "scripted", "real"],
-            a: "Honestly — and that's the point. This is deterministic retrieval over answers Simone wrote, scoped, and tested: curated responses, suggested questions, and a refusal boundary for everything else. No live model call, so it cannot hallucinate about her career. Designing an agent's scope, grounding, and failure behavior is exactly the discipline she applies to production systems — this one just has a very small job.",
-            src: "source: this page, agent-foot"
-          }
-        ];
-        var FALLBACK = {
-          a: "That's outside what I'm scoped to answer — I only speak to Simone's work, and only from her published case studies. (Refusing gracefully is a designed behavior, not a bug.) Try one of the suggested questions, or email her directly: [removed-private-contact].",
-          src: "refusal boundary · by design"
-        };
-
-        var log = document.getElementById("agent-log");
-        var chipsEl = document.getElementById("agent-chips");
-        var asked = {};
-        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-        function el(tag, cls, html) { var d = document.createElement(tag); if (cls) d.className = cls; if (html != null) d.innerHTML = html; return d; }
-        function scrollLog() { log.scrollTop = log.scrollHeight; }
-
-        function botSay(item) {
-          var t = el("div", "typing"); t.appendChild(el("i")); t.appendChild(el("i")); t.appendChild(el("i"));
-          log.appendChild(t); scrollLog();
-          window.setTimeout(function () {
-            log.removeChild(t);
-            var html = item.a;
-            if (item.link) html += ' <a href="' + item.link.href + '">' + item.link.label + ' →</a>';
-            html += '<span class="src">' + item.src + "</span>";
-            log.appendChild(el("div", "msg bot", html));
-            scrollLog();
-          }, reduced ? 60 : 750);
-        }
-
-        function ask(item) {
-          log.appendChild(el("div", "msg user", item.chip));
-          scrollLog();
-          asked[item.id] = true;
-          renderChips();
-          botSay(item);
-        }
-
-        function renderChips() {
-          chipsEl.innerHTML = "";
-          KB.filter(function (k) { return !asked[k.id]; }).forEach(function (k) {
-            var b = el("button", "agent-chip", k.chip);
-            b.type = "button";
-            b.addEventListener("click", function () { ask(k); });
-            chipsEl.appendChild(b);
-          });
-          if (!chipsEl.children.length) {
-            var done = el("div", "agent-chip", "That's the whole golden dataset — the long answers live in the case studies ↓");
-            done.style.cursor = "default"; done.style.borderStyle = "dashed";
-            chipsEl.appendChild(done);
-          }
-        }
-
-        // free-text input: keyword retrieval over the KB; no match → refusal fires
-        var form = document.getElementById("agent-form");
-        var input = document.getElementById("agent-q");
-        function retrieve(q) {
-          var text = q.toLowerCase();
-          var best = null, bestScore = 0;
-          KB.forEach(function (k) {
-            var score = 0;
-            k.match.forEach(function (kw) { if (text.indexOf(kw) !== -1) score += kw.length > 4 ? 2 : 1; });
-            if (score > bestScore) { bestScore = score; best = k; }
-          });
-          return bestScore > 0 ? best : null;
-        }
-        form.addEventListener("submit", function (e) {
-          e.preventDefault();
-          var q = input.value.trim();
-          if (!q) return;
-          input.value = "";
-          log.appendChild(el("div", "msg user", q.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")));
-          scrollLog();
-          var hit = retrieve(q);
-          if (hit) { asked[hit.id] = true; renderChips(); botSay(hit); }
-          else { botSay(FALLBACK); }
-        });
-
-        // opening message
-        botSay({
-          a: "Hi — I'm the portfolio agent. Simone designed my scope, wrote my responses, and decided what I should refuse to answer. Ask me about her work — or try to take me off-topic and watch the refusal.",
-          src: "system: greeting · v1.0"
-        });
-        renderChips();
-      })();
     </script>
+    <script src="./v2-agent.js" defer></script>
   </body>
 </html>
