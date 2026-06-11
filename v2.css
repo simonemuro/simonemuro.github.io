@@ -143,6 +143,8 @@ h3 { font-size: 1.15rem; margin: 0 0 0.4rem; font-weight: 600; }
 .proof .num em { font-style: normal; color: var(--accent); }
 .proof .lab { font-size: 0.84rem; color: var(--muted); line-height: 1.45; display: block; margin-top: 0.25rem; }
 
+.brand-strip { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.18em; color: var(--faint); margin-top: 1.6rem; }
+
 /* ---------- agent widget ---------- */
 .agent-section { padding-top: 1rem; }
 .agent-frame { border: 1px solid var(--line-bright); border-radius: var(--radius); background: var(--surface); overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,0.45); }
@@ -160,6 +162,13 @@ h3 { font-size: 1.15rem; margin: 0 0 0.4rem; font-weight: 600; }
 .typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: blink 1.2s infinite; }
 .typing i:nth-child(2) { animation-delay: 0.18s; } .typing i:nth-child(3) { animation-delay: 0.36s; }
 @keyframes blink { 0%,80%,100% { opacity: 0.25; } 40% { opacity: 1; } }
+.agent-input { display: flex; gap: 0.6rem; padding: 0 1.4rem 1rem; }
+.agent-input input { flex: 1; background: var(--bg-raise); border: 1px solid var(--line-bright); border-radius: 99px; color: var(--ink); font-family: var(--body); font-size: 0.93rem; padding: 0.65rem 1.1rem; outline: none; transition: border-color 0.15s; }
+.agent-input input:focus { border-color: var(--accent); }
+.agent-input input::placeholder { color: var(--faint); }
+.agent-input button { width: 42px; height: 42px; border-radius: 50%; border: 0; background: var(--accent); color: var(--accent-ink); font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: transform 0.15s; }
+.agent-input button:hover { transform: translateX(2px); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 .agent-chips { display: flex; flex-wrap: wrap; gap: 0.55rem; padding: 0 1.4rem 1.1rem; }
 .agent-chip { font-size: 0.84rem; font-weight: 500; color: var(--ink); background: transparent; border: 1px solid var(--line-bright); border-radius: 99px; padding: 0.45rem 0.95rem; cursor: pointer; transition: border-color 0.15s, background 0.15s; font-family: var(--body); }
 .agent-chip:hover { border-color: var(--accent); background: rgba(255,196,107,0.07); }
