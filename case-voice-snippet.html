@@ -3,284 +3,122 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Intuit Assist Voice Snippet: GenAI on the phone line · Simone Muro</title>
-    <meta name="description" content="Simone Muro put one of Intuit's first GenAI experiences on the phone line, the hardest channel to get right, by treating structure as a writing decision. She designed the disambiguation flow, wrote the system prompt, defined the JSON output, and authored the response rubric. +3.9 pp containment lift on targeted intents at Bayesian significance." />
-    <link rel="stylesheet" href="./styles.css" />
+    <title>Voice Snippet: GenAI on the phone line, 18 months before the platform was ready · Simone Muro</title>
+    <meta name="description" content="Simone Muro originated a GenAI voice experience in June 2023 — before there was an approved way to deploy it — then co-designed the production version that shipped in December 2024 with a +3.9 pp containment lift at Bayesian significance." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./v2.css" />
   </head>
   <body>
+    <div class="bg-field" aria-hidden="true"></div>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
       <nav class="nav-shell" aria-label="Primary navigation">
-        <a class="wordmark" href="index.html">SIMONE MURO</a>
+        <a class="wordmark" href="index.html">SIMONE<span>_</span>MURO</a>
         <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
         </button>
         <div class="nav-links" id="nav-menu">
-          <a href="index.html#about">About</a>
           <a href="index.html#work">Case Studies</a>
+          <a href="index.html#build">What I Build</a>
+          <a href="index.html#about">About</a>
           <a href="resume.html">Resume</a>
-          <a href="index.html#contact">Contact</a>
+          <a class="nav-cta" href="index.html#contact">Let's talk</a>
         </div>
       </nav>
     </header>
 
     <main id="main">
-      <article>
-        <section class="case-hero">
-          <div class="wrap">
-            <a class="back-link" href="index.html#work"><span aria-hidden="true">←</span> All work</a>
-            <div class="tags">
-              <span class="tag">Voice AI</span>
-              <span class="tag">Model UX Writing</span>
-              <span class="tag">Response Evaluation</span>
-            </div>
-            <h1>GenAI on the phone line, the one channel where a wrong answer is a wrong outcome.</h1>
-            <p class="deck">
-              In late 2024, when putting GenAI on a live support phone line still felt risky to most teams, I bet it was
-              exactly where it could pay off. Inbound calls were a third of all contact volume and the costliest place to
-              give a bad answer. Voice is also the hardest surface to write for: there's no screen, the caller hears it
-              once, and a wrong answer isn't a bad sentence, it's a bad outcome. I designed the disambiguation flow, wrote
-              the system prompt, defined the structured output the experience runs on, and authored the rubric that
-              decided whether any of it was good enough to ship. The bet that made it work: treat structure as a writing
-              decision.
-            </p>
-          </div>
-        </section>
-
-        <section class="wrap">
-          <dl class="case-meta">
-            <div><dt>My role</dt><dd>Conversation Designer &amp; Prompt Engineer. I owned what the model said and how we judged it</dd></div>
-            <div><dt>Surface</dt><dd>Intuit phone support (Intelligent Voice Assistant)</dd></div>
-            <div><dt>What I did</dt><dd>Disambiguation flow, system prompt, structured JSON output, voice-tuned summaries, response-evaluation rubric</dd></div>
-            <div><dt>Context</dt><dd>One of Intuit's first GenAI voice experiences; I owned the conversation-AI and evaluation design</dd></div>
+      <section class="case-hero">
+        <div class="shell-narrow">
+          <p class="eyebrow">Case study 04 · Voice AI · Production GenAI · 2023–24</p>
+          <h1>Voice Snippet: GenAI on the phone line, 18 months before the platform was ready</h1>
+          <p class="lede">Putting a generated answer on a live support call is the hardest version of the GenAI problem: no screen, no scrolling back, one chance to be heard. <b>I originated the concept in June 2023 and co-designed the production experience that shipped in December 2024</b> — and the gap between those dates is part of the story.</p>
+          <dl class="at-a-glance">
+            <div><dt>Role</dt><dd>Originated the concept; co-designed the production experience</dd></div>
+            <div><dt>Surface</dt><dd>Phone support — the voice assistant</dd></div>
+            <div><dt>What I did</dt><dd>Disambiguation design, system prompt, JSON output schema, escalation moments, eval rubric</dd></div>
+            <div><dt>Outcome</dt><dd>+3.9 pp containment lift, in production since Dec 2024</dd></div>
           </dl>
-        </section>
+        </div>
+      </section>
 
-        <section class="case-body-wrap">
-          <div class="wrap">
+      <article class="prose">
+        <div class="shell-narrow">
+          <h2>June 2023: the prototype the platform couldn't carry yet</h2>
+          <p>
+            The idea started as an "answer summary" experience in early GenAI use-case work: instead of reading help-article content at a caller, <b>generate a short, voice-tuned answer to their actual problem</b>. I prototyped it in June 2023. It was blocked — there was no approved deployment path for GenAI on the phone line yet, and I wasn't going to put a generated answer on a live call through an unapproved one. When the platform caught up, the concept shipped in December 2024, and I co-designed the production experience. I'll be precise about ownership throughout: the concept was mine; the ship was a team's.
+          </p>
 
-            <div class="block">
-              <span class="kicker">The problem</span>
-              <h2>A huge, expensive channel running on rigid scripts.</h2>
-              <div class="prose">
-                <p>
-                  Inbound calls were roughly <strong>30% of contact volume</strong> with a baseline containment around
-                  <strong>36%</strong>, a $70M-plus cost-saving opportunity if the experience actually helped people. But
-                  the voice assistant ran on rigid NLU flows and scripted responses. A caller with a specific problem
-                  heard a generic answer, repeated themselves, or got transferred with no context traveling with them.
-                </p>
-                <p>
-                  When a GenAI platform landed internally, the easy move was to point it at chat, where a clumsy answer is
-                  just a line you can scroll past. I argued for the harder, higher-value bet: voice. There's no screen to
-                  scan, the caller hears it once, and in support a wrong or risky answer isn't a bad sentence, it's a bad
-                  outcome.
-                </p>
-              </div>
-            </div>
+          <h2>Why voice, why it mattered</h2>
+          <p>
+            Inbound calls were roughly <b>30% of contact volume</b> — a <b>$70M+ opportunity</b> against a <b>36% baseline containment</b>. And the channel ran on rigid scripts: a caller with a specific problem heard a generic read-out, repeated themselves, or got transferred with no context traveling with them. The easy move for GenAI was chat, where a clumsy answer is just a line you scroll past. Voice is harder and worth more. <b>A screen can show detail. Voice has to earn every second.</b>
+          </p>
 
-            <div class="block">
-              <span class="kicker">My role</span>
-              <h2>I designed what the model said, and how we'd know it was good.</h2>
-              <ul class="role-list">
-                <li><b>Designed the disambiguation flow</b>, the clarifying questions that pin down a vague reason for calling before the system commits to an answer.</li>
-                <li><b>Wrote the system prompt</b> behind the live experience and <b>defined its structured JSON output</b>: the customer's question, the action to take, a clarifying question, the spoken response, task complexity, and an off-topic flag. On a phone line, that contract is what keeps a generated answer safe to say out loud.</li>
-                <li><b>Designed the voice-tuned summaries</b>, concise, speakable answers to a proposed fix, instead of reading a help article aloud.</li>
-                <li><b>Defined the handoff moments</b>, when the system should stop and route to an expert, carrying context with it.</li>
-                <li><b>Authored the response-evaluation rubric</b> that decided whether a generated answer was good enough to ship. It became one of the early templates the org's automated-evaluation rubric was built from.</li>
-              </ul>
+          <h2>The craft: every word the caller hears is a field with a job</h2>
+          <p>
+            My pieces of the production design were the behavior and the contract. I designed the <b>disambiguation questions</b> that pin down a vague caller intent — "payroll" or "invoices" alone isn't answerable; one well-chosen spoken question makes it answerable. I wrote and tuned the <b>system prompt</b> behind the experience. I defined the <b>JSON-structured output</b> the whole experience runs on — parsed downstream for routing, never read by a human. I designed the <b>escalation moments</b>: when the system should stop, hand off to an expert, and carry the context with it so the caller never starts over. And I authored the <b>response-quality evaluation rubric</b> that decided whether any generated answer was good enough to say out loud — a rubric that went on to seed the team's broader automated-evaluation rubric.
+          </p>
 
-              <figure class="three-category" role="img" aria-label="The voice classifier divides utterances into three categories. Categories one and two, standalone product names or standalone objects, trigger disambiguation. Category three, object plus action, triggers a voice-tuned summary with a handoff option.">
-                <figcaption>Three categories the classifier reads</figcaption>
-                <div class="cat-grid">
-                  <div class="cat ask">
-                    <span class="cat-num">01</span>
-                    <h4>Standalone product or general help</h4>
-                    <p class="cat-examples">"QuickBooks." "Help with payroll." "Tech support."</p>
-                    <p class="cat-action">→ Ask for details before answering</p>
-                  </div>
-                  <div class="cat ask">
-                    <span class="cat-num">02</span>
-                    <h4>Standalone object</h4>
-                    <p class="cat-examples">"Invoices." "Billing." "Manage subscription."</p>
-                    <p class="cat-action">→ Ask for details before answering</p>
-                  </div>
-                  <div class="cat answer">
-                    <span class="cat-num">03</span>
-                    <h4>Object + action</h4>
-                    <p class="cat-examples">"Cancel subscription." "Update billing info." "Dispute a charge."</p>
-                    <p class="cat-action">→ Voice-tuned summary + handoff option</p>
-                  </div>
-                </div>
-              </figure>
-            </div>
-
-            <div class="block">
-              <span class="kicker">The key decision</span>
-              <h2>Design for being heard once, and keep the output structured.</h2>
-              <div class="prose">
-                <p>
-                  The core decision was to treat the model's job as <strong>summarize, don't recite.</strong> Instead of
-                  reading a solution article aloud, the system generates a short, voice-tuned summary of the proposed fix.
-                  That meant deliberately trading completeness for comprehension: a caller can hold one clear next step in
-                  their head, not a four-paragraph article.
-                </p>
-                <p>
-                  The second decision was to make the output <strong>structured rather than free text.</strong> Forcing
-                  the model to emit a typed object let the experience decide what to do next, catch an out-of-scope
-                  request before it generated a risky answer, and be judged the same way every time. Structure is what
-                  made the difference between a demo and something safe to put on a phone line. It is also what made the
-                  answers measurable, and the measurable version is the one that moved containment: the +3.9 point lift
-                  was downstream of that decision, not separate from it.
-                </p>
-              </div>
-
-              <figure class="schema-anatomy" role="img" aria-label="The structured output contract for the Voice Snippet response, showing each field and what it controls in the spoken experience.">
-                <figcaption>The structured output, each field has a job</figcaption>
-                <div class="anatomy-grid">
-                  <div class="anatomy-row">
-                    <span class="field">customer_question</span>
-                    <span class="arrow" aria-hidden="true">→</span>
-                    <span class="purpose">What the caller actually asked, normalized.</span>
-                  </div>
-                  <div class="anatomy-row">
-                    <span class="field">action_type</span>
-                    <span class="arrow" aria-hidden="true">→</span>
-                    <span class="purpose">Decides what the caller hears next: <code>answer</code> · <code>disambiguate</code> · <code>handoff</code> · <code>off_topic</code></span>
-                  </div>
-                  <div class="anatomy-row">
-                    <span class="field">disambiguation</span>
-                    <span class="arrow" aria-hidden="true">→</span>
-                    <span class="purpose">One spoken question to narrow a vague intent.</span>
-                  </div>
-                  <div class="anatomy-row">
-                    <span class="field">response</span>
-                    <span class="arrow" aria-hidden="true">→</span>
-                    <span class="purpose">The spoken summary. Two sentences, because the caller hears it once.</span>
-                  </div>
-                  <div class="anatomy-row">
-                    <span class="field">task_complexity</span>
-                    <span class="arrow" aria-hidden="true">→</span>
-                    <span class="purpose"><code>low</code> | <code>high</code>, informs whether to hand off.</span>
-                  </div>
-                  <div class="anatomy-row">
-                    <span class="field">off_topic</span>
-                    <span class="arrow" aria-hidden="true">→</span>
-                    <span class="purpose">Caught before generation, so a risky request never becomes a spoken answer.</span>
-                  </div>
-                </div>
-              </figure>
-
-              <div class="prose">
-                <p>
-                  Everything the caller hears is one of those fields. In the clip below, the clarifying question is the
-                  <code>disambiguation</code> field and the two-sentence fix is <code>response</code>, the same contract,
-                  running in production.
-                </p>
-              </div>
-
-              <figure class="media-figure">
-                <figcaption>Before and after, on the phone line</figcaption>
-                <div class="media-embed">
-                  <video controls preload="metadata" playsinline>
-                    <source src="assets/voice-snippet-before-after.mp4" type="video/mp4" />
-                    <p class="media-fallback">Your browser can't play this clip. <a href="assets/voice-snippet-before-after.mp4" download>Download the before-and-after demo</a> instead.</p>
-                  </video>
-                </div>
-                <div class="media-transcript">
-                  <p class="mt-cap">What the clip shows</p>
-                  <p class="mt-turn"><span class="mt-spk">Before:</span> a long, scripted read-out of a help article, the same answer regardless of the caller's actual problem.</p>
-                  <p class="mt-turn"><span class="mt-spk">After:</span> one clarifying question, then a two-sentence spoken summary of the fix, with the option to send the full steps or hand off to an expert who already has the context.</p>
-                </div>
-                <p class="evidence-note"><b>Note:</b> a sanitized before-and-after demo. Production prompts, exact copy, and customer data are confidential.</p>
-              </figure>
-            </div>
-
-            <div class="block">
-              <span class="kicker">The outcome</span>
-              <h2>A measured lift on a channel that's expensive to get wrong.</h2>
-              <div class="metrics-row">
-                <div class="metric"><strong>+3.9 pp</strong><span>containment lift on targeted intents</span></div>
-                <div class="metric"><strong>Bayesian</strong><span>reached statistical significance in testing</span></div>
-                <div class="metric"><strong>~30%</strong><span>of contact volume is this channel, a $70M-class opportunity</span></div>
-              </div>
-              <div class="prose" style="margin-top:24px;">
-                <p>
-                  The lift landed on a channel where small percentages are large dollars, against a roughly 36%
-                  containment baseline on about a third of all contacts. It also changed how the team was seen: credible
-                  builders of GenAI voice, not only flow designers. And the rubric I wrote to judge these answers became
-                  one of the templates the org's later automated evaluation was seeded from.
-                </p>
-              </div>
-            </div>
-
-            <div class="block">
-              <span class="kicker">What I'd carry forward</span>
-              <h2>Structure is a writing decision, not just an engineering one.</h2>
-              <div class="prose">
-                <p>
-                  The biggest lesson was that the output schema <em>was</em> the content design. Deciding what fields the
-                  model must produce, and that it must flag off-topic and complexity before answering, shaped the
-                  customer experience more than any single sentence did. The hard part was choosing what to leave out:
-                  comprehension over completeness, one clear next step over a full article, and the schema is where I
-                  enforced that decision. I came out of this convinced that for AI, the contract between the model and the
-                  product is a core part of the writer's job, and I've designed that way ever since.
-                </p>
-              </div>
-            </div>
-
-            <div class="takeaway">
-              <span class="kicker" style="font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:12.5px;display:block;margin-bottom:10px;">The transferable principle</span>
-              <p>
-                Writing for the ear is a different discipline from writing for a screen. An answer heard once has to be
-                concise and correct, the system has to know when to hand off to a person, and the whole thing has to be
-                measurable on a high-volume line. Get that right and voice stops being the channel teams fear and becomes
-                one a model can be trusted with.
-              </p>
-            </div>
+          <div class="prompt-block" role="img" aria-label="The structured output contract: six JSON fields and what each controls in the spoken experience">
+            <div class="row"><span class="key">customer_question</span><span class="val">What the caller actually asked, normalized.</span></div>
+            <div class="row"><span class="key">action_type</span><span class="val">Decides what the caller hears next: <code>answer</code> · <code>disambiguate</code> · <code>handoff</code> · <code>off_topic</code></span></div>
+            <div class="row"><span class="key">disambiguation</span><span class="val">One spoken question to narrow a vague intent — one, because the caller is on the phone.</span></div>
+            <div class="row"><span class="key">response</span><span class="val">The spoken answer. Short by design — the caller hears it once.</span></div>
+            <div class="row"><span class="key">task_complexity</span><span class="val">Informs whether to answer or hand off to an expert with context.</span></div>
+            <div class="row"><span class="key">off_topic</span><span class="val">Caught before generation, so a risky request never becomes a spoken answer.</span></div>
           </div>
-        </section>
 
-        <section class="wrap">
-          <div class="case-next">
-            <a class="back-link" href="index.html#work" style="margin:0;"><span aria-hidden="true">←</span> All work</a>
-            <a class="nx" href="case-quality-evaluation.html" style="text-align:right;">
-              <div class="nx-label">Next case</div>
-              <div class="nx-title">Quality Evaluation for Intuit Intelligence →</div>
-            </a>
+          <p>
+            The structure <i>was</i> the safety case and the content design at once. Forcing the model into a typed contract is what let the experience catch an out-of-scope request before generating, route on complexity instead of hoping, and be judged the same way on every call. The choice that shaped the writing most was what to leave out: <b>summarize, don't recite</b> — one clear next step a caller can hold in their head, not a four-paragraph article read aloud.
+          </p>
+
+          <figure class="fig">
+            <video controls preload="metadata" playsinline>
+              <source src="assets/voice-snippet-before-after.mp4" type="video/mp4" />
+              <p>Your browser can't play this clip. <a href="assets/voice-snippet-before-after.mp4" download>Download the before-and-after demo</a> instead.</p>
+            </video>
+            <figcaption>Before: a long scripted read-out of a help article, the same for every caller. After: one clarifying question, then a two-sentence spoken answer — with the option to hand off to an expert who already has the context. Sanitized demo; production prompts and customer data are confidential.</figcaption>
+          </figure>
+
+          <h2>The outcome</h2>
+          <div class="callout">
+            <span class="num">+3.9 pp containment lift</span>
+            <p>On the targeted intents, at Bayesian significance in A/B testing — in production since December 2024, on a channel where small percentages are large dollars against a 36% baseline.</p>
           </div>
-        </section>
+          <p>
+            There was a second outcome that's harder to put in a callout: the ship established the design team as <b>credible GenAI builders</b> — people who could write the prompt, define the contract, and author the evaluation, not just design the flow around someone else's model.
+          </p>
+
+          <h2>What this proves</h2>
+          <p>
+            That the contract between the model and the product is a writer's job — the output schema shaped the customer experience more than any single sentence did. That voice, the channel teams fear most, becomes trustable when every generated word passes through structure and a rubric. And that being early is only worth something if you're also rigorous: the 2023 prototype earned the right to exist in 2024 because the behavior, the contract, and the definition of good were already worked out.
+          </p>
+
+          <nav class="case-nav" aria-label="Case study navigation">
+            <a href="case-quality-evaluation.html">← Previous: Quality Evaluation</a>
+            <a href="case-cancellation.html">Next: Cancellation Saves →</a>
+          </nav>
+        </div>
       </article>
     </main>
 
     <footer class="site-footer">
-      <div class="wrap">
+      <div class="shell">
         <p>© 2026 Simone Muro</p>
-        <p>Case studies are redacted to protect confidential company, customer, and platform information.</p>
+        <p>Reconstructed and redacted to protect confidential company, customer, and platform information. Role, process, decisions, and measured outcomes are preserved.</p>
       </div>
     </footer>
+
     <script>
       (function () {
-        var t = document.querySelector(".nav-toggle");
-        var m = document.getElementById("nav-menu");
-        if (t && m) {
-          var close = function () { m.classList.remove("open"); t.setAttribute("aria-expanded", "false"); t.setAttribute("aria-label", "Open menu"); };
-          var open = function () { m.classList.add("open"); t.setAttribute("aria-expanded", "true"); t.setAttribute("aria-label", "Close menu"); };
-          t.addEventListener("click", function () { m.classList.contains("open") ? close() : open(); });
-          m.addEventListener("click", function (e) { if (e.target.tagName === "A") close(); });
-          document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
-        }
-        if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-        var els = document.querySelectorAll(".block, figure");
-        els.forEach(function (el) { el.classList.add("reveal"); });
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) {
-            if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
-          });
-        }, { threshold: 0.08 });
-        els.forEach(function (el) { io.observe(el); });
+        var t = document.querySelector(".nav-toggle"), m = document.getElementById("nav-menu");
+        if (!t || !m) return;
+        t.addEventListener("click", function () { var o = m.classList.toggle("open"); t.setAttribute("aria-expanded", o ? "true" : "false"); });
+        m.addEventListener("click", function (e) { if (e.target.tagName === "A") m.classList.remove("open"); });
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") m.classList.remove("open"); });
       })();
     </script>
   </body>
