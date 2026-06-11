@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>BillingSkill: building the thing I'd been evaluating · Simone Muro</title>
-    <meta name="description" content="A conversation designer builds a working agent skill end to end in five days — skill instructions, a three-mode tool, and a 108-case golden dataset — without engineering support." />
+    <meta name="description" content="A conversation designer builds a working agent skill end to end in five days: skill instructions, a three-mode tool, and a 108-case golden dataset. No engineering support." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -35,9 +35,9 @@
         <div class="shell-narrow">
           <p class="eyebrow">Case study 01 · Agentic AI · Built solo · May 2026</p>
           <h1>BillingSkill: building the thing I'd been evaluating</h1>
-          <p class="lede">For a year I defined what good agent behavior looked like — golden datasets, rubrics, quality gates. One question kept nagging me: <b>could the person who writes the evaluation build the thing being evaluated?</b> I gave myself five days and an internal hackathon deadline to find out.</p>
+          <p class="lede">For a year I defined what good agent behavior looked like: golden datasets, rubrics, quality gates. One question kept nagging me: <b>could the person who writes the evaluation build the thing being evaluated?</b> I gave myself five days and an internal hackathon deadline to find out.</p>
           <dl class="at-a-glance">
-            <div><dt>Role</dt><dd>Solo builder — design, prompts, tool, eval</dd></div>
+            <div><dt>Role</dt><dd>Solo builder: design, prompts, tool, eval</dd></div>
             <div><dt>Context</dt><dd>Intuit internal builder hackathon, submitted &amp; judged</dd></div>
             <div><dt>Stack</dt><dd>Agent platform repo · Cursor · skill YAML · MCP</dd></div>
             <div><dt>Outcome</dt><dd>Working skill + 108-case eval dataset in 5 days</dd></div>
@@ -49,36 +49,44 @@
         <div class="shell-narrow">
           <h2>The problem worth picking</h2>
           <p>
-            Subscription-billing questions are one of the highest-volume reasons customers contact QuickBooks support. Ask the assistant "what's this charge?" and you got a summarized help article — generic steps, no awareness of <b>your</b> account, <b>your</b> plan, <b>your</b> charge. The data to answer properly existed. Nothing connected it to the conversation.
+            Subscription-billing questions are one of the highest-volume reasons customers contact QuickBooks support. Ask the assistant "what's this charge?" and you got a summarized help article: generic steps, no awareness of <b>your</b> account, <b>your</b> plan, <b>your</b> charge. The data to answer properly existed. Nothing connected it to the conversation.
           </p>
 
           <div class="transcript">
             <div class="transcript-head">Before → after · reconstructed</div>
             <div class="transcript-body">
               <div class="msg user">Why was I charged $107 this month?</div>
-              <div class="msg bot">BEFORE — generic article summary: "To view your subscription charges, go to Settings → Billing &amp; Subscription…" <span class="src">no account context · same answer for every customer</span></div>
-              <div class="msg bot">AFTER — account-aware: "Your June charge is $107: QuickBooks Online Plus ($99/mo) plus the Payroll add-on you added on May 14 ($8 prorated). Want me to break that down, or review your plan options?" <span class="src">grounded in live account data via the lookup tool</span></div>
+              <div class="msg bot">BEFORE (generic article summary): "To view your subscription charges, go to Settings → Billing &amp; Subscription…" <span class="src">no account context · same answer for every customer</span></div>
+              <div class="msg bot">AFTER (account-aware): "Your June charge is $107: QuickBooks Online Plus ($99/mo) plus the Payroll add-on you added on May 14 ($8 prorated). Want me to break that down, or review your plan options?" <span class="src">grounded in live account data via the lookup tool</span></div>
             </div>
-            <p class="note">Reconstructed with invented account data. The pattern — identify the question, retrieve account context, explain plainly, offer the next action — is the real design.</p>
+            <p class="note">Reconstructed with invented account data. The pattern (identify the question, retrieve account context, explain plainly, offer the next action) is the real design.</p>
           </div>
 
           <h2>The bet</h2>
           <p>
-            The tools to build agent skills already existed inside the company: the agent platform repo, a skill definition format, a tool-registration path. They were just considered engineering territory. My thesis, stated in the hackathon submission: <b>a conversation designer who already shapes how the agent talks — through golden datasets, rubrics, and quality criteria — can use those same tools to build a working skill end to end.</b> If true, designers stop being quality guardians at the end of the line and become contributors at the source.
+            The tools to build agent skills already existed inside the company: the agent platform repo, a skill definition format, a tool-registration path. They were just considered engineering territory. My thesis, stated in the hackathon submission: <b>a conversation designer who already shapes how the agent talks, through golden datasets, rubrics, and quality criteria, can use those same tools to build a working skill end to end.</b> If true, designers stop being quality guardians at the end of the line and become contributors at the source.
           </p>
 
           <h2>Five days, honestly logged</h2>
           <div class="timeline">
-            <div class="step"><h3><span>DAY 1</span>Scope from evidence, not opinion</h3><p>Analyzed 500+ labeled customer utterances; defined 7 intent categories (unrecognized charge, billing inquiry, pricing, duplicate charge…). Chose subscription charges — highest volume, clearest data dependency.</p></div>
-            <div class="step"><h3><span>DAY 2</span>Write the skill, build the tool</h3><p>Wrote the skill definition in YAML: tone, when-to-use conditions, graceful handling, and an admin vs non-admin permission check. Built a billing lookup tool with three environment modes — LIVE (real APIs), EVAL (scenario injection), DEV (mock data) — and registered it in the agent repo.</p></div>
+            <div class="step"><h3><span>DAY 1</span>Scope from evidence, not opinion</h3><p>Analyzed 500+ labeled customer utterances; defined 7 intent categories (unrecognized charge, billing inquiry, pricing, duplicate charge…). Chose subscription charges: highest volume, clearest data dependency.</p></div>
+            <div class="step"><h3><span>DAY 2</span>Write the skill, build the tool</h3><p>Wrote the skill definition in YAML: tone, when-to-use conditions, graceful handling, and an admin vs non-admin permission check. Built a billing lookup tool with three environment modes, LIVE (real APIs), EVAL (scenario injection), and DEV (mock data), and registered it in the agent repo.</p></div>
             <div class="step"><h3><span>DAY 3</span>Test end to end</h3><p>Ran the skill locally against the real agent through a Streamlit test harness. Validated both permission paths: admins get charge detail, non-admins get a safe redirect.</p></div>
-            <div class="step"><h3><span>DAY 4</span>Hit the wall, document the wall</h3><p>API research for live billing history hit a permissions blocker. Documented it precisely for the platform team instead of faking around it — and built the first 33-row golden dataset so evaluation wouldn't wait on access.</p></div>
-            <div class="step"><h3><span>DAY 5</span>Make it real with real conversations</h3><p>Pulled 55 actual production conversations, rewrote the skill instructions to handle what people actually say — cancel intent, price-increase complaints, downgrades — and grew the eval set to 108 test cases across 13 intent categories — six more than I'd scoped on Day 1, because real conversations widened the taxonomy.</p></div>
+            <div class="step"><h3><span>DAY 4</span>Hit the wall, document the wall</h3><p>API research for live billing history hit a permissions blocker. Documented it precisely for the platform team instead of faking around it, and built the first 33-row golden dataset so evaluation wouldn't wait on access.</p></div>
+            <div class="step"><h3><span>DAY 5</span>Make it real with real conversations</h3><p>Pulled 55 actual production conversations, rewrote the skill instructions to handle what people actually say (cancel intent, price-increase complaints, downgrades) and grew the eval set to 108 test cases across 13 intent categories. That's six more categories than I'd scoped on Day 1, because real conversations widened the taxonomy.</p></div>
           </div>
+
+          <h2>How I actually built it</h2>
+          <p>
+            I forked the agent platform repo and worked in Cursor with Claude as my pair. I used it to understand how existing skills were structured, to write the code I needed, and to test everything locally on my machine. The MCP piece was the two of us vibe-coding a local prototype, with full knowledge that wiring it into the company's production infrastructure would take engineering partnership.
+          </p>
+          <p>
+            I'm specific about the method because the method is the point. This is what AI-native building looks like in 2026: knowing how to drive an AI pair through an unfamiliar codebase, what to ask it, what to verify yourself, and when to stop generating and read the code. That skill is what turned a year of defining quality into working software in five days.
+          </p>
 
           <h2>The part most demos skip: the skill shipped with its own eval</h2>
           <p>
-            I didn't want a demo that worked when I drove it. Every scenario in the golden dataset carries mock tool data and <b>judge-checkable gating criteria</b> — explicit pass/fail rules written for a judge model to apply, including the failure modes that matter most:
+            I didn't want a demo that worked when I drove it. Every scenario in the golden dataset carries mock tool data and <b>judge-checkable gating criteria</b>: explicit pass/fail rules written for a judge model to apply, including the failure modes that matter most:
           </p>
           <div class="prompt-block" role="img" aria-label="Excerpt of one golden dataset row: mock data plus gating criteria">
             <div class="row"><span class="key">scenario</span><span class="val">"Customer asks why their monthly charge went up"</span></div>
@@ -88,17 +96,17 @@
             <div class="row"><span class="key">gating · behavior</span><span class="val">Must not: send the customer to support without first checking account data</span></div>
           </div>
           <p>
-            Plus a cancel-intercept: when a customer's billing question is really a cancellation in disguise, the skill offers a confirmation widget — a chance to fix the actual problem — before surrendering to churn. And before any of it could conflict with production, I ran an overlap analysis against the 7 existing skills that touch billing. No critical conflicts.
+            Plus a cancel-intercept: when a customer's billing question is really a cancellation in disguise, the skill offers a confirmation widget, a chance to fix the actual problem, before surrendering to churn. And before any of it could conflict with production, I ran an overlap analysis against the 7 existing skills that touch billing. No critical conflicts.
           </p>
 
           <div class="callout">
             <span class="num">5 days · 108 test cases · 0 engineers</span>
-            <p>Submitted and judged at Intuit's internal builder hackathon, with a working demo — built while learning MCP from scratch. It didn't take a prize, and I'm not going to pretend it did: the result I wanted was the proof, and the API blockers I documented went to the platform team as real feedback.</p>
+            <p>Submitted and judged at Intuit's internal builder hackathon, with a working demo, built while learning MCP from scratch. It didn't take a prize, and I'm not going to pretend it did: the result I wanted was the proof, and the API blockers I documented went to the platform team as real feedback.</p>
           </div>
 
           <h2>What this proves</h2>
           <p>
-            Not that designers should replace engineers — they shouldn't, and the API blocker I documented is exactly where engineering partnership matters. It proves that <b>the gap between "defines what good looks like" and "builds the thing" is now crossable by one motivated person</b> — and that when the same person designs the behavior, writes the instructions, and authors the eval, the loop between intent and evidence closes in days, not quarters. That's the working model I bring to a team: scope from evidence, build the smallest real thing, ship it with its own definition of good.
+            <b>The gap between "defines what good looks like" and "builds the thing" is now crossable by one motivated person.</b> When the same person designs the behavior, writes the instructions, and authors the eval, the loop between intent and evidence closes in days, not quarters. The API blocker I documented is exactly where engineering partnership begins, and I documented it the way a good partner would: precisely. That's the working model I bring to a team: scope from evidence, build the smallest real thing, ship it with its own definition of good.
           </p>
 
           <nav class="case-nav" aria-label="Case study navigation">
@@ -125,5 +133,6 @@
         document.addEventListener("keydown", function (e) { if (e.key === "Escape") m.classList.remove("open"); });
       })();
     </script>
+  <script src="./v2-agent.js" defer></script>
   </body>
 </html>
