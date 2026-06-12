@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simone Muro · Resume</title>
+<meta name="description" content="Resume of Simone Muro: conversational AI and agentic AI design and development. Behavior design, prompt engineering, golden datasets, evaluation. Meta, Apple Siri, Sam's Club, Intuit, Credit Karma." />
+<meta name="robots" content="noindex" />
+<meta property="og:title" content="Simone Muro · Resume" />
+<meta property="og:description" content="Conversation and agentic AI: behavior design, working builds, and the evaluation that proves them." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./v3.css" />
+<style>
+  /* ---------- resume layout: hairline tables, mono labels ---------- */
+  .rwrap { width: min(calc(100% - 48px), 880px); margin: 0 auto; }
+  .r-head { padding: 56px 0 36px; border-bottom: 1px solid var(--hairline); }
+  .r-head h1 { font-size: clamp(2.4rem, 5vw, 3.4rem); margin: 0 0 12px; }
+  .r-role { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--persimmon); margin: 0 0 16px; }
+  .r-meta { font-size: 0.92rem; color: var(--muted); margin: 0; }
+  .r-meta a { color: var(--muted); text-underline-offset: 3px; }
+  .r-meta a:hover { color: var(--persimmon); }
+  .r-tip { color: var(--faint); }
+
+  .r-sec { display: grid; grid-template-columns: 168px 1fr; gap: 36px; padding: 44px 0; border-bottom: 1px solid var(--hairline); }
+  .r-sec:last-of-type { border-bottom: 0; }
+  .r-sec > h2 { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin: 5px 0 0; }
+  @media (max-width: 700px) { .r-sec { grid-template-columns: 1fr; gap: 16px; padding: 34px 0; } }
+
+  .r-summary { font-size: 1.04rem; line-height: 1.7; margin: 0; color: #3d3a35; max-width: 62ch; }
+
+  .r-record { list-style: none; margin: 0; padding: 0; }
+  .r-record li { padding: 15px 0; border-bottom: 1px solid var(--hairline); font-size: 0.94rem; line-height: 1.65; color: var(--muted); }
+  .r-record li:first-child { padding-top: 0; }
+  .r-record li:last-child { border-bottom: 0; padding-bottom: 0; }
+  .r-record b { color: var(--ink); font-weight: 600; }
+
+  .job { padding: 28px 0 0; }
+  .job:first-child { padding-top: 0; }
+  .job + .job { border-top: 1px solid var(--hairline); margin-top: 28px; }
+  .job-head { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: baseline; }
+  .job .org { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.01em; }
+  .job .yrs { font-family: var(--mono); font-size: 0.72rem; color: var(--faint); white-space: nowrap; }
+  .job .role-line { font-size: 0.9rem; font-weight: 500; color: var(--ink); margin: 6px 0 12px; }
+
+  .roles-table { width: 100%; border-collapse: collapse; margin: 12px 0 18px; }
+  .roles-table td { padding: 8px 0; border-bottom: 1px solid var(--hairline); font-size: 0.88rem; color: var(--ink); font-weight: 500; }
+  .roles-table td.yr { font-family: var(--mono); font-weight: 400; font-size: 0.7rem; color: var(--faint); text-align: right; white-space: nowrap; padding-left: 16px; }
+
+  .job ul { list-style: none; margin: 0; padding: 0; }
+  .job ul li { position: relative; padding-left: 20px; margin-bottom: 9px; font-size: 0.92rem; line-height: 1.6; color: var(--muted); }
+  .job ul li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 8px; height: 1px; background: var(--faint); }
+  .job ul li b { color: var(--ink); font-weight: 600; }
+
+  .r-skills { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 36px; }
+  @media (max-width: 700px) { .r-skills { grid-template-columns: 1fr; } }
+  .r-skill { margin: 0; font-size: 0.9rem; line-height: 1.65; color: var(--muted); }
+  .r-skill b { display: block; font-family: var(--mono); font-weight: 500; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); margin-bottom: 6px; }
+
+  .r-edu { margin: 0; font-size: 0.92rem; line-height: 1.8; color: var(--muted); }
+
+  .r-actions { display: flex; gap: 14px; flex-wrap: wrap; padding: 44px 0 80px; }
+
+  /* ---------- print: clean black on white ---------- */
+  @media print {
+    :root { --paper: #fff; --card: #fff; --ink: #000; --muted: #333; --faint: #555; --hairline: #ccc; --persimmon: #000; --signal: #000; }
+    body { background: #fff; color: #000; font-size: 11.5px; }
+    .nav, .colophon, .agent-door, .skip-link, .r-actions, .r-tip { display: none !important; }
+    a { color: #000 !important; text-decoration: none; }
+    .r-summary { color: #000; }
+    .r-head { padding: 0 0 16px; }
+    .r-head h1 { font-size: 22pt; }
+    .r-sec { padding: 14px 0; grid-template-columns: 120px 1fr; gap: 18px; }
+    .job { break-inside: avoid; padding-top: 14px; }
+    .job + .job { margin-top: 14px; }
+    .r-record li { padding: 7px 0; }
+    .roles-table td { padding: 4px 0; }
+    .job ul li { margin-bottom: 4px; }
+    .r-skills { gap: 10px 24px; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav"><div class="shell">
+  <a class="wordmark" href="index.html">SIMONE MURO</a>
+  <div class="nav-links">
+    <a href="index.html#work">Work</a>
+    <a href="index.html#about">About</a>
+    <a href="resume.html" class="optional" aria-current="page">Resume</a>
+    <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
+  </div>
+</div></nav>
+
+<main id="main">
+
+<header class="r-head"><div class="rwrap">
+  <h1>Simone Muro</h1>
+  <p class="r-role">AI Experience Designer &amp; Builder · Conversation &amp; Agentic Systems</p>
+  <p class="r-meta"><a href="mailto:[removed-private-contact]">[removed-private-contact]</a> · Bay Area, CA · <a href="https://www.linkedin.com/in/simonemuro" rel="me">LinkedIn</a> · <a href="index.html">portfolio</a> · <span class="r-tip">tip: print this page to save a PDF</span></p>
+</div></header>
+
+<div class="rwrap">
+
+<section class="r-sec">
+  <h2>Summary</h2>
+  <p class="r-summary">
+    Nine years in conversation AI and language AI, the last six and a half designing and building conversation AI through three generations of the technology: NLU assistants, prompt-engineered LLM experiences, and agentic systems. I define how AI behaves (what it says, what it does, and where it stops) and prove it is good enough to ship: prompt engineering, golden datasets, LLM-as-judge and human-in-the-loop evaluation. A design technologist who ships: most recently a working agent skill built in five days, with its own 108-case eval dataset. Led the work and the people doing it as a manager of three.
+  </p>
+</section>
+
+<section class="r-sec">
+  <h2>The record</h2>
+  <ul class="r-record">
+    <li>Built a working agentic skill end to end, solo, in 5 days (skill instructions, a three-mode lookup tool, and a <b>108-case golden dataset</b> with judge-checkable gating criteria), submitted and judged at Intuit's internal builder hackathon.</li>
+    <li>Co-designed one of Intuit's first GenAI voice experiences (a concept I originated in 2023): disambiguation, voice-tuned summaries, JSON-structured output, response rubric; <b>+3.9 pp containment lift</b>, measured in production.</li>
+    <li>Prompt-engineered an LLM cancellation classifier to <b>96.6% savability accuracy</b> in pre-launch evaluation, with zero hallucination or toxicity findings in pre-launch testing, raising known-reason coverage from <b>60% to 96%</b>; the saves flow I designed beat its retention target, <b>12% saves rate vs a 5% goal</b>, over its first four months, with the analytics team's model projecting <b>$2.9M in retention revenue</b> from the improved routing.</li>
+    <li>Led AI quality evaluation for Intuit Intelligence, the agentic platform: golden datasets, LLM-as-judge, human labeling, multi-turn simulators: <b>+8 to +13 pp quality-score lifts</b>; built an LLM pre-population pipeline that cut dataset turnaround <b>~3 weeks → ~1 week across 3,000+ rows</b>.</li>
+    <li>Defined agent behavior for a regulated payroll agent: golden answers and tool inventory for <b>payroll's top contact drivers in ~10 days</b> (high-traffic, high-complexity questions), plus a diagnostic decision-tree framework for the hardest troubleshooting scenarios, adopted and extended by the partner team.</li>
+  </ul>
+</section>
+
+<section class="r-sec">
+  <h2>Experience</h2>
+  <div>
+
+    <div class="job">
+      <div class="job-head"><span class="org">Intuit · QuickBooks &amp; Credit Karma</span><span class="yrs">Oct 2020 – May 2026 · Mountain View, CA</span></div>
+      <table class="roles-table">
+        <tbody>
+          <tr><td>Conversation AI Design Lead (Manager II)</td><td class="yr">Aug 2025 – May 2026</td></tr>
+          <tr><td>Staff Conversation Designer</td><td class="yr">2024 – 2025</td></tr>
+          <tr><td>Prompt Engineer, Credit Karma (rotation)</td><td class="yr">Aug 2024 – late 2024</td></tr>
+          <tr><td>Senior Conversation Designer</td><td class="yr">2022 – 2024</td></tr>
+          <tr><td>Conversation Designer</td><td class="yr">Oct 2020 – 2022</td></tr>
+        </tbody>
+      </table>
+      <ul>
+        <li>Led conversation AI design for Intuit Intelligence, owning agent behavior and the quality bar across customer support, payroll, banking, and payments.</li>
+        <li>Built the model evaluation practice: golden datasets, source-of-truth answers and expected actions, response rubrics, multi-turn user-simulator instructions, expert audits, regression gates; validated LLM judges against a 200-task human-labeled set.</li>
+        <li>Prompt engineer on Credit Karma's GenAI features (Aug–late 2024): iterated production prompts across GPT-3.5 and GPT-4o under hard legal constraints, versioned in git and shipped through merged PRs, with persona-spanning synthetic test profiles and a graded evaluation rubric.</li>
+        <li>Designed model behavior for subscription and billing support: LLM cancellation-saves classification with empathetic expert handoff; built an LLM billing-query classifier end to end, lifting self-help resolution <b>12 points</b> (containment ~50% → 61%) on a ~800K-contact support area.</li>
+        <li>Established a reusable Responsible AI approval pattern (umbrella + addendum) that became the team standard for shipping LLM classification use cases.</li>
+        <li>Voice: four iterative login/password-reset experiments raised self-help acceptance 35% → 57% and containment 17% → 29%: the highest-performing voice redesign in the product line that year.</li>
+        <li>Managed a team of three designers and design technologists; championed a promotion to Senior Design Technologist; led senior-designer hiring screens and authored the team's craft exercise.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head"><span class="org">Sam's Club (Walmart)</span><span class="yrs">Dec 2019 – Oct 2020 · San Bruno, CA</span></div>
+      <p class="role-line">Lead Conversation Designer</p>
+      <ul>
+        <li>Sole design owner for the customer-support voice assistant and chatbot across a retail membership and e-commerce environment: dialogue architecture, escalation paths, production quality standards.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head"><span class="org">Apple</span><span class="yrs">Oct 2018 – Dec 2019 · Cupertino, CA</span></div>
+      <p class="role-line">Language Engineer, Siri</p>
+      <ul>
+        <li>Improved Siri ASR and TTS for Brazilian Portuguese: training-data curation, grammar and pronunciation rules, lexicon expansion, quality review with linguists, engineers, and QA.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head"><span class="org">Meta (Facebook)</span><span class="yrs">Oct 2016 – Oct 2018 · Menlo Park, CA</span></div>
+      <p class="role-line">Content &amp; Language Analyst</p>
+      <ul>
+        <li>Partnered with ML engineers on language-model training for content-policy detection: taxonomy refinement, labeling quality, trend analysis.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<section class="r-sec">
+  <h2>Skills</h2>
+  <div class="r-skills">
+    <p class="r-skill"><b>AI craft</b> Prompt engineering, conversational AI &amp; model UX design, agent &amp; skill design, retrieval-grounded responses (RAG), structured JSON output, golden datasets, ground truth, LLM-as-judge, human-in-the-loop labeling, multi-turn simulators, Responsible AI, NLU design &amp; tuning.</p>
+    <p class="r-skill"><b>Build</b> Claude Code, Cursor, Codex, MCP, Python, Git &amp; GitHub, Streamlit (test harness), Langfuse.</p>
+    <p class="r-skill"><b>Voice &amp; conversation</b> Vapi, Voiceflow, Dialogflow, Amazon Lex, IVR/telephony design, voice &amp; tone systems, disambiguation, error recovery, human handoff.</p>
+    <p class="r-skill"><b>Evidence</b> A/B experimentation, containment/self-help/quality metrics, Tableau, Qlik, Splunk.</p>
+  </div>
+</section>
+
+<section class="r-sec">
+  <h2>Education</h2>
+  <p class="r-edu">
+    Prompt Engineering for Developers, DeepLearning.AI · Python for Data Science, Udemy · Conversation AI, Coursera ·
+    Front-End Development, Udacity · Law (LL.B.), Univale, Brazil · Languages: English (fluent), Portuguese (native).
+  </p>
+</section>
+
+<div class="r-actions">
+  <a class="btn solid" href="index.html#contact">Get in touch</a>
+  <a class="btn ghost" href="index.html#work">Back to the work</a>
+</div>
+
+</div>
+
+</main>
+
+<footer class="colophon"><div class="shell">
+  <p>Set in Geist and Newsreader. Designed and built AI-natively: directed by Simone, executed with AI agents, the way she works. Motion honors reduced-motion; every animation has a finished static state.</p>
+  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. Roles, process, design decisions, and measured outcomes are preserved. © 2026 Simone Muro · Bay Area, CA</p>
+</div></footer>
+
+<button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
+<script src="./v3.js" defer></script>
+</body>
+</html>
