@@ -47,9 +47,9 @@
 
       <article class="prose">
         <div class="shell-narrow">
-          <h2>Why one judge isn't a quality system</h2>
+          <h2>Why one judge is not a quality system</h2>
           <p>
-            LLM-as-judge is cheap, fast, and necessary. It is not sufficient. A judge model can grade whether an answer reads well; it's far weaker at knowing whether the agent took the <b>right action</b> in a payroll run or a billing workflow, and it drifts when the product underneath it changes. So the discipline I built treats the judge as one instrument in a loop, not the verdict: golden datasets carry ground truth answers <b>and expected actions</b>; offline judging is checked against human labeling on production samples; failure audits feed fixes back into prompts, tools, and content; and regression and drift monitoring make sure last month's quality is still this month's.
+            LLM-as-judge is cheap, fast, and necessary. It is not sufficient. A judge model can grade whether an answer reads well; it is far weaker at knowing whether the agent took the <b>right action</b> in a payroll run or a billing workflow, and it drifts when the product underneath it changes. So the discipline I built treats the judge as one instrument in a loop, not the verdict: golden datasets carry ground truth answers <b>and expected actions</b>; offline judging is checked against human labeling on production samples; failure audits feed fixes back into prompts, tools, and content; and regression and drift monitoring make sure last month's quality is still this month's.
           </p>
 
           <h2>The loop, end to end</h2>
@@ -68,9 +68,9 @@
           </p>
           <div class="prompt-block" role="img" aria-label="Illustrative shape of a user-simulator instruction">
             <div class="row"><span class="key">simulator</span><span class="val">A GenAI bot playing the customer, conversing with the agent rather than grading it</span></div>
-            <div class="row"><span class="key">behavior rule</span><span class="val"><code>If the agent asks for information the persona wouldn't know → say you're not sure where to find it</code></span></div>
+            <div class="row"><span class="key">behavior rule</span><span class="val"><code>If the agent asks for information the persona would not know → say you are not sure where to find it</code></span></div>
             <div class="row"><span class="key">behavior rule</span><span class="val"><code>If the agent offers the correct resolution → accept it and confirm the outcome</code></span></div>
-            <div class="row"><span class="key">why</span><span class="val">Multi-turn behavior (clarifying questions, recovery, follow-through) can't be evaluated one turn at a time</span></div>
+            <div class="row"><span class="key">why</span><span class="val">Multi-turn behavior (clarifying questions, recovery, follow-through) cannot be evaluated one turn at a time</span></div>
           </div>
 
           <h2>Two weeks' notice</h2>
@@ -85,17 +85,17 @@
 
           <h2>Rigor that paid for itself</h2>
           <p>
-            Before scaling the judges, I validated them against a 200-task human-labeled set, with the agreement bar fixed before the test rather than after. The judges cleared it (the internal numbers stay internal, but the decision rule didn't move), and on the strength of that evidence I cut a planned 2,000-row contract with an external labeling vendor. The judges were well-tuned; the spend wasn't needed. That's what an evaluation program should do: tell you not just where quality is, but where your money isn't required.
+            Before scaling the judges, I validated them against a 200-task human-labeled set, with the agreement bar fixed before the test rather than after. The judges cleared it (the internal numbers stay internal), and on the strength of that evidence I cut a planned 2,000-row contract with an external labeling vendor. The judges were well-tuned; the spend was not needed. That is what an evaluation program should do: tell you not just where quality is, but where your money is not required.
           </p>
 
           <div class="callout mint">
             <span class="num">Help +8 pp · Payroll +9.8 pp · Insights +13 pp</span>
-            <p>Quality-score lifts as of April 2026. The structural win underneath them: quality became a release gate, not a report. Concretely: rows failing correctness or scoring below the conversation-quality threshold were flagged and audited, and a skill didn't ramp until its golden-set results cleared the launch bar.</p>
+            <p>Quality-score lifts as of April 2026. The structural win underneath them: quality became a release gate, not a report. Concretely: rows failing correctness or scoring below the conversation-quality threshold were flagged and audited, and a skill did not ramp until its golden-set results cleared the launch bar.</p>
           </div>
 
           <h2>What this proves</h2>
           <p>
-            Quality systems leadership has three layers, and I've done all three on the same program: <b>define the methodology</b> (the loop, the rubrics, the audit frameworks), <b>build the tooling that scales it</b> (the pre-population pipeline, the judge validation), and <b>run it through org turbulence</b> (a two-week leadership handoff during the org's top priority, with delivery never stopping). The metrics matter, but the durable outcome is the second one in the callout: shipping now requires evidence.
+            Quality systems leadership has three layers, and I have done all three on the same program: <b>define the methodology</b> (the loop, the rubrics, the audit frameworks), <b>build the tooling that scales it</b> (the pre-population pipeline, the judge validation), and <b>run it through org turbulence</b> (a two-week leadership handoff during the org's top priority, with delivery never stopping). The metrics matter, but the durable outcome is the second one in the callout: shipping now requires evidence.
           </p>
 
           <nav class="case-nav" aria-label="Case study navigation">

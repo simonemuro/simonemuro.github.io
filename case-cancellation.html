@@ -35,7 +35,7 @@
         <div class="shell-narrow">
           <p class="eyebrow">Case study 05 · LLM classification · Retention · 2022–23</p>
           <h1>Cancellation Saves: teaching the system to hear why customers leave</h1>
-          <p class="lede">A customer who says "I want to cancel" is not one problem. They're a dozen, and only some of them are losses you have to accept. This is the story of teaching a support system to hear the difference: first with the tools of 2022, then with a prompt that <b>beat months of NLU work in hours</b>, with an honest account of what shipped when.</p>
+          <p class="lede">A customer who says "I want to cancel" is not one problem. They are a dozen, and only some of them are losses you have to accept. This is the story of teaching a support system to hear the difference: first with the tools of 2022, then with a prompt that <b>beat months of NLU work in hours</b>, and what shipped when.</p>
           <dl class="at-a-glance">
             <div><dt>Role</dt><dd>Lead conversation designer &amp; prompt engineer</dd></div>
             <div><dt>Surface</dt><dd>The voice assistant; pattern later shipped across voice and chat</dd></div>
@@ -52,7 +52,7 @@
             Cancellation was one of the highest-volume reasons customers called, and the flow treated every request identically: hand over the cancel steps, let them go. The reason, the one piece of signal that decides whether a customer is savable, was spoken out loud on every call and acted on in none of them.
           </p>
           <p>
-            I designed the savable-cancellation routing for the voice assistant. The flow disambiguated the cancel intent, probed for the reason, and split the path: customers leaving for <b>price, switching products, or not using the product</b> (the three reasons the saves team validated as genuinely winnable) were routed to dedicated retention experts with the case context pre-populated, so nobody repeated themselves. Everyone else got a clean, respectful cancel path. No dark patterns, no hostage negotiation. If the business closed, we helped them leave well.
+            I designed the savable-cancellation routing for the voice assistant. The flow disambiguated the cancel intent, probed for the reason, and split the path: customers leaving for <b>price, switching products, or not using the product</b> (the three reasons the saves team validated as genuinely winnable) were routed to dedicated retention experts with the case context pre-populated, so nobody repeated themselves. Everyone else got a clean, respectful cancel path. If the business closed, we helped them leave well.
           </p>
 
           <div class="transcript">
@@ -69,9 +69,9 @@
             It worked, and we measured it. Across <b>8,814 cancellation calls from December 2022 through March 2023</b>, the flow saved <b>12% of customers against a 5% target</b>. Calls where the reason was price, the reason a specialist has the most room to fix, saved at <b>43%</b>.
           </p>
 
-          <h2>The ceiling: a model that couldn't hear</h2>
+          <h2>The ceiling: a model that could not hear</h2>
           <p>
-            The routing was only as good as the classification feeding it, and the NLU-era intent model had a hard ceiling. It returned <b>"unknown" on roughly 40% of cancellation reasons</b>: no trained intent matched the real, messy ways people explain why they're leaving. And when it did produce a label, it was right about <b>80%</b> of the time, so downstream routing inherited both the blindness and the errors. Meanwhile the saves teams kept <b>20–35% of customers when they knew the real reason</b>. Every "unknown" was money left on the table, and training new intents took months per iteration.
+            The routing was only as good as the classification feeding it, and the NLU-era intent model had a hard ceiling. It returned <b>"unknown" on roughly 40% of cancellation reasons</b>: no trained intent matched the real, messy ways people explain why they are leaving. And when it did produce a label, it was right about <b>80%</b> of the time, so downstream routing inherited both the blindness and the errors. Meanwhile the saves teams kept <b>20–35% of customers when they knew the real reason</b>. Every "unknown" was money left on the table, and training new intents took months per iteration.
           </p>
 
           <h2>May–June 2023: replace the intent model with a prompt</h2>
@@ -88,7 +88,7 @@
           </div>
 
           <p>
-            I tested it the way I'd want anyone to test a claim of mine: across <b>hundreds of real customer utterances</b>. The classifier hit <b>96.6% savability accuracy</b>, lifted the share of cancellations resolved to a known reason from <b>60% to 96%</b>, and produced <b>zero hallucinations and zero toxicity</b> across the test set. Estimated run cost: about <b>$756 a year</b>. And the dev-time story might be the biggest number of all: what took months of NLU training per iteration collapsed into hours of prompt work.
+            I tested it across <b>hundreds of real customer utterances</b>. The classifier hit <b>96.6% savability accuracy</b>, lifted the share of cancellations resolved to a known reason from <b>60% to 96%</b>, and produced <b>zero hallucinations and zero toxicity</b> across the test set. Estimated run cost: about <b>$756 a year</b>. And the dev-time story might be the biggest number of all: what took months of NLU training per iteration collapsed into hours of prompt work.
           </p>
 
           <div class="callout">
@@ -96,21 +96,21 @@
             <p>Classifier accuracy measured across hundreds of real customer utterances, zero hallucinations or toxicity, ~$756/year to run. All on top of an NLU-era flow that had already beaten its saves target by more than 2x.</p>
           </div>
 
-          <h2>The part I didn't get to ship, and what happened instead</h2>
+          <h2>Blocked from production, then shipped</h2>
           <p>
-            Here's the honest twist: the classifier was <b>blocked from production</b>. The deployment path it needed wasn't approved platform infrastructure yet, and I wasn't going to route a revenue-critical decision through an unapproved one. I didn't fake my way around it. I documented the proof (the accuracy, the test methodology, the cost) and made the case.
+            The classifier was <b>blocked from production</b>. The deployment path it needed was not approved platform infrastructure yet, and a revenue-critical decision does not belong on an unapproved one. I documented the proof (the accuracy, the test methodology, the cost) and made the case.
           </p>
           <div class="callout mint">
             <span class="num">Blocked in 2023. Shipped in FY25.</span>
             <p>When the platform caught up, the GenAI classification pattern shipped through approved channels, across voice and chat. The Responsible AI approval pattern I helped establish became the team standard for LLM classification use cases.</p>
           </div>
           <p>
-            I won't claim the 2023 prototype shipped as-is, because it didn't. What I'll claim is what the evidence supports: I proved the pattern before the platform could carry it, kept the proof rigorous enough to survive scrutiny, and the production version that followed stood on it.
+            The 2023 prototype did not ship as-is. The pattern did: proven before the platform could carry it, documented while it waited, and the production version that followed stood on that proof.
           </p>
 
           <h2>What this proves</h2>
           <p>
-            Three things. First, <b>problem-first prompt craft under a real business constraint</b>: the prompt wasn't a demo, it was a routing decision with asymmetric costs on each kind of error. Second, <b>evaluation rigor</b>: every number on this page was measured, and the one famous number that wasn't defensible isn't here. Third, the pattern generalizes: fraud triage, escalation, any problem shaped like <i>read the messy human reason, then route the decision</i> is won the same way: a tightly ruled classifier, structured output, and an eval you'd stake the routing on.
+            Three things. First, <b>problem-first prompt craft under a real business constraint</b>: the prompt was not a demo, it was a routing decision with asymmetric costs on each kind of error. Second, <b>evaluation rigor</b>: accuracy, classification coverage, hallucination rate, toxicity, and run cost were all measured across hundreds of real utterances. Third, the pattern generalizes: fraud triage, escalation, any problem shaped like <i>read the messy human reason, then route the decision</i> is won the same way: a tightly ruled classifier, structured output, and an eval strong enough to stake the routing on.
           </p>
 
           <nav class="case-nav" aria-label="Case study navigation">
