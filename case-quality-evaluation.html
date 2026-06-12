@@ -35,7 +35,7 @@
         <div class="shell-narrow">
           <p class="eyebrow mint">Case study 03 · AI quality at scale · Leadership · 2025–26</p>
           <h1>Making "good enough to ship" measurable for an agentic platform</h1>
-          <p class="lede">As Intuit Intelligence scaled across QuickBooks, one judge model grading answers stopped being enough. Agents were taking <b>actions</b> in product and financial workflows, and "the answer sounded right" is not a quality bar for someone's books. I built the judge-validation method, the blind ground-truth audit, and the pre-population pipeline that made quality measurable at scale. When the program's day-to-day owner left on sudden leave, I ran the whole thing.</p>
+          <p class="lede">As Intuit Intelligence scaled across QuickBooks, one judge model grading answers stopped being enough. Agents were taking <b>actions</b> in product and financial workflows, and "the answer sounded right" isn't a quality bar for someone's books. I built the judge-validation method, the blind ground-truth audit, and the pre-population pipeline that made quality measurable at scale. When the program's day-to-day owner left on sudden leave, I ran the whole thing.</p>
           <dl class="at-a-glance">
             <div><dt>Role</dt><dd>Eval methodology builder; took over the full program in 2026; design manager</dd></div>
             <div><dt>Context</dt><dd>Intuit Intelligence, the agentic AI platform across QuickBooks</dd></div>
@@ -47,9 +47,9 @@
 
       <article class="prose">
         <div class="shell-narrow">
-          <h2>Why one judge is not a quality system</h2>
+          <h2>Why one judge isn't a quality system</h2>
           <p>
-            LLM-as-judge is cheap, fast, and necessary. It is not sufficient. A judge model can grade whether an answer reads well; it is far weaker at knowing whether the agent took the <b>right action</b> in a payroll run or a billing workflow, and it drifts when the product underneath it changes. So the discipline I built treats the judge as one instrument in a loop, not the verdict: golden datasets carry ground truth answers <b>and expected actions</b>; offline judging is checked against human labeling on production samples; failure audits feed fixes back into prompts, tools, and content; and regression and drift monitoring make sure last month's quality is still this month's.
+            LLM-as-judge is cheap, fast, and necessary. It's not sufficient. A judge model can grade whether an answer reads well; it's far weaker at knowing whether the agent took the <b>right action</b> in a payroll run or a billing workflow, and it drifts when the product underneath it changes. So the discipline I built treats the judge as one instrument in a loop, not the verdict: golden datasets carry ground truth answers <b>and expected actions</b>; offline judging is checked against human labeling on production samples; failure audits feed fixes back into prompts, tools, and content; and regression and drift monitoring make sure last month's quality is still this month's.
           </p>
 
           <h2>The loop, end to end</h2>
@@ -85,17 +85,17 @@
 
           <h2>Rigor that paid for itself</h2>
           <p>
-            Before scaling the judges, I validated them against a 200-task human-labeled set, with the agreement bar fixed before the test rather than after. The judges cleared it (the internal numbers stay internal), and on the strength of that evidence I cut a planned 2,000-row contract with an external labeling vendor. The judges were well-tuned; the spend was not needed. That is what an evaluation program should do: tell you not just where quality is, but where your money is not required.
+            Before scaling the judges, I validated them against a 200-task human-labeled set, with the agreement bar fixed before the test rather than after. The judges cleared it (the internal numbers stay internal), and on the strength of that evidence I cut a planned 2,000-row contract with an external labeling vendor. The judges were well-tuned; the spend wasn't needed. That's what an evaluation program should do: tell you not just where quality is, but where your money isn't required.
           </p>
 
           <div class="callout mint">
             <span class="num">Help +8 pp · Payroll +9.8 pp · Insights +13 pp</span>
-            <p>Quality-score lifts as of April 2026. The structural win underneath them: quality became a release gate, not a report. Concretely: rows failing correctness or scoring below the conversation-quality threshold were flagged and audited, and a skill did not ramp until its golden-set results cleared the launch bar.</p>
+            <p>Quality-score lifts as of April 2026. The structural win underneath them: quality became a release gate, not a report. Concretely: rows failing correctness or scoring below the conversation-quality threshold were flagged and audited, and a skill didn't ramp until its golden-set results cleared the launch bar.</p>
           </div>
 
           <h2>What this proves</h2>
           <p>
-            Quality systems leadership has three layers, and I have done all three on the same program: <b>define the methodology</b> (the loop, the rubrics, the audit frameworks), <b>build the tooling that scales it</b> (the pre-population pipeline, the judge validation), and <b>run it through org turbulence</b> (a two-week leadership handoff during the org's top priority, with delivery never stopping). The metrics matter, but the durable outcome is the second one in the callout: shipping now requires evidence.
+            Quality systems leadership has three layers, and I've done all three on the same program: <b>define the methodology</b> (the loop, the rubrics, the audit frameworks), <b>build the tooling that scales it</b> (the pre-population pipeline, the judge validation), and <b>run it through org turbulence</b> (a two-week leadership handoff during the org's top priority, with delivery never stopping). The metrics matter, but the durable outcome is the second one in the callout: shipping now requires evidence.
           </p>
 
           <nav class="case-nav" aria-label="Case study navigation">

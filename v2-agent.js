@@ -47,7 +47,7 @@
       link: { href: "case-billing-skill.html", label: "Read the build story" } },
     { id: "eval", chip: "How does she think about AI quality?",
       match: ["quality", "eval", "evaluation", "golden", "dataset", "judge", "measure", "rubric", "metric", "test", "ground truth", "label"],
-      a: "Her core belief: if you cannot define what good looks like, you cannot ship it. In practice that means golden datasets with ground truth and expected actions, LLM judges validated against human labels before anyone trusts them, multi-turn user simulators, and quality scores as release gates rather than reports. That program lifted agent quality 8 to 13 points across three domains.",
+      a: "Her core belief: if you can't define what good looks like, you can't ship it. In practice that means golden datasets with ground truth and expected actions, LLM judges validated against human labels before anyone trusts them, multi-turn user simulators, and quality scores as release gates rather than reports. That program lifted agent quality 8 to 13 points across three domains.",
       src: "source: Quality Evaluation case study",
       link: { href: "case-quality-evaluation.html", label: "See the quality loop" } },
     { id: "voice", chip: "What about voice?",
@@ -65,7 +65,7 @@
       src: "source: this page" }
   ];
   var FALLBACK = {
-    a: "That is outside my scope. I speak to Simone's work, from her published case studies. Ask about her builds, her evals, or her voice work, or email her directly: googsicle@gmail.com.",
+    a: "That's outside my scope. I speak to Simone's work, from her published case studies. Ask about her builds, her evals, or her voice work, or email her directly: googsicle@gmail.com.",
     src: "refusal boundary"
   };
 
@@ -129,7 +129,7 @@
     }).catch(function () {
       if (t.parentNode) log.removeChild(t);
       liveMode = false;
-      log.appendChild(el("div", "msg bot", "The live model is unreachable right now, so I have switched to curated mode: answers Simone wrote and tested, still grounded in her real work.<span class=\"src\">curated mode</span>"));
+      log.appendChild(el("div", "msg bot", "The live model is unreachable right now, so I've switched to curated mode: answers Simone wrote and tested, still grounded in her real work.<span class=\"src\">curated mode</span>"));
       scrollLog();
       curatedAnswer(q);
     });
@@ -176,7 +176,7 @@
       '<div class="agent-chips" id="agent-chips" role="group" aria-label="Suggested questions"></div>' +
       '<div class="agent-foot"><b>How this works:</b> <span>' +
         (liveMode
-          ? 'a live model (Claude) behind a guardrailed, eval-tested system prompt I wrote, grounded in my case studies. If it is unreachable, a curated mode I also wrote takes over.'
+          ? 'a live model (Claude) behind a guardrailed, eval-tested system prompt I wrote, grounded in my case studies. If it's unreachable, a curated mode I also wrote takes over.'
           : 'curated mode: deterministic retrieval over answers I wrote and tested. Designing the scope, grounding, and refusal behavior is the craft.') +
       '</span></div>';
 
@@ -196,8 +196,8 @@
         greeted = true;
         botSay({
           a: liveMode
-            ? "Hi, I am Simone's agent twin. She wrote my instructions, scoped what I can speak to, and eval-tested me before letting me talk to you. Ask me anything about her work."
-            : "Hi, I am Simone's portfolio agent. She designed my scope, wrote my responses, and decided what I should refuse to answer. Ask me about her work.",
+            ? "Hi, I'm Simone's agent twin. She wrote my instructions, scoped what I can speak to, and eval-tested me before letting me talk to you. Ask me anything about her work."
+            : "Hi, I'm Simone's portfolio agent. She designed my scope, wrote my responses, and decided what I should refuse to answer. Ask me about her work.",
           src: "system: greeting"
         }, 500);
         renderChips();
