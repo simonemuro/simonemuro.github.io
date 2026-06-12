@@ -176,7 +176,7 @@
       '<div class="agent-chips" id="agent-chips" role="group" aria-label="Suggested questions"></div>' +
       '<div class="agent-foot"><b>How this works:</b> <span>' +
         (liveMode
-          ? 'a live model (Claude) behind a guardrailed, eval-tested system prompt I wrote, grounded in my case studies. If it's unreachable, a curated mode I also wrote takes over.'
+          ? 'a live model (Claude) behind a guardrailed, eval-tested system prompt I wrote, grounded in my case studies. If it’s unreachable, a curated mode I also wrote takes over.'
           : 'curated mode: deterministic retrieval over answers I wrote and tested. Designing the scope, grounding, and refusal behavior is the craft.') +
       '</span></div>';
 
