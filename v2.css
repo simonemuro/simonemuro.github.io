@@ -157,13 +157,14 @@ h3 { font-size: 1.15rem; margin: 0 0 0.4rem; font-weight: 600; }
 .hero-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; }
 
 /* proof bar */
-.proof-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-top: 3.4rem; }
+.proof-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-top: 2.6rem; }
 .proof { background: var(--surface); padding: 1.35rem 1.5rem; }
 .proof .num { font-family: var(--display); font-size: 1.85rem; font-weight: 700; color: var(--ink-strong); display: block; }
 .proof .num em { font-style: normal; color: var(--accent); }
 .proof .lab { font-size: 0.84rem; color: var(--muted); line-height: 1.45; display: block; margin-top: 0.25rem; }
 
-.brand-strip { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.18em; color: var(--faint); margin-top: 1.6rem; }
+.brand-strip { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.16em; color: var(--muted); margin: 2.2rem 0 0; }
+.brand-label { color: var(--faint); text-transform: uppercase; font-size: 0.66rem; letter-spacing: 0.2em; margin-right: 0.9rem; }
 
 /* ---------- agent widget ---------- */
 .agent-section { padding-top: 1rem; }
