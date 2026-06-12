@@ -39,7 +39,7 @@
           <dl class="at-a-glance">
             <div><dt>Role</dt><dd>Lead conversation designer &amp; prompt engineer</dd></div>
             <div><dt>Surface</dt><dd>The voice assistant; pattern later shipped across voice and chat</dd></div>
-            <div><dt>What I did</dt><dd>Routing design, savability criteria, classifier prompt, JSON schema, evaluation</dd></div>
+            <div><dt>What I did</dt><dd>Routing design, NLU tuning, classifier prompt, JSON schema, evaluation, RAI approval, end-to-end build</dd></div>
             <div><dt>Outcome</dt><dd>12% saves vs 5% target · 96.6% classifier accuracy</dd></div>
           </dl>
         </div>
@@ -69,14 +69,24 @@
             It worked, and we measured it. Across <b>8,814 cancellation calls from December 2022 through March 2023</b>, the flow saved <b>12% of customers against a 5% target</b>. Calls where the reason was price, the reason a specialist has the most room to fix, saved at <b>43%</b>.
           </p>
 
-          <h2>The ceiling: a model that couldn't hear</h2>
+          <h2>The queue had a pollution problem</h2>
           <p>
-            The routing was only as good as the classification feeding it, and the NLU-era intent model had a hard ceiling. It returned <b>"unknown" on roughly 40% of cancellation reasons</b>: no trained intent matched the real, messy ways people explain why they're leaving. And when it did produce a label, it was right about <b>80%</b> of the time, so downstream routing inherited both the blindness and the errors. Meanwhile the saves teams kept <b>20–35% of customers when they knew the real reason</b>. Every "unknown" was money left on the table, and training new intents took months per iteration.
+            The work started further back than the routing. The growth and retention team first asked us to collect the cancellation reason at all: before the flow offered cancel steps, it would ask why. I analyzed what customers actually said, bucketed the reasons into topics, and partnered with an NLP team on a classification model so the retention strategists could finally see the reasons landscape they were working with.
+          </p>
+          <p>
+            Then came the routing experiment, and with it the real problem. The saves queue was being polluted with false positives: customers who weren't actually canceling, or whose reasons were final. Specialists trained to rescue a price objection were fielding calls that should never have reached them. My bar for the classifier came straight from that queue: <b>if I send ten people to the saves specialists, ten should be genuinely savable.</b> Not two.
+          </p>
+          <h2>Four months of tuning, fifteen points of progress</h2>
+          <p>
+            I led the NLU quality project first, because that was the tool we had. The intent model returned <b>"unknown" on roughly 40% of cancellation reasons</b>: no trained intent matched the real, messy ways people explain why they're leaving. Four months of intent tuning bought roughly fifteen points of precision on the reasons it could identify, to about <b>80%</b>. The unknowns barely moved. Meanwhile the saves teams kept <b>20–35% of customers when they knew the real reason</b>: every "unknown" was money left on the table, and every tuning cycle took months.
           </p>
 
-          <h2>May–June 2023: replace the intent model with a prompt</h2>
+          <h2>Early 2023: stop training intents, start prompting a model</h2>
           <p>
-            So I prompt-engineered a GenAI savability classifier. The design was the prompt: a tightly specified classifier persona (a clear role, a precise task, and the rules it had to hold) emitting <b>strict JSON</b> (intent, reason, sentiment, savability) that was never read by a human; it was parsed downstream to make the routing call. The few-shot examples came from real customer language, in all its mess. And the iteration loop was the one that actually moves accuracy: find the failure, add the example that kills that class of error, re-test the whole set.
+            When LLMs arrived, I saw the opening and made the case: stop training intents and classify with a model that already understands natural language. The idea was mine to champion, and making it real meant partnering with the platform team to onboard the API that let the flow call an LLM at all. The design was the prompt: a tightly specified classifier persona emitting <b>strict JSON</b> (intent, reason, sentiment, savability) that no human ever reads; it's parsed downstream to make the routing call.
+          </p>
+          <p>
+            The savability rules came from the people who knew the economics: the growth and retention team's saves data and the analytics behind it. A customer closing their business or retiring counts as final; they get a respectful, efficient cancel path, not a pitch. The few-shot examples came from real customer language, in all its mess. And the iteration loop was the one that actually moves accuracy: find the failure, add the example that kills that class of error, re-test the whole set.
           </p>
 
           <div class="prompt-block" role="img" aria-label="Anatomy of the savability classifier prompt: role, task, rules, output schema, and few-shot examples">
@@ -93,19 +103,12 @@
 
           <div class="callout">
             <span class="num">96.6% accuracy · 60% → 96% classified · 12% saves vs 5% target</span>
-            <p>Classifier accuracy measured across hundreds of real customer utterances, zero hallucinations or toxicity, ~$756/year to run. All on top of an NLU-era flow that had already beaten its saves target by more than 2x.</p>
+            <p>Classifier accuracy measured across hundreds of real customer utterances, zero hallucinations or toxicity, ~$756/year to run. The analytics team's retention model, built on the 2022 experiment, projected <b>$2.9M in retention revenue</b> from routing this accurately.</p>
           </div>
 
-          <h2>Blocked from production, then shipped</h2>
+          <h2>From prototype to shipped experiment</h2>
           <p>
-            The classifier was <b>blocked from production</b>. The deployment path it needed wasn't approved platform infrastructure yet, and a revenue-critical decision does not belong on an unapproved one. I documented the proof (the accuracy, the test methodology, the cost) and made the case.
-          </p>
-          <div class="callout mint">
-            <span class="num">Blocked in 2023. Shipped in FY25.</span>
-            <p>When the platform caught up, the GenAI classification pattern shipped through approved channels, across voice and chat. The Responsible AI approval pattern I helped establish became the team standard for LLM classification use cases.</p>
-          </div>
-          <p>
-            The 2023 prototype didn't ship as-is. The pattern did: proven before the platform could carry it, documented while it waited, and the production version that followed stood on that proof.
+            Proving the classifier was half the work. I drove it through the Responsible AI review (the internal gauntlet every LLM-powered experience had to clear: safety checks, guardrails, strict testing), then built the experience end to end in an internal low-code tool and shipped it as a controlled experiment. The approval pattern from that review became the team's standard for LLM classification use cases, and the pattern itself carried across voice and chat.
           </p>
 
           <h2>What this proves</h2>
