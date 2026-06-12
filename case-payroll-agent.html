@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Payroll Intelligence Agent: defining what good means before the agent exists · Simone Muro</title>
-    <meta name="description" content="An urgent ask for ground truth on the top 51 payroll questions becomes a reusable golden-dataset blueprint, plus a system prompt that generates diagnostic datasets for SME review." />
+    <meta name="description" content="An urgent ask for ground truth on payroll's top contact drivers becomes a reusable golden-dataset blueprint, plus a system prompt that generates diagnostic datasets for SME review." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -35,11 +35,11 @@
         <div class="shell-narrow">
           <p class="eyebrow">Case study 02 · Agent behavior design · Regulated domain · 2026</p>
           <h1>Payroll Intelligence Agent: defining what good means before the agent exists</h1>
-          <p class="lede">In January 2026 the PM building the Payroll Intelligence Agent needed ground truth for the top 51 payroll questions (golden answers plus a tool and data inventory), and she needed it urgently. Her message, paraphrased: <b>"You said you had this, but I'm not seeing anything."</b> If we didn't deliver, design would stay an outside consultant to the agent build.</p>
+          <p class="lede">In January 2026 the PM building the Payroll Intelligence Agent needed ground truth for payroll's top contact drivers (golden answers plus a tool and data inventory), and she needed it urgently. Her message, paraphrased: <b>"You said you had this, but I am not seeing anything."</b> If we did not deliver, design would stay an outside consultant to the agent build.</p>
           <dl class="at-a-glance">
             <div><dt>Role</dt><dd>Led the effort: mobilized 3 designers, then built the generator myself</dd></div>
             <div><dt>Context</dt><dd>Ground truth for a payroll agent, before the agent existed</dd></div>
-            <div><dt>Scale</dt><dd>51 questions + 9 diagnostic troubleshooting topics</dd></div>
+            <div><dt>Scale</dt><dd>Payroll's top contact drivers + 9 diagnostic troubleshooting topics</dd></div>
             <div><dt>Outcome</dt><dd>Reusable blueprint, adopted and extended by the partner team</dd></div>
           </dl>
         </div>
@@ -49,28 +49,28 @@
         <div class="shell-narrow">
           <h2>Why payroll punishes vagueness</h2>
           <p>
-            Payroll is the worst possible place to wing it. It's regulated, so a wrong answer isn't just unhelpful. It can create a compliance problem. It's data-dependent, so the right answer changes with each account's setup. And it's emotionally loaded, because the question behind every question is <b>"will my people get paid?"</b> An agent operating here needs its definition of good written down before it answers anyone: what the correct answer is, what data it needs to give that answer, and when it must stop and hand off to a human.
+            Payroll is the worst possible place to wing it. It is regulated, so a wrong answer is not just unhelpful. It can create a compliance problem. It is data-dependent, so the right answer changes with each account's setup. And it is emotionally loaded, because the question behind every question is <b>"will my people get paid?"</b> An agent operating here needs its definition of good written down before it answers anyone: what the correct answer is, what data it needs to give that answer, and when it must stop and hand off to a human.
           </p>
           <p>
-            That definition didn't exist for the top 51 payroll questions. The PM needed it to build. We had a week's worth of credibility to either earn or lose.
+            That definition did not exist for payroll's top contact drivers: the high-traffic, high-complexity questions with do-it-for-me potential. The PM needed it to build. We had a week's worth of credibility to either earn or lose.
           </p>
 
           <h2>Run it like an operation, not a heroic all-nighter</h2>
           <p>
-            I got leadership approval to commit to this full-time for the week, then mobilized three designers plus product and content partners. The leverage move: <b>I didn't write the answers myself.</b> I wrote the instructions and templates: what a complete golden answer looks like, which tool and data dependencies to capture, what format the agent team could actually consume. Then I held the line on scope, format, and timeline while the team produced. Leadership had suggested scaling the scope down. We delivered all 51 questions in about ten days, as a blueprint the agent team could keep extending rather than a one-off document.
+            I got leadership approval to commit to this full-time for the week, then mobilized three designers plus product and content partners. The move that made it scale: <b>I did not write the answers myself.</b> I wrote the instructions and templates: what a complete golden answer looks like, which tool and data dependencies to capture, what format the agent team could actually consume. Then I held the line on scope, format, and timeline while the team produced. Leadership had suggested scaling the scope down. We delivered the full set in about ten days, as a blueprint the agent team could keep extending rather than a one-off document.
           </p>
           <p>
-            The relationship changed shape with the deliverable. We went from consultants the agent team occasionally asked for opinions to <b>embedded contributors with a seat in the build</b>.
+            The relationship changed shape with the deliverable. <b>The agent team stopped asking design for opinions and started building on design's ground truth.</b>
           </p>
 
           <div class="callout">
-            <span class="num">51 questions · ~10 days · 1 reusable framework</span>
-            <p>Delivered the full scope (beyond the scaled-down version leadership suggested) in a format the agent team adopted and extended.</p>
+            <span class="num">Top contact drivers, fully covered · ~10 days · 1 reusable framework</span>
+            <p>Delivered the full scope in a format the agent team adopted and extended.</p>
           </div>
 
           <h2>The harder half: questions without a single right answer</h2>
           <p>
-            Then I took the follow-up nobody volunteered for: nine troubleshooting topics: auto-payroll blocked, payroll run twice, direct-deposit changes, and the rest. These don't have golden answers. They have golden <b>decision trees</b>, and writing them takes SME-level diagnostic coverage.
+            Then I took the follow-up nobody volunteered for: nine troubleshooting topics: auto-payroll blocked, payroll run twice, direct-deposit changes, and the rest. These do not have golden answers. They have golden <b>decision trees</b>, and writing them takes SME-level diagnostic coverage.
           </p>
 
           <div class="transcript">
@@ -86,7 +86,7 @@
 
           <h2>Engineering the generator</h2>
           <p>
-            Hand-writing nine SME-grade decision trees would have taken weeks I didn't have. So I engineered the <b>Diagnostic Golden Dataset Generator</b>: a ~27KB system prompt that generates diagnostic golden datasets in a strict, enforced structure. Every generated topic must produce eleven sections in a fixed order. Omit none, combine none:
+            Hand-writing nine SME-grade decision trees would have taken weeks I did not have. So I engineered the <b>Diagnostic Golden Dataset Generator</b>: a ~27KB system prompt that generates diagnostic golden datasets in a strict, enforced structure. Every generated topic must produce eleven sections in a fixed order. Omit none, combine none:
           </p>
           <div class="prompt-block" role="img" aria-label="The generator's enforced output schema, section by section">
             <div class="row"><span class="key">header</span><span class="val">Title, the exact customer question in quotes, named SMEs (or "[TBD: need SME validation]"), and reference URLs</span></div>
@@ -96,13 +96,13 @@
             <div class="row"><span class="key">critical understanding</span><span class="val">What the agent must grasp about the domain before it acts</span></div>
             <div class="row"><span class="key">decision tree</span><span class="val">Explicit branching grammar: <code>If [condition] → Go to Step X</code>, with no prose hand-waving</span></div>
             <div class="row"><span class="key">data · retrievable</span><span class="val">What the system can look up itself, per branch</span></div>
-            <div class="row"><span class="key">data · must ask</span><span class="val">What only the customer knows. Each question must carry a <code>Why:</code> justifying that it can't be retrieved</span></div>
+            <div class="row"><span class="key">data · must ask</span><span class="val">What only the customer knows. Each question must carry a <code>Why:</code> justifying that it cannot be retrieved</span></div>
             <div class="row"><span class="key">reference content</span><span class="val">The grounding content each branch draws on</span></div>
             <div class="row"><span class="key">handoff triggers</span><span class="val">The conditions under which the agent must escalate to a human</span></div>
             <div class="row"><span class="key">root-cause summary</span><span class="val">The map of causes the tree resolves, stated plainly</span></div>
           </div>
           <p>
-            The structure alone wasn't enough. The prompt also had to control <b>how</b> the model reasons. It runs a six-step pre-generation reasoning process before writing anything, and it carries contrastive correct/incorrect examples so the model learns the difference between an answer and an answer-shaped sentence: <b>"Check the settings" is wrong</b>; <b>"Go to Settings &gt; Payroll &gt; Tax Setup and verify the EIN field" is right.</b> PII rules and a validation checklist gate the output. And nothing generated ships as-is: <b>SMEs review and edit every draft</b>. The generator does the structural labor; humans own the truth.
+            The structure alone was not enough. The prompt also had to control <b>how</b> the model reasons. It runs a six-step pre-generation reasoning process before writing anything, and it carries contrastive correct/incorrect examples so the model learns the difference between an answer and an answer-shaped sentence: <b>"Check the settings" is wrong</b>; <b>"Go to Settings &gt; Payroll &gt; Tax Setup and verify the EIN field" is right.</b> PII rules and a validation checklist gate the output. And nothing generated ships as-is: <b>SMEs review and edit every draft</b>. The generator does the structural labor; humans own the truth.
           </p>
 
           <h2>Where it went</h2>
@@ -112,7 +112,7 @@
 
           <h2>What this proves</h2>
           <p>
-            Agent behavior design isn't styling an agent after engineering builds it. It's defining ground truth, tool and data dependencies, and escalation triggers <b>before the agent exists</b>, so the build has something true to aim at. And it shows the move I keep making: take an ambiguous, urgent ask, turn it into a system with instructions and templates, and hand back something other people can extend without me in the room.
+            Agent behavior design is not styling an agent after engineering builds it. It is defining ground truth, tool and data dependencies, and escalation triggers <b>before the agent exists</b>, so the build has something true to aim at. And it shows the move I keep making: take an ambiguous, urgent ask, turn it into a system with instructions and templates, and hand back something other people can extend without me in the room.
           </p>
 
           <nav class="case-nav" aria-label="Case study navigation">

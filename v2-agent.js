@@ -38,35 +38,35 @@
   var KB = [
     { id: "who", chip: "Who is Simone?",
       match: ["who", "about", "background", "introduce", "summary", "experience", "career", "story", "intuit", "history"],
-      a: "Simone is an AI experience designer and builder: nine years in language AI across Meta, Apple's Siri, Sam's Club, Intuit, and Credit Karma, with the last six and a half designing and building conversation and agentic systems. She has led the work and the people doing it, including a team of three designers and design technologists.",
+      a: "Simone is an AI experience designer and builder: nine years in language AI across Meta, Apple's Siri, Sam's Club, Intuit, and Credit Karma, with the last six and a half designing and building conversation and agentic systems. She has led the work and the people doing it, coaching designers and design technologists while staying in the craft herself.",
       src: "source: About + career timeline" },
     { id: "build", chip: "Can she actually build?",
       match: ["build", "built", "code", "coding", "technical", "engineer", "hands-on", "ship", "mcp", "yaml", "skill", "prototype", "billing"],
-      a: "Judge for yourself: in May 2026 she built a working agent skill in 5 days, solo. She wrote the skill YAML, built a billing lookup tool with three environment modes (LIVE, EVAL, DEV), registered it in the agent repo, tested it locally through a Streamlit harness, and authored a 108-case golden dataset with judge-checkable gating criteria. She builds AI-natively, pairing with Claude in Cursor, and she knows exactly where engineering partnership begins.",
+      a: "In May 2026 she built a working agent skill in 5 days, solo: skill YAML, a billing lookup tool with three environment modes (LIVE, EVAL, DEV), registration in the agent repo, local testing through a Streamlit harness, and a 108-case golden dataset with judge-checkable gating criteria. She builds AI-natively, pairing with Claude in Cursor.",
       src: "source: BillingSkill case study",
       link: { href: "case-billing-skill.html", label: "Read the build story" } },
     { id: "eval", chip: "How does she think about AI quality?",
       match: ["quality", "eval", "evaluation", "golden", "dataset", "judge", "measure", "rubric", "metric", "test", "ground truth", "label"],
-      a: "Her core belief: if you can't define what good looks like, you can't ship it. In practice that means golden datasets with ground truth and expected actions, LLM judges validated against human labels before anyone trusts them, multi-turn user simulators, and quality scores as release gates rather than reports. That program lifted agent quality 8 to 13 points across three domains.",
+      a: "Her core belief: if you cannot define what good looks like, you cannot ship it. In practice that means golden datasets with ground truth and expected actions, LLM judges validated against human labels before anyone trusts them, multi-turn user simulators, and quality scores as release gates rather than reports. That program lifted agent quality 8 to 13 points across three domains.",
       src: "source: Quality Evaluation case study",
       link: { href: "case-quality-evaluation.html", label: "See the quality loop" } },
     { id: "voice", chip: "What about voice?",
       match: ["voice", "phone", "telephony", "ivr", "call", "speech", "audio", "snippet"],
-      a: "Voice is her home turf: five years on Intuit's telephony assistant, then one of Intuit's first GenAI voice experiences, a concept she prototyped in mid-2023 before the platform had an approved path and co-shipped in December 2024. Result: a 3.9-point containment lift, measured in production. Her rule for the medium: a screen can show detail; voice has to earn every second.",
+      a: "Voice is her home turf: five years on Intuit's telephony assistant, then one of Intuit's first GenAI voice experiences, a concept she prototyped in mid-2023 before the platform had an approved path and co-shipped in December 2024. Result: a 3.9-point containment lift, measured in production. Her rule for the medium: a screen can show detail; voice must earn every second.",
       src: "source: Voice Snippet case study",
       link: { href: "case-voice-snippet.html", label: "Voice Snippet, with video" } },
     { id: "lead", chip: "Designer, PM, or manager?",
       match: ["manager", "lead", "leader", " pm", "product", "role", "title", "team", "fit", "hire", "hiring", "level", "designer"],
-      a: "Yes, deliberately. She has managed a team of three, authored PRDs and owned roadmap-facing deliverables, and stayed hands-on in the craft the whole time. She targets roles where that range is the point: agentic AI design, AI product, or the generalist seat on a team shipping AI that has to be measurably good.",
+      a: "Yes, deliberately. She has managed a design team, authored PRDs and owned roadmap-facing deliverables, and stayed hands-on in the craft the whole time. She targets roles where that range is the point: agentic AI design, AI product, or the generalist seat on a team shipping AI that has to be measurably good.",
       src: "source: About + leadership record" },
     { id: "agent", chip: "How was this agent built?",
       match: ["this agent", "this bot", "this chat", "how was this", "how does this work", "scripted", "real", "twin"],
-      a: "Two layers, honestly labeled. When the live endpoint is up, you're talking to Claude running behind a guardrailed system prompt Simone wrote: grounded in her case studies, scoped to her work, eval-tested against a golden set that includes injection attempts. When it isn't, this curated mode answers from responses she wrote and tested, so it can never improvise about her career. Designing scope, grounding, and refusal behavior is the same craft she applies at production scale.",
+      a: "Two layers. Live mode is Claude behind a guardrailed system prompt Simone wrote: grounded in her case studies, scoped to her work, eval-tested against a golden set that includes injection attempts. Curated mode answers from responses she wrote and tested, so it never improvises about her career. Designing scope, grounding, and refusal behavior is the same craft she applies at production scale.",
       src: "source: this page" }
   ];
   var FALLBACK = {
-    a: "That's outside what I'm scoped to answer. I only speak to Simone's work, and only from her published case studies. (Refusing gracefully is a designed behavior, not a bug.) Try one of the suggested questions, or email her directly: [removed-private-contact].",
-    src: "refusal boundary · by design"
+    a: "That is outside my scope. I speak to Simone's work, from her published case studies. Ask about her builds, her evals, or her voice work, or email her directly: [removed-private-contact].",
+    src: "refusal boundary"
   };
 
   var liveMode = !!AGENT_ENDPOINT;
@@ -129,7 +129,7 @@
     }).catch(function () {
       if (t.parentNode) log.removeChild(t);
       liveMode = false;
-      log.appendChild(el("div", "msg bot", "The live model is unreachable right now, so I've switched to curated mode: answers Simone wrote and tested. Everything I say is still grounded in her real work.<span class=\"src\">graceful degradation · by design</span>"));
+      log.appendChild(el("div", "msg bot", "The live model is unreachable right now, so I have switched to curated mode: answers Simone wrote and tested, still grounded in her real work.<span class=\"src\">curated mode</span>"));
       scrollLog();
       curatedAnswer(q);
     });
@@ -170,14 +170,14 @@
       '<div class="agent-log" id="agent-log" aria-live="polite"></div>' +
       '<form class="agent-input" id="agent-form">' +
         '<label class="sr-only" for="agent-q">Ask a question about Simone’s work</label>' +
-        '<input id="agent-q" type="text" autocomplete="off" maxlength="300" placeholder="Ask about my work. Off-scope gets refused, by design…" />' +
+        '<input id="agent-q" type="text" autocomplete="off" maxlength="300" placeholder="Ask about Simone\u2019s work…" />' +
         '<button type="submit" aria-label="Send question">→</button>' +
       '</form>' +
       '<div class="agent-chips" id="agent-chips" role="group" aria-label="Suggested questions"></div>' +
       '<div class="agent-foot"><b>How this works:</b> <span>' +
         (liveMode
-          ? 'a live model (Claude) behind a guardrailed, eval-tested system prompt I wrote, grounded in my case studies. If it’s unreachable, a curated mode I also wrote takes over.'
-          : 'curated mode: deterministic retrieval over answers I wrote and tested, so nothing here is improvised. Designing the scope, grounding, and refusal behavior is the craft.') +
+          ? 'a live model (Claude) behind a guardrailed, eval-tested system prompt I wrote, grounded in my case studies. If it is unreachable, a curated mode I also wrote takes over.'
+          : 'curated mode: deterministic retrieval over answers I wrote and tested. Designing the scope, grounding, and refusal behavior is the craft.') +
       '</span></div>';
 
     document.body.appendChild(panel);
@@ -196,8 +196,8 @@
         greeted = true;
         botSay({
           a: liveMode
-            ? "Hi, I’m Simone’s agent twin. She wrote my instructions, scoped what I can speak to, and eval-tested me before letting me talk to you. Ask me anything about her work. Try to take me off-topic if you like; the refusal is part of the design."
-            : "Hi, I’m Simone’s portfolio agent. She designed my scope, wrote my responses, and decided what I should refuse to answer. Ask me about her work, or try to take me off-topic and watch the refusal.",
+            ? "Hi, I am Simone's agent twin. She wrote my instructions, scoped what I can speak to, and eval-tested me before letting me talk to you. Ask me anything about her work."
+            : "Hi, I am Simone's portfolio agent. She designed my scope, wrote my responses, and decided what I should refuse to answer. Ask me about her work.",
           src: "system: greeting"
         }, 500);
         renderChips();
