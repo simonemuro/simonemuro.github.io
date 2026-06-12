@@ -218,7 +218,7 @@
     { id: "fit", chip: "Designer, PM, or manager?", match: ["manager", "lead", " pm", "product", "role", "team", "fit", "hire", "hiring", "level", "designer"],
       a: "Yes, deliberately. She has managed a design team, authored PRDs, and stayed hands-on the whole time. She targets roles where that range is the point: agentic AI design, AI product, or the generalist seat on a team shipping AI that has to be measurably good.", src: "about + leadership record" },
     { id: "agent", chip: "How was this agent built?", match: ["this agent", "this bot", "how was this", "how do you work", "scripted", "real", "twin"],
-      a: "Two layers. Live mode is Claude behind a guardrailed system prompt Simone wrote: grounded in these case studies, eval-tested against a golden set that includes injection attempts. Curated mode answers from responses she wrote and tested, so it never improvises about her career.", src: "this site" }
+      a: "Two layers. Live mode runs Claude behind a guardrailed system prompt Simone wrote, with a golden eval set (injection attempts included) it must pass before it ships. Curated mode, running now, answers from responses she wrote and tested, so it never improvises about her career.", src: "this site" }
   ];
   var FALLBACK = { a: "That's outside my scope. I speak to Simone's work, from the case studies on this site. Ask about her builds, her evals, or her voice work, or email her: [removed-private-contact].", src: "refusal boundary" };
 
