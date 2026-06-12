@@ -35,7 +35,7 @@
         <div class="shell-narrow">
           <p class="eyebrow">Case study 02 · Agent behavior design · Regulated domain · 2026</p>
           <h1>Payroll Intelligence Agent: defining what good means before the agent exists</h1>
-          <p class="lede">In January 2026 the PM building the Payroll Intelligence Agent needed ground truth for payroll's top contact drivers (golden answers plus a tool and data inventory), and she needed it urgently. Her message, paraphrased: <b>"You said you had this, but I am not seeing anything."</b> If we did not deliver, design would stay an outside consultant to the agent build.</p>
+          <p class="lede">In January 2026, the team building the Payroll Intelligence Agent needed ground truth for payroll's top contact drivers: golden answers, plus an inventory of the tools and data each answer depends on. The agent build was moving with or without it. <b>Ground truth that arrives after the agent ships is trivia.</b> The deadline was a week, and the dataset didn't exist yet.</p>
           <dl class="at-a-glance">
             <div><dt>Role</dt><dd>Led the effort: mobilized 3 designers, then built the generator myself</dd></div>
             <div><dt>Context</dt><dd>Ground truth for a payroll agent, before the agent existed</dd></div>
@@ -49,15 +49,15 @@
         <div class="shell-narrow">
           <h2>Why payroll punishes vagueness</h2>
           <p>
-            Payroll is the worst possible place to wing it. It is regulated, so a wrong answer is not just unhelpful. It can create a compliance problem. It is data-dependent, so the right answer changes with each account's setup. And it is emotionally loaded, because the question behind every question is <b>"will my people get paid?"</b> An agent operating here needs its definition of good written down before it answers anyone: what the correct answer is, what data it needs to give that answer, and when it must stop and hand off to a human.
+            Payroll is the worst possible place to wing it. It's regulated, so a wrong answer isn't just unhelpful. It can create a compliance problem. It's data-dependent, so the right answer changes with each account's setup. And it's emotionally loaded, because the question behind every question is <b>"will my people get paid?"</b> An agent operating here needs its definition of good written down before it answers anyone: what the correct answer is, what data it needs to give that answer, and when it must stop and hand off to a human.
           </p>
           <p>
-            That definition did not exist for payroll's top contact drivers: the high-traffic, high-complexity questions with do-it-for-me potential. The PM needed it to build. We had a week's worth of credibility to either earn or lose.
+            That definition didn't exist for payroll's top contact drivers: the high-traffic, high-complexity questions with do-it-for-me potential. The PM needed it to build. We had a week's worth of credibility to either earn or lose.
           </p>
 
           <h2>Run it like an operation, not a heroic all-nighter</h2>
           <p>
-            I got leadership approval to commit to this full-time for the week, then mobilized three designers plus product and content partners. The move that made it scale: <b>I did not write the answers myself.</b> I wrote the instructions and templates: what a complete golden answer looks like, which tool and data dependencies to capture, what format the agent team could actually consume. Then I held the line on scope, format, and timeline while the team produced. Leadership had suggested scaling the scope down. We delivered the full set in about ten days, as a blueprint the agent team could keep extending rather than a one-off document.
+            I got leadership approval to commit to this full-time for the week, then mobilized three designers plus product and content partners. The move that made it scale: <b>I didn't write the answers myself.</b> I wrote the instructions and templates: what a complete golden answer looks like, which tool and data dependencies to capture, what format the agent team could actually consume. Then I held the line on scope, format, and timeline while the team produced. We delivered the full set in about ten days, as a blueprint the agent team could keep extending rather than a one-off document.
           </p>
           <p>
             The relationship changed shape with the deliverable. <b>The agent team stopped asking design for opinions and started building on design's ground truth.</b>
@@ -70,7 +70,7 @@
 
           <h2>The harder half: questions without a single right answer</h2>
           <p>
-            Then I took the follow-up nobody volunteered for: nine troubleshooting topics: auto-payroll blocked, payroll run twice, direct-deposit changes, and the rest. These do not have golden answers. They have golden <b>decision trees</b>, and writing them takes SME-level diagnostic coverage.
+            Then I took the follow-up nobody volunteered for: nine troubleshooting topics: auto-payroll blocked, payroll run twice, direct-deposit changes, and the rest. These don't have golden answers. They have golden <b>decision trees</b>, and writing them takes SME-level diagnostic coverage.
           </p>
 
           <div class="transcript">
@@ -86,7 +86,7 @@
 
           <h2>Engineering the generator</h2>
           <p>
-            Hand-writing nine SME-grade decision trees would have taken weeks I did not have. So I engineered the <b>Diagnostic Golden Dataset Generator</b>: a ~27KB system prompt that generates diagnostic golden datasets in a strict, enforced structure. Every generated topic must produce eleven sections in a fixed order. Omit none, combine none:
+            Hand-writing nine SME-grade decision trees would have taken weeks I didn't have. So I engineered the <b>Diagnostic Golden Dataset Generator</b>: a ~27KB system prompt that generates diagnostic golden datasets in a strict, enforced structure. Every generated topic must produce eleven sections in a fixed order. Omit none, combine none:
           </p>
           <div class="prompt-block" role="img" aria-label="The generator's enforced output schema, section by section">
             <div class="row"><span class="key">header</span><span class="val">Title, the exact customer question in quotes, named SMEs (or "[TBD: need SME validation]"), and reference URLs</span></div>
@@ -102,7 +102,7 @@
             <div class="row"><span class="key">root-cause summary</span><span class="val">The map of causes the tree resolves, stated plainly</span></div>
           </div>
           <p>
-            The structure alone was not enough. The prompt also had to control <b>how</b> the model reasons. It runs a six-step pre-generation reasoning process before writing anything, and it carries contrastive correct/incorrect examples so the model learns the difference between an answer and an answer-shaped sentence: <b>"Check the settings" is wrong</b>; <b>"Go to Settings &gt; Payroll &gt; Tax Setup and verify the EIN field" is right.</b> PII rules and a validation checklist gate the output. And nothing generated ships as-is: <b>SMEs review and edit every draft</b>. The generator does the structural labor; humans own the truth.
+            The structure alone wasn't enough. The prompt also had to control <b>how</b> the model reasons. It runs a six-step pre-generation reasoning process before writing anything, and it carries contrastive correct/incorrect examples so the model learns the difference between an answer and an answer-shaped sentence: <b>"Check the settings" is wrong</b>; <b>"Go to Settings &gt; Payroll &gt; Tax Setup and verify the EIN field" is right.</b> PII rules and a validation checklist gate the output. And nothing generated ships as-is: <b>SMEs review and edit every draft</b>. The generator does the structural labor; humans own the truth.
           </p>
 
           <h2>Where it went</h2>
@@ -112,7 +112,7 @@
 
           <h2>What this proves</h2>
           <p>
-            Agent behavior design is not styling an agent after engineering builds it. It is defining ground truth, tool and data dependencies, and escalation triggers <b>before the agent exists</b>, so the build has something true to aim at. And it shows the move I keep making: take an ambiguous, urgent ask, turn it into a system with instructions and templates, and hand back something other people can extend without me in the room.
+            Agent behavior design isn't styling an agent after engineering builds it. It's defining ground truth, tool and data dependencies, and escalation triggers <b>before the agent exists</b>, so the build has something true to aim at. And it shows the move I keep making: take an ambiguous, urgent ask, turn it into a system with instructions and templates, and hand back something other people can extend without me in the room.
           </p>
 
           <nav class="case-nav" aria-label="Case study navigation">

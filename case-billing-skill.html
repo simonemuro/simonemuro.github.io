@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BillingSkill: building the thing I had been evaluating · Simone Muro</title>
+    <title>BillingSkill: building the thing I'd been evaluating · Simone Muro</title>
     <meta name="description" content="A conversation designer builds a working agent skill end to end in five days: skill instructions, a three-mode tool, and a 108-case golden dataset. Built solo." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,7 +34,7 @@
       <section class="case-hero">
         <div class="shell-narrow">
           <p class="eyebrow">Case study 01 · Agentic AI · Built solo · May 2026</p>
-          <h1>BillingSkill: building the thing I had been evaluating</h1>
+          <h1>BillingSkill: building the thing I'd been evaluating</h1>
           <p class="lede">For a year I defined what good agent behavior looked like: golden datasets, rubrics, quality gates. One question kept nagging me: <b>could the person who writes the evaluation build the thing being evaluated?</b> I gave myself five days and an internal hackathon deadline to find out.</p>
           <dl class="at-a-glance">
             <div><dt>Role</dt><dd>Design, prompts, tool, and eval, end to end</dd></div>
@@ -72,7 +72,7 @@
             <div class="step"><h3><span>DAY 1</span>Scope from evidence, not opinion</h3><p>Analyzed 500+ labeled customer utterances; defined 7 intent categories (unrecognized charge, billing inquiry, pricing, duplicate charge…). Chose subscription charges: highest volume, clearest data dependency.</p></div>
             <div class="step"><h3><span>DAY 2</span>Write the skill, build the tool</h3><p>Wrote the skill definition in YAML: tone, when-to-use conditions, graceful handling, and an admin vs non-admin permission check. Built a billing lookup tool with three environment modes, LIVE (real APIs), EVAL (scenario injection), and DEV (mock data), and registered it in the agent repo.</p></div>
             <div class="step"><h3><span>DAY 3</span>Test end to end</h3><p>Ran the skill locally against the real agent through a Streamlit test harness. Validated both permission paths: admins get charge detail, non-admins get a safe redirect.</p></div>
-            <div class="step"><h3><span>DAY 4</span>Hit the wall, document the wall</h3><p>API research for live billing history hit a permissions blocker. Documented it precisely for the platform team, and built the first 33-row golden dataset so evaluation would not wait on access.</p></div>
+            <div class="step"><h3><span>DAY 4</span>Hit the wall, document the wall</h3><p>API research for live billing history hit a permissions blocker. Documented it precisely for the platform team, and built the first 33-row golden dataset so evaluation wouldn't wait on access.</p></div>
             <div class="step"><h3><span>DAY 5</span>Make it real with real conversations</h3><p>Pulled 55 actual production conversations, rewrote the skill instructions to handle what people actually say (cancel intent, price-increase complaints, downgrades) and grew the eval set to 108 test cases across 13 intent categories, six more than the Day 1 scope, because real conversations widened the taxonomy.</p></div>
           </div>
 
@@ -86,7 +86,7 @@
 
           <h2>The skill shipped with its own eval</h2>
           <p>
-            The skill shipped with the same rigor I had spent a year applying to other teams' agents. Every scenario in the golden dataset carries mock tool data and <b>judge-checkable gating criteria</b>: explicit pass/fail rules written for a judge model to apply, including the failure modes that matter most:
+            The skill shipped with the same rigor I'd spent a year applying to other teams' agents. Every scenario in the golden dataset carries mock tool data and <b>judge-checkable gating criteria</b>: explicit pass/fail rules written for a judge model to apply, including the failure modes that matter most:
           </p>
           <div class="prompt-block" role="img" aria-label="Excerpt of one golden dataset row: mock data plus gating criteria">
             <div class="row"><span class="key">scenario</span><span class="val">"Customer asks why their monthly charge went up"</span></div>
@@ -106,7 +106,7 @@
 
           <h2>What this proves</h2>
           <p>
-            <b>The gap between "defines what good looks like" and "builds the thing" is now crossable by one motivated person.</b> When the same person designs the behavior, writes the instructions, and authors the eval, the loop between intent and evidence closes in days, not quarters. The documented API blocker marks where engineering partnership begins. That is the working model I bring to a team: scope from evidence, build the smallest real thing, ship it with its own definition of good.
+            <b>The gap between "defines what good looks like" and "builds the thing" is now crossable by one motivated person.</b> When the same person designs the behavior, writes the instructions, and authors the eval, the loop between intent and evidence closes in days, not quarters. The documented API blocker marks where engineering partnership begins. That's the working model I bring to a team: scope from evidence, build the smallest real thing, ship it with its own definition of good.
           </p>
 
           <nav class="case-nav" aria-label="Case study navigation">
