@@ -54,7 +54,7 @@
       match: ["voice", "phone", "telephony", "ivr", "call", "speech", "audio", "snippet"],
       a: "Voice is her home turf: five years on Intuit's telephony assistant, then one of Intuit's first GenAI voice experiences, a concept she prototyped in mid-2023 before the platform had an approved path and co-shipped in December 2024. Result: a 3.9-point containment lift, measured in production. Her rule for the medium: a screen can show detail; voice must earn every second.",
       src: "source: Voice Snippet case study",
-      link: { href: "case-voice-snippet.html", label: "Voice Snippet, with video" } },
+      link: { href: "case-voice-snippet.html", label: "Read the Voice Snippet story" } },
     { id: "lead", chip: "Designer, PM, or manager?",
       match: ["manager", "lead", "leader", " pm", "product", "role", "title", "team", "fit", "hire", "hiring", "level", "designer"],
       a: "Yes, deliberately. She has managed a design team, authored PRDs and owned roadmap-facing deliverables, and stayed hands-on in the craft the whole time. She targets roles where that range is the point: agentic AI design, AI product, or the generalist seat on a team shipping AI that has to be measurably good.",
