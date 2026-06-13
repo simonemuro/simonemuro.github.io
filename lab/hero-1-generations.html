@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Three Generations, Living · Simone Muro</title>
+<meta name="description" content="One question, answered across three eras of conversation AI: 2018 NLU, 2023 LLM, 2026 agentic. The same designer behind all three." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   THREE GENERATIONS, LIVING — hero card, identity-level
+   One question, three eras, auto-morphing on a loop.
+   Light shell. Paper, ink, hairlines, one persimmon accent.
+   Motion constitution: paper doesn't fidget; only the work
+   performs; one autoplay per page; reduced-motion renders the
+   complete artifact (the agentic, present-day end state).
+   ============================================================ */
+
+:root {
+  --paper: #faf9f6;
+  --card: #ffffff;
+  --ink: #1a1815;
+  --muted: #6b6660;
+  --faint: #9b958c;
+  --hairline: #e5e1da;
+  --persimmon: #e8552f;
+  --signal: #1b7f5c;
+  --sans: "Geist", system-ui, -apple-system, sans-serif;
+  --mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+  --serif: "Newsreader", Georgia, serif;
+
+  /* period-authentic palettes, scoped per era (invented, sanitized) */
+  --p18-chrome: #dfe1e4;      /* 2018 cool gray window chrome */
+  --p18-field: #f4f5f6;
+  --p18-edge: #c3c7cc;
+  --p18-blue: #2b6cb0;        /* dated enterprise blue */
+  --p18-ink: #3a3f45;
+  --p23-bubble: #f1efe9;      /* 2023 warm neutral bubble */
+}
+
+@property --stream {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* center the card so it renders realistically on its own */
+.stage {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 48px 20px;
+}
+
+/* ---------- the card ---------- */
+.gen-card {
+  width: 440px;
+  max-width: 100%;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: 0 1px 2px rgba(26,24,21,.04), 0 12px 40px rgba(26,24,21,.06);
+  overflow: hidden;
+  view-transition-name: gen-card;
+}
+
+/* ---------- header: era timeline ---------- */
+.gen-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 13px 16px 12px;
+  border-bottom: 1px solid var(--hairline);
+}
+.head-l {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  font-family: var(--mono);
+  font-size: .68rem;
+  letter-spacing: .04em;
+  color: var(--muted);
+  min-width: 0;
+}
+.head-l .yr {
+  color: var(--ink);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.head-l .stack {
+  color: var(--faint);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-size: .6rem;
+  white-space: nowrap;
+}
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: .6rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--faint);
+  white-space: nowrap;
+}
+.live .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--faint);
+  transition: background .4s;
+}
+.gen-card[data-era="2"] .live .dot { background: var(--signal); animation: breathe 1.6s ease-in-out infinite; }
+.gen-card[data-era="2"] .live { color: var(--signal); }
+@keyframes breathe { 50% { opacity: .35; } }
+
+/* the 3-tick era rail */
+.rail {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--paper);
+}
+.tick {
+  position: relative;
+  padding: 9px 0 9px;
+  font-family: var(--mono);
+  font-size: .58rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  text-align: center;
+  cursor: pointer;
+  border: 0; background: transparent;
+  transition: color .35s;
+}
+.tick::after {
+  content: "";
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  bottom: -1px;
+  width: 0; height: 2px;
+  background: var(--persimmon);
+  transition: width .45s cubic-bezier(.34,1.2,.64,1);
+}
+.tick[aria-selected="true"] { color: var(--ink); }
+.tick[aria-selected="true"]::after { width: 100%; }
+.tick:hover { color: var(--muted); }
+
+/* progress hairline under the active era */
+.progress {
+  height: 2px;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+.progress i {
+  position: absolute;
+  inset: 0 100% 0 0;
+  background: linear-gradient(90deg, var(--persimmon), var(--persimmon));
+  opacity: .55;
+}
+
+/* ---------- body: the morphing conversation surface ---------- */
+.surface {
+  min-height: 286px;
+  padding: 18px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  view-transition-name: gen-surface;
+}
+
+/* the asked question, identical across eras */
+.ask {
+  font-size: .82rem;
+  line-height: 1.45;
+  margin: 0 0 14px;
+  align-self: flex-end;
+  max-width: 86%;
+}
+
+/* ============ ERA 0 — 2018 NLU (boxy, cold, dated) ============ */
+.era0 .ask {
+  background: var(--p18-blue);
+  color: #fff;
+  border-radius: 3px;
+  padding: 8px 11px;
+  font-family: var(--mono);
+  font-size: .76rem;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.12);
+}
+.nlu-win {
+  border: 1px solid var(--p18-edge);
+  border-radius: 3px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+}
+.nlu-bar {
+  display: flex; align-items: center; gap: 6px;
+  background: linear-gradient(var(--p18-chrome), #d2d5d9);
+  border-bottom: 1px solid var(--p18-edge);
+  padding: 5px 8px;
+  font-family: var(--mono);
+  font-size: .58rem;
+  color: var(--p18-ink);
+  letter-spacing: .02em;
+}
+.nlu-bar .b { width: 9px; height: 9px; border-radius: 50%; border: 1px solid rgba(0,0,0,.18); }
+.nlu-bar .b1 { background: #e7e9ec; }
+.nlu-bar .b2 { background: #e7e9ec; }
+.nlu-bar .title { margin-left: 4px; }
+.nlu-body { padding: 11px 11px 12px; }
+.nlu-fail {
+  font-family: var(--mono);
+  font-size: .73rem;
+  color: var(--p18-ink);
+  line-height: 1.45;
+  margin: 0 0 9px;
+}
+.nlu-fail .conf {
+  display: block;
+  margin-top: 6px;
+  font-size: .58rem;
+  color: #9aa0a7;
+  letter-spacing: .02em;
+}
+.nlu-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 11px; }
+.nlu-chip {
+  font-family: var(--mono);
+  font-size: .68rem;
+  color: var(--p18-blue);
+  background: var(--p18-field);
+  border: 1px solid var(--p18-edge);
+  border-radius: 2px;
+  padding: 5px 9px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(3px);
+}
+.nlu-chip.on { opacity: 1; transform: none; transition: opacity .25s, transform .25s; }
+.nlu-input {
+  display: flex; gap: 0;
+  border: 1px solid var(--p18-edge);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.nlu-input span {
+  flex: 1;
+  padding: 7px 9px;
+  font-family: var(--mono);
+  font-size: .7rem;
+  color: #aeb3b9;
+  background: #fff;
+}
+.nlu-input b {
+  font-weight: 400;
+  background: linear-gradient(var(--p18-chrome), #cfd2d6);
+  border-left: 1px solid var(--p18-edge);
+  color: var(--p18-ink);
+  font-family: var(--mono);
+  font-size: .62rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 7px 11px;
+  display: flex; align-items: center;
+}
+
+/* ============ ERA 1 — 2023 LLM (clean single bubble) ============ */
+.era1 .ask {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 13px 13px 4px 13px;
+  padding: 8px 13px;
+}
+.llm-bubble {
+  background: var(--p23-bubble);
+  border-radius: 4px 13px 13px 13px;
+  padding: 13px 15px;
+  font-size: .85rem;
+  line-height: 1.55;
+  color: #2c2926;
+  max-width: 94%;
+  position: relative;
+}
+.llm-bubble .body { min-height: 1.55em; }
+.llm-bubble .cap {
+  display: inline-block;
+  width: 2px; height: 1em;
+  background: var(--ink);
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: caret 1s steps(1) infinite;
+}
+.llm-meta {
+  margin-top: 9px;
+  font-family: var(--mono);
+  font-size: .58rem;
+  letter-spacing: .06em;
+  color: var(--faint);
+  text-transform: uppercase;
+}
+@keyframes caret { 50% { opacity: 0; } }
+
+/* ============ ERA 2 — 2026 AGENTIC (full modern treatment) ============ */
+.era2 .ask {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 13px 13px 4px 13px;
+  padding: 8px 13px;
+  box-shadow: 0 1px 2px rgba(26,24,21,.08);
+}
+
+/* collapsible reasoning trace */
+.think {
+  align-self: flex-start;
+  font-family: var(--mono);
+  font-size: .66rem;
+  color: var(--faint);
+  margin-bottom: 11px;
+  width: 100%;
+}
+.think .row {
+  display: flex; align-items: center; gap: 7px;
+  cursor: pointer;
+}
+.think .chev {
+  width: 9px; height: 9px;
+  transition: transform .35s cubic-bezier(.34,1.2,.64,1);
+  color: var(--faint);
+}
+.think.open .chev { transform: rotate(90deg); }
+.think .lbl { letter-spacing: .04em; }
+.think .lbl b { color: var(--muted); font-weight: 500; }
+.think .trace {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .45s cubic-bezier(.4,0,.2,1);
+}
+.think.open .trace { grid-template-rows: 1fr; }
+.think .trace > div { overflow: hidden; }
+.think .trace p {
+  margin: 7px 0 0 16px;
+  padding-left: 11px;
+  border-left: 1px solid var(--hairline);
+  color: var(--faint);
+  font-size: .64rem;
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(2px);
+}
+.think.open .trace p { opacity: 1; transform: none; transition: opacity .4s, transform .4s; }
+.think.open .trace p:nth-child(2) { transition-delay: .08s; }
+.think.open .trace p:nth-child(3) { transition-delay: .16s; }
+
+/* tool-call chip with lifecycle */
+.tool {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--mono);
+  font-size: .66rem;
+  color: var(--muted);
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 9px;
+  padding: 7px 11px;
+  margin-bottom: 11px;
+  max-width: 100%;
+  opacity: 0;
+  transform: translateY(4px);
+}
+.tool.in { opacity: 1; transform: none; transition: opacity .4s, transform .4s; }
+.tool .ic {
+  width: 13px; height: 13px;
+  color: var(--signal);
+  flex-shrink: 0;
+}
+.tool .verb b { color: var(--ink); font-weight: 500; }
+.tool .pill {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .58rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--signal);
+  padding-left: 9px;
+  border-left: 1px solid var(--hairline);
+  white-space: nowrap;
+}
+.tool .pill .sp {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--signal);
+}
+.tool[data-state="run"] .pill .sp { animation: breathe 1.1s ease-in-out infinite; }
+.tool[data-state="done"] .pill { color: var(--muted); }
+.tool[data-state="done"] .pill .sp { background: var(--muted); }
+.tool[data-state="done"] .check {
+  width: 11px; height: 11px; color: var(--signal);
+}
+
+/* streamed answer + caret at the tip */
+.answer {
+  align-self: flex-start;
+  font-size: .85rem;
+  line-height: 1.55;
+  color: #2c2926;
+  max-width: 96%;
+  margin-bottom: 12px;
+}
+.answer .cap {
+  display: inline-block;
+  width: 2px; height: 1.05em;
+  background: var(--persimmon);
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  border-radius: 1px;
+  animation: caret .9s steps(1) infinite;
+}
+.answer.settled .cap { display: none; }
+
+/* inline structured result widget (the 2026 frontier move) */
+.widget {
+  align-self: stretch;
+  border: 1px solid var(--hairline);
+  border-radius: 11px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #fff, #fdfcfa);
+  opacity: 0;
+  transform: translateY(8px) scale(.985);
+}
+.widget.in { opacity: 1; transform: none; transition: opacity .5s, transform .5s cubic-bezier(.34,1.4,.64,1); }
+.widget .w-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--hairline);
+  font-family: var(--mono);
+  font-size: .6rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.widget .w-head .synthetic {
+  color: var(--faint);
+  font-size: .55rem;
+}
+.w-rows { padding: 4px 0; }
+.w-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  font-size: .78rem;
+  border-bottom: 1px solid var(--hairline);
+}
+.w-row:last-child { border-bottom: 0; }
+.w-row .lab { color: var(--muted); display: flex; flex-direction: column; gap: 2px; }
+.w-row .lab small { font-family: var(--mono); font-size: .56rem; color: var(--faint); letter-spacing: .04em; }
+.w-row .val {
+  font-family: var(--mono);
+  font-size: .82rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  font-weight: 500;
+}
+.w-row.lead { background: var(--paper); }
+.w-row.lead .val { color: var(--persimmon); }
+.w-row .bar {
+  grid-column: 1 / -1;
+  height: 4px; border-radius: 2px;
+  background: var(--hairline);
+  overflow: hidden;
+  margin-top: 2px;
+}
+.w-row .bar > i {
+  display: block; height: 100%;
+  background: var(--signal);
+  width: 0;
+  transition: width .9s cubic-bezier(.4,0,.2,1);
+}
+.w-row.lead .bar > i { background: var(--persimmon); }
+.widget.in .w-row .bar > i { width: var(--w, 0); }
+.w-foot {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 12px;
+  border-top: 1px solid var(--hairline);
+  font-family: var(--sans);
+}
+.w-foot .act {
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 500;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 999px;
+  padding: 5px 13px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.w-foot .act:hover { background: var(--persimmon); border-color: var(--persimmon); }
+.w-foot .act.ghost { background: transparent; color: var(--ink); }
+.w-foot .act.ghost:hover { color: var(--persimmon); }
+
+/* fade-swap container for era morph (paired with View Transitions) */
+.scene { display: none; flex-direction: column; flex: 1; }
+.scene.show { display: flex; }
+
+/* ---------- footer: caption + replay control ---------- */
+.gen-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 16px;
+  border-top: 1px solid var(--hairline);
+}
+.foot-cap {
+  font-family: var(--mono);
+  font-size: .6rem;
+  line-height: 1.5;
+  color: var(--muted);
+  min-width: 0;
+}
+.foot-cap b { color: var(--ink); font-weight: 500; }
+.replay {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: .62rem;
+  letter-spacing: .04em;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 5px 11px;
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+}
+.replay:hover { border-color: var(--persimmon); color: var(--ink); }
+.replay svg { width: 11px; height: 11px; }
+.replay .pause-i { display: none; }
+.replay[data-paused="true"] .pause-i { display: block; }
+.replay[data-paused="true"] .play-i { display: none; }
+
+/* the single morph transition: cross-fade + tiny lift (physical) */
+::view-transition-old(gen-surface) {
+  animation: vt-out .4s cubic-bezier(.4,0,.2,1) both;
+}
+::view-transition-new(gen-surface) {
+  animation: vt-in .5s cubic-bezier(.34,1.2,.64,1) both;
+}
+@keyframes vt-out { to { opacity: 0; transform: translateY(-6px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(8px); } }
+
+/* ---------- reduced motion: render the complete present-day artifact ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, ::view-transition-old(*), ::view-transition-new(*) {
+    animation: none !important;
+    transition: none !important;
+  }
+  .live .dot, .tool .pill .sp { animation: none !important; }
+  .nlu-chip, .tool, .widget { opacity: 1 !important; transform: none !important; }
+  .think .trace { grid-template-rows: 1fr; }
+  .think .trace p { opacity: 1 !important; transform: none !important; }
+  .answer .cap, .llm-bubble .cap { display: none !important; }
+  .widget .w-row .bar > i { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <figure class="gen-card" data-era="2" aria-label="The same question answered across three eras of conversation AI, auto-morphing on a loop">
+
+    <!-- header: stack identity + live signal -->
+    <figcaption class="gen-head">
+      <div class="head-l">
+        <span class="yr" id="hYear">2026</span>
+        <span class="stack" id="hStack">Agentic</span>
+      </div>
+      <span class="live" id="hLive"><span class="dot"></span><span id="hLiveTx">streaming</span></span>
+    </figcaption>
+
+    <!-- era rail (clickable timeline) -->
+    <div class="rail" role="tablist" aria-label="Era">
+      <button class="tick" role="tab" data-era="0" aria-selected="false">2018 · NLU</button>
+      <button class="tick" role="tab" data-era="1" aria-selected="false">2023 · LLM</button>
+      <button class="tick" role="tab" data-era="2" aria-selected="true">2026 · Agentic</button>
+    </div>
+    <div class="progress"><i id="prog"></i></div>
+
+    <!-- the morphing conversation surface -->
+    <div class="surface" id="surface" aria-live="polite">
+
+      <!-- ===== ERA 0 — 2018 NLU ===== -->
+      <div class="scene era0" data-scene="0">
+        <p class="ask">move my data to the new plan</p>
+        <div class="nlu-win">
+          <div class="nlu-bar"><span class="b b1"></span><span class="b b2"></span><span class="title">Virtual Assistant v2.1</span></div>
+          <div class="nlu-body">
+            <p class="nlu-fail">I didn't quite get that. Did you mean:
+              <span class="conf">INTENT MATCH: none above 0.62 threshold</span>
+            </p>
+            <div class="nlu-chips" id="nluChips">
+              <button class="nlu-chip">Change my plan</button>
+              <button class="nlu-chip">Download my data</button>
+              <button class="nlu-chip">Contact support</button>
+            </div>
+            <div class="nlu-input"><span>Type your question&hellip;</span><b>Send</b></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== ERA 1 — 2023 LLM ===== -->
+      <div class="scene era1" data-scene="1">
+        <p class="ask">Can you help me move my data to the new plan?</p>
+        <div class="llm-bubble">
+          <span class="body" id="llmBody"></span><span class="cap" id="llmCap"></span>
+          <div class="llm-meta" id="llmMeta" style="opacity:0">Generated &middot; 1 response</div>
+        </div>
+      </div>
+
+      <!-- ===== ERA 2 — 2026 AGENTIC ===== -->
+      <div class="scene era2" data-scene="2">
+        <p class="ask">Can you help me move my data to the new plan?</p>
+
+        <div class="think" id="think">
+          <div class="row" id="thinkRow">
+            <svg class="chev" viewBox="0 0 10 10" fill="none"><path d="M3 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="lbl" id="thinkLbl">Reasoning&hellip;</span>
+          </div>
+          <div class="trace"><div>
+            <p>Checking what's on the current plan and where the data lives.</p>
+            <p>Confirming the target plan can hold every record type.</p>
+            <p>No destructive step runs without the customer's go-ahead.</p>
+          </div></div>
+        </div>
+
+        <div class="tool" id="tool" data-state="run">
+          <svg class="ic" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2v10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="7" cy="7" r="5.2" stroke="currentColor" stroke-width="1.2"/></svg>
+          <span class="verb"><b>migration_preview</b></span>
+          <span class="pill">
+            <span class="sp"></span>
+            <span id="toolPill">running</span>
+            <svg class="check" viewBox="0 0 12 12" fill="none" style="display:none"><path d="M2.5 6.4l2.3 2.3L9.5 3.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+
+        <div class="answer" id="answer"><span id="ansBody"></span><span class="cap" id="ansCap"></span></div>
+
+        <div class="widget" id="widget" aria-label="Migration preview, synthetic data">
+          <div class="w-head"><span>Migration preview</span><span class="synthetic">synthetic</span></div>
+          <div class="w-rows">
+            <div class="w-row lead">
+              <span class="lab">Records to move<small>contacts · history · settings</small></span>
+              <span class="val">1,284</span>
+              <span class="bar"><i style="--w:100%"></i></span>
+            </div>
+            <div class="w-row">
+              <span class="lab">Compatible on new plan<small>verified field-by-field</small></span>
+              <span class="val">1,284 / 1,284</span>
+              <span class="bar"><i style="--w:100%"></i></span>
+            </div>
+            <div class="w-row">
+              <span class="lab">Estimated time<small>nothing deleted</small></span>
+              <span class="val">~4 min</span>
+            </div>
+          </div>
+          <div class="w-foot">
+            <button class="act">Approve &amp; move</button>
+            <button class="act ghost">Review fields</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- footer: caption + replay -->
+    <div class="gen-foot">
+      <span class="foot-cap"><b id="capWho">Same question. Three eras.</b> <span id="capWhat">Simone designed across all of them.</span></span>
+      <button class="replay" id="replay" data-paused="false" aria-label="Pause or replay">
+        <svg class="pause-i" viewBox="0 0 12 12" fill="currentColor"><rect x="2.5" y="2" width="2.6" height="8" rx="1"/><rect x="6.9" y="2" width="2.6" height="8" rx="1"/></svg>
+        <svg class="play-i" viewBox="0 0 12 12" fill="currentColor"><path d="M3 2l7 4-7 4z"/></svg>
+        <span id="replayTx">Pause</span>
+      </button>
+    </div>
+
+  </figure>
+
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const card    = document.querySelector(".gen-card");
+  const surface = document.getElementById("surface");
+  const scenes  = [...document.querySelectorAll(".scene")];
+  const ticks   = [...document.querySelectorAll(".tick")];
+  const prog    = document.getElementById("prog");
+  const hYear   = document.getElementById("hYear");
+  const hStack  = document.getElementById("hStack");
+  const hLiveTx = document.getElementById("hLiveTx");
+  const capWho  = document.getElementById("capWho");
+  const capWhat = document.getElementById("capWhat");
+  const replay  = document.getElementById("replay");
+  const replayTx= document.getElementById("replayTx");
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const supportsVT = typeof document.startViewTransition === "function";
+
+  const ERAS = [
+    { year: "2018", stack: "NLU",     live: "intent match", who: "2018 · NLU.",     what: "Rigid intent matching. It missed the ask." },
+    { year: "2023", stack: "LLM",     live: "generating",   who: "2023 · LLM.",     what: "One model, one fluent paragraph." },
+    { year: "2026", stack: "Agentic", live: "streaming",    who: "2026 · Agentic.", what: "Reasons, calls a tool, shows the work." },
+  ];
+
+  // hold durations per era (ms) — the agentic era earns the longest look
+  const HOLD = [4200, 5000, 8200];
+
+  let era = 2;            // start on the present-day artifact
+  let paused = false;
+  let offscreen = false;  // soft-pause when the card scrolls out of view
+  let timers = [];
+  let progRAF = 0;
+  let progStart = 0;
+  let gen = 0;            // generation token: invalidates stale streamers on era change
+
+  // progress (auto-advance) honors both pause and offscreen;
+  // in-scene streaming honors only pause, so a flaky first IntersectionObserver
+  // frame can never freeze a visible card mid-stream.
+  const heldProgress = () => paused || offscreen;
+  const heldStream = () => paused;
+  const clearTimers = () => { gen++; timers.forEach(clearTimeout); timers = []; cancelAnimationFrame(progRAF); };
+  const later = (fn, ms) => { const id = setTimeout(fn, ms); timers.push(id); return id; };
+
+  // ---- header + rail + caption sync ----
+  function syncChrome() {
+    const e = ERAS[era];
+    hYear.textContent = e.year;
+    hStack.textContent = e.stack;
+    hLiveTx.textContent = e.live;
+    capWho.textContent = e.who;
+    capWhat.textContent = e.what;
+    card.dataset.era = era;
+    ticks.forEach((t, i) => t.setAttribute("aria-selected", i === era ? "true" : "false"));
+  }
+
+  // ---- progress bar drives the hold AND the advance (single source of truth).
+  // It pauses cleanly when held() (paused or offscreen), so an out-of-view card
+  // never silently flips eras under a frozen bar. ----
+  function runProgress(ms, onComplete) {
+    cancelAnimationFrame(progRAF);
+    if (reduce) { prog.style.inset = "0 0 0 0"; return; }
+    const myGen = gen;
+    progStart = performance.now();
+    let prev = progStart;
+    const tick = (now) => {
+      if (myGen !== gen) return;            // superseded by a newer era
+      if (heldProgress()) { progStart += (now - prev); prev = now; progRAF = requestAnimationFrame(tick); return; }
+      prev = now;
+      const p = Math.min(1, (now - progStart) / ms);
+      prog.style.inset = `0 ${(1 - p) * 100}% 0 0`;
+      if (p < 1) { progRAF = requestAnimationFrame(tick); }
+      else { onComplete && onComplete(); }
+    };
+    progRAF = requestAnimationFrame(tick);
+  }
+
+  // ---- token streamer (rAF-paced, not setInterval; respects pause) ----
+  function streamText(node, text, { speed = 26, onDone } = {}) {
+    if (reduce) { node.textContent = text; onDone && onDone(); return; }
+    const myGen = gen;     // capture: a later era change bumps gen and stops this stream
+    let i = 0, acc = 0, last = performance.now();
+    const step = (now) => {
+      if (myGen !== gen) return;            // stale streamer from a prior era; stop
+      if (heldStream()) { last = now; requestAnimationFrame(step); return; }
+      acc += now - last; last = now;
+      // chunk a few chars per frame at human-ish cadence
+      while (acc >= speed && i < text.length) { i++; acc -= speed; }
+      node.textContent = text.slice(0, i);
+      if (i < text.length) { requestAnimationFrame(step); }
+      else { onDone && onDone(); }
+    };
+    requestAnimationFrame(step);
+  }
+
+  // ---- show one scene; reset its internal animated bits ----
+  function mountScene(i) {
+    scenes.forEach((s, k) => s.classList.toggle("show", k === i));
+    if (i === 0) playNLU();
+    else if (i === 1) playLLM();
+    else playAgentic();
+  }
+
+  // ===== ERA 0 — NLU: stiff chips pop in one by one =====
+  function playNLU() {
+    const chips = [...document.querySelectorAll("#nluChips .nlu-chip")];
+    chips.forEach(c => c.classList.remove("on"));
+    if (reduce) { chips.forEach(c => c.classList.add("on")); return; }
+    chips.forEach((c, k) => later(() => c.classList.add("on"), 260 + k * 200));
+  }
+
+  // ===== ERA 1 — LLM: single bubble, simple typing =====
+  function playLLM() {
+    const body = document.getElementById("llmBody");
+    const cap  = document.getElementById("llmCap");
+    const meta = document.getElementById("llmMeta");
+    const text = "Yes. Your current plan and the new one store the same record types, so everything moves over. Open Settings, choose the new plan, and confirm the switch when you're ready.";
+    body.textContent = "";
+    cap.style.display = "inline-block";
+    meta.style.opacity = "0";
+    if (reduce) { body.textContent = text; cap.style.display = "none"; meta.style.opacity = "1"; return; }
+    later(() => streamText(body, text, { speed: 22, onDone: () => {
+      cap.style.display = "none";
+      meta.style.transition = "opacity .4s"; meta.style.opacity = "1";
+    }}), 420);
+  }
+
+  // ===== ERA 2 — AGENTIC: reasoning -> tool -> stream -> widget =====
+  function playAgentic() {
+    const think  = document.getElementById("think");
+    const thinkLbl = document.getElementById("thinkLbl");
+    const tool   = document.getElementById("tool");
+    const toolPill = document.getElementById("toolPill");
+    const toolCheck= tool.querySelector(".check");
+    const answer = document.getElementById("answer");
+    const ansBody= document.getElementById("ansBody");
+    const ansCap = document.getElementById("ansCap");
+    const widget = document.getElementById("widget");
+
+    // reset
+    think.classList.remove("open");
+    thinkLbl.innerHTML = "Reasoning&hellip;";
+    tool.classList.remove("in"); tool.dataset.state = "run";
+    toolPill.textContent = "running"; toolCheck.style.display = "none";
+    tool.querySelector(".pill .sp").style.display = "block";
+    answer.classList.remove("settled");
+    ansBody.textContent = ""; ansCap.style.display = "inline-block";
+    widget.classList.remove("in");
+
+    const ansText = "Yes, and nothing's lost. All 1,284 records move cleanly to the new plan. Here's the preview before anything runs.";
+
+    if (reduce) {
+      think.classList.add("open");
+      thinkLbl.innerHTML = "Thought for <b>3s</b>";
+      tool.classList.add("in"); tool.dataset.state = "done";
+      toolPill.textContent = "done"; toolCheck.style.display = "block";
+      tool.querySelector(".pill .sp").style.display = "none";
+      ansBody.textContent = ansText; ansCap.style.display = "none";
+      answer.classList.add("settled"); widget.classList.add("in");
+      return;
+    }
+
+    // 1) reasoning trace expands, dimmed and subordinate
+    later(() => think.classList.add("open"), 260);
+    // 2) reasoning collapses to a summary chip (honest, present-tense -> past)
+    later(() => {
+      think.classList.remove("open");
+      thinkLbl.innerHTML = "Thought for <b>3s</b>";
+    }, 1900);
+    // 3) tool call appears, pending pulse
+    later(() => tool.classList.add("in"), 2050);
+    // 4) tool resolves
+    later(() => {
+      tool.dataset.state = "done";
+      toolPill.textContent = "done";
+      tool.querySelector(".pill .sp").style.display = "none";
+      toolCheck.style.display = "block";
+    }, 3450);
+    // 5) stream the answer token-by-token, caret at the tip
+    later(() => streamText(ansBody, ansText, { speed: 21, onDone: () => {
+      ansCap.style.display = "none";
+      answer.classList.add("settled");
+      // 6) inline structured result widget springs in
+      later(() => widget.classList.add("in"), 180);
+    }}), 3750);
+  }
+
+  // ---- advance to next era with the single morph transition ----
+  function goTo(next, { user = false } = {}) {
+    clearTimers();
+    era = ((next % 3) + 3) % 3;
+    const apply = () => { syncChrome(); mountScene(era); };
+    if (supportsVT && !reduce) {
+      document.startViewTransition(apply);
+    } else {
+      apply();
+    }
+    // schedule the next advance (no-op while paused; the loop keeps its rhythm)
+    scheduleNext();
+  }
+
+  function scheduleNext() {
+    cancelAnimationFrame(progRAF);
+    if (paused) { return; }
+    const myEra = era;
+    runProgress(HOLD[era], () => { if (era === myEra) goTo(era + 1); });
+  }
+
+  // ---- controls ----
+  ticks.forEach((t, i) => t.addEventListener("click", () => {
+    paused = false; setReplayUI();
+    goTo(i, { user: true });
+  }));
+
+  function setReplayUI() {
+    replay.dataset.paused = String(paused);
+    replayTx.textContent = paused ? "Play" : "Pause";
+  }
+
+  replay.addEventListener("click", () => {
+    paused = !paused;
+    setReplayUI();
+    if (!paused) {
+      // resume: restart the current era's hold cleanly
+      scheduleNext();
+    } else {
+      cancelAnimationFrame(progRAF);
+      clearTimers();
+    }
+  });
+
+  // soft-pause the loop when the card scrolls out of view (perf + politeness).
+  // held() already gates progress and streaming; nothing else to schedule.
+  if ("IntersectionObserver" in window && !reduce) {
+    const io = new IntersectionObserver((ents) => {
+      ents.forEach(e => { offscreen = !e.isIntersecting; });
+    }, { threshold: 0.2 });
+    io.observe(card);
+  }
+
+  // ---- boot ----
+  syncChrome();
+  setReplayUI();
+  if (reduce) {
+    // render the complete present-day artifact, no loop
+    mountScene(2);
+    prog.style.inset = "0 0 0 0";
+    capWho.textContent = ERAS[2].who;
+    capWhat.textContent = ERAS[2].what;
+  } else {
+    mountScene(2);
+    scheduleNext();
+  }
+})();
+</script>
+</body>
+</html>
