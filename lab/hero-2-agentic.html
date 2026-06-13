@@ -5,7 +5,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Agentic Window · Simone Muro</title>
-<meta name="description" content="One empathetic support exchange, end to end: reasoning that tucks away, tool calls that resolve, an answer that renders a charge breakdown inline. The kind of agentic support experience Simone designs." />
+<!-- All data below is Mock data. No real company or product names. -->
+
+<meta name="description" content="One billing question, handled across plan, team, and charges: reasoning that tucks away, four tool calls across different sources that resolve, an answer that renders a charge breakdown inline. The kind of agentic support experience Simone designs." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
@@ -414,6 +416,52 @@
   .ledger .line.total .lbl { font-weight: 500; }
   .ledger .line.total .amt { font-size: 0.86rem; font-weight: 500; }
 
+  /* the focal change block — the two drivers behind the increase this cycle */
+  .ledger .change {
+    margin: 9px -10px 1px;
+    padding: 10px 12px 11px;
+    border-radius: 10px;
+    background: rgba(232,85,47,0.07);
+    box-shadow: inset 0 0 0 1px rgba(232,85,47,0.22);
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  .ledger .change.in {
+    opacity: 1; transform: none;
+    transition: opacity 0.5s var(--settle), transform 0.55s var(--spring);
+  }
+  .ledger .change .change-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding-bottom: 7px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(232,85,47,0.2);
+  }
+  .ledger .change .change-head .ttl {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--persimmon);
+  }
+  .ledger .change .change-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 3px 0;
+    font-size: 0.76rem;
+    color: var(--muted);
+  }
+  .ledger .change .amt {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--persimmon);
+    white-space: nowrap;
+  }
+  .ledger .change .change-head .amt { font-size: 0.82rem; }
+
   .followups { display: flex; flex-wrap: wrap; gap: 7px; margin: 6px 0 4px; }
   .fu {
     font-family: var(--mono);
@@ -487,7 +535,7 @@
 
   /* ---- reduced motion: the finished artifact, fully legible, no motion ---- */
   @media (prefers-reduced-motion: reduce) {
-    .appear, .user, .reason, .tool, .answer, .widget, .fu, .reason-steps p, .tool-rows .r, .ledger .line {
+    .appear, .user, .reason, .tool, .answer, .widget, .fu, .reason-steps p, .tool-rows .r, .ledger .line, .ledger .change {
       opacity: 1 !important;
       transform: none !important;
       transition: none !important;
@@ -501,7 +549,7 @@
 </head>
 <body>
   <main class="stage">
-    <p class="caption"><b>The kind of agentic support experience I design.</b> One billing question, handled start to finish: the worry acknowledged early, access checked before any detail shows, the full charge pulled and explained, then real options offered. Mock data.</p>
+    <p class="caption"><b>The kind of agentic support experience I design.</b> One billing question, handled across plan, team, and charges. The agent checks access, gathers from four sources, explains the $288 in plain terms, then offers real options. Mock data.</p>
 
     <section class="inst" aria-label="A live agentic exchange, demonstrated">
       <div class="inst-head">
@@ -535,6 +583,8 @@
 
   const CARD_ICO   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg>';
   const SHIELD_ICO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z"/><path d="m9 12 2 2 4-4"/></svg>';
+  const PLAN_ICO   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></svg>';
+  const TEAM_ICO   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.2a3 3 0 0 1 0 5.6M17.5 19a5.5 5.5 0 0 0-3-4.9"/></svg>';
 
   const el = (tag, cls, html) => {
     const n = document.createElement(tag);
@@ -569,7 +619,7 @@
     setActState('stop');
 
     // 1 — customer opens, a little worried about an unexpected charge (all mock)
-    const user = el('div', 'user appear', 'I see a $148 charge on my card I don’t recognize. Can you help me understand it?');
+    const user = el('div', 'user appear', 'I see a $288 charge on my card I don’t recognize. Can you help me understand it?');
     thread.appendChild(user);
     await wait(60); user.classList.add('in');
     await wait(900);
@@ -591,8 +641,8 @@
     const rlabel = reason.querySelector('.label');
     const STEPS = [
       'Confirm this is the account owner before showing any billing detail.',
-      'Pull the full charge, not just the total. An unexpected amount usually means something changed.',
-      'Check for anything ending, like a promo or trial, that would raise the price this cycle.',
+      'Pull the plan, the team count, and the charges, then see what changed since last cycle.',
+      'An increase usually means something was added or a rate ended. Find the specific reason.',
     ];
     rhead.addEventListener('click', () => toggleReason(reason));
 
@@ -613,72 +663,82 @@
     rhead.setAttribute('aria-expanded', reduce ? 'true' : 'false');
     await wait(reduce ? 0 : 480);
 
-    // 3 — tool call: verify the request is allowed before any billing detail shows
-    const t1 = el('div', 'tool open appear');
-    t1.innerHTML = `
-      <div class="tool-head">
-        <span class="ic">${SHIELD_ICO}</span>
-        <span><span class="verb">Verifying</span> <span class="arg">verify_account_access</span></span>
-        <span class="pill"><span class="dot"></span><span class="lbl">Running</span></span>
-      </div>
-      <div class="tool-body"><div><div class="tool-rows">
-        <div class="skel w1"></div>
-      </div></div></div>`;
-    thread.appendChild(t1);
-    await wait(40); t1.classList.add('in');
-    await wait(reduce ? 0 : 900);
+    // 3 — four tool calls across DIFFERENT sources: the agent assembles the answer
+    // from several systems (access, plan, team, billing). Each chip pends, then resolves.
+    async function toolChip({ ico, verb, doneVerb, arg, skels, rows, donePill }) {
+      const t = el('div', 'tool open appear');
+      const skel = skels === 2
+        ? '<div class="skel w1"></div><div class="skel w2"></div>'
+        : '<div class="skel w1"></div>';
+      t.innerHTML = `
+        <div class="tool-head">
+          <span class="ic">${ico}</span>
+          <span><span class="verb">${verb}</span> <span class="arg">${arg}</span></span>
+          <span class="pill"><span class="dot"></span><span class="lbl">Running</span></span>
+        </div>
+        <div class="tool-body"><div><div class="tool-rows">${skel}</div></div></div>`;
+      thread.appendChild(t);
+      await wait(40); t.classList.add('in');
+      await wait(reduce ? 0 : (skels === 2 ? 1000 : 760));
 
-    const rows1 = t1.querySelector('.tool-rows');
-    rows1.innerHTML = '';
-    for (const [k, v] of [['role', 'account owner'], ['scope', 'read-only · billing'], ['result', 'verified']]) {
-      const r = el('div', 'r', `<span class="k">${k}</span><span class="v">${v}</span>`);
-      rows1.appendChild(r);
-      await wait(30); r.classList.add('in');
-      await wait(reduce ? 0 : 100);
+      const rowsWrap = t.querySelector('.tool-rows');
+      rowsWrap.innerHTML = '';
+      for (const [k, v] of rows) {
+        const r = el('div', 'r', `<span class="k">${k}</span><span class="v">${v}</span>`);
+        rowsWrap.appendChild(r);
+        await wait(30); r.classList.add('in');
+        await wait(reduce ? 0 : 90);
+      }
+      t.querySelector('.verb').textContent = doneVerb;
+      t.querySelector('.lbl').textContent = donePill;
+      t.classList.add('done');
+      await wait(reduce ? 0 : 520);
+      if (!reduce) t.classList.remove('open'); // tuck closed; user could reopen in a real build
+      await wait(reduce ? 0 : 300);
+      return t;
     }
-    t1.querySelector('.verb').textContent = 'Verified';
-    t1.querySelector('.lbl').textContent = 'Account owner';
-    t1.classList.add('done');
-    await wait(reduce ? 0 : 700);
-    if (!reduce) t1.classList.remove('open'); // tuck closed; user could reopen in a real build
-    await wait(reduce ? 0 : 460);
 
-    // 4 — tool call: pull the full charge breakdown (multi-source retrieval)
-    const t2 = el('div', 'tool open appear');
-    t2.innerHTML = `
-      <div class="tool-head">
-        <span class="ic">${CARD_ICO}</span>
-        <span><span class="verb">Pulling</span> <span class="arg">get_account_charges · this cycle</span></span>
-        <span class="pill"><span class="dot"></span><span class="lbl">Running</span></span>
-      </div>
-      <div class="tool-body"><div><div class="tool-rows">
-        <div class="skel w1"></div><div class="skel w2"></div>
-      </div></div></div>`;
-    thread.appendChild(t2);
-    await wait(40); t2.classList.add('in');
-    await wait(reduce ? 0 : 1100);
+    // (a) access — verify the owner before any billing detail shows
+    await toolChip({
+      ico: SHIELD_ICO, verb: 'Verifying', doneVerb: 'Verified',
+      arg: 'verify_account_access', skels: 1,
+      rows: [['role', 'account owner'], ['scope', 'read-only · billing'], ['result', 'verified']],
+      donePill: 'Account owner',
+    });
 
-    // the charge breakdown — the focal "intro rate ended" line is what answers the question
+    // (b) plan — what the account is on, including add-ons
+    await toolChip({
+      ico: PLAN_ICO, verb: 'Reading', doneVerb: 'Read',
+      arg: 'get_plan', skels: 1,
+      rows: [['plan', 'Plus plan'], ['add-ons', 'Payroll · Payments']],
+      donePill: 'Plus plan + 2 add-ons',
+    });
+
+    // (c) team — active seats and what changed this cycle
+    await toolChip({
+      ico: TEAM_ICO, verb: 'Counting', doneVerb: 'Counted',
+      arg: 'get_team', skels: 1,
+      rows: [['active', '16'], ['last cycle', '14'], ['change', '+2 this cycle']],
+      donePill: '16 active · +2',
+    });
+
+    // (d) billing — the charges this cycle and the delta vs last month
+    await toolChip({
+      ico: CARD_ICO, verb: 'Pulling', doneVerb: 'Pulled',
+      arg: 'get_billing · this cycle', skels: 2,
+      rows: [['line items', '4'], ['change vs last month', '+$60.00'], ['total', '$288.00']],
+      donePill: '+$60.00 · $288.00',
+    });
+    await wait(reduce ? 0 : 200);
+
+    // the charge breakdown the answer renders inline. The focal block below the
+    // line items names the two drivers behind the +$60.00.
     const CHARGES = [
-      { lbl: 'Plus plan', sub: 'Base subscription', amt: '$80.00 / mo' },
-      { lbl: 'Payroll add-on', sub: 'Files your payroll taxes automatically', amt: '$35.00 / mo' },
-      { lbl: 'Payments processing', sub: 'Card fees this month', amt: '$5.00' },
-      { lbl: 'Intro rate ended', sub: '6-month welcome discount finished this cycle', amt: '+$28.00', flag: true },
+      { lbl: 'Plus plan', sub: 'Base subscription', amt: '$99.00 / mo' },
+      { lbl: 'Payroll', sub: 'Monthly subscription', amt: '$50.00 / mo' },
+      { lbl: 'Team members', sub: '16 active, $6.00 each', amt: '$96.00 / mo' },
+      { lbl: 'Payments processing', sub: 'Card fees this month', amt: '$43.00' },
     ];
-    const rows2 = t2.querySelector('.tool-rows');
-    rows2.innerHTML = '';
-    for (const [k, v] of [['line items', '4'], ['change vs. last month', '+$28.00'], ['new total', '$148.00']]) {
-      const r = el('div', 'r', `<span class="k">${k}</span><span class="v">${v}</span>`);
-      rows2.appendChild(r);
-      await wait(30); r.classList.add('in');
-      await wait(reduce ? 0 : 90);
-    }
-    t2.querySelector('.verb').textContent = 'Pulled';
-    t2.querySelector('.lbl').textContent = '4 items';
-    t2.classList.add('done');
-    await wait(reduce ? 0 : 700);
-    if (!reduce) t2.classList.remove('open');
-    await wait(reduce ? 0 : 440);
 
     // 5 — warm, reassuring answer, streamed, with the charge breakdown rendered inline
     const ans = el('div', 'answer appear');
@@ -687,7 +747,7 @@
 
     const pre = el('span', null, '');
     ans.appendChild(pre);
-    await streamInto(pre, 'Good news, nothing is wrong, and nothing was added without your say-so. Here is exactly what the $148 covers.', 15);
+    await streamInto(pre, 'Happy to walk you through it. Here is exactly what makes up the $288, and why it is about $60 more than last month.', 15);
 
     // inline rendered widget (a real charge breakdown, not a wall of text)
     const widget = el('div', 'widget');
@@ -709,26 +769,34 @@
         <span class="amt">${c.amt}</span>`;
       return line;
     };
-    CHARGES.forEach((c) => ledger.appendChild(buildLine(c, c.flag ? 'flag' : '')));
-    ledger.appendChild(buildLine({ lbl: 'New total', amt: '$148.00' }, 'total'));
+    CHARGES.forEach((c) => ledger.appendChild(buildLine(c)));
+    ledger.appendChild(buildLine({ lbl: 'New total', amt: '$288.00 / mo' }, 'total'));
 
-    // reveal the lines on a gentle stagger, the flagged line lands as the focal point
-    const lines = ledger.querySelectorAll('.line');
+    // focal block: the two drivers behind the +$60.00 this cycle
+    const change = el('div', 'change');
+    change.innerHTML = `
+      <div class="change-head"><span class="ttl">Changed this cycle</span><span class="amt">+$60.00</span></div>
+      <div class="change-row"><span>2 team members added</span><span class="amt">+$12.00</span></div>
+      <div class="change-row"><span>6-month welcome rate ended</span><span class="amt">+$48.00</span></div>`;
+    ledger.appendChild(change);
+
+    // reveal the lines on a gentle stagger, the change block lands as the focal point
+    const lines = ledger.querySelectorAll('.line, .change');
     for (let i = 0; i < lines.length; i++) {
       const t = setTimeout(() => lines[i].classList.add('in'), reduce ? 0 : i * 130);
       timers.push(t);
     }
     await wait(reduce ? 0 : lines.length * 130 + 360);
 
-    // close the explanation with empathy and the real reason it went up
+    // close with the two reasons in plain terms, value woven in, nothing pushed
     const post = el('span', null, '');
     ans.appendChild(post);
-    await streamInto(post, ' The reason it is higher than last month is the line in orange: your 6-month intro discount finished this cycle, which we flagged on last month’s statement. Everything else is the same plan you already had.', 15);
+    await streamInto(post, ' The two new team members are $6 each, and that covers their payroll tax filings automatically. The bigger piece is your 6-month welcome rate finishing this cycle. Everything else is the same plan you already had.', 15);
 
     await wait(reduce ? 0 : 760);
 
-    // 7 — follow-up turn: a worried clarification, handled with empathy and real options
-    const user2 = el('div', 'user appear', 'I didn’t realize the discount was ending. Is there any way to lower it?');
+    // 7 — follow-up turn: handled value-first and retention-oriented, never a cancel
+    const user2 = el('div', 'user appear', 'Is there any way to bring it down?');
     thread.appendChild(user2);
     await wait(40); user2.classList.add('in');
     await wait(reduce ? 0 : 760);
@@ -738,11 +806,11 @@
     await wait(40); ans2.classList.add('in');
     const a2 = el('span', null, '');
     ans2.appendChild(a2);
-    await streamInto(a2, 'Totally fair, that one is easy to miss. A few ways to bring it down: switch to annual billing and save about 15%, drop Payments if you are not taking card payments right now, or I can connect you with a specialist to review the whole plan. Want me to walk through any of these?', 15);
+    await streamInto(a2, 'Good news, there is room here. You may qualify to extend your welcome rate for a few more months, and I can request that for you right now. Switching to annual billing also saves about 15% across the whole account. Or I can connect you with a specialist to look at plan options that fit how you are growing. Want me to start with the rate extension?', 15);
 
     // 8 — follow-up suggestions appear, settling in
     const fus = el('div', 'followups');
-    const FU = ['Switch to annual billing', 'Remove Payments', 'Talk to a specialist'];
+    const FU = ['Extend my welcome rate', 'Switch to annual billing', 'Talk to a specialist'];
     FU.forEach((f) => fus.appendChild(el('button', 'fu', f)));
     thread.appendChild(fus);
     await wait(reduce ? 0 : 120);
