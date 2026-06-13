@@ -208,7 +208,7 @@
   SM.AGENT_ENDPOINT = "";
   var KB = [
     { id: "who", chip: "Who is Simone?", match: ["who", "about", "background", "summary", "experience", "career", "story", "history"],
-      a: "Simone is an AI experience designer and builder: nine years in language AI across Meta, Apple's Siri, Sam's Club, Intuit, and Credit Karma, with the last six and a half designing and building conversation and agentic systems. She has led the work and the people doing it, coaching designers and design technologists while staying in the craft herself.", src: "about + career timeline" },
+      a: "Simone is an AI experience designer and builder: ten years in language AI across Meta, Apple's Siri, Sam's Club, Intuit, and Credit Karma, with the last six and a half designing and building conversation and agentic systems. She has led the work and the people doing it, coaching designers and design technologists while staying in the craft herself.", src: "about + career timeline" },
     { id: "build", chip: "Can she actually build?", match: ["build", "built", "code", "technical", "engineer", "hands-on", "ship", "mcp", "yaml", "skill", "billing"],
       a: "In May 2026 she built a working agent skill in 5 days, solo: skill YAML, a billing lookup tool with three environment modes, local testing through a Streamlit harness, and a 108-case golden dataset with judge-checkable gating criteria. She builds AI-natively, pairing with Claude in Cursor.", src: "No. 01 · BillingSkill", link: { href: "billing-skill.html", label: "Read No. 01" } },
     { id: "eval", chip: "How does she think about quality?", match: ["quality", "eval", "golden", "dataset", "judge", "rubric", "measure", "test", "label"],
