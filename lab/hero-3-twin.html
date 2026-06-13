@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simone Muro · Agent Twin (hero card)</title>
+<meta name="description" content="A live agent twin as the hero. Streams a sample agentic exchange on load, then invites you to ask anything about Simone's work." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   SIMONE MURO · "Talk to Me" — the agent twin as hero card.
+   Design system: light shell, paper/ink/hairline, one persimmon
+   accent rationed, one signal green for live tool/agent state.
+   Geist (UI) · Geist Mono (data/labels) · Newsreader Italic (her words).
+   June-2026 bar: token streaming, animated reasoning trace,
+   tool-chip lifecycle, inline structured result widget, spring easing.
+   Every motion has a finished static state for reduced-motion.
+   ============================================================ */
+:root {
+  --paper: #faf9f6;
+  --card: #ffffff;
+  --ink: #1a1815;
+  --muted: #6b6660;
+  --faint: #9b958c;
+  --hairline: #e5e1da;
+  --persimmon: #e8552f;
+  --signal: #1b7f5c;
+  --sans: "Geist", system-ui, -apple-system, sans-serif;
+  --mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+  --serif: "Newsreader", Georgia, serif;
+
+  /* animated custom property for the caret hue + a spring curve reused
+     across micro (0.18s chip) and macro (0.6s card) motion, proportional. */
+  --spring: linear(
+    0, 0.006, 0.025 2.8%, 0.101 6.1%, 0.539 18.9%, 0.721 25.3%, 0.849,
+    0.937 35.1%, 0.968, 0.991 43.5%, 1.006 47.3%, 1.015 52.1%, 1.017 56.2%,
+    1.013 65.3%, 1.001 80.2%, 0.997 88.1%, 1
+  );
+}
+@property --caretA {
+  syntax: "<number>";
+  initial-value: 1;
+  inherits: false;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* render the card centered, alone, like it sits in the hero right column */
+  display: grid;
+  place-items: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+  /* faint paper texture so white card reads as a card, not the page */
+  background-image:
+    radial-gradient(1200px 600px at 80% -10%, rgba(232,85,47,0.025), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(27,127,92,0.02), transparent 55%);
+}
+::selection { background: var(--persimmon); color: var(--paper); }
+
+/* ---------------- the card shell ---------------- */
+.twin {
+  width: min(100%, 452px);
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: 0 1px 2px rgba(26,24,21,0.04), 0 12px 40px rgba(26,24,21,0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* card itself does not fidget; it just settles in once on load */
+  opacity: 0;
+  transform: translateY(10px) scale(0.992);
+  animation: cardIn 0.7s var(--spring) forwards;
+}
+@keyframes cardIn { to { opacity: 1; transform: none; } }
+
+/* header: identity, not a chatbot bar */
+.twin-head {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--hairline);
+}
+.sig {
+  position: relative;
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  background: var(--ink);
+  color: var(--paper);
+  display: grid; place-items: center;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  flex: 0 0 auto;
+}
+.sig .live {
+  position: absolute;
+  right: -3px; bottom: -3px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--signal);
+  border: 2px solid var(--card);
+}
+.sig .live::after {
+  content: "";
+  position: absolute; inset: -2px;
+  border-radius: 50%;
+  background: var(--signal);
+  opacity: 0.5;
+  animation: ring 2.4s ease-out infinite;
+}
+@keyframes ring { 0% { transform: scale(0.6); opacity: 0.5; } 100% { transform: scale(2.1); opacity: 0; } }
+.twin-head .who { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.twin-head .name { font-size: 0.86rem; font-weight: 600; letter-spacing: -0.01em; }
+.twin-head .mode {
+  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.twin-head .mode .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--signal); }
+.twin-head .replay {
+  margin-left: auto;
+  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.04em;
+  color: var(--faint); background: transparent; border: 1px solid var(--hairline);
+  border-radius: 999px; padding: 4px 10px; cursor: pointer;
+  transition: color 0.18s var(--spring), border-color 0.18s var(--spring), opacity 0.2s;
+}
+.twin-head .replay:hover { color: var(--persimmon); border-color: var(--persimmon); }
+.twin-head .replay:disabled { opacity: 0.4; cursor: default; }
+
+/* ---------------- the conversation log ---------------- */
+.log {
+  padding: 16px;
+  display: flex; flex-direction: column; gap: 0;
+  overflow-y: auto;
+  /* fixed-ish stage so streaming never shifts page layout (CLS guard) */
+  height: 366px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hairline) transparent;
+}
+.log::-webkit-scrollbar { width: 7px; }
+.log::-webkit-scrollbar-thumb { background: var(--hairline); border-radius: 999px; }
+
+.turn { display: flex; flex-direction: column; margin-bottom: 14px; }
+.turn:last-child { margin-bottom: 2px; }
+
+/* enter motion: spring rise, settles fast then is stable to read */
+.msg, .toolcard, .think {
+  opacity: 0; transform: translateY(7px);
+  animation: rise 0.5s var(--spring) forwards;
+}
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+.msg.user {
+  align-self: flex-end;
+  max-width: 84%;
+  background: var(--ink); color: var(--paper);
+  padding: 9px 14px;
+  border-radius: 14px 14px 4px 14px;
+  font-size: 0.88rem; line-height: 1.5;
+}
+.msg.bot {
+  align-self: flex-start;
+  max-width: 92%;
+  font-size: 0.9rem; line-height: 1.6;
+  color: #2c2a26;
+}
+.msg.bot .stream { white-space: pre-wrap; }
+.msg.bot b { font-weight: 600; color: var(--ink); }
+.msg.bot .num { font-family: var(--mono); font-weight: 500; color: var(--ink); }
+
+/* the streaming caret: a thin pulsing bar at the stream tip */
+.caret {
+  display: inline-block;
+  width: 2px; height: 1.05em;
+  margin-left: 1px;
+  vertical-align: -0.18em;
+  background: var(--persimmon);
+  border-radius: 1px;
+  --caretA: 1;
+  opacity: var(--caretA);
+  animation: caret 1s steps(1) infinite;
+}
+@keyframes caret { 50% { --caretA: 0.15; } }
+
+/* source line under a settled answer */
+.src {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.04em;
+  color: var(--faint); margin-top: 9px;
+}
+.src::before { content: ""; width: 9px; height: 1px; background: var(--hairline); }
+.src a { color: var(--persimmon); text-decoration: none; }
+.src a:hover { text-decoration: underline; }
+
+/* ---------------- reasoning / thinking trace ----------------
+   collapsed by default, dimmed + subordinate, honest present-tense label. */
+.think {
+  align-self: flex-start;
+  width: 100%;
+  margin-bottom: 9px;
+}
+.think summary {
+  list-style: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.03em;
+  color: var(--muted);
+  user-select: none;
+}
+.think summary::-webkit-details-marker { display: none; }
+.think summary .chev {
+  width: 9px; height: 9px;
+  border-right: 1.5px solid var(--faint); border-bottom: 1.5px solid var(--faint);
+  transform: rotate(-45deg);
+  transition: transform 0.25s var(--spring);
+}
+.think[open] summary .chev { transform: rotate(45deg); }
+.think summary .spin {
+  width: 11px; height: 11px; border-radius: 50%;
+  border: 1.5px solid var(--hairline); border-top-color: var(--signal);
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.think .trace {
+  margin-top: 8px; padding-left: 16px;
+  border-left: 1.5px solid var(--hairline);
+  display: flex; flex-direction: column; gap: 5px;
+}
+.think .trace .step {
+  font-family: var(--mono); font-size: 0.66rem; line-height: 1.5;
+  color: var(--faint);
+  opacity: 0; transform: translateX(-4px);
+  animation: stepIn 0.4s var(--spring) forwards;
+}
+.think .trace .step b { color: var(--muted); font-weight: 500; }
+@keyframes stepIn { to { opacity: 1; transform: none; } }
+
+/* ---------------- tool-call card · lifecycle ---------------- */
+.toolcard {
+  align-self: flex-start;
+  width: 100%;
+  border: 1px solid var(--hairline);
+  border-radius: 11px;
+  background: var(--paper);
+  overflow: hidden;
+  margin-bottom: 9px;
+}
+.toolcard .tc-head {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 12px;
+}
+.toolcard .tc-ico {
+  width: 22px; height: 22px; border-radius: 6px;
+  background: var(--card); border: 1px solid var(--hairline);
+  display: grid; place-items: center; flex: 0 0 auto;
+  color: var(--signal);
+}
+.toolcard .tc-ico svg { width: 13px; height: 13px; }
+.toolcard .tc-name {
+  font-family: var(--mono); font-size: 0.7rem; color: var(--ink); font-weight: 500;
+}
+.toolcard .tc-name .verb { color: var(--muted); font-weight: 400; }
+.toolcard .tc-pill {
+  margin-left: auto;
+  font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em;
+  text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 9px; border-radius: 999px;
+  border: 1px solid var(--hairline); color: var(--muted);
+}
+.toolcard .tc-pill .led {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--signal);
+}
+.toolcard.running .tc-pill { color: var(--signal); border-color: rgba(27,127,92,0.35); }
+.toolcard.running .tc-pill .led { animation: breathe 1.2s ease-in-out infinite; }
+@keyframes breathe { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.7); } }
+.toolcard.done .tc-pill { color: var(--signal); border-color: rgba(27,127,92,0.25); background: rgba(27,127,92,0.05); }
+.toolcard.done .tc-pill .led { background: var(--signal); }
+
+/* the structured result that the tool resolves into — UI, not JSON */
+.toolcard .tc-result {
+  max-height: 0; opacity: 0;
+  transition: max-height 0.5s var(--spring), opacity 0.4s ease, padding 0.5s var(--spring);
+  padding: 0 12px; overflow: hidden;
+}
+.toolcard.done .tc-result { max-height: 220px; opacity: 1; padding: 0 12px 11px; }
+.tc-result .row {
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: center; gap: 10px;
+  padding: 7px 0;
+  border-top: 1px solid var(--hairline);
+  font-size: 0.78rem;
+}
+.tc-result .row:first-child { border-top: 0; }
+.tc-result .row .lbl { color: var(--muted); }
+.tc-result .row .lbl .meta { font-family: var(--mono); font-size: 0.62rem; color: var(--faint); display: block; }
+.tc-result .row .amt { font-family: var(--mono); font-size: 0.82rem; color: var(--ink); font-weight: 500; }
+.tc-result .row.total { border-top: 1.5px solid var(--ink); margin-top: 2px; }
+.tc-result .row.total .lbl { color: var(--ink); font-weight: 600; }
+.tc-result .row.total .amt { color: var(--persimmon); }
+.tc-result .synthetic {
+  font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--faint);
+  margin-top: 8px; display: flex; align-items: center; gap: 6px;
+}
+.tc-result .synthetic::before { content: ""; width: 5px; height: 5px; border-radius: 50%; border: 1px solid var(--faint); }
+/* result bars draw in left-to-right when revealed */
+.tc-result .bar { height: 3px; background: var(--hairline); border-radius: 2px; margin-top: 5px; overflow: hidden; }
+.tc-result .bar i { display: block; height: 100%; width: 0; background: var(--signal); border-radius: 2px; transition: width 0.7s var(--spring); }
+.toolcard.done .tc-result .bar i { width: var(--w, 50%); }
+
+/* ---------------- refusal styling (scoped, graceful) ---------------- */
+.msg.bot.refusal {
+  border-left: 2px solid var(--persimmon);
+  padding-left: 12px;
+  color: var(--muted);
+}
+
+/* ---------------- composer ---------------- */
+.compose {
+  border-top: 1px solid var(--hairline);
+  padding: 11px 12px 12px;
+  background: var(--card);
+}
+.compose .invite {
+  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.04em;
+  color: var(--faint); margin: 0 0 9px 3px;
+  display: flex; align-items: center; gap: 7px;
+}
+.compose .invite .pip { width: 5px; height: 5px; border-radius: 50%; background: var(--persimmon); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 9px; }
+.chip {
+  font-family: var(--mono); font-size: 0.68rem;
+  border: 1px solid var(--hairline); background: var(--paper);
+  border-radius: 999px; padding: 5px 11px; cursor: pointer; color: var(--muted);
+  transition: border-color 0.18s var(--spring), color 0.18s var(--spring), transform 0.18s var(--spring);
+}
+.chip:hover { border-color: var(--persimmon); color: var(--ink); transform: translateY(-1px); }
+.chip:active { transform: translateY(0); }
+.field {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  padding: 6px 6px 6px 14px;
+  transition: border-color 0.2s var(--spring), box-shadow 0.2s var(--spring);
+}
+.field:focus-within { border-color: var(--persimmon); box-shadow: 0 0 0 3px rgba(232,85,47,0.08); }
+.field input {
+  flex: 1; border: 0; background: transparent; outline: none;
+  font-family: var(--sans); font-size: 0.88rem; color: var(--ink);
+  padding: 5px 0;
+}
+.field input::placeholder { color: var(--faint); }
+.field .send {
+  width: 34px; height: 34px; flex: 0 0 auto;
+  border-radius: 9px; border: 0; cursor: pointer;
+  background: var(--ink); color: var(--paper);
+  display: grid; place-items: center;
+  transition: background 0.18s var(--spring), transform 0.18s var(--spring);
+}
+.field .send:hover { background: var(--persimmon); }
+.field .send:active { transform: scale(0.94); }
+.field .send svg { width: 15px; height: 15px; }
+/* the send button becomes a stop control while generating */
+.field .send.stop { background: var(--persimmon); }
+.field .send.stop svg.arrow { display: none; }
+.field .send svg.square { display: none; }
+.field .send.stop svg.square { display: block; }
+
+.foot {
+  font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.02em;
+  color: var(--faint); line-height: 1.55;
+  margin: 9px 3px 0;
+}
+.foot b { color: var(--muted); font-weight: 500; }
+
+/* ---------------- reduced motion: complete static artifact ---------------- */
+@media (prefers-reduced-motion: reduce) {
+  .twin { animation: none; opacity: 1; transform: none; }
+  .msg, .toolcard, .think, .think .trace .step { animation: none; opacity: 1; transform: none; }
+  .sig .live::after { animation: none; opacity: 0; }
+  .caret { display: none; }
+  .toolcard.running .tc-pill .led, .think summary .spin { animation: none; }
+  .log { scroll-behavior: auto; }
+  .toolcard .tc-result { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<main class="twin" aria-label="Simone's agent twin">
+  <header class="twin-head">
+    <div class="sig" aria-hidden="true">SM<span class="live"></span></div>
+    <div class="who">
+      <span class="name">Simone's agent twin</span>
+      <span class="mode" id="modeLabel"><span class="dot"></span><span id="modeText">curated mode</span></span>
+    </div>
+    <button class="replay" id="replayBtn" type="button" aria-label="Replay the sample exchange">replay</button>
+  </header>
+
+  <div class="log" id="log" aria-live="polite" aria-label="Conversation with the agent twin"></div>
+
+  <div class="compose">
+    <p class="invite"><span class="pip"></span>Ask my twin anything about my work</p>
+    <div class="chips" id="chips" role="group" aria-label="Suggested questions"></div>
+    <form class="field" id="form" autocomplete="off">
+      <label for="q" style="position:absolute;left:-9999px">Ask about Simone's work</label>
+      <input id="q" name="q" maxlength="240" placeholder="Can she actually build, or just design?" />
+      <button class="send" id="send" type="submit" aria-label="Send">
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <svg class="square" viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="7" width="10" height="10" rx="2"/></svg>
+      </button>
+    </form>
+    <p class="foot" id="foot"></p>
+  </div>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+     AGENT_ENDPOINT — wire this to a backend that proxies Claude.
+     When set, the twin runs LIVE: it POSTs {messages:[...]} and reads
+     a streaming text/event-stream (or plain text) response token by token.
+     When EMPTY (default), it runs CURATED mode: retrieval over answers
+     Simone wrote and tested, streamed so it still feels alive.
+     Expected live contract:
+       POST AGENT_ENDPOINT  body: { messages: [{role, content}, ...] }
+       resp: text/event-stream of `data: {"delta":"..."}` lines,
+             optional `data: {"tool":{...}}` and `data: {"done":true}`.
+     ============================================================ */
+  var AGENT_ENDPOINT = ""; // <-- set to e.g. "/api/twin" to go live
+
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var log = document.getElementById("log");
+  var chipsEl = document.getElementById("chips");
+  var form = document.getElementById("form");
+  var input = document.getElementById("q");
+  var sendBtn = document.getElementById("send");
+  var replayBtn = document.getElementById("replayBtn");
+  var modeText = document.getElementById("modeText");
+  var foot = document.getElementById("foot");
+  var live = !!AGENT_ENDPOINT;
+
+  modeText.textContent = live ? "live · Claude" : "curated mode";
+  foot.innerHTML = live
+    ? "<b>Live:</b> Claude behind a guardrailed prompt Simone wrote and eval-tested before it talks to you. Grounded in her case studies."
+    : "<b>Curated mode:</b> answers Simone wrote and tested, streamed live. Scope, grounding, and refusal are the craft. Any data shown is synthetic.";
+
+  /* ---------------- the knowledge base (reused from v3.js, voice-matched) ----------------
+     Each answer is authored in Simone's voice: leads with the point, no hype,
+     natural contractions, "Conversation AI". `seg` lets bold/number runs survive
+     token streaming. */
+  function seg(s) { return s; } // marker for readability only
+
+  var KB = [
+    {
+      id: "build",
+      chip: "Can she actually build?",
+      match: ["build", "built", "code", "coding", "technical", "engineer", "engineering", "hands-on", "ship", "mcp", "yaml", "skill", "billing", "actually"],
+      a: "Yes. In May 2026 she built a working agent skill in <num>5 days, solo</num>: the skill itself, a billing-lookup tool with three environment modes, local testing through a harness, and a <num>108-case</num> golden dataset with judge-checkable gating. She builds AI-natively, pairing with Claude in Cursor.",
+      src: "No. 01 · BillingSkill",
+      link: { href: "../billing-skill.html", label: "Read No. 01" }
+    },
+    {
+      id: "eval",
+      chip: "How does she define quality?",
+      match: ["quality", "eval", "evals", "golden", "dataset", "judge", "rubric", "measure", "measurably", "test", "label", "good", "prove", "proof"],
+      a: "Her core belief: if you can't define what good looks like, you can't ship it. <b>Golden datasets</b> with ground truth and expected actions, LLM judges validated against human labels before anyone trusts them, and quality scores used as release gates, not reports.",
+      src: "No. 03 · The Quality Program",
+      link: { href: "../quality-program.html", label: "Read No. 03" }
+    },
+    {
+      id: "who",
+      chip: "Who is Simone?",
+      match: ["who is", "who's", "background", "summary", "her career", "career", "resume", "cv", "story", "history", "years of experience", "how long", "bio"],
+      a: "An AI experience designer and builder: <num>ten years</num> in language AI across Meta, Apple's Siri, Sam's Club, Intuit, and Credit Karma, the last six and a half designing and building conversation and agentic systems. She's led the work and the people doing it, while staying in the craft herself.",
+      src: "about + career timeline"
+    },
+    {
+      id: "voice",
+      chip: "What about voice?",
+      match: ["voice", "phone", "telephony", "ivr", "call", "speech", "audio", "1-800"],
+      a: "Voice is home turf: five years on Intuit's telephony assistant, then one of its first GenAI voice experiences, prototyped in mid-2023 and co-shipped December 2024. A <num>3.9-point</num> containment lift, measured in production. Her rule: a screen can show detail, voice has to earn every second.",
+      src: "No. 04 · Voice Snippet",
+      link: { href: "../voice-snippet.html", label: "Read No. 04" }
+    },
+    {
+      id: "fit",
+      chip: "Designer, PM, or manager?",
+      match: ["manager", "lead", "leader", "leadership", "pm", "product", "role", "team", "fit", "hire", "hiring", "level", "designer", "seat"],
+      a: "Yes, deliberately. She's managed a design team, authored PRDs, and stayed hands-on the whole time. She targets roles where that range is the point: agentic AI design, AI product, or the generalist seat on a team shipping AI that has to be measurably good.",
+      src: "about + leadership record"
+    },
+    {
+      id: "agent",
+      chip: "How were you built?",
+      match: ["this agent", "this bot", "how was this", "how do you work", "scripted", "real", "twin", "you built", "were you", "are you"],
+      a: "Two layers. Live mode runs Claude behind a guardrailed prompt Simone wrote, with a golden eval set (injection attempts included) it has to pass before it ships. Curated mode, running now, answers from responses she wrote and tested, so it never improvises about her career.",
+      src: "this card"
+    }
+  ];
+
+  var FALLBACK = {
+    refusal: true,
+    a: "That's outside my scope. I only speak to Simone's work, from the case studies on this site. Ask about her builds, her evals, or her voice work, or reach her directly at [removed-private-contact].",
+    src: "refusal boundary"
+  };
+
+  /* ---------------- tiny helpers ---------------- */
+  function el(tag, cls, html) { var d = document.createElement(tag); if (cls) d.className = cls; if (html != null) d.innerHTML = html; return d; }
+  function esc(t) { return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function nearBottom() { return log.scrollHeight - log.scrollTop - log.clientHeight < 90; }
+  function autoScroll(force) { if (force || nearBottom()) log.scrollTop = log.scrollHeight; }
+
+  /* The user can scroll up to read; we stop auto-advancing until they return. */
+  var stick = true;
+  log.addEventListener("scroll", function () { stick = nearBottom(); });
+
+  /* convert <b>..</b> / <num>..</num> markup in KB answers to spans, but
+     reveal it token by token. We pre-tokenize into [{text, cls}] runs. */
+  function tokenize(markup) {
+    var runs = [], re = /<(b|num)>([\s\S]*?)<\/\1>|([^<]+)/g, m;
+    while ((m = re.exec(markup))) {
+      if (m[3] != null) runs.push({ t: m[3], c: null });
+      else runs.push({ t: m[2], c: m[1] === "num" ? "num" : null, b: m[1] === "b" });
+    }
+    // split each run into word+space tokens, preserving its class
+    var toks = [];
+    runs.forEach(function (r) {
+      var parts = r.t.match(/\S+\s*|\s+/g) || [];
+      parts.forEach(function (p) { toks.push({ t: p, c: r.c, b: r.b }); });
+    });
+    return toks;
+  }
+
+  /* ---------------- run-state / cancellation ---------------- */
+  var busy = false, cancelled = false, timers = [], history = [], liveAbort = null;
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+  function later(fn, ms) { var id = setTimeout(fn, ms); timers.push(id); return id; }
+  function setBusy(on) {
+    busy = on;
+    sendBtn.classList.toggle("stop", on);
+    sendBtn.setAttribute("aria-label", on ? "Stop generating" : "Send");
+  }
+  function stopGen() {
+    cancelled = true; clearTimers();
+    if (liveAbort) { try { liveAbort.abort(); } catch (e) {} liveAbort = null; }
+    // finalize any live caret immediately into a stable state
+    var c = log.querySelector(".caret"); if (c) c.remove();
+    setBusy(false);
+  }
+
+  /* ---------------- render a user turn ---------------- */
+  function userTurn(text) {
+    var turn = el("div", "turn");
+    turn.appendChild(el("div", "msg user", esc(text)));
+    log.appendChild(turn);
+    autoScroll(true);
+    return turn;
+  }
+
+  /* ---------------- reasoning trace (animated, collapsible) ---------------- */
+  function thinkTrace(turn, steps, label, onDone) {
+    var det = el("details", "think");
+    det.open = false;
+    var sum = el("summary", null,
+      '<span class="spin" aria-hidden="true"></span><span class="tlabel">' + esc(label) + '</span>');
+    var trace = el("div", "trace");
+    det.appendChild(sum); det.appendChild(trace);
+    turn.appendChild(det);
+    autoScroll();
+
+    if (reduced) {
+      sum.querySelector(".spin").outerHTML = '<span class="chev" aria-hidden="true"></span>';
+      sum.querySelector(".tlabel").textContent = label.replace("…", "");
+      steps.forEach(function (s) { trace.appendChild(el("div", "step", s)); });
+      det.open = false; // collapsed summary state is the artifact
+      onDone && onDone(det, sum);
+      return;
+    }
+
+    var i = 0;
+    (function next() {
+      if (cancelled) return;
+      if (i >= steps.length) {
+        // collapse to a one-line, honest summary the user can re-expand
+        sum.querySelector(".spin").outerHTML = '<span class="chev" aria-hidden="true"></span>';
+        sum.querySelector(".tlabel").textContent = label.replace("…", " · done");
+        later(function () { det.removeAttribute("open"); }, 220);
+        onDone && onDone(det, sum);
+        return;
+      }
+      var step = el("div", "step", steps[i]);
+      trace.appendChild(step);
+      det.setAttribute("open", "");
+      autoScroll();
+      i++;
+      later(next, 430 + Math.random() * 160);
+    })();
+  }
+
+  /* ---------------- tool-call card with lifecycle + structured result ---------------- */
+  function toolCard(turn, spec, onDone) {
+    var card = el("div", "toolcard running");
+    card.innerHTML =
+      '<div class="tc-head">' +
+        '<span class="tc-ico">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>' +
+        '</span>' +
+        '<span class="tc-name">' + esc(spec.name) + ' <span class="verb">' + esc(spec.verb) + '</span></span>' +
+        '<span class="tc-pill"><span class="led"></span>' + (reduced ? "done" : "running") + '</span>' +
+      '</div>' +
+      '<div class="tc-result">' + spec.result + '</div>';
+    turn.appendChild(card);
+    autoScroll();
+
+    function resolve() {
+      card.classList.remove("running");
+      card.classList.add("done");
+      card.querySelector(".tc-pill").innerHTML = '<span class="led"></span>' + esc(spec.donePill || "200 ok");
+      autoScroll();
+      onDone && onDone();
+    }
+    if (reduced) { resolve(); }
+    else { later(resolve, spec.ms || 1100); }
+  }
+
+  /* ---------------- streaming bot answer (token by token) ---------------- */
+  function streamAnswer(turn, item, onDone) {
+    var msg = el("div", "msg bot" + (item.refusal ? " refusal" : ""));
+    var streamEl = el("span", "stream");
+    var caret = el("span", "caret");
+    msg.appendChild(streamEl); msg.appendChild(caret);
+    turn.appendChild(msg);
+    autoScroll();
+
+    var toks = tokenize(item.a);
+
+    function finish() {
+      caret.remove();
+      if (item.src) {
+        var s = el("span", "src");
+        var inner = esc(item.src);
+        if (item.link) inner += ' · <a href="' + item.link.href + '">' + esc(item.link.label) + ' &rarr;</a>';
+        s.innerHTML = inner;
+        msg.appendChild(s);
+      }
+      autoScroll();
+      onDone && onDone();
+    }
+
+    if (reduced) {
+      // render the complete artifact at once
+      toks.forEach(function (tk) { appendTok(streamEl, tk); });
+      finish();
+      return;
+    }
+
+    var i = 0;
+    (function tick() {
+      if (cancelled) { caret.remove(); return; }
+      if (i >= toks.length) { finish(); return; }
+      appendTok(streamEl, toks[i]);
+      i++;
+      autoScroll();
+      // pace ~ real model cadence: short tokens fast, punctuation gets a beat
+      var last = toks[i - 1].t;
+      var d = 22 + Math.random() * 24;
+      if (/[.,;:]\s*$/.test(last)) d += 120;
+      later(tick, d);
+    })();
+  }
+  function appendTok(parent, tk) {
+    if (tk.c === "num" || tk.b) {
+      var span = parent.querySelector("span[data-run='" + (tk.c || "b") + "-open']");
+      // simpler: just wrap each styled token
+      var s = document.createElement("span");
+      s.className = tk.c === "num" ? "num" : "";
+      if (tk.b) s.style.fontWeight = "600", s.style.color = "var(--ink)";
+      s.textContent = tk.t;
+      parent.appendChild(s);
+    } else {
+      parent.appendChild(document.createTextNode(tk.t));
+    }
+  }
+
+  /* ---------------- retrieval (curated mode) ----------------
+     Word-boundary matching with a specificity weight: a topic keyword that
+     appears as a whole word scores higher than a loose substring, and longer
+     keywords outweigh generic ones. This keeps "her voice work" routing to the
+     voice topic instead of tying with the generic "about" in the bio. */
+  function retrieve(q) {
+    var text = " " + q.toLowerCase().replace(/[^a-z0-9\- ]/g, " ").replace(/\s+/g, " ") + " ";
+    var best = null, score = 0;
+    KB.forEach(function (k) {
+      var s = 0;
+      k.match.forEach(function (kw) {
+        var whole = text.indexOf(" " + kw + " ") > -1;
+        var loose = text.indexOf(kw) > -1;
+        if (whole) s += kw.length > 5 ? 4 : (kw.length > 3 ? 3 : 2);
+        else if (loose) s += kw.length > 4 ? 2 : 1;
+      });
+      if (s > score) { score = s; best = k; }
+    });
+    return score > 0 ? best : null;
+  }
+
+  /* build a short, honest reasoning trace for the matched topic */
+  function planFor(item, q) {
+    if (!item) {
+      return { label: "Checking scope…", steps: [
+        "Read the question against Simone's case-study index.",
+        "No grounded match. This is outside what I'm scoped to answer."
+      ] };
+    }
+    return { label: "Reasoning…", steps: [
+      "Parse the question, find the relevant case study.",
+      "Match: <b>" + item.src + "</b>.",
+      "Ground the answer in tested copy. No improvising about her career."
+    ].map(function (s) { return s.replace(/<b>(.*?)<\/b>/, '<b>$1</b>'); }) };
+  }
+
+  /* ---------------- LIVE mode: stream from the Claude-backed endpoint ----------------
+     Renders into the same bubble + caret as curated mode, so the surface is
+     identical whether the words come from a script or the model. Reads either a
+     plain streamed body or an SSE-shaped one (`data: {"delta":"..."}` lines).
+     Any failure degrades gracefully to curated retrieval, announced honestly. */
+  function liveAnswer(turn, q) {
+    history.push({ role: "user", content: q });
+    var msg = el("div", "msg bot");
+    var streamEl = el("span", "stream");
+    var caret = el("span", "caret");
+    msg.appendChild(streamEl); msg.appendChild(caret);
+    turn.appendChild(msg);
+    autoScroll();
+
+    liveAbort = ("AbortController" in window) ? new AbortController() : null;
+    var got = "";
+
+    function fallToCurated(reason) {
+      caret.remove();
+      if (!msg.textContent) msg.remove();
+      // honest one-line switch, then the tested answer
+      var note = el("div", "turn");
+      log.appendChild(note);
+      streamAnswer(note, { a: reason, src: "curated mode" }, function () {
+        var hit = retrieve(q) || FALLBACK;
+        var t2 = el("div", "turn"); log.appendChild(t2);
+        streamAnswer(t2, hit, function () { setBusy(false); renderChips(); });
+      });
+    }
+
+    function pushChar(ch) {
+      streamEl.appendChild(document.createTextNode(ch));
+    }
+    function ingest(text) {
+      // append new text to the visible stream (caret stays at the tip)
+      got += text;
+      for (var i = 0; i < text.length; i++) pushChar(text[i]);
+      autoScroll();
+    }
+    function parseSSE(chunk) {
+      // tolerate both raw text and `data: {...}` SSE frames
+      if (chunk.indexOf("data:") === -1) { ingest(chunk); return; }
+      chunk.split(/\n/).forEach(function (line) {
+        line = line.trim();
+        if (!line || line.indexOf("data:") !== 0) return;
+        var payload = line.slice(5).trim();
+        if (payload === "[DONE]") return;
+        try {
+          var obj = JSON.parse(payload);
+          if (obj.delta) ingest(obj.delta);
+          else if (obj.text) ingest(obj.text);
+        } catch (e) { /* ignore keep-alive frames */ }
+      });
+    }
+    function finish() {
+      caret.remove();
+      history.push({ role: "assistant", content: got });
+      var s = el("span", "src", "live &middot; Claude, guardrailed by Simone");
+      msg.appendChild(s);
+      autoScroll();
+      setBusy(false); renderChips();
+    }
+
+    fetch(AGENT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: history.slice(-12) }),
+      signal: liveAbort ? liveAbort.signal : undefined
+    }).then(function (r) {
+      if (!r.ok || !r.body || !r.body.getReader) {
+        // no streaming body: read once as text/json
+        return r.text().then(function (txt) {
+          var reply = txt;
+          try { var j = JSON.parse(txt); reply = j.reply || j.text || txt; } catch (e) {}
+          if (!reply) throw new Error("empty");
+          ingest(reply); finish();
+        });
+      }
+      var reader = r.body.getReader(), dec = new TextDecoder();
+      (function pump() {
+        return reader.read().then(function (res) {
+          if (cancelled) { try { reader.cancel(); } catch (e) {} return; }
+          if (res.done) { finish(); return; }
+          parseSSE(dec.decode(res.value, { stream: true }));
+          return pump();
+        });
+      })();
+    }).catch(function (e) {
+      if (cancelled) return;
+      live = false;
+      modeText.textContent = "curated mode";
+      fallToCurated("The live model is unreachable, so I've switched to curated mode: answers Simone wrote and tested.");
+    });
+  }
+
+  /* ---------------- the conversation controller ---------------- */
+  function answer(q, kbItem) {
+    if (busy) stopGen();
+    cancelled = false; setBusy(true);
+
+    var item = kbItem || retrieve(q);
+    var turn = el("div", "turn");
+    log.appendChild(turn);
+
+    // honest, present-tense reasoning label: live "Thinking", curated "Reasoning"
+    var plan = planFor(item, q);
+    if (live) plan = { label: "Thinking…", steps: [
+      "Read the question against the guardrails Simone set.",
+      item ? "On topic: <b>" + item.src + "</b> is the relevant case study." : "Checking it sits inside her scoped subjects.",
+      "Answer from the case studies. Refuse anything off her work."
+    ] };
+
+    // 1) reasoning trace, then 2) the answer (live stream, or curated)
+    thinkTrace(turn, plan.steps, plan.label, function () {
+      if (cancelled) { setBusy(false); return; }
+      var doAnswer = function () {
+        if (live) { liveAnswer(turn, q); }
+        else { streamAnswer(turn, item || FALLBACK, function () { setBusy(false); renderChips(); }); }
+      };
+      later(doAnswer, 180);
+    });
+  }
+
+  /* ---------------- suggestion chips ---------------- */
+  var asked = {};
+  function renderChips() {
+    chipsEl.innerHTML = "";
+    var open = KB.filter(function (k) { return !asked[k.id]; });
+    // keep at most 3 visible so the composer stays calm
+    open.slice(0, 3).forEach(function (k) {
+      var b = el("button", "chip", esc(k.chip));
+      b.type = "button";
+      b.addEventListener("click", function () {
+        if (busy) return;
+        asked[k.id] = true;
+        userTurn(k.chip);
+        answer(k.chip, k);
+        renderChips();
+      });
+      chipsEl.appendChild(b);
+    });
+    if (open.length === 0) {
+      var note = el("span", "chip");
+      note.style.cursor = "default"; note.style.opacity = "0.6";
+      note.textContent = "ask anything, or email her";
+      chipsEl.appendChild(note);
+    }
+  }
+
+  /* ---------------- the autoplay sample exchange (alive on load) ----------------
+     A scripted, full agentic turn: visitor question -> reasoning -> tool-call with
+     a structured inline result -> streamed answer. This is the canned "build" topic
+     so it doubles as a real KB answer, but with the rich tool widget. */
+  function autoplay() {
+    asked["build"] = true;
+    var turn = userTurn("Can she actually build, or just design?");
+
+    var botTurn = el("div", "turn");
+    log.appendChild(botTurn);
+
+    var plan = {
+      label: "Reasoning…",
+      steps: [
+        "Parse the question. They want proof of building, not a claim.",
+        "Match: <b>No. 01 · BillingSkill</b> — a skill she built solo.",
+        "Pull the receipts from that build to show, not tell."
+      ]
+    };
+
+    setBusy(true); cancelled = false;
+
+    thinkTrace(botTurn, plan.steps, plan.label, function () {
+      if (cancelled) { setBusy(false); return; }
+      // tool call: "open" the build artifact and render a structured result
+      var toolSpec = {
+        name: "build_lookup",
+        verb: "· reading BillingSkill",
+        ms: 1150,
+        donePill: "resolved",
+        result:
+          '<div class="row"><span class="lbl">Skill, tool, env modes<span class="meta">skill.yaml + billing_lookup</span></span><span class="amt">shipped</span></div>' +
+          '<div class="row"><span class="lbl">Golden eval set<span class="meta">judge-checkable gating</span></span><span class="amt">108 cases</span></div>' +
+          '<div class="row"><span class="lbl">Build time, solo<span class="meta">design + code + eval</span></span><span class="amt">5 days</span></div>' +
+          '<div class="bar"><i style="--w:88%"></i></div>' +
+          '<div class="synthetic">illustrative · synthetic figures, real project</div>'
+      };
+      later(function () {
+        if (cancelled) { setBusy(false); return; }
+        toolCard(botTurn, toolSpec, function () {
+          if (cancelled) { setBusy(false); return; }
+          later(function () {
+            streamAnswer(botTurn, KB[0] /* build */, function () {
+              setBusy(false);
+              renderChips();
+              // gentle nudge: focus is NOT stolen, but the field is ready
+            });
+          }, 260);
+        });
+      }, 200);
+    });
+  }
+
+  /* ---------------- form + stop button ---------------- */
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (busy) { stopGen(); return; }
+    var q = input.value.trim();
+    if (!q) return;
+    input.value = "";
+    var item = retrieve(q);
+    if (item) asked[item.id] = true;
+    userTurn(q);
+    answer(q, item);
+    renderChips();
+  });
+
+  /* ---------------- replay control ---------------- */
+  function reset() {
+    stopGen();
+    cancelled = false;
+    log.innerHTML = "";
+    asked = {};
+    stick = true;
+  }
+  replayBtn.addEventListener("click", function () {
+    reset();
+    renderChips();
+    autoplay();
+  });
+
+  /* ---------------- boot ---------------- */
+  renderChips();
+  // small beat so the card's entrance settles before the conversation starts
+  if (reduced) {
+    autoplay();
+  } else {
+    later(autoplay, 620);
+  }
+})();
+</script>
+</body>
+</html>
