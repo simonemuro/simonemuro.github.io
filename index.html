@@ -39,6 +39,27 @@
   </div>
   <iframe class="hero-agent" src="hero-agent.html" title="A live agentic billing-support exchange, autoplaying. Mock data." loading="eager"></iframe>
 </div></header>
+<script>
+  // The hero card is full-height (no inner scroll): the whole exchange stays on screen
+  // as it builds and the finished state shows the entire thread. Same-origin, so we
+  // measure the card directly and grow the iframe to fit as the conversation streams.
+  (function () {
+    var f = document.querySelector('iframe.hero-agent');
+    if (!f) return;
+    function fit() {
+      try {
+        var d = f.contentWindow.document;
+        var h = Math.max(d.documentElement.scrollHeight, d.body.scrollHeight);
+        if (h > 0) f.style.height = h + 'px';
+      } catch (e) {}
+    }
+    f.addEventListener('load', function () {
+      fit();
+      try { new ResizeObserver(fit).observe(f.contentWindow.document.body); }
+      catch (e) { var n = 0, id = setInterval(function () { fit(); if (++n > 90) clearInterval(id); }, 400); }
+    });
+  })();
+</script>
 
 <section class="record" aria-label="The record"><div class="shell">
   <div class="rec"><span class="n" data-count="3.9" data-prefix="+">+3.9<small> pp</small></span><span class="c">containment lift, measured in production. GenAI voice on the 1-800 line.</span></div>

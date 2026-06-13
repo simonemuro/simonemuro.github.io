@@ -92,17 +92,10 @@
 
   .thread {
     padding: 18px 18px 8px;
-    height: 384px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
+    min-height: 396px;
     display: flex;
     flex-direction: column;
-    scrollbar-width: thin;
-    scrollbar-color: var(--hairline) transparent;
   }
-  .thread::-webkit-scrollbar { width: 7px; }
-  .thread::-webkit-scrollbar-thumb { background: var(--hairline); border-radius: 99px; border: 2px solid var(--card); }
-  .thread::-webkit-scrollbar-track { background: transparent; }
 
   /* ---- generic appear ---- */
   .appear {
@@ -582,14 +575,6 @@
   let timers = [];
   let running = false;
 
-  // keep the newest content pinned: this is a fixed-height chat window, so the
-  // thread auto-scrolls to the bottom as messages, tool chips, and tokens land.
-  let pinned = true;
-  const atBottom = () => thread.scrollHeight - thread.scrollTop - thread.clientHeight < 28;
-  const scrollDown = () => { if (pinned) thread.scrollTop = thread.scrollHeight; };
-  thread.addEventListener('scroll', () => { pinned = atBottom(); });
-  new MutationObserver(scrollDown).observe(thread, { childList: true, subtree: true, characterData: true });
-
   const wait = (ms) => new Promise(r => { const t = setTimeout(r, reduce ? 0 : ms); timers.push(t); });
   const clearAll = () => { timers.forEach(clearTimeout); timers = []; };
 
@@ -628,7 +613,6 @@
     if (running) return;
     running = true;
     thread.innerHTML = '';
-    pinned = true;
     setActState('stop');
 
     // 1 — customer opens, a little worried about an unexpected charge (all mock)
@@ -804,7 +788,7 @@
     // close with the two reasons in plain terms, value woven in, nothing pushed
     const post = el('span', null, '');
     ans.appendChild(post);
-    await streamInto(post, ' You are likely seeing a different amount than usual this month, and two things changed it. You added 2 team members, each $6, which covers their payroll tax filings automatically. And your 6-month welcome rate finished this cycle. Everything else is the same plan you already had.', 15);
+    await streamInto(post, ' You are likely seeing a different amount than usual this month, and two things changed it. First, you added 2 team members at $6 each, which adds $12 and covers their payroll tax filings automatically. Second, your 6-month welcome rate finished this cycle, which had been taking $48 off your bill. Together those bring your monthly total from $228 to $288, an increase of $60. Everything else is the same plan you already had.', 15);
 
     await wait(reduce ? 0 : 760);
 
