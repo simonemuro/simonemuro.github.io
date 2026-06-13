@@ -1,264 +1,156 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Simone Muro · AI Experience Designer &amp; Builder | Conversation &amp; Agentic Systems</title>
-    <meta
-      name="description"
-      content="I design the behavior of AI systems: what they say, what they do, and how we prove they're good. Then I build working versions myself. Nine years in conversational AI and language AI: NLU, LLMs, and agentic systems. Model UX, prompt engineering, golden datasets, evaluation."
-    />
-    <meta property="og:title" content="Simone Muro · AI Experience Designer &amp; Builder" />
-    <meta property="og:description" content="Conversation and agentic AI: behavior design, prompts, golden datasets, evaluation, and working builds to prove it." />
-    <meta property="og:type" content="website" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./v2.css" />
-  </head>
-  <body>
-    <div class="bg-field" aria-hidden="true"></div>
-    <a class="skip-link" href="#main">Skip to content</a>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simone Muro · Conversation &amp; Agentic AI, designed, built, and proven</title>
+<meta name="description" content="I design how AI systems behave, build them, and prove they work. Nine years in conversational AI and language AI: NLU, LLMs, and agentic systems. Model UX, prompt engineering, golden datasets, evaluation." />
+<meta property="og:title" content="Simone Muro · AI Experience Designer &amp; Builder" />
+<meta property="og:description" content="Conversation and agentic AI: behavior design, working builds, and the evaluation that proves them." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./v3.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-header">
-      <nav class="nav-shell" aria-label="Primary navigation">
-        <a class="wordmark" href="#top">SIMONE<span>_</span>MURO</a>
-        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
-          <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
-        </button>
-        <div class="nav-links" id="nav-menu">
-          <a href="#work">Case Studies</a>
-          <a href="#about">About</a>
-          <a href="resume.html">Resume</a>
-          <a class="nav-cta" href="#contact">Let's talk</a>
-        </div>
-      </nav>
-    </header>
+<nav class="nav"><div class="shell">
+  <a class="wordmark" href="index.html">SIMONE MURO</a>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="resume.html" class="optional">Resume</a>
+    <a href="#contact" style="color:var(--persimmon)">Contact</a>
+  </div>
+</div></nav>
 
-    <main id="main">
-      <!-- HERO -->
-      <section class="hero" id="top" aria-labelledby="hero-title">
-        <div class="shell">
-          <p class="hero-kicker"><span class="dot" aria-hidden="true"></span>Open to Agentic AI design · AI product · Conversation AI leadership</p>
-          <h1 id="hero-title">I design how AI systems <span class="gradient-text">behave</span>, build them, and prove they work.</h1>
-          <p class="lede">
-            What the model says, what it does, where it stops, and <b>how we prove it's good enough to ship</b>.
-            Nine years in language AI, from Meta to Apple's Siri, with the last six and a half designing and building conversation and agentic systems through every generation of the technology. I engineer the prompts, build the golden datasets, run the evaluation that holds it all to account, and have led the team doing the same.
-          </p>
-          <div class="hero-actions">
-            <a class="button primary" href="#work">See the work</a>
-            <button class="button secondary" type="button" onclick="window.PortfolioAgent &amp;&amp; window.PortfolioAgent.open()">Talk to my agent</button>
-          </div>
+<main id="main">
 
-          <p class="brand-strip reveal" aria-label="Past employers"><span class="brand-label">Previously</span> META &nbsp;·&nbsp; APPLE (SIRI) &nbsp;·&nbsp; SAM'S CLUB &nbsp;·&nbsp; INTUIT &nbsp;·&nbsp; CREDIT KARMA</p>
+<header class="hero"><div class="shell">
+  <div>
+    <p class="kicker">Conversation &amp; Agentic AI · Design and Development</p>
+    <h1>I design how AI systems <em>behave</em>, build them, and prove they work.</h1>
+    <p class="lede">Nine years in language AI, from Meta to Apple's Siri. The last six and a half: designing, building, and evaluating conversation and agentic systems people rely on, most recently leading conversation AI design for Intuit's agentic platform.</p>
+    <div class="hero-actions">
+      <a class="btn solid" href="#work">See the work</a>
+      <button class="btn ghost" type="button" onclick="window.SMAgentOpen &amp;&amp; window.SMAgentOpen()">Talk to my agent</button>
+    </div>
+  </div>
+  <figure class="inst" data-instrument="replay" data-config="cfg-hero-replay" aria-label="A replay of the BillingSkill conversation, before and after">
+    <div class="inst-head">
+      <span>replay · billingskill</span>
+      <span class="pill-toggle"><button data-variant="before">BEFORE</button><button data-variant="after">AFTER</button></span>
+    </div>
+    <div class="inst-body" style="min-height:240px"></div>
+    <figcaption class="inst-caption"><b>From BillingSkill.</b> Built solo in five days: skill, tool, and a 108-case eval. Invented account data.</figcaption>
+  </figure>
+  <script type="application/json" id="cfg-hero-replay">
+  {
+    "autoplayVariant": "after",
+    "deferUntilVisible": false,
+    "variants": {
+      "after": [
+        {"k":"user","t":"Why was I charged $107 this month?"},
+        {"k":"tool","t":"billing_lookup · subscription + add-ons retrieved"},
+        {"k":"bot","t":"Your June charge is $107: QuickBooks Online Plus ($99/mo) plus the Payroll add-on you added May 14 ($8, prorated). Want the breakdown, or a look at plan options?"}
+      ],
+      "before": [
+        {"k":"user","t":"Why was I charged $107 this month?"},
+        {"k":"bot","t":"To view your subscription charges, go to Settings → Billing & Subscription. You can review your plan and billing history there."}
+      ]
+    }
+  }
+  </script>
+</div></header>
 
-          <div class="proof-bar reveal" aria-label="Selected outcomes">
-            <div class="proof"><span class="num"><em>+3.9</em> pp</span><span class="lab">containment lift, measured in production, from the GenAI voice experience on Intuit's 1-800 line</span></div>
-            <div class="proof"><span class="num"><em>96.6</em>%</span><span class="lab">savability accuracy from the LLM cancellation classifier I prompt-engineered and validated in pre-launch evaluation</span></div>
-            <div class="proof"><span class="num"><em>+8–13</em> pp</span><span class="lab">agent quality-score lifts across three skill domains, through the golden-dataset and evaluation program I led</span></div>
-            <div class="proof"><span class="num"><em>5</em> days</span><span class="lab">to build a working agent skill solo: YAML, tool calls, and a 108-case eval dataset</span></div>
-          </div>
-        </div>
-      </section>
+<section class="record" aria-label="The record"><div class="shell">
+  <div class="rec"><span class="n" data-count="3.9" data-prefix="+">+3.9<small> pp</small></span><span class="c">containment lift, measured in production. GenAI voice on the 1-800 line.</span></div>
+  <div class="rec"><span class="n" data-count="96.6">96.6<small>%</small></span><span class="c">savability accuracy from the classifier prompt, in pre-launch evaluation.</span></div>
+  <div class="rec"><span class="n">3w <small>→</small> 1w</span><span class="c">golden-dataset turnaround after the pipeline I built and merged.</span></div>
+  <div class="rec"><span class="n" data-count="5">5<small> days</small></span><span class="c">to a working agent skill, built solo, with its own eval dataset.</span></div>
+</div></section>
 
-      <!-- AGENT TEASER -->
-      <section class="agent-section" id="ask" aria-labelledby="ask-title">
-        <div class="shell-narrow">
-          <div class="agent-teaser reveal">
-            <span class="pulse" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
-            <p id="ask-title"><b>This portfolio ships with an agent.</b><br />I design agent behavior for a living. This one is my twin: grounded in these case studies, scoped and eval-tested, with me on every page, bottom right.</p>
-            <button class="button primary" type="button" onclick="window.PortfolioAgent &amp;&amp; window.PortfolioAgent.open()">Open the agent</button>
-          </div>
-        </div>
-      </section>
+<section class="generations" id="about" aria-label="Three generations"><div class="shell">
+  <p class="kicker">Three generations of the technology</p>
+  <h2 class="beat" style="margin-top:0; max-width:24ch;">Every era taught the same lesson: define good, then prove it.</h2>
+  <p class="lede">I connect the technical with the human. The tools changed three times; the discipline never did.</p>
+  <div class="gen-line" aria-hidden="true"><span class="draw"></span></div>
+  <div class="gen-marks">
+    <div class="gen reveal">
+      <span class="era">2016 – 2022 · NLU</span>
+      <h3>Intent by intent</h3>
+      <p>Language models for content policy, speech for Siri, then full ownership of voice and chat assistants: intents, training, tuning, and the analytics that told the truth.</p>
+      <span class="marks">META · APPLE · SAM'S CLUB · INTUIT</span>
+    </div>
+    <div class="gen reveal">
+      <span class="era">2022 – 2024 · LLM</span>
+      <h3>Prompts replace training</h3>
+      <p>First GenAI classification in the cancellation flow, first GenAI voice on the 1-800 line, regulated prompt systems at Credit Karma. Months of model work became hours of prompt craft.</p>
+      <span class="marks">INTUIT · CREDIT KARMA</span>
+    </div>
+    <div class="gen reveal">
+      <span class="era">2024 – 2026 · AGENTIC</span>
+      <h3>Behavior becomes a system</h3>
+      <p>Golden datasets, validated judges, and quality as a release gate for an agentic platform. Then the proof: a working agent skill built solo, with its own eval.</p>
+      <span class="marks">INTUIT INTELLIGENCE · LED A TEAM OF DESIGN TECHNOLOGISTS</span>
+    </div>
+  </div>
+</div></section>
 
-      <!-- CASE STUDIES -->
-      <section class="work-section" id="work" aria-labelledby="work-title">
-        <div class="shell">
-          <p class="eyebrow">Case studies</p>
-          <h2 id="work-title">Six stories. One through-line: define good, then prove it.</h2>
-          <div class="case-grid" style="margin-top:2.2rem;">
+<section class="contents" id="work" aria-label="The work"><div class="shell">
+  <p class="kicker">The work</p>
+  <a class="row flagship reveal" href="billing-skill.html">
+    <span class="no">No. 01</span>
+    <span class="t">BillingSkill<span class="whisper">A working skill, a 108-case eval, and an argument that landed.</span></span>
+    <span class="fig">5 days · solo</span>
+  </a>
+  <a class="row reveal" href="payroll-intelligence.html">
+    <span class="no">No. 02</span>
+    <span class="t">Payroll Intelligence<span class="whisper">Teaching an agent what experts know, before it answers anyone.</span></span>
+    <span class="fig">top contact drivers · ~10 days</span>
+  </a>
+  <a class="row reveal" href="quality-program.html">
+    <span class="no">No. 03</span>
+    <span class="t">The Quality Program<span class="whisper">Golden datasets, validated judges, and a pipeline that tripled the pace.</span></span>
+    <span class="fig">3,000+ rows · 3w → 1w</span>
+  </a>
+  <a class="row reveal" href="voice-snippet.html">
+    <span class="no">No. 04</span>
+    <span class="t">Voice Snippet<span class="whisper">GenAI on a live phone call, prototyped before the platform could carry it.</span></span>
+    <span class="fig">+3.9 pp · in production</span>
+  </a>
+  <a class="row reveal" href="cancellation-saves.html">
+    <span class="no">No. 05</span>
+    <span class="t">Cancellation Saves<span class="whisper">Four months of tuning, fifteen points. One prompt, thirty-six.</span></span>
+    <span class="fig">96.6% · 60% → 96%</span>
+  </a>
+  <a class="row reveal" href="credit-karma.html">
+    <span class="no">No. 06</span>
+    <span class="t">Credit Karma<span class="whisper">Prompts that reason over what they're forbidden to say.</span></span>
+    <span class="fig">regulated finance · 2024</span>
+  </a>
+</div></section>
 
-            <a class="case-card reveal" href="case-billing-skill.html">
-              <div class="case-art art-amber" aria-hidden="true"><span>01</span></div>
-              <div>
-                <p class="case-type">Agentic AI · Built solo · 2026</p>
-                <h3>BillingSkill: a conversation designer walks into the agent repo</h3>
-                <p>After a year of defining what good agent behavior looks like, I built the thing being evaluated: a working billing skill (YAML, a three-mode lookup tool, its own eval dataset) in five days, submitted and judged at Intuit's builder hackathon.</p>
-                <div class="case-metrics"><span class="metric-chip">108-case golden dataset</span><span class="metric-chip">skill YAML + 3-mode tool</span><span class="metric-chip mint">5 days, solo</span></div>
-                <span class="case-read">Read the build story →</span>
-              </div>
-            </a>
+<section class="contact" id="contact"><div class="shell">
+  <p class="kicker">Contact</p>
+  <h2>Building AI that has to be measurably good? Let's talk.</h2>
+  <p class="lede">Designer, product lead, or the generalist seat in between. The range is the point.</p>
+  <div class="contact-rows">
+    <a href="mailto:googsicle@gmail.com"><span class="lbl">Email</span><span>googsicle@gmail.com</span></a>
+    <a href="https://www.linkedin.com/in/simonemuro" rel="me"><span class="lbl">LinkedIn</span><span>linkedin.com/in/simonemuro</span></a>
+    <a href="resume.html"><span class="lbl">Resume</span><span>The one-page version</span></a>
+  </div>
+</div></section>
 
-            <a class="case-card reveal" href="case-payroll-agent.html">
-              <div class="case-art art-mint" aria-hidden="true"><span>02</span></div>
-              <div>
-                <p class="case-type">Agent behavior design · Regulated domain · 2026</p>
-                <h3>Payroll Intelligence Agent: defining what "good" means before the agent exists</h3>
-                <p>The Payroll Intelligence Agent was being built on a one-week clock, and the ground truth it needed didn't exist yet. I mobilized a team, built a reusable system prompt that generates diagnostic golden datasets, and delivered the full set above scope. The framework outlived the sprint.</p>
-                <div class="case-metrics"><span class="metric-chip">top contact drivers, covered in ~10 days</span><span class="metric-chip mint">reusable diagnostic framework</span><span class="metric-chip mint">adopted by the agent team</span></div>
-                <span class="case-read">Read case study →</span>
-              </div>
-            </a>
+</main>
 
-            <a class="case-card reveal" href="case-quality-evaluation.html">
-              <div class="case-art art-blue" aria-hidden="true"><span>03</span></div>
-              <div>
-                <p class="case-type">AI quality at scale · Leadership · 2025–26</p>
-                <h3>Making "good enough to ship" measurable for an agentic platform</h3>
-                <p>Golden datasets, LLM-as-judge, human labeling, multi-turn user simulators, and an LLM pipeline I built that cut dataset turnaround from three weeks to one. When the program's day-to-day owner went on sudden leave, I took the whole thing over without dropping a release.</p>
-                <div class="case-metrics"><span class="metric-chip">+8 to +13 pp quality lift</span><span class="metric-chip">3,000+ rows · 3wk → 1wk</span></div>
-                <span class="case-read">Read case study →</span>
-              </div>
-            </a>
+<footer class="colophon"><div class="shell">
+  <p>Set in Geist and Newsreader. Designed and built AI-natively: directed by Simone, executed with AI agents, the way she works. Motion honors reduced-motion; every animation has a finished static state.</p>
+  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. Roles, process, design decisions, and measured outcomes are preserved. © 2026 Simone Muro · Bay Area, CA</p>
+</div></footer>
 
-            <a class="case-card reveal" href="case-voice-snippet.html">
-              <div class="case-art art-coral" aria-hidden="true"><span>04</span></div>
-              <div>
-                <p class="case-type">Voice AI · Production GenAI · 2023–24</p>
-                <h3>Voice Snippet: GenAI on the phone line, 18 months before the platform was ready</h3>
-                <p>I prototyped the concept in mid-2023, when there was no approved path to ship it. When the platform caught up, we shipped it: disambiguation, voice-tuned summaries, structured output, and the rubric that judged every response.</p>
-                <div class="case-metrics"><span class="metric-chip">+3.9 pp containment</span><span class="metric-chip mint">measured in production</span><span class="metric-chip mint">live since Dec 2024</span></div>
-                <span class="case-read">Read case study →</span>
-              </div>
-            </a>
-
-            <a class="case-card reveal" href="case-cancellation.html">
-              <div class="case-art art-amber" aria-hidden="true"><span>05</span></div>
-              <div>
-                <p class="case-type">LLM classification · Retention · 2022–23</p>
-                <h3>Cancellation Saves: teaching the system to hear why customers leave</h3>
-                <p>The NLU model returned "unknown" on 40% of cancellations. I designed the saves flow that beat its target by 7 points, then prompt-engineered the LLM classifier that took reason-reading from 60% to 96% in pre-launch evaluation. Months of model training collapsed into hours of prompt work.</p>
-                <div class="case-metrics"><span class="metric-chip">96.6% savability accuracy</span><span class="metric-chip">classification 60% → 96%</span><span class="metric-chip mint">12% saves rate vs 5% target</span></div>
-                <span class="case-read">Read case study →</span>
-              </div>
-            </a>
-
-            <a class="case-card reveal" href="case-credit-karma.html">
-              <div class="case-art art-mint" aria-hidden="true"><span>06</span></div>
-              <div>
-                <p class="case-type">Prompt engineering · Regulated finance · 2024</p>
-                <h3>Credit Karma: prompt systems under hard legal constraints</h3>
-                <p>As a prompt engineer on Credit Karma's GenAI features, I iterated production prompts across GPT-3.5 and GPT-4o, including the guardrail that lets a model reason over approval odds it is legally forbidden to mention. Prompts versioned in git, shipped through merged PRs.</p>
-                <div class="case-metrics"><span class="metric-chip">model-specific prompt systems</span><span class="metric-chip mint">graded eval rubric</span><span class="metric-chip mint">shipped via merged PRs</span></div>
-                <span class="case-read">Read case study →</span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- WHAT I BUILD -->
-      <section id="build" aria-labelledby="build-title">
-        <div class="shell">
-          <p class="eyebrow">What I build</p>
-          <h2 id="build-title">The four artifacts every serious AI team needs</h2>
-          <div class="grid-3" style="margin-top:2rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
-            <article class="card reveal"><span class="num">01</span><h3>Prompts &amp; agent instructions</h3><p>System guidance, tool-use conditions, structured output, refusal boundaries, and tone rules that make model behavior explicit enough to test.</p></article>
-            <article class="card reveal"><span class="num">02</span><h3>Golden datasets &amp; ground truth</h3><p>Source-of-truth answers, diagnostic decision trees, and judge-checkable gating criteria that give a team a shared definition of good.</p></article>
-            <article class="card reveal"><span class="num">03</span><h3>Evaluation &amp; quality loops</h3><p>Rubrics, LLM-as-judge, human labeling, multi-turn simulators, and failure taxonomies that turn response quality into a release gate.</p></article>
-            <article class="card reveal"><span class="num">04</span><h3>Working prototypes</h3><p>Skills, tools, and demos built in Claude Code, Cursor, Vapi, and Voiceflow, so teams test the experience before they commit the quarter.</p></article>
-          </div>
-        </div>
-      </section>
-
-      <!-- ABOUT -->
-      <section id="about" aria-labelledby="about-title">
-        <div class="shell-narrow">
-          <p class="eyebrow">About</p>
-          <h2 id="about-title">I connect the technical with the human.</h2>
-          <div class="prose" style="padding:0.5rem 0 0;">
-            <p>
-              I translate complex AI systems into experiences that genuinely help the person on the other side of the screen. Nine years of it: Meta, Apple (Siri), Sam's Club, and Intuit across QuickBooks and Credit Karma, growing from hands-on conversation designer to leading the team and the discipline. What the AI says, when it acts, where it stops (handing off, refusing, or asking first), and how we prove it's good enough to ship.
-            </p>
-            <p>
-              My bias is action. When LLMs arrived, I prototyped GenAI classification a year before our platform approved it; the concepts shipped when the platform caught up. When agentic systems arrived, I learned the repo, wrote the YAML, built the tool, and shipped a working skill in five days. Strategy first, always: map the problem to what the technology can genuinely do, then prove it with a build.
-            </p>
-            <p>
-              I have led that work end to end and led the people doing it: designers and design technologists I coached daily, a promotion championed through, hiring loops run, and a craft standard the team still builds to.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- MORE WORK -->
-      <section aria-labelledby="more-title">
-        <div class="shell">
-          <p class="eyebrow">More work</p>
-          <h2 id="more-title">The supporting record</h2>
-          <div class="more-grid" style="margin-top:2rem;">
-            <article class="card reveal"><span class="badge">Top contact driver · LLM</span><h3>Billing-support redesign</h3><p>Owned the PRD and built the LLM billing-query classifier end to end for a ~800K-contact support area: issue-specific answers instead of one generic link.</p><span class="metric-line">+12 pt self-help resolution · containment 50% → 61%</span></article>
-            <article class="card reveal"><span class="badge">Eval infrastructure</span><h3>Golden-dataset pre-population pipeline</h3><p>LLM-powered pipeline that pre-fills evaluation data before designer review. Manual authoring became human-in-the-loop review.</p><span class="metric-line">~3 weeks → ~1 week across 3,000+ rows</span></article>
-            <article class="card reveal"><span class="badge">Voice · Iteration</span><h3>Login &amp; password voice redesign</h3><p>Four iterative experiments on a top phone-support flow: the highest-performing voice redesign in the product line that year.</p><span class="metric-line">35% → 57% self-help · 17% → 29% containment</span></article>
-            <article class="card reveal"><span class="badge">Governance · Responsible AI</span><h3>Reusable Responsible-AI approval pattern</h3><p>Refactored AI-safety approvals into an umbrella-plus-addendum pattern so new LLM classification use cases ship without a fresh weeks-long review.</p><span class="metric-line">Became the team standard</span></article>
-            <article class="card reveal"><span class="badge">Team enablement</span><h3>AI tooling adoption</h3><p>Built queryable NotebookLM references for every assistant the team owned and an LLM deck generator; coached designers into Cursor, Claude Code, and prompt registration workflows.</p><span class="metric-line">Recognized with a team Spotlight award</span></article>
-            <article class="card reveal"><span class="badge">Leadership</span><h3>People &amp; hiring</h3><p>Managed designers and design technologists; championed a promotion to Senior Design Technologist; ran senior-designer hiring screens and authored the craft exercise.</p><span class="metric-line">Manager · coach · hiring</span></article>
-          </div>
-        </div>
-      </section>
-
-      <!-- SKILLS & TOOLS -->
-      <section aria-labelledby="skills-title">
-        <div class="shell">
-          <p class="eyebrow">Skills &amp; tools</p>
-          <h2 id="skills-title">The stack</h2>
-          <div style="margin-top:1.6rem;">
-            <div class="tools-group"><span class="tools-label">AI &amp; LLM craft</span><div class="chips"><span>Prompt engineering</span><span>Conversational AI / conversation design</span><span>Model UX</span><span>Agent &amp; skill design</span><span>Retrieval-grounded responses (RAG)</span><span>Golden datasets</span><span>LLM-as-judge</span><span>Human-in-the-loop evals</span><span>Multi-turn simulators</span><span>Responsible AI workflows</span><span>NLU design &amp; tuning</span></div></div>
-            <div class="tools-group"><span class="tools-label">Build</span><div class="chips"><span>Claude Code</span><span>Cursor</span><span>Codex</span><span>MCP</span><span>Python</span><span>Git &amp; GitHub</span><span>JSON structured output</span><span>Streamlit <em>(test harness)</em></span></div></div>
-            <div class="tools-group"><span class="tools-label">Voice &amp; conversation</span><div class="chips"><span>Vapi</span><span>Voiceflow</span><span>Dialogflow</span><span>Amazon Lex</span><span>IVR / telephony design</span></div></div>
-            <div class="tools-group"><span class="tools-label">Evidence &amp; analytics</span><div class="chips"><span>A/B experimentation</span><span>Tableau</span><span>Qlik</span><span>Splunk</span><span>Langfuse</span></div></div>
-            <div class="tools-group"><span class="tools-label">Design &amp; collaboration</span><div class="chips"><span>Figma <em>(working knowledge)</em></span><span>Miro</span><span>Lucidchart</span><span>Jira &amp; Confluence</span></div></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CONTACT -->
-      <section class="contact" id="contact" aria-labelledby="contact-title">
-        <div class="shell-narrow">
-          <p class="eyebrow" style="justify-content:center;">Contact</p>
-          <h2 id="contact-title">Building AI that has to be <span class="gradient-text">measurably good</span>? Let's talk.</h2>
-          <p>I'm looking for work where the full range matters: the strategy, the design, the model behavior, and the evaluation that proves it. As a designer, a product lead, or the generalist who fills the gaps in between.</p>
-          <div class="hero-actions" style="justify-content:center;">
-            <a class="button primary" href="mailto:googsicle@gmail.com">Email me</a>
-            <a class="button secondary" href="resume.html">Resume</a>
-            <a class="button secondary" href="https://www.linkedin.com/in/simonemuro" rel="me">LinkedIn</a>
-          </div>
-          <p style="margin-top:1.8rem;font-family:var(--mono);font-size:0.85rem;color:var(--faint);">googsicle@gmail.com · Bay Area, CA</p>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="shell">
-        <p>© 2026 Simone Muro</p>
-        <p>Case studies are reconstructed or redacted to protect confidential company, customer, and platform information. Role, process, decisions, and measured outcomes are preserved.</p>
-      </div>
-    </footer>
-
-    <script>
-      // mobile nav
-      (function () {
-        var t = document.querySelector(".nav-toggle"), m = document.getElementById("nav-menu");
-        if (!t || !m) return;
-        function close() { m.classList.remove("open"); t.setAttribute("aria-expanded", "false"); }
-        t.addEventListener("click", function () {
-          var open = m.classList.toggle("open");
-          t.setAttribute("aria-expanded", open ? "true" : "false");
-        });
-        m.addEventListener("click", function (e) { if (e.target.tagName === "A") close(); });
-        document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
-      })();
-
-      // reveal on scroll
-      (function () {
-        var els = document.querySelectorAll(".reveal");
-        if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in"); }); return; }
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
-        }, { threshold: 0.12 });
-        els.forEach(function (e) { io.observe(e); });
-      })();
-    </script>
-    <script src="./v2-agent.js" defer></script>
-  </body>
+<button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
+<script src="./v3.js" defer></script>
+</body>
 </html>

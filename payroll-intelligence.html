@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Payroll Intelligence · Teaching an agent what experts know · Simone Muro</title>
+<meta name="description" content="Ground truth for a payroll agent on a one-week clock: golden answers for the top contact drivers, a retrievable-versus-ask data framework, and a generator that drafts diagnostic golden datasets for expert review. Conversational AI and agentic AI design." />
+<meta property="og:title" content="Payroll Intelligence · Simone Muro" />
+<meta property="og:description" content="The agent was due in a week and its ground truth didn't exist. What got built instead of a heroic all-nighter." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./v3.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav"><div class="shell">
+  <a class="wordmark" href="index.html">SIMONE MURO</a>
+  <div class="nav-links">
+    <a href="index.html#work">Work</a>
+    <a href="index.html#about">About</a>
+    <a href="resume.html" class="optional">Resume</a>
+    <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
+  </div>
+</div></nav>
+
+<main id="main">
+
+<section class="case-open"><div class="shell">
+  <span class="no-big">No. 02 · Payroll Intelligence</span>
+  <h1>Teaching an agent what the experts know.</h1>
+  <p class="lede">January 2026. The payroll agent was being built on a one-week clock, and its ground truth didn't exist yet: golden answers for payroll's top contact drivers, the tools and data each answer depends on, the moments it must hand off to a human. The build was moving with or without it. Ground truth that arrives after the agent ships is trivia.</p>
+  <div class="factbox">
+    <div><b>Role</b>Led ground truth: templates, instructions, the generator</div>
+    <div><b>Scope</b>Top contact drivers + 9 diagnostic subdomains</div>
+    <div><b>Pace</b>Full set, above scope, in about 10 days</div>
+    <div><b>Adopted</b>Framework adopted by partner teams</div>
+  </div>
+</div></section>
+
+<article class="case-body">
+
+  <div class="narrow">
+    <h2 class="beat">Instructions, not answers.</h2>
+    <div class="prose">
+      <p>Payroll is the worst place to wing it. It's regulated, so a wrong answer can create a compliance problem, not just a bad session. It's data-dependent, so the right answer changes with each account's setup. And behind every question sits the same one: <b>will my people get paid?</b></p>
+      <p>The target was payroll's top contact drivers: the high-traffic, high-complexity questions with do-it-for-me potential. One person hand-writing golden answers for all of them in a week was fantasy, so I made the move that scales. <b>I wrote the instructions instead of the answers.</b> Templates for what a complete golden answer looks like, which tool and data dependencies to capture, the exact format the agent team could consume. Then I mobilized designers plus product and content partners, and held the line on scope and timeline while the team produced.</p>
+      <p>The full set landed in about ten days, above the original scope, as a blueprint the agent team could keep extending rather than a one-off document. The agent team stopped asking design for opinions and started building on design's ground truth.</p>
+    </div>
+
+    <h2 class="beat">The agent already knows more than the expert.</h2>
+    <div class="prose">
+      <p>"My employee is missing from this payroll run" sounds like one question. It's half a dozen root causes wearing the same sentence. A human expert opens with a long interview because a human starts blind.</p>
+      <p>The agent doesn't. Before its first reply it can already read the account: subscription status, employee records, pay schedules, the audit log. So the rule I wrote into the framework: <b>don't mimic the expert's question sequence.</b> Match the customer's state against the known root causes first, then ask one confirming question, and only for what only the customer can know.</p>
+    </div>
+  </div>
+
+  <div class="shell">
+    <figure class="inst wide" data-instrument="sorter" data-config="cfg-payroll-sorter" aria-label="Interactive sorter: which data points can the agent retrieve itself, and which must it ask the customer?">
+      <div class="inst-head">
+        <span>sorter · “my employee is missing from this run”</span>
+        <span>retrievable vs must-ask</span>
+      </div>
+      <div class="inst-body" style="min-height:280px"></div>
+      <figcaption class="inst-caption"><b>From the diagnostic framework.</b> Reconstructed example with invented account data. Every must-ask question in the real dataset carries a written justification for why it can't be retrieved.</figcaption>
+    </figure>
+    <script type="application/json" id="cfg-payroll-sorter">
+    {
+      "prompt": "Six things the agent needs before it can answer. Click each one: can the system retrieve it, or must the customer say it?",
+      "bucketLabels": {
+        "sys": "The agent already knows",
+        "ask": "Only the customer knows"
+      },
+      "items": [
+        {"label": "payroll subscription status", "bucket": "sys", "why": "Active, trial, or lapsed: the account already says."},
+        {"label": "employee list and status", "bucket": "sys", "why": "Who exists and who's active is in the system of record."},
+        {"label": "pay schedule assignments", "bucket": "sys", "why": "Who's assigned to which run is readable before the first reply."},
+        {"label": "audit log of recent changes", "bucket": "sys", "why": "What changed lately, and who changed it, is logged."},
+        {"label": "“Is this employee brand new, or did they appear in past runs?”", "bucket": "ask", "why": "What the customer expected to happen isn't in any table."},
+        {"label": "“Do you see them in the run list at all, even excluded?”", "bucket": "ask", "why": "What's on the customer's screen right now, only the customer can confirm."}
+      ],
+      "moral": "An agent that mimics the human question sequence wastes what it already knows. Sort first, ask second, and only what only the customer can know."
+    }
+    </script>
+  </div>
+
+  <div class="narrow">
+    <h2 class="beat">A generator for the hardest questions.</h2>
+    <div class="prose">
+      <p>Golden answers work for how-to questions: one verified procedure, the same for every customer. Troubleshooting questions are different. They don't have golden answers; they have golden <b>decision trees</b>, and every branch needs expert-grade coverage.</p>
+      <p>Hand-writing nine of those would've taken weeks the agent team didn't have. So I built the <b>Diagnostic Golden Dataset Generator</b>: a system prompt that drafts a complete diagnostic golden dataset in eleven sections, in a fixed order, omitting none and combining none.<button class="note-ref" data-note="n1" aria-expanded="false">+</button></p>
+      <div class="note-body" id="n1">The prompt controls how the model reasons, not just what it outputs. It runs a six-step reasoning pass before writing anything, and it carries contrastive examples so the model learns the difference between an answer and an answer-shaped sentence: "check the settings" fails; "go to Settings → Payroll Settings → Tax Setup and verify the EIN field" passes. PII rules and a validation checklist gate the output.</div>
+    </div>
+
+    <figure class="inst wide" aria-label="The generator's enforced output schema: eleven sections in a fixed order">
+      <div class="inst-head">
+        <span>schema · diagnostic golden dataset</span>
+        <span>11 sections · fixed order</span>
+      </div>
+      <div class="inst-body">
+        <div class="spec">
+          <div class="row2"><span class="k">header</span><span class="v">Title, the customer question verbatim, named expert reviewers, reference URLs</span></div>
+          <div class="row2"><span class="k">question</span><span class="v">Phrased the way a customer actually types it</span></div>
+          <div class="row2"><span class="k">scope</span><span class="v">What this topic covers, and explicitly what it doesn't</span></div>
+          <div class="row2"><span class="k">sub-variants</span><span class="v">Distinct flavors of the same complaint that need different handling</span></div>
+          <div class="row2"><span class="k">critical understanding</span><span class="v">What the agent must grasp about the domain before it acts</span></div>
+          <div class="row2"><span class="k">decision tree</span><span class="v">Explicit branching grammar: <code>If [condition] → Go to Step X</code>. No prose hand-waving</span></div>
+          <div class="row2"><span class="k">data · retrievable</span><span class="v">What the system can look up itself, listed per branch</span></div>
+          <div class="row2"><span class="k">data · must ask</span><span class="v">What only the customer knows. Each question carries a <code>Why:</code> proving it can't be retrieved</span></div>
+          <div class="row2"><span class="k">reference content</span><span class="v">The grounding content each branch draws on</span></div>
+          <div class="row2"><span class="k">handoff triggers</span><span class="v">The conditions under which the agent must escalate to a human</span></div>
+          <div class="row2"><span class="k">root-cause summary</span><span class="v">The map of causes the tree resolves, stated plainly</span></div>
+        </div>
+      </div>
+      <figcaption class="inst-caption"><b>From the generator's system prompt.</b> Structure redacted to its section names; the real schema enforces format, reasoning steps, and PII rules.</figcaption>
+    </figure>
+
+    <div class="prose">
+      <p>Nothing generated ships as-is. Subject-matter experts review and edit every draft: <b>the generator does the structural labor, humans own the truth.</b> The framework was adopted by the partner teams building on it.</p>
+    </div>
+
+    <h2 class="beat">The knowledge lived in people, not the model.</h2>
+    <div class="prose">
+      <p>The nine troubleshooting questions are umbrella subdomains, each one a whole territory of sub-questions, chosen by call volume, customer pain, and how long they keep experts on the phone. Auto-payroll blocked. Payroll run twice. Direct-deposit changes mid-cycle.</p>
+      <p>Filling the trees took about a week and a half of interviews with the people who actually resolve these calls: support, engineering, the policy team. A model asked for institutional knowledge will confidently invent it. <b>The diagnostic paths had to come from humans.</b></p>
+      <p>Hand-built root causes age as the product changes, and a library of them is a real maintenance question at scale. The framework was the answer to that question: structure you regenerate, not documents you maintain. We started with the hardest questions first. </p>
+      <p>The deliverable encoded diagnostic knowledge that had lived only in experts' heads.</p>
+    </div>
+  </div>
+
+  <!-- No pull quote on this page by design: the dossiers hold no verbatim payroll-related quote in Simone's own words, and colleague words are banned. If she supplies one, it goes after the sorter, pending her sign-off. -->
+
+</article>
+
+<nav class="case-next" aria-label="Next case study"><div class="shell">
+  <a href="quality-program.html">
+    <span class="nxt">Next · No. 03</span>
+    <span class="t">The Quality Program</span>
+  </a>
+</div></nav>
+
+</main>
+
+<footer class="colophon"><div class="shell">
+  <p>Set in Geist and Newsreader. Designed and built AI-natively: directed by Simone, executed with AI agents, the way she works. Motion honors reduced-motion; every animation has a finished static state.</p>
+  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. Roles, process, design decisions, and measured outcomes are preserved. © 2026 Simone Muro · Bay Area, CA</p>
+</div></footer>
+
+<button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
+<script src="./v3.js" defer></script>
+</body>
+</html>
