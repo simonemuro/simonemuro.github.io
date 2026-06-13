@@ -74,21 +74,19 @@
     transform: rotate(45deg);
   }
   .head .name { font-size: 0.86rem; font-weight: 500; letter-spacing: -0.01em; }
-  .head .status {
-    margin-left: auto;
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--faint);
+  .head .badge {
+    font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--persimmon); background: rgba(232,85,47,0.1);
+    padding: 3px 7px 2px; border-radius: 999px; line-height: 1;
   }
-  .head .status i {
-    width: 6px; height: 6px; border-radius: 50%; background: var(--faint);
-    transition: background 0.3s;
+  .head .ctrl { margin-left: auto; display: inline-flex; gap: 0px; color: var(--faint); }
+  .head .cbtn {
+    border: 0; background: none; padding: 5px; border-radius: 7px; color: var(--faint);
+    cursor: pointer; display: grid; place-items: center;
+    transition: background .15s, color .15s;
   }
-  .head.go .status i { background: var(--persimmon); animation: pulse 1.4s var(--settle) infinite; }
-  .head.done .status i { background: var(--signal); animation: none; }
-  @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(232,85,47,.34)} 70%{box-shadow:0 0 0 5px rgba(232,85,47,0)} 100%{box-shadow:0 0 0 0 rgba(232,85,47,0)} }
-  .head .ctrl { display: inline-flex; gap: 4px; margin-left: 12px; color: var(--faint); }
-  .head .ctrl svg { width: 15px; height: 15px; display: block; }
+  .head .cbtn:hover { background: var(--paper); color: var(--muted); }
+  .head .cbtn svg { width: 15px; height: 15px; display: block; }
 
   /* body */
   .body { padding: 16px 16px 6px; }
@@ -268,11 +266,12 @@
     <section class="panel" aria-label="An agent resolving a billing question, demonstrated">
       <div class="head" id="head">
         <span class="mark"><i></i></span>
-        <span class="name">billing support</span>
-        <span class="status"><i></i><span id="statustext">ready</span></span>
-        <span class="ctrl" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></svg>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3m13 5h3a2 2 0 0 0 2-2v-3"/></svg>
+        <span class="name">Ledger</span>
+        <span class="badge">demo</span>
+        <span class="ctrl">
+          <button type="button" class="cbtn" aria-label="More" title="Example control"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></svg></button>
+          <button type="button" class="cbtn" id="expandbtn" aria-label="Expand the window" title="Expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3m13 5h3a2 2 0 0 0 2-2v-3"/></svg></button>
+          <button type="button" class="cbtn" aria-label="Close the window" title="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
         </span>
       </div>
       <div class="body" id="body"></div>
@@ -291,7 +290,6 @@
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const body = document.getElementById('body');
   const head = document.getElementById('head');
-  const statustext = document.getElementById('statustext');
   const replay = document.getElementById('replay');
   const send = document.getElementById('send');
   let timers = [], running = false;
@@ -316,10 +314,9 @@
     });
   }
 
-  function setStatus(mode, text) {
+  function setStatus(mode) {
     head.classList.remove('go', 'done');
     if (mode) head.classList.add(mode);
-    statustext.textContent = text;
   }
 
   // the planning + processing steps — the MAIN section, in grayed text
