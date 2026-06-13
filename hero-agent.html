@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Agentic Window · Simone Muro</title>
+<!-- All data below is Mock data. No real company or product names. -->
+
+<meta name="description" content="One billing question, handled across plan, team, and charges: reasoning that tucks away, four tool calls across different sources that resolve, an answer that renders a charge breakdown inline. The kind of agentic support experience Simone designs." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #faf9f6;
+    --card: #ffffff;
+    --ink: #1a1815;
+    --muted: #6b6660;
+    --faint: #9b958c;
+    --hairline: #e5e1da;
+    --persimmon: #e8552f;
+    --signal: #1b7f5c;
+    --sans: "Geist", system-ui, -apple-system, sans-serif;
+    --mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+    --serif: "Newsreader", Georgia, serif;
+    /* physical easing family — one curve, used proportionally everywhere */
+    --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --settle: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @property --sweep { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    padding: 6px 8px 14px;
+  }
+  ::selection { background: var(--persimmon); color: var(--paper); }
+
+  /* ---- stage: caption + card, sized for the hero's right column ---- */
+  .stage { width: 100%; max-width: 460px; margin: 0 auto; }
+
+  .caption {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0 4px 16px;
+  }
+  .caption b { color: var(--ink); font-weight: 500; }
+
+  /* ---- the card frame (matches .inst in v3.css) ---- */
+  .inst {
+    border: 1px solid var(--hairline);
+    border-radius: 16px;
+    background: var(--card);
+    box-shadow: 0 1px 2px rgba(26,24,21,0.04), 0 12px 40px rgba(26,24,21,0.06);
+    overflow: hidden;
+  }
+  .inst-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--hairline);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .inst-head .live {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--signal);
+  }
+  .inst-head .live i {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--signal);
+    animation: breathe 2.4s infinite;
+  }
+  @keyframes breathe { 0%,100% { opacity: 1; } 50% { opacity: 0.32; } }
+
+  .thread {
+    padding: 18px 18px 8px;
+    height: 384px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    display: flex;
+    flex-direction: column;
+    scrollbar-width: thin;
+    scrollbar-color: var(--hairline) transparent;
+  }
+  .thread::-webkit-scrollbar { width: 7px; }
+  .thread::-webkit-scrollbar-thumb { background: var(--hairline); border-radius: 99px; border: 2px solid var(--card); }
+  .thread::-webkit-scrollbar-track { background: transparent; }
+
+  /* ---- generic appear ---- */
+  .appear {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+  .appear.in {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.5s var(--settle), transform 0.55s var(--spring);
+  }
+
+  /* ---- user message ---- */
+  .user {
+    align-self: flex-end;
+    max-width: 84%;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 9px 15px;
+    border-radius: 15px 15px 4px 15px;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  /* ---- reasoning trace ---- */
+  .reason {
+    margin-bottom: 14px;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    background: var(--paper);
+    overflow: hidden;
+  }
+  .reason-head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    padding: 10px 13px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 0.71rem;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    text-align: left;
+  }
+  .reason-head .glyph {
+    position: relative;
+    width: 13px; height: 13px;
+    flex: none;
+  }
+  .reason-head .glyph i {
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid var(--faint);
+    border-radius: 50%;
+    border-top-color: var(--persimmon);
+  }
+  .reason.thinking .glyph i { animation: spin 0.9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .reason.done .glyph i {
+    border-color: var(--signal);
+    border-top-color: var(--signal);
+    animation: none;
+  }
+  .reason-head .label { flex: 1; }
+  .reason-head .chev {
+    width: 9px; height: 9px;
+    border-right: 1.5px solid var(--faint);
+    border-bottom: 1.5px solid var(--faint);
+    transform: rotate(45deg);
+    transition: transform 0.4s var(--settle);
+    margin-right: 2px;
+  }
+  .reason.collapsed .reason-head .chev { transform: rotate(-45deg); }
+  .reason.thinking .reason-head .chev { opacity: 0; }
+
+  .reason-body {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.5s var(--settle);
+  }
+  .reason.collapsed .reason-body { grid-template-rows: 0fr; }
+  .reason-body > div {
+    overflow: hidden;
+    min-height: 0;
+  }
+  .reason-steps {
+    padding: 2px 14px 13px 34px;
+    font-size: 0.79rem;
+    line-height: 1.55;
+    color: var(--faint);
+  }
+  .reason-steps p {
+    margin: 0 0 7px;
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+  .reason-steps p.in {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.45s var(--settle), transform 0.45s var(--settle);
+  }
+  .reason-steps p:last-child { margin-bottom: 0; }
+
+  /* ---- tool-call chip ---- */
+  .tool {
+    margin-bottom: 14px;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    background: var(--card);
+    overflow: hidden;
+  }
+  .tool-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 13px;
+    font-family: var(--mono);
+    font-size: 0.71rem;
+    color: var(--muted);
+  }
+  .tool-head .ic {
+    width: 22px; height: 22px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    border-radius: 7px;
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    color: var(--muted);
+  }
+  .tool-head .ic svg { width: 13px; height: 13px; display: block; }
+  .tool-head > span:nth-child(2) {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .tool-head .verb { color: var(--ink); }
+  .tool-head .arg { color: var(--faint); }
+  .tool-head .pill {
+    flex: none;
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.64rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .tool-head .pill .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--signal);
+    animation: pulse 1.3s var(--settle) infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(27,127,92,0.34); }
+    70% { box-shadow: 0 0 0 6px rgba(27,127,92,0); }
+    100% { box-shadow: 0 0 0 0 rgba(27,127,92,0); }
+  }
+  .tool.done .ic { color: var(--signal); border-color: rgba(27,127,92,0.4); background: rgba(27,127,92,0.06); }
+  .tool.done .pill .dot { animation: none; background: var(--signal); }
+  .tool.done .pill { color: var(--signal); }
+
+  /* tool result — collapses open while running, tucks to one line when done */
+  .tool-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s var(--settle);
+  }
+  .tool.open .tool-body { grid-template-rows: 1fr; }
+  .tool-body > div { overflow: hidden; min-height: 0; }
+  .tool-rows {
+    padding: 0 13px 11px 45px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .tool-rows .r {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 3px 0;
+    border-top: 1px solid var(--hairline);
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  .tool-rows .r.in {
+    opacity: 1; transform: none;
+    transition: opacity 0.4s var(--settle), transform 0.4s var(--settle);
+  }
+  .tool-rows .r:first-child { border-top: 0; }
+  .tool-rows .r .v { color: var(--ink); }
+  .tool-rows .skel {
+    height: 9px; border-radius: 4px;
+    background: linear-gradient(90deg, var(--hairline) 25%, #efece5 50%, var(--hairline) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.1s linear infinite;
+    margin: 6px 0;
+  }
+  .tool-rows .skel.w1 { width: 70%; } .tool-rows .skel.w2 { width: 52%; }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+
+  /* ---- answer ---- */
+  .answer {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .answer .caret {
+    display: inline-block;
+    width: 2px; height: 1.02em;
+    vertical-align: -0.18em;
+    background: var(--persimmon);
+    margin-left: 1px;
+    animation: caret 1s steps(1) infinite;
+  }
+  @keyframes caret { 50% { opacity: 0; } }
+
+  /* ---- inline structured widget: a small rendered "result" ---- */
+  .widget {
+    margin: 12px 0 2px;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    background: var(--paper);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  .widget.in {
+    opacity: 1; transform: none;
+    transition: opacity 0.55s var(--settle), transform 0.6s var(--spring);
+  }
+  .widget-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 14px 9px;
+  }
+  .widget-head .title { font-size: 0.84rem; font-weight: 500; letter-spacing: -0.01em; }
+  .widget-head .meta { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.05em; color: var(--faint); text-transform: uppercase; }
+
+  .bars { padding: 2px 14px 12px; display: grid; gap: 9px; }
+  .bar { display: grid; grid-template-columns: 96px 1fr 52px; align-items: center; gap: 10px; }
+  .bar .name { font-size: 0.76rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar .track { height: 7px; border-radius: 4px; background: var(--hairline); overflow: hidden; }
+  .bar .fill {
+    height: 100%;
+    border-radius: 4px;
+    background: var(--faint);
+    width: 0%;
+    transition: width 0.9s var(--settle);
+  }
+  .bar.lead .fill { background: var(--persimmon); }
+  .bar .pct { font-family: var(--mono); font-size: 0.72rem; color: var(--ink); text-align: right; }
+  .widget-foot {
+    border-top: 1px solid var(--hairline);
+    padding: 8px 14px;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--faint);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .widget-foot svg { width: 11px; height: 11px; flex: none; }
+
+  /* ---- charge ledger: dollar line items, with a flagged focal line ---- */
+  .ledger { padding: 2px 14px 10px; display: grid; gap: 1px; }
+  .ledger .line {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 12px;
+    padding: 7px 0;
+    border-top: 1px solid var(--hairline);
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  .ledger .line:first-child { border-top: 0; }
+  .ledger .line.in {
+    opacity: 1; transform: none;
+    transition: opacity 0.45s var(--settle), transform 0.45s var(--settle);
+  }
+  .ledger .line .lbl { font-size: 0.79rem; color: var(--ink); }
+  .ledger .line .sub { display: block; font-size: 0.68rem; color: var(--faint); line-height: 1.45; margin-top: 1px; }
+  .ledger .line .amt { font-family: var(--mono); font-size: 0.76rem; color: var(--ink); white-space: nowrap; }
+
+  /* the focal line — the answer to the real question */
+  .ledger .line.flag {
+    margin: 5px -10px;
+    padding: 9px 10px;
+    border-top: 0;
+    border-radius: 9px;
+    background: rgba(232,85,47,0.07);
+    box-shadow: inset 0 0 0 1px rgba(232,85,47,0.22);
+  }
+  .ledger .line.flag .lbl { color: var(--persimmon); font-weight: 500; }
+  .ledger .line.flag .sub { color: var(--muted); }
+  .ledger .line.flag .amt { color: var(--persimmon); font-weight: 500; }
+
+  /* the total row */
+  .ledger .line.total {
+    margin-top: 3px;
+    padding-top: 10px;
+    border-top: 1.5px solid var(--hairline);
+  }
+  .ledger .line.total .lbl { font-weight: 500; }
+  .ledger .line.total .amt { font-size: 0.86rem; font-weight: 500; }
+
+  /* the focal change block — the two drivers behind the increase this cycle */
+  .ledger .change {
+    margin: 9px -10px 1px;
+    padding: 10px 12px 11px;
+    border-radius: 10px;
+    background: rgba(232,85,47,0.07);
+    box-shadow: inset 0 0 0 1px rgba(232,85,47,0.22);
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  .ledger .change.in {
+    opacity: 1; transform: none;
+    transition: opacity 0.5s var(--settle), transform 0.55s var(--spring);
+  }
+  .ledger .change .change-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding-bottom: 7px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(232,85,47,0.2);
+  }
+  .ledger .change .change-head .ttl {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--persimmon);
+  }
+  .ledger .change .change-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 3px 0;
+    font-size: 0.76rem;
+    color: var(--muted);
+  }
+  .ledger .change .amt {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--persimmon);
+    white-space: nowrap;
+  }
+  .ledger .change .change-head .amt { font-size: 0.82rem; }
+
+  .followups { display: flex; flex-wrap: wrap; gap: 7px; margin: 6px 0 4px; }
+  .fu {
+    font-family: var(--mono);
+    font-size: 0.69rem;
+    border: 1px solid var(--hairline);
+    background: transparent;
+    border-radius: 999px;
+    padding: 6px 12px;
+    color: var(--muted);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 0.4s var(--settle), transform 0.45s var(--spring), border-color 0.15s, color 0.15s;
+  }
+  .fu.in { opacity: 1; transform: none; }
+  .fu:hover { border-color: var(--persimmon); color: var(--ink); }
+
+  /* ---- composer (docked, with reachable stop) ---- */
+  .composer {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 14px;
+    border-top: 1px solid var(--hairline);
+  }
+  .composer .fake {
+    flex: 1;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid var(--hairline);
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    font-size: 0.82rem;
+    color: var(--faint);
+  }
+  .composer .act {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 0;
+    background: var(--ink);
+    color: var(--paper);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    flex: none;
+    transition: background 0.2s, transform 0.2s var(--spring);
+  }
+  .composer .act svg { width: 14px; height: 14px; }
+  .composer .act.stop { background: var(--persimmon); }
+  .composer .act.stop svg { width: 11px; height: 11px; }
+  .composer .act:hover { transform: scale(1.06); }
+
+  /* replay control */
+  .replay {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+  }
+  .replay svg { width: 11px; height: 11px; }
+  .replay:hover { color: var(--persimmon); }
+
+  /* ---- reduced motion: the finished artifact, fully legible, no motion ---- */
+  @media (prefers-reduced-motion: reduce) {
+    .appear, .user, .reason, .tool, .answer, .widget, .fu, .reason-steps p, .tool-rows .r, .ledger .line, .ledger .change {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .reason.collapsed .reason-body { grid-template-rows: 1fr; }
+    .tool-body { grid-template-rows: 1fr; }
+    .bar .fill { transition: none; }
+    .inst-head .live i, .reason .glyph i, .tool .pill .dot, .answer .caret, .tool-rows .skel { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <main class="stage">
+    <p class="caption"><b>The kind of agentic support experience I design.</b> One billing question, handled across plan, team, and charges. The agent checks access, gathers from four sources, explains the $288 in plain terms, then offers real options. Mock data.</p>
+
+    <section class="inst" aria-label="A live agentic exchange, demonstrated">
+      <div class="inst-head">
+        <span>billing support</span>
+        <span class="live"><i></i>autoplay</span>
+      </div>
+
+      <div class="thread" id="thread" role="log" aria-live="polite"></div>
+
+      <div class="composer">
+        <span class="fake" id="ghost">Ask anything…</span>
+        <button class="act" id="actbtn" type="button" aria-label="Replay the exchange">
+          <svg id="acticon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12a7 7 0 1 1 2 4.9"/><path d="M5 12V8m0 4h4"/></svg>
+        </button>
+      </div>
+    </section>
+  </main>
+
+<script>
+(() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const thread = document.getElementById('thread');
+  const ghost = document.getElementById('ghost');
+  const actbtn = document.getElementById('actbtn');
+  const acticon = document.getElementById('acticon');
+  let timers = [];
+  let running = false;
+
+  // keep the newest content pinned: this is a fixed-height chat window, so the
+  // thread auto-scrolls to the bottom as messages, tool chips, and tokens land.
+  let pinned = true;
+  const atBottom = () => thread.scrollHeight - thread.scrollTop - thread.clientHeight < 28;
+  const scrollDown = () => { if (pinned) thread.scrollTop = thread.scrollHeight; };
+  thread.addEventListener('scroll', () => { pinned = atBottom(); });
+  new MutationObserver(scrollDown).observe(thread, { childList: true, subtree: true, characterData: true });
+
+  const wait = (ms) => new Promise(r => { const t = setTimeout(r, reduce ? 0 : ms); timers.push(t); });
+  const clearAll = () => { timers.forEach(clearTimeout); timers = []; };
+
+  const CARD_ICO   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg>';
+  const SHIELD_ICO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z"/><path d="m9 12 2 2 4-4"/></svg>';
+  const PLAN_ICO   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></svg>';
+  const TEAM_ICO   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.2a3 3 0 0 1 0 5.6M17.5 19a5.5 5.5 0 0 0-3-4.9"/></svg>';
+
+  const el = (tag, cls, html) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (html != null) n.innerHTML = html;
+    return n;
+  };
+
+  // stream text token-ish into a node, leaving a caret at the tip
+  function streamInto(node, text, speed = 16) {
+    return new Promise((resolve) => {
+      const caret = el('span', 'caret');
+      node.appendChild(caret);
+      if (reduce) { node.insertBefore(document.createTextNode(text), caret); caret.remove(); return resolve(); }
+      const words = text.split(/(\s+)/);
+      let i = 0;
+      const step = () => {
+        if (i >= words.length) { caret.remove(); return resolve(); }
+        node.insertBefore(document.createTextNode(words[i]), caret);
+        i++;
+        const t = setTimeout(step, speed + Math.random() * speed);
+        timers.push(t);
+      };
+      step();
+    });
+  }
+
+  async function run() {
+    if (running) return;
+    running = true;
+    thread.innerHTML = '';
+    pinned = true;
+    setActState('stop');
+
+    // 1 — customer opens, a little worried about an unexpected charge (all mock)
+    const user = el('div', 'user appear', 'I see a $288 charge on my card I don’t recognize. Can you help me understand it?');
+    thread.appendChild(user);
+    await wait(60); user.classList.add('in');
+    await wait(900);
+
+    // 2 — reasoning trace: the agent's judgment, then it tucks to a summary
+    const reason = el('div', 'reason thinking appear');
+    reason.innerHTML = `
+      <button class="reason-head" type="button" aria-expanded="true">
+        <span class="glyph"><i></i></span>
+        <span class="label">Reasoning</span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+      <div class="reason-body"><div><div class="reason-steps"></div></div></div>`;
+    thread.appendChild(reason);
+    await wait(40); reason.classList.add('in');
+
+    const steps = reason.querySelector('.reason-steps');
+    const rhead = reason.querySelector('.reason-head');
+    const rlabel = reason.querySelector('.label');
+    const STEPS = [
+      'Confirm this is the account owner before showing any billing detail.',
+      'Pull the plan, the team count, and the charges, then see what changed since last cycle.',
+      'An increase usually means something was added or a rate ended. Find the specific reason.',
+    ];
+    rhead.addEventListener('click', () => toggleReason(reason));
+
+    for (let i = 0; i < STEPS.length; i++) {
+      const p = el('p', null, '');
+      steps.appendChild(p);
+      await wait(30); p.classList.add('in');
+      await streamInto(p, STEPS[i], 11);
+      await wait(reduce ? 0 : 360);
+    }
+    await wait(reduce ? 0 : 520);
+
+    // collapse the trace to a one-line summary chip the user can reopen
+    rlabel.textContent = 'Thought for 5s';
+    reason.classList.remove('thinking');
+    reason.classList.add('done');
+    if (!reduce) reason.classList.add('collapsed');
+    rhead.setAttribute('aria-expanded', reduce ? 'true' : 'false');
+    await wait(reduce ? 0 : 480);
+
+    // 3 — four tool calls across DIFFERENT sources: the agent assembles the answer
+    // from several systems (access, plan, team, billing). Each chip pends, then resolves.
+    async function toolChip({ ico, verb, doneVerb, arg, skels, rows, donePill }) {
+      const t = el('div', 'tool open appear');
+      const skel = skels === 2
+        ? '<div class="skel w1"></div><div class="skel w2"></div>'
+        : '<div class="skel w1"></div>';
+      t.innerHTML = `
+        <div class="tool-head">
+          <span class="ic">${ico}</span>
+          <span><span class="verb">${verb}</span> <span class="arg">${arg}</span></span>
+          <span class="pill"><span class="dot"></span><span class="lbl">Running</span></span>
+        </div>
+        <div class="tool-body"><div><div class="tool-rows">${skel}</div></div></div>`;
+      thread.appendChild(t);
+      await wait(40); t.classList.add('in');
+      await wait(reduce ? 0 : (skels === 2 ? 1000 : 760));
+
+      const rowsWrap = t.querySelector('.tool-rows');
+      rowsWrap.innerHTML = '';
+      for (const [k, v] of rows) {
+        const r = el('div', 'r', `<span class="k">${k}</span><span class="v">${v}</span>`);
+        rowsWrap.appendChild(r);
+        await wait(30); r.classList.add('in');
+        await wait(reduce ? 0 : 90);
+      }
+      t.querySelector('.verb').textContent = doneVerb;
+      t.querySelector('.lbl').textContent = donePill;
+      t.classList.add('done');
+      await wait(reduce ? 0 : 520);
+      if (!reduce) t.classList.remove('open'); // tuck closed; user could reopen in a real build
+      await wait(reduce ? 0 : 300);
+      return t;
+    }
+
+    // (a) access — verify the owner before any billing detail shows
+    await toolChip({
+      ico: SHIELD_ICO, verb: 'Verifying', doneVerb: 'Verified',
+      arg: 'verify_account_access', skels: 1,
+      rows: [['role', 'account owner'], ['scope', 'read-only · billing'], ['result', 'verified']],
+      donePill: 'Account owner',
+    });
+
+    // (b) plan — what the account is on, including add-ons
+    await toolChip({
+      ico: PLAN_ICO, verb: 'Reading', doneVerb: 'Read',
+      arg: 'get_plan', skels: 1,
+      rows: [['plan', 'Plus plan'], ['add-ons', 'Payroll · Payments']],
+      donePill: 'Plus plan + 2 add-ons',
+    });
+
+    // (c) team — active seats and what changed this cycle
+    await toolChip({
+      ico: TEAM_ICO, verb: 'Counting', doneVerb: 'Counted',
+      arg: 'get_team', skels: 1,
+      rows: [['active', '16'], ['last cycle', '14'], ['change', '+2 this cycle']],
+      donePill: '16 active · +2',
+    });
+
+    // (d) billing — the charges this cycle and the delta vs last month
+    await toolChip({
+      ico: CARD_ICO, verb: 'Pulling', doneVerb: 'Pulled',
+      arg: 'get_billing · this cycle', skels: 2,
+      rows: [['line items', '4'], ['change vs last month', '+$60.00'], ['total', '$288.00']],
+      donePill: '+$60.00 · $288.00',
+    });
+    await wait(reduce ? 0 : 200);
+
+    // the charge breakdown the answer renders inline. The focal block below the
+    // line items names the two drivers behind the +$60.00.
+    const CHARGES = [
+      { lbl: 'Plus plan', sub: 'Base subscription', amt: '$99.00 / mo' },
+      { lbl: 'Payroll', sub: 'Monthly subscription', amt: '$50.00 / mo' },
+      { lbl: 'Team members', sub: '16 active, $6.00 each', amt: '$96.00 / mo' },
+      { lbl: 'Payments processing', sub: 'Card fees this month', amt: '$43.00' },
+    ];
+
+    // 5 — warm, reassuring answer, streamed, with the charge breakdown rendered inline
+    const ans = el('div', 'answer appear');
+    thread.appendChild(ans);
+    await wait(40); ans.classList.add('in');
+
+    const pre = el('span', null, '');
+    ans.appendChild(pre);
+    await streamInto(pre, 'Happy to walk you through it. Here is exactly what makes up the $288 this cycle.', 15);
+
+    // inline rendered widget (a real charge breakdown, not a wall of text)
+    const widget = el('div', 'widget');
+    widget.innerHTML = `
+      <div class="widget-head">
+        <span class="title">Charge breakdown · this cycle</span>
+        <span class="meta">Card ending 4417</span>
+      </div>
+      <div class="ledger"></div>
+      <div class="widget-foot">${SHIELD_ICO}<span>Mock data · read-only · verified account owner</span></div>`;
+    ans.appendChild(widget);
+    await wait(40); widget.classList.add('in');
+
+    const ledger = widget.querySelector('.ledger');
+    const buildLine = (c, cls) => {
+      const line = el('div', 'line' + (cls ? ' ' + cls : ''));
+      line.innerHTML = `
+        <span><span class="lbl">${c.lbl}</span>${c.sub ? `<span class="sub">${c.sub}</span>` : ''}</span>
+        <span class="amt">${c.amt}</span>`;
+      return line;
+    };
+    CHARGES.forEach((c) => ledger.appendChild(buildLine(c)));
+    ledger.appendChild(buildLine({ lbl: 'New total', amt: '$288.00 / mo' }, 'total'));
+
+    // focal block: the two drivers behind the +$60.00 this cycle
+    const change = el('div', 'change');
+    change.innerHTML = `
+      <div class="change-head"><span class="ttl">Changed this cycle</span><span class="amt">+$60.00</span></div>
+      <div class="change-row"><span>2 team members added</span><span class="amt">+$12.00</span></div>
+      <div class="change-row"><span>6-month welcome rate ended</span><span class="amt">+$48.00</span></div>`;
+    ledger.appendChild(change);
+
+    // reveal the lines on a gentle stagger, the change block lands as the focal point
+    const lines = ledger.querySelectorAll('.line, .change');
+    for (let i = 0; i < lines.length; i++) {
+      const t = setTimeout(() => lines[i].classList.add('in'), reduce ? 0 : i * 130);
+      timers.push(t);
+    }
+    await wait(reduce ? 0 : lines.length * 130 + 360);
+
+    // close with the two reasons in plain terms, value woven in, nothing pushed
+    const post = el('span', null, '');
+    ans.appendChild(post);
+    await streamInto(post, ' You are likely seeing a different amount than usual this month, and two things changed it. You added 2 team members, each $6, which covers their payroll tax filings automatically. And your 6-month welcome rate finished this cycle. Everything else is the same plan you already had.', 15);
+
+    await wait(reduce ? 0 : 760);
+
+    // 7 — follow-up turn: handled value-first and retention-oriented, never a cancel
+    const user2 = el('div', 'user appear', 'Is there any way to bring it down?');
+    thread.appendChild(user2);
+    await wait(40); user2.classList.add('in');
+    await wait(reduce ? 0 : 760);
+
+    const ans2 = el('div', 'answer appear');
+    thread.appendChild(ans2);
+    await wait(40); ans2.classList.add('in');
+    const a2 = el('span', null, '');
+    ans2.appendChild(a2);
+    await streamInto(a2, 'Let us take a look. You may qualify to extend your welcome rate, and I can request that for you. Annual billing is another way to save, and a specialist can review plan options as your team grows. Pick whichever you would like to explore.', 15);
+
+    // 8 — follow-up suggestions appear, settling in
+    const fus = el('div', 'followups');
+    const FU = ['Extend my welcome rate', 'Switch to annual billing', 'Talk to a specialist'];
+    FU.forEach((f) => fus.appendChild(el('button', 'fu', f)));
+    thread.appendChild(fus);
+    await wait(reduce ? 0 : 120);
+    [...fus.children].forEach((b, i) => {
+      const t = setTimeout(() => b.classList.add('in'), reduce ? 0 : i * 90);
+      timers.push(t);
+    });
+
+    await wait(reduce ? 0 : 500);
+    setActState('replay');
+    running = false;
+  }
+
+  function toggleReason(reason) {
+    const open = reason.classList.toggle('collapsed');
+    reason.querySelector('.reason-head').setAttribute('aria-expanded', open ? 'false' : 'true');
+  }
+
+  function setActState(mode) {
+    if (mode === 'stop') {
+      acticon.innerHTML = '<rect x="6" y="6" width="12" height="12" rx="2.2" fill="currentColor" stroke="none"/>';
+      actbtn.classList.add('stop');
+      actbtn.setAttribute('aria-label', 'Stop generating');
+      ghost.textContent = 'Generating…';
+    } else {
+      acticon.innerHTML = '<path d="M5 12a7 7 0 1 1 2 4.9"/><path d="M5 12V8m0 4h4"/>';
+      actbtn.classList.remove('stop');
+      actbtn.setAttribute('aria-label', 'Replay the exchange');
+      ghost.textContent = 'Ask anything…';
+    }
+  }
+
+  actbtn.addEventListener('click', () => {
+    if (running) {
+      clearAll();
+      running = false;
+      setActState('replay');
+    } else {
+      clearAll();
+      run();
+    }
+  });
+
+  // autoplay on load
+  run();
+})();
+</script>
+</body>
+</html>

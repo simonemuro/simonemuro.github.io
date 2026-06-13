@@ -37,31 +37,7 @@
       <button class="btn ghost" type="button" onclick="window.SMAgentOpen &amp;&amp; window.SMAgentOpen()">Talk to my agent</button>
     </div>
   </div>
-  <figure class="inst" data-instrument="replay" data-config="cfg-hero-replay" aria-label="A replay of the BillingSkill conversation, before and after">
-    <div class="inst-head">
-      <span>replay · billingskill</span>
-      <span class="pill-toggle"><button data-variant="before">BEFORE</button><button data-variant="after">AFTER</button></span>
-    </div>
-    <div class="inst-body" style="min-height:240px"></div>
-    <figcaption class="inst-caption"><b>From BillingSkill.</b> Built solo in five days: skill, tool, and a 108-case eval. Invented account data.</figcaption>
-  </figure>
-  <script type="application/json" id="cfg-hero-replay">
-  {
-    "autoplayVariant": "after",
-    "deferUntilVisible": false,
-    "variants": {
-      "after": [
-        {"k":"user","t":"Why was I charged $107 this month?"},
-        {"k":"tool","t":"billing_lookup · subscription + add-ons retrieved"},
-        {"k":"bot","t":"Your June charge is $107: QuickBooks Online Plus ($99/mo) plus the Payroll add-on you added May 14 ($8, prorated). Want the breakdown, or a look at plan options?"}
-      ],
-      "before": [
-        {"k":"user","t":"Why was I charged $107 this month?"},
-        {"k":"bot","t":"To view your subscription charges, go to Settings → Billing & Subscription. You can review your plan and billing history there."}
-      ]
-    }
-  }
-  </script>
+  <iframe class="hero-agent" src="hero-agent.html" title="A live agentic billing-support exchange, autoplaying. Mock data." loading="eager"></iframe>
 </div></header>
 
 <section class="record" aria-label="The record"><div class="shell">
