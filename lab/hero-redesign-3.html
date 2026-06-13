@@ -212,6 +212,41 @@
     font-family: var(--mono); font-size: 0.62rem; color: var(--faint); letter-spacing: 0.04em;
   }
 
+  /* ---- full charge breakdown (the persistent structured result) ---- */
+  .bd {
+    margin-top: 13px; border: 1px solid var(--hairline2); border-radius: 12px;
+    overflow: hidden; background: var(--paper);
+    opacity: 0; transform: translateY(6px);
+  }
+  .bd.in { opacity: 1; transform: none; transition: opacity .5s var(--settle), transform .55s var(--spring); }
+  .bd-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 11px 13px 9px; }
+  .bd-head .t { font-size: 0.82rem; font-weight: 500; letter-spacing: -0.01em; }
+  .bd-head .c { font-family: var(--mono); font-size: 0.6rem; color: var(--faint); letter-spacing: 0.05em; text-transform: uppercase; }
+  .bd .line { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 7px 13px; border-top: 1px solid var(--hairline); }
+  .bd .line .l { font-size: 0.8rem; color: var(--ink); }
+  .bd .line .l .s { display: block; font-size: 0.68rem; color: var(--faint); margin-top: 1px; }
+  .bd .line .a { font-family: var(--mono); font-size: 0.76rem; color: var(--ink); white-space: nowrap; }
+  .bd .line.total { border-top: 1.5px solid var(--hairline2); }
+  .bd .line.total .l { font-weight: 500; }
+  .bd .line.total .a { font-weight: 500; font-size: 0.85rem; }
+  .bd .change {
+    margin: 9px 12px 11px; padding: 9px 11px 10px; border-radius: 9px;
+    background: rgba(232,85,47,0.07); box-shadow: inset 0 0 0 1px rgba(232,85,47,0.2);
+  }
+  .bd .change .ch-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    padding-bottom: 6px; margin-bottom: 5px; border-bottom: 1px solid rgba(232,85,47,0.18);
+  }
+  .bd .change .ch-head .t { font-size: 0.77rem; font-weight: 500; color: var(--persimmon); }
+  .bd .change .ch-head .a { font-family: var(--mono); font-size: 0.8rem; font-weight: 500; color: var(--persimmon); }
+  .bd .change .r { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 3px 0; font-size: 0.75rem; color: var(--muted); }
+  .bd .change .r .a { font-family: var(--mono); font-size: 0.73rem; font-weight: 500; color: var(--persimmon); }
+  .bd .foot { border-top: 1px solid var(--hairline); padding: 7px 13px; font-family: var(--mono); font-size: 0.6rem; color: var(--faint); letter-spacing: 0.04em; }
+
+  /* ---- follow-up turn ---- */
+  .fu { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--hairline); }
+  .fu .say { margin-top: 11px; }
+
   /* utility row */
   .util { display: flex; align-items: center; gap: 16px; margin: 14px 2px 4px; color: var(--faint); }
   .util svg { width: 15px; height: 15px; display: block; }
@@ -252,9 +287,9 @@
   .replay:hover { color: var(--persimmon); }
 
   @media (prefers-reduced-motion: reduce) {
-    .step, .resolve, .chip { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .step, .resolve, .chip, .bd { opacity: 1 !important; transform: none !important; transition: none !important; }
     .step .res { max-height: 40px !important; opacity: 1 !important; }
-    .work-head .sp i, .step .node b, .head .status i { animation: none !important; }
+    .work-head .sp i, .step .node b { animation: none !important; }
     .caret { display: none; }
   }
 </style>
@@ -266,7 +301,6 @@
     <section class="panel" aria-label="An agent resolving a billing question, demonstrated">
       <div class="head" id="head">
         <span class="mark"><i></i></span>
-        <span class="name">Ledger</span>
         <span class="badge">demo</span>
         <span class="ctrl">
           <button type="button" class="cbtn" aria-label="More" title="Example control"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></svg></button>
@@ -377,41 +411,45 @@
     work.classList.add('collapsed');        // then fold the work away — only the response persists
     await wait(reduce ? 0 : 440);
 
-    // RESOLUTION — solid ink, the payoff that the grayed work earned
+    // RESOLUTION — solid ink, the payoff. The full, approved copy persists.
     const res = el('div', 'resolve', `<div class="lead"></div><div class="say"></div>`);
     body.appendChild(res);
     await wait(40); res.classList.add('in');
     await streamInto(res.querySelector('.lead'), 'You are likely seeing a different amount than usual this month.', 13);
     await wait(reduce ? 0 : 200);
-    await streamInto(res.querySelector('.say'), 'You added 2 team members at $6 each, which adds $12 and covers their payroll tax filings, and your 6-month welcome rate finished, which had been taking $48 off. That brings your total from $228 to $288. Everything else is the same plan you already had.', 12);
+    await streamInto(res.querySelector('.say'), 'Two things changed it. First, you added 2 team members at $6 each, which adds $12 and covers their payroll tax filings automatically. Second, your 6-month welcome rate finished this cycle, which had been taking $48 off your bill. Together those bring your monthly total from $228 to $288, an increase of $60. Everything else is the same plan you already had.', 12);
 
-    // compact result
-    const result = el('div', 'result', `
-      <div class="total"><span class="k">New total · this cycle</span><span class="v">$288.00 / mo</span></div>
-      <div class="drivers">
-        <div class="d"><span>2 team members added</span><span class="a">+$12.00</span></div>
-        <div class="d focal"><span>6-month welcome rate ended</span><span class="a">+$48.00</span></div>
+    // the full charge breakdown — the structured result that persists
+    const bd = el('div', 'bd', `
+      <div class="bd-head"><span class="t">Charge breakdown · this cycle</span><span class="c">Card ending 4417</span></div>
+      <div class="line"><span class="l">Plus plan<span class="s">Base subscription</span></span><span class="a">$99.00 / mo</span></div>
+      <div class="line"><span class="l">Payroll<span class="s">Monthly subscription</span></span><span class="a">$50.00 / mo</span></div>
+      <div class="line"><span class="l">Team members<span class="s">16 active, $6.00 each</span></span><span class="a">$96.00 / mo</span></div>
+      <div class="line"><span class="l">Payments processing<span class="s">Card fees this month</span></span><span class="a">$43.00</span></div>
+      <div class="line total"><span class="l">New total</span><span class="a">$288.00 / mo</span></div>
+      <div class="change">
+        <div class="ch-head"><span class="t">Changed this cycle</span><span class="a">+$60.00</span></div>
+        <div class="r"><span>2 team members added</span><span class="a">+$12.00</span></div>
+        <div class="r"><span>6-month welcome rate ended</span><span class="a">+$48.00</span></div>
       </div>
       <div class="foot">Mock data · read-only · verified account owner</div>`);
-    res.appendChild(result);
+    res.appendChild(bd);
+    await wait(40); bd.classList.add('in');
+    await wait(reduce ? 0 : 640);
 
-    // utility row
-    res.appendChild(el('div', 'util', `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11M2 14v5a2 2 0 0 0 2 2h12.3a2 2 0 0 0 2-1.7l1.1-7a1.6 1.6 0 0 0-1.6-1.9H13l1-5a2 2 0 0 0-2-2.3L7 10"/></svg>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 14v5a2 2 0 0 1-2 2H2.7a2 2 0 0 1-2-1.7M7 14v-11M22 10v5a2 2 0 0 1-2 2H11l-1 5a2 2 0 0 1-2-2.3L9 14"/></svg>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      <span class="sp"></span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 10l5 5 5-5M5 21h14"/></svg>`));
-
-    // value-first options
-    const lead = el('div', 'opt-lead', '');
-    res.appendChild(lead);
-    await wait(reduce ? 0 : 160);
-    await streamInto(lead, 'If you would like to lower it, you may qualify to extend your welcome rate, and I can request that for you.', 11);
+    // follow-up turn — value-first, never a cancel
+    const fu = el('div', 'fu');
+    res.appendChild(fu);
+    const q2 = el('div', 'turn', 'Is there any way to bring it down?');
+    fu.appendChild(q2); fu.appendChild(el('div', 'clear'));
+    await wait(reduce ? 0 : 660);
+    const a2 = el('div', 'say', '');
+    fu.appendChild(a2);
+    await streamInto(a2, 'Let us take a look. You may qualify to extend your welcome rate, and I can request that for you. Annual billing is another way to save, and a specialist can review plan options as your team grows. Pick whichever you would like to explore.', 12);
 
     const chips = el('div', 'chips');
     ['Extend my welcome rate', 'Switch to annual billing', 'Talk to a specialist'].forEach(t => chips.appendChild(el('button', 'chip', t)));
-    res.appendChild(chips);
+    fu.appendChild(chips);
     await wait(reduce ? 0 : 120);
     [...chips.children].forEach((c, i) => { const t = setTimeout(() => c.classList.add('in'), reduce ? 0 : i * 90); timers.push(t); });
 
