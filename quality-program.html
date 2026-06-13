@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Quality Program · Simone Muro</title>
+<meta name="description" content="Quality for an agentic AI platform: golden datasets with ground truth and expected actions, LLM judges validated against human labels, blind ground-truth audits, and a pre-population pipeline that cut dataset turnaround from three weeks to one." />
+<meta property="og:title" content="The Quality Program · Simone Muro" />
+<meta property="og:description" content="Golden datasets, validated judges, and a pipeline that tripled the pace. Quality became a release gate." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./v3.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav"><div class="shell">
+  <a class="wordmark" href="index.html">SIMONE MURO</a>
+  <div class="nav-links">
+    <a href="index.html#work" aria-current="true">Work</a>
+    <a href="index.html#about">About</a>
+    <a href="resume.html" class="optional">Resume</a>
+    <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
+  </div>
+</div></nav>
+
+<main id="main">
+
+<section class="case-open"><div class="shell">
+  <span class="no-big">No. 03 · The Quality Program</span>
+  <h1>The answer sounded right.</h1>
+  <p class="lede">Agents on Intuit Intelligence were taking actions in product and financial workflows across QuickBooks. Sounding right isn't a quality bar for someone's books.</p>
+  <div class="factbox">
+    <div><b>Role</b>Methodology, tooling, program lead</div>
+    <div><b>When</b>2025 – 2026</div>
+    <div><b>Instruments</b>Golden datasets · LLM judges · simulators · blind audits</div>
+    <div><b>Outcome</b>Quality became a release gate</div>
+  </div>
+</div></section>
+
+<article class="case-body">
+
+  <div class="narrow">
+    <div class="prose">
+      <p>A judge model can grade whether an answer reads well. It's far weaker at knowing whether the agent took the right action in a payroll run or a billing workflow, and it drifts when the product underneath it changes. As the platform scaled, one judge grading answers stopped being enough.</p>
+      <p>So I built the quality discipline as a loop, not a verdict. Golden datasets carry the correct answer <b>and the expected actions</b>. Offline judging gets checked against human labels on production samples. Multi-turn simulators, a GenAI bot playing the customer, surface the failures that only appear three turns deep. Regression runs make sure last month's quality is still this month's.</p>
+    </div>
+
+    <h2 class="beat">Trust the judge only after you test the judge.</h2>
+    <div class="prose">
+      <p>LLM judges are cheap, fast, and necessary. Before scaling them, I validated them against a <b>200-task human-labeled set</b>, with the agreement bar fixed before the test rather than after.</p>
+      <p>The judges cleared it. On that evidence I cut the planned 2,000-row vendor dataset: the judges were well tuned, and the spend wasn't needed. An evaluation program should tell you where quality is and where your money isn't required.</p>
+      <p>Here's a judge run against one golden row. One gate is supposed to fail.</p>
+    </div>
+  </div>
+
+  <div class="shell">
+    <figure class="inst wide" data-instrument="inspector" data-config="cfg-quality-inspector" aria-label="One golden dataset row: scenario, ground truth, and gating criteria, with a judge run where one gate fails">
+      <div class="inst-head">
+        <span>inspector · golden dataset · one row of 3,000+</span>
+        <span>judges validated against human labels</span>
+      </div>
+      <div class="inst-body"></div>
+      <figcaption class="inst-caption"><b>One row, mock data.</b> The judge graded an answer that got everything right except a date it made up. Schema real; the filing is invented.</figcaption>
+    </figure>
+    <script type="application/json" id="cfg-quality-inspector">
+    {
+      "runLabel": "Run the judge",
+      "tabs": [
+        {
+          "name": "scenario",
+          "rows": [
+            ["skill domain", "<code>payroll</code>"],
+            ["scenario", "Customer asks whether their federal payroll tax deposit went through"],
+            ["expected action", "Retrieve the filing record before answering"]
+          ]
+        },
+        {
+          "name": "ground truth",
+          "rows": [
+            ["filing", "<code>\"941 federal deposit · March\"</code>"],
+            ["status", "<code>\"filed\"</code>"],
+            ["filed_on", "not in the record yet"],
+            ["expected answer", "Confirms the deposit was filed and says the dated confirmation isn't available yet"]
+          ]
+        },
+        {
+          "name": "gating",
+          "rows": [
+            ["correctness", "Reports the filing and its status exactly as the record shows"],
+            ["completeness", "Tells the customer how to get the formal confirmation"],
+            ["no_hallucination", "Every fact in the answer traces to the record. No invented dates, amounts, or statuses"],
+            ["behavior", "Checks the filing record before answering, never routes to support first"]
+          ]
+        }
+      ],
+      "gates": [
+        { "label": "correctness", "pass": true, "detail": "deposit and filed status match the record" },
+        { "label": "completeness", "pass": true, "detail": "next step for formal confirmation included" },
+        { "label": "behavior", "pass": true, "detail": "filing record retrieved before the answer" },
+        { "label": "no_hallucination", "pass": false, "detail": "answer says \"filed on March 3\"; the record holds no date" }
+      ],
+      "failNote": "The answer was right about everything except a date it invented. A gate that never fires isn't a gate."
+    }
+    </script>
+  </div>
+
+  <div class="narrow">
+    <h2 class="beat">Three weeks to one.</h2>
+    <div class="prose">
+      <p>Authoring golden datasets by hand was the slowest step in the loop. A designer opened a blank row and wrote everything: the scenario, the ground truth, the expected actions, the gating criteria.</p>
+      <p>So I built a pre-population pipeline. An LLM pre-fills the evaluation data first; designers review and correct instead of authoring from blank. Turnaround dropped from about <b>three weeks to about one</b> across 3,000+ rows, without adding headcount.</p>
+      <p>The pipeline shipped as a pull request through the same review process as platform code: <b>+1,590 lines, reviewed and merged</b>. A reviewer pushed on an auto-promote edge case; the fix made the pipeline safer and landed within four hours.</p>
+    </div>
+
+    <!-- PENDING SIGN-OFF: Simone's verbatim words from her own portfolio doc about the pre-population PR. Publish only with her explicit sign-off. -->
+    <blockquote class="pull">
+      "This is platform code shipped through the same review pipeline as senior engineering work."
+      <span class="attr">from my notes · May 2026</span>
+    </blockquote>
+
+    <h2 class="beat">Two weeks' notice.</h2>
+    <div class="prose">
+      <p>In March 2026 the program's day-to-day owner went on sudden leave with two weeks' notice, while quality was the org's top priority. I sat in every handoff session, took over the pipeline, and ran the program without dropping a release.</p>
+      <p>I also tightened the foundation while holding it. Designers re-audited expert ground truth as blind <b>KEEP or DELETE</b> calls, original labels hidden so nobody could anchor on the expert's answer: 1,200+ rows in the first wave. If the ground truth is wrong, everything downstream of it is confidently wrong.</p>
+    </div>
+
+    <h2 class="beat">Shipping started requiring evidence.</h2>
+    <div class="prose">
+      <!-- PROVENANCE PENDING: the 8-to-13-point lift stays in body text (not a hero number) until Simone confirms provenance. Source: CAREER_DOSSIER section D, Apr 2026 year-end. -->
+      <p>By April 2026, quality scores had risen between 8 and 13 points across three skill domains.</p>
+      <p>The structural change runs deeper than the lift: a skill didn't ramp until its golden-set results cleared the launch bar. Quality stopped being a report someone wrote and became a gate releases pass through.</p>
+    </div>
+  </div>
+
+</article>
+
+<nav class="case-next" aria-label="Next case study"><div class="shell">
+  <a href="voice-snippet.html">
+    <span class="nxt">Next · No. 04</span>
+    <span class="t">Voice Snippet</span>
+  </a>
+</div></nav>
+
+</main>
+
+<footer class="colophon"><div class="shell">
+  <p>Set in Geist and Newsreader. Designed and built AI-natively: directed by Simone, executed with AI agents, the way she works. Motion honors reduced-motion; every animation has a finished static state.</p>
+  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. Roles, process, design decisions, and measured outcomes are preserved. © 2026 Simone Muro · Bay Area, CA</p>
+</div></footer>
+
+<button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
+<script src="./v3.js" defer></script>
+</body>
+</html>

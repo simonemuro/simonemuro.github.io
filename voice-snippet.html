@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Voice Snippet · One chance to be heard · Simone Muro</title>
+<meta name="description" content="GenAI on a live phone call: Simone Muro prototyped the answer-summary concept in June 2023 and co-designed the production conversational AI voice experience that shipped in December 2024, with a +3.9 pp containment lift measured in production." />
+<meta property="og:title" content="Voice Snippet · Simone Muro" />
+<meta property="og:description" content="A generated answer on a live phone call: prototyped in 2023, shipped when the platform could carry it, measured in production." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./v3.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav"><div class="shell">
+  <a class="wordmark" href="index.html">SIMONE MURO</a>
+  <div class="nav-links">
+    <a href="index.html#work">Work</a>
+    <a href="index.html#about">About</a>
+    <a href="resume.html" class="optional">Resume</a>
+    <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
+  </div>
+</div></nav>
+
+<main id="main">
+
+<section class="case-open"><div class="shell">
+  <span class="no-big">No. 04 · Voice Snippet</span>
+  <h1>One chance to be <em>heard</em>.</h1>
+  <p class="lede">A generated answer on a live phone call is the hardest version of the GenAI problem. No screen, no scrolling back, one shot at being understood. I prototyped the concept in June 2023; the production version has been answering callers since December 2024.</p>
+  <div class="factbox">
+    <div><b>Surface</b>Phone support, the 1-800 line</div>
+    <div><b>Role</b>Originated the concept, co-designed the ship</div>
+    <div><b>Measured</b>+3.9 pp containment lift in production</div>
+    <div><b>Live</b>Since December 2024</div>
+  </div>
+</div></section>
+
+<article class="case-body">
+  <div class="narrow">
+
+    <h2 class="beat">A caller can't scroll past a bad answer.</h2>
+    <div class="prose">
+      <p>Phone calls were roughly <b>30% of support contact volume</b>, a <b>$70M+ opportunity</b> sitting on a <b>36% baseline containment rate</b>. And the channel ran on scripts: a caller with a specific problem heard a generic article read at them, repeated themselves, or got transferred with nothing traveling along.</p>
+      <p>Chat was the easy place to put GenAI first. A clumsy answer in chat is just a line you scroll past. On the phone, every generated word spends the caller's time and patience, and there's no taking it back. That's exactly what made the channel worth it.</p>
+    </div>
+
+    <h2 class="beat">Prototyped in 2023, shipped when the platform could carry it.</h2>
+    <div class="prose">
+      <p>The concept started in June 2023 as an answer summary: instead of reading help content at the caller, <b>generate a short, voice-tuned answer to their actual problem</b>. That same season, my LLM savability classifier cleared Responsible AI review and shipped as a controlled experiment.</p>
+      <p>This one couldn't follow it, and the difference was risk profile. The classifier's output was machine-read JSON no customer ever saw. This put <b>generated words directly in a customer's ear</b>, and customer-facing generation needed more than an approval: it needed the GenAI platform path, which didn't exist yet. When the platform could carry it, it shipped, in December 2024. The concept was mine. The ship was a team's.</p>
+    </div>
+
+    <!-- PULL QUOTE: her words. PENDING SIMONE'S SIGN-OFF before publish. -->
+    <blockquote class="pull">A screen can show detail. Voice has to earn every second.<span class="attr">Simone, the design rule for the channel</span></blockquote>
+
+  </div>
+
+  <div class="shell">
+    <figure class="inst wide" data-instrument="earned" data-config="cfg-earned-second" aria-label="Before and after, in seconds: a forty-second article read aloud versus a four-second disambiguating question and a nine-second two-sentence answer">
+      <div class="inst-head"><span>earned · before / after, in seconds</span></div>
+      <div class="inst-body"></div>
+      <figcaption class="inst-caption"><b>What the caller hears.</b> Before: a help article read aloud. After: one question to pin the intent, then a two-sentence answer. Representative timings; illustrative reconstruction.</figcaption>
+    </figure>
+    <script type="application/json" id="cfg-earned-second">
+    {
+      "strips": [
+        {"who": "BEFORE", "seconds": 40, "hot": false, "label": "~40s · a help article, read aloud"},
+        {"who": "AFTER", "seconds": 4, "hot": true, "label": "~4s · one disambiguating question"},
+        {"who": "AFTER", "seconds": 9, "hot": true, "label": "~9s · a two-sentence answer"}
+      ]
+    }
+    </script>
+  </div>
+
+  <div class="narrow">
+
+    <h2 class="beat">The contract is the design.</h2>
+    <div class="prose">
+      <p>My pieces of the production design were the behavior and the contract. The experience runs on a <b>six-field JSON output</b>, parsed downstream for routing and never read by a human. Every word a caller hears is a field with a job.</p>
+    </div>
+
+    <div class="spec" style="border:1px solid var(--hairline); border-radius:12px; overflow:hidden; margin:28px 0 36px; background:var(--card);" role="img" aria-label="The six-field output contract: customer question, action type, disambiguation, response, task complexity, and off-topic detection">
+      <div class="row2"><span class="k">customer_question</span><span class="v">What the caller actually asked, normalized.</span></div>
+      <div class="row2"><span class="k">action_type</span><span class="v">Decides what the caller hears next: <code>answer</code> · <code>disambiguate</code> · <code>handoff</code> · <code>off_topic</code></span></div>
+      <div class="row2"><span class="k">disambiguation</span><span class="v">One spoken question to narrow a vague intent. Just one, because the caller is on the phone.</span></div>
+      <div class="row2"><span class="k">response</span><span class="v">The spoken answer. Two sentences by design: the caller hears it once.</span></div>
+      <div class="row2"><span class="k">task_complexity</span><span class="v">Routes between answering and handing the call to an expert, with context.</span></div>
+      <div class="row2"><span class="k">off_topic</span><span class="v">Caught before generation, so a risky request never becomes a spoken answer.</span></div>
+    </div>
+
+    <div class="prose">
+      <p>The structure is the safety case and the content design at once. An out-of-scope request gets caught before a word is generated. Complexity routes the call to an expert with the context carried along, so the caller never starts over. And the answer stays short on purpose: <b>one clear next step a caller can hold in their head</b>, not an article performed at them.</p>
+    </div>
+
+    <h2 class="beat">It's been on the line since December 2024.</h2>
+    <div class="prose">
+      <p><b>+3.9 percentage points of containment lift</b>, measured in production. On a channel this size, small percentages are large dollars against a 36% baseline.</p>
+      <p>The quieter outcome outlived the ship. The rubric I authored to decide whether a generated answer was good enough to say out loud went on to seed the team's broader automated-evaluation rubric. Defining good for one experience became how the team defined good for all of them.</p>
+    </div>
+
+  </div>
+</article>
+
+<footer class="case-next"><div class="shell">
+  <a href="cancellation-saves.html">
+    <span class="nxt">Next · No. 05</span>
+    <span class="t">Cancellation Saves</span>
+  </a>
+</div></footer>
+
+</main>
+
+<footer class="colophon"><div class="shell">
+  <p>Set in Geist and Newsreader. Designed and built AI-natively: directed by Simone, executed with AI agents, the way she works. Motion honors reduced-motion; every animation has a finished static state.</p>
+  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. Roles, process, design decisions, and measured outcomes are preserved. © 2026 Simone Muro · Bay Area, CA</p>
+</div></footer>
+
+<button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
+<script src="./v3.js" defer></script>
+</body>
+</html>
