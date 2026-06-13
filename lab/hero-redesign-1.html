@@ -1,0 +1,1119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Resolved Pane · Simone Muro</title>
+<!-- All data below is Mock data. No real company or product names. -->
+<meta name="description" content="One billing question, resolved in a contained pane: reasoning that empties itself into a four-source audit rail, while the answer it produces fills a pre-drawn charge breakdown in place. The kind of agentic support experience Simone designs." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #faf9f6;
+    --card: #ffffff;
+    --ink: #1a1815;
+    --muted: #6b6660;
+    --faint: #9b958c;
+    --hairline: #e5e1da;
+    --persimmon: #e8552f;
+    --signal: #1b7f5c;
+    --sans: "Geist", system-ui, -apple-system, sans-serif;
+    --mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+    --serif: "Newsreader", Georgia, serif;
+    /* physical easing family — one curve, used proportionally everywhere */
+    --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --settle: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    padding: 6px 8px 14px;
+  }
+  ::selection { background: var(--persimmon); color: var(--paper); }
+
+  /* ---- stage: caption + card, sized for the hero's right column ---- */
+  .stage { width: 100%; max-width: 460px; margin: 0 auto; }
+
+  .caption {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0 4px 16px;
+  }
+  .caption b { color: var(--ink); font-weight: 500; }
+
+  /* ---- the card frame ---- */
+  .inst {
+    border: 1px solid var(--hairline);
+    border-radius: 16px;
+    background: var(--card);
+    box-shadow: 0 1px 2px rgba(26,24,21,0.04), 0 12px 40px rgba(26,24,21,0.06);
+    overflow: hidden;
+  }
+
+  /* ===== ZONE 0 — header (slim, mono, live dot) ===== */
+  .inst-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 18px;
+    border-bottom: 1px solid var(--hairline);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .inst-head .live {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--signal);
+  }
+  .inst-head .live i {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--signal);
+    animation: breathe 2.4s infinite;
+  }
+  @keyframes breathe { 0%,100% { opacity: 1; } 50% { opacity: 0.32; } }
+
+  /* ===== ZONE 1 — the working lane (fixed height, the only animating zone) ===== */
+  .lane {
+    position: relative;
+    height: 132px;
+    padding: 11px 18px 0;
+    border-bottom: 1px solid var(--hairline);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* pinned customer question — always-visible context at the lane's top edge */
+  .pin {
+    align-self: flex-end;
+    max-width: 86%;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 6px 13px;
+    border-radius: 13px 13px 4px 13px;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0;
+    transform: translateY(6px);
+    flex: none;
+  }
+  .pin.in {
+    opacity: 1; transform: none;
+    transition: opacity 0.45s var(--settle), transform 0.5s var(--settle);
+  }
+
+  /* the live activity area — exactly one row at a time, then the demoted rail */
+  .lane-live {
+    position: relative;
+    flex: 1;
+    margin-top: 11px;
+    min-height: 0;
+  }
+
+  /* the streaming "now" row */
+  .nowrow {
+    position: absolute;
+    inset: 0 0 auto 0;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--muted);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s var(--settle), transform 0.45s var(--settle);
+  }
+  .nowrow.in { opacity: 1; transform: none; }
+  /* DEMOTE: the now row slides up and fades as it becomes history */
+  .nowrow.demote { opacity: 0; transform: translateY(-9px); }
+  .nowrow .spark {
+    position: relative;
+    color: var(--ink);
+    padding-bottom: 2px;
+  }
+  /* honest shimmer underline — a working state, not a spinner */
+  .nowrow .spark::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 1.5px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--hairline) 0%, var(--persimmon) 45%, var(--persimmon) 55%, var(--hairline) 100%);
+    background-size: 220% 100%;
+    animation: underglide 1.25s linear infinite;
+  }
+  @keyframes underglide { to { background-position: -220% 0; } }
+  .nowrow .glyph {
+    position: relative; width: 12px; height: 12px; flex: none;
+  }
+  .nowrow .glyph i {
+    position: absolute; inset: 0;
+    border: 1.5px solid var(--faint);
+    border-radius: 50%;
+    border-top-color: var(--persimmon);
+    animation: spin 0.9s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* the completed rail — four checked tool tokens, fills left to right */
+  .rail {
+    position: absolute;
+    inset: 0 0 auto 0;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.45s var(--settle), transform 0.5s var(--settle);
+  }
+  .rail.in { opacity: 1; transform: none; }
+  .token {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 22px;
+    padding: 0 9px 0 6px;
+    border-radius: 999px;
+    border: 1px solid var(--hairline);
+    background: var(--paper);
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.01em;
+    color: var(--muted);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(5px) scale(0.96);
+  }
+  .token.in {
+    opacity: 1; transform: none;
+    transition: opacity 0.34s var(--settle), transform 0.4s var(--spring), border-color 0.3s, background 0.3s, color 0.3s;
+  }
+  .token .ic {
+    width: 15px; height: 15px; flex: none;
+    display: grid; place-items: center;
+    color: var(--signal);
+  }
+  .token .ic svg { width: 13px; height: 13px; display: block; }
+  .token.in { border-color: rgba(27,127,92,0.34); background: rgba(27,127,92,0.06); color: var(--ink); }
+
+  /* the "Thought for 5s · 4 sources" pill — re-expandable audit handle */
+  .auditpill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 22px;
+    padding: 0 10px;
+    border-radius: 999px;
+    border: 1px dashed var(--hairline);
+    background: transparent;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.03em;
+    color: var(--faint);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  .auditpill.in {
+    opacity: 1; transform: none;
+    transition: opacity 0.34s var(--settle), transform 0.4s var(--settle), color 0.2s, border-color 0.2s;
+  }
+  .auditpill:hover { color: var(--persimmon); border-color: var(--persimmon); }
+  .auditpill .chev {
+    width: 6px; height: 6px;
+    border-right: 1.4px solid currentColor;
+    border-bottom: 1.4px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.3s var(--settle);
+    margin-right: 3px;
+  }
+  .auditpill[aria-expanded="true"] .chev { transform: rotate(-135deg); }
+
+  /* lazy audit overlay — PiP inside the lane bounds, never grows the lane */
+  .audit-pip {
+    position: absolute;
+    inset: -2px -6px;
+    z-index: 5;
+    background: rgba(255,255,255,0.97);
+    border-radius: 10px;
+    box-shadow: 0 8px 26px rgba(26,24,21,0.1), inset 0 0 0 1px var(--hairline);
+    padding: 11px 13px;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(4px) scale(0.99);
+    transition: opacity 0.25s var(--settle), transform 0.3s var(--settle);
+  }
+  .audit-pip.open { opacity: 1; pointer-events: auto; transform: none; }
+  .audit-pip h4 {
+    margin: 0 0 6px;
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 500;
+  }
+  .audit-pip .ar { margin: 0 0 5px; font-size: 0.73rem; line-height: 1.4; color: var(--muted); }
+  .audit-pip .ar:last-child { margin-bottom: 0; }
+  .audit-pip .ar b { color: var(--ink); font-weight: 500; }
+  .audit-pip .pip-close {
+    position: absolute; top: 8px; right: 9px;
+    width: 18px; height: 18px;
+    border: 0; background: transparent; cursor: pointer;
+    color: var(--faint); font-size: 1rem; line-height: 1;
+    display: grid; place-items: center; border-radius: 6px;
+  }
+  .audit-pip .pip-close:hover { color: var(--persimmon); background: var(--paper); }
+
+  /* ===== thin step indicator under the lane ===== */
+  .steps {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    padding: 8px 0 6px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .steps i {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--hairline);
+    transition: background 0.4s var(--settle), transform 0.4s var(--spring);
+  }
+  .steps i.on { background: var(--faint); }
+  .steps i.cur { background: var(--persimmon); transform: scale(1.3); }
+
+  /* ===== ZONE 2 — the anchored result (permanent focus, layered stage) ===== */
+  .result {
+    position: relative;
+    padding: 13px 18px 12px;
+  }
+  /* the stage is a FIXED-height window: the breakdown lives inside it and the
+     options layer is stacked over the SAME footprint and crossfades in, so the
+     follow-up turn costs zero additional card height and the envelope is
+     deterministic no matter how much agentic detail is shown. */
+  .result-stage { position: relative; height: 424px; }
+  .layer {
+    position: absolute;
+    inset: 0;
+    transition: opacity 0.55s var(--settle), transform 0.6s var(--settle);
+  }
+  /* the breakdown sits in the window; if its content ever slightly exceeds the
+     fixed window it scrolls internally with a soft bottom fade (it does not at
+     rest — this is only a safety valve, never the primary reading mode) */
+  .layer.breakdown {
+    z-index: 1;
+    overflow-y: auto;
+    -webkit-mask-image: linear-gradient(180deg, #000 0, #000 calc(100% - 18px), transparent 100%);
+            mask-image: linear-gradient(180deg, #000 0, #000 calc(100% - 18px), transparent 100%);
+    scrollbar-width: none;
+  }
+  .layer.breakdown::-webkit-scrollbar { display: none; }
+  .layer.options {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    z-index: 2;
+  }
+  /* the options layer reads as a new focal pane laid over the receded breakdown,
+     which stays faintly visible at the top so the overview is never lost */
+  .layer.options::before {
+    content: "";
+    position: absolute;
+    inset: 44px -4px -4px;
+    background: linear-gradient(180deg, rgba(250,249,246,0) 0%, var(--paper) 34px, var(--paper) 100%);
+    z-index: -1;
+  }
+
+  /* agent framing line above the ledger */
+  .framing {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: var(--ink);
+    margin: 0 0 8px;
+    min-height: 1.3em;
+  }
+  .framing .caret {
+    display: inline-block;
+    width: 2px; height: 1.02em;
+    vertical-align: -0.18em;
+    background: var(--persimmon);
+    margin-left: 1px;
+    animation: caret 1s steps(1) infinite;
+  }
+  @keyframes caret { 50% { opacity: 0; } }
+
+  /* the breakdown widget — drawn as a ghost first, hydrated in place */
+  .widget {
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    background: var(--paper);
+    overflow: hidden;
+  }
+  .widget-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 14px 7px;
+  }
+  .widget-head .title { font-size: 0.82rem; font-weight: 500; letter-spacing: -0.01em; color: var(--ink); }
+  .widget-head .meta { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.05em; color: var(--faint); text-transform: uppercase; }
+
+  .ledger { padding: 0 14px 4px; display: grid; gap: 1px; }
+  .ledger .line {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 12px;
+    padding: 4px 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .ledger .line:first-child { border-top: 0; }
+  .ledger .line .lbl { font-size: 0.79rem; color: var(--ink); }
+  .ledger .line .sub { display: block; font-size: 0.68rem; color: var(--faint); line-height: 1.45; margin-top: 1px; }
+  .ledger .line .amt { font-family: var(--mono); font-size: 0.76rem; color: var(--ink); white-space: nowrap; }
+
+  /* hydration: the value text crossfades from ghost placeholder to real number in place */
+  .ledger .line .lbl, .ledger .line .sub, .ledger .line .amt {
+    transition: opacity 0.25s var(--settle), color 0.25s var(--settle);
+  }
+  /* ghost state: dim placeholder bars where labels and amounts will land */
+  .ledger .line.ghost .amt {
+    color: transparent;
+    background: var(--hairline);
+    border-radius: 4px;
+    min-width: 54px;
+    display: inline-block;
+    height: 9px;
+  }
+  .ledger .line.ghost .lbl {
+    color: transparent;
+    background: var(--hairline);
+    border-radius: 4px;
+    display: inline-block;
+    height: 9px;
+    width: 92px;
+  }
+  .ledger .line.ghost .sub { opacity: 0; }
+  .ledger .line.ghost .lbl, .ledger .line.ghost .amt {
+    animation: ghostpulse 1.6s var(--settle) infinite;
+  }
+  @keyframes ghostpulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+  /* once hydrated, the real content shows */
+  .ledger .line.filled .lbl, .ledger .line.filled .amt {
+    animation: none;
+    background: transparent;
+    height: auto;
+    width: auto;
+    min-width: 0;
+  }
+  .ledger .line.filled .lbl { color: var(--ink); }
+  .ledger .line.filled .amt { color: var(--ink); }
+  .ledger .line.filled .sub { opacity: 1; }
+
+  /* total row */
+  .ledger .line.total {
+    margin-top: 2px;
+    padding-top: 8px;
+    border-top: 1.5px solid var(--hairline);
+  }
+  .ledger .line.total.filled .lbl { font-weight: 500; }
+  .ledger .line.total .amt { font-size: 0.85rem; }
+  .ledger .line.total.filled .amt { font-weight: 500; }
+  .ledger .line.total.ghost .amt { min-width: 64px; }
+
+  /* the focal change block — lands last, the one permitted scale pop */
+  .change {
+    margin: 7px 14px 7px;
+    padding: 8px 12px 9px;
+    border-radius: 10px;
+    background: rgba(232,85,47,0.07);
+    box-shadow: inset 0 0 0 1px rgba(232,85,47,0.22);
+    opacity: 0;
+    transform: translateY(5px) scale(0.985);
+  }
+  .change.in {
+    opacity: 1; transform: none;
+    transition: opacity 0.5s var(--settle), transform 0.55s var(--spring);
+  }
+  .change .change-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding-bottom: 6px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid rgba(232,85,47,0.2);
+  }
+  .change .change-head .ttl { font-size: 0.78rem; font-weight: 500; color: var(--persimmon); }
+  .change .change-head .amt { font-family: var(--mono); font-size: 0.82rem; font-weight: 500; color: var(--persimmon); }
+  .change .change-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 2px 0;
+    font-size: 0.76rem;
+    color: var(--muted);
+  }
+  .change .change-row .amt { font-family: var(--mono); font-size: 0.75rem; font-weight: 500; color: var(--persimmon); white-space: nowrap; }
+
+  /* "Why it changed" — expanded at rest, tucked under the change block, adds no scroll */
+  .why { margin: 0 14px 2px; }
+  .why-head {
+    display: flex; align-items: center; gap: 7px;
+    width: 100%; padding: 2px 0;
+    border: 0; background: transparent; cursor: pointer;
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.03em;
+    color: var(--muted); text-align: left;
+  }
+  .why-head .chev {
+    width: 7px; height: 7px;
+    border-right: 1.4px solid var(--faint);
+    border-bottom: 1.4px solid var(--faint);
+    transform: rotate(-135deg);
+    transition: transform 0.3s var(--settle);
+  }
+  .why.collapsed .why-head .chev { transform: rotate(45deg); }
+  .why-body {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.4s var(--settle);
+  }
+  .why.collapsed .why-body { grid-template-rows: 0fr; }
+  .why-body > div { overflow: hidden; min-height: 0; }
+  .why-text {
+    font-size: 0.765rem;
+    line-height: 1.5;
+    color: var(--muted);
+    padding: 3px 0 2px;
+  }
+
+  .widget-foot {
+    border-top: 1px solid var(--hairline);
+    padding: 6px 14px;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--faint);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .widget-foot svg { width: 11px; height: 11px; flex: none; }
+
+  /* recede state for the breakdown when the follow-up turn takes focus */
+  .layer.breakdown.recede {
+    opacity: 0.66;
+    transform: scale(0.96);
+    transform-origin: top center;
+  }
+  .layer.options.in {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  /* the follow-up customer chip + value-first options.
+     pushed down so the receded breakdown's top peeks above this focal pane */
+  .layer.options { padding-top: 50px; }
+  .fu-user {
+    margin: 0 0 11px auto;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 7px 13px;
+    border-radius: 13px 13px 4px 13px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    width: fit-content;
+    max-width: 84%;
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  .fu-user.in { opacity: 1; transform: none; transition: opacity 0.45s var(--settle), transform 0.5s var(--settle); }
+  .fu-framing {
+    font-size: 0.84rem;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0 0 12px;
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  .fu-framing.in { opacity: 1; transform: none; transition: opacity 0.5s var(--settle), transform 0.55s var(--settle); }
+  .fu-opts { display: flex; flex-direction: column; gap: 8px; }
+  .fu {
+    display: flex; align-items: center; gap: 10px;
+    text-align: left;
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    border: 1px solid var(--hairline);
+    background: var(--card);
+    border-radius: 11px;
+    padding: 10px 13px;
+    color: var(--ink);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s var(--settle), transform 0.45s var(--spring), border-color 0.18s, background 0.18s;
+  }
+  .fu.in { opacity: 1; transform: none; }
+  .fu:hover { border-color: var(--persimmon); background: var(--paper); }
+  .fu .fu-ic {
+    width: 26px; height: 26px; flex: none;
+    display: grid; place-items: center;
+    border-radius: 8px;
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    color: var(--muted);
+  }
+  .fu:hover .fu-ic { color: var(--persimmon); border-color: rgba(232,85,47,0.4); }
+  .fu .fu-ic svg { width: 14px; height: 14px; }
+  .fu .fu-tx { flex: 1; line-height: 1.3; }
+  .fu .fu-sub { display: block; font-size: 0.68rem; color: var(--faint); margin-top: 1px; }
+
+  /* ===== ZONE 3 — composer (reachable control) ===== */
+  .composer {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 14px;
+    border-top: 1px solid var(--hairline);
+  }
+  .composer .fake {
+    flex: 1;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid var(--hairline);
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    font-size: 0.82rem;
+    color: var(--faint);
+  }
+  .composer .act {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 0;
+    background: var(--ink);
+    color: var(--paper);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    flex: none;
+    transition: background 0.2s, transform 0.2s var(--spring);
+  }
+  .composer .act svg { width: 14px; height: 14px; }
+  .composer .act.stop { background: var(--persimmon); }
+  .composer .act.stop svg { width: 11px; height: 11px; }
+  .composer .act:hover { transform: scale(1.06); }
+
+  /* ---- reduced motion: render the COMPLETE finished overview, no motion ---- */
+  @media (prefers-reduced-motion: reduce) {
+    .pin, .nowrow, .rail, .token, .auditpill, .change, .fu, .fu-user, .fu-framing, .layer {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+      animation: none !important;
+    }
+    .inst-head .live i, .nowrow .spark::after, .nowrow .glyph i,
+    .framing .caret, .ledger .line.ghost .lbl, .ledger .line.ghost .amt { animation: none !important; }
+    .why.collapsed .why-body { grid-template-rows: 1fr; }
+    /* the fixed crossfade window becomes a natural vertical flow: both layers
+       stack legibly one after the other, full breakdown + full options visible */
+    .result-stage { height: auto !important; }
+    .layer { position: relative !important; inset: auto !important; }
+    .layer.options { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--hairline); }
+    .layer.breakdown.recede { opacity: 1 !important; transform: none !important; }
+  }
+</style>
+</head>
+<body>
+  <main class="stage">
+    <p class="caption"><b>The kind of agentic support experience I design.</b> One worried billing question, resolved in a contained pane: the reasoning empties itself into a four-source audit rail while the answer it produces fills the breakdown below. Mock data.</p>
+
+    <section class="inst" aria-label="A live agentic exchange, demonstrated">
+
+      <!-- ZONE 0 — header -->
+      <div class="inst-head">
+        <span>billing support</span>
+        <span class="live"><i></i><span id="livelbl">autoplay</span></span>
+      </div>
+
+      <!-- ZONE 1 — the working lane (fixed height, the only animating zone) -->
+      <div class="lane" id="lane" aria-label="Agent working lane">
+        <div class="pin" id="pin"></div>
+        <div class="lane-live" id="laneLive">
+          <div class="nowrow" id="nowrow" aria-hidden="true">
+            <span class="glyph"><i></i></span>
+            <span class="spark" id="sparktext">Reading your account…</span>
+          </div>
+          <div class="rail" id="rail" role="group" aria-label="Completed tool calls, four sources"></div>
+        </div>
+        <div class="audit-pip" id="auditPip" role="region" aria-label="Full reasoning and tool detail"></div>
+      </div>
+
+      <!-- thin 5-dot step indicator -->
+      <div class="steps" id="steps" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <!-- ZONE 2 — the anchored result (present from frame one) -->
+      <div class="result" role="log" aria-live="polite">
+        <div class="result-stage">
+
+          <!-- LAYER A — the charge breakdown -->
+          <div class="layer breakdown" id="breakdown">
+            <p class="framing" id="framing"></p>
+            <div class="widget">
+              <div class="widget-head">
+                <span class="title">Charge breakdown · this cycle</span>
+                <span class="meta">Card ending 4417</span>
+              </div>
+              <div class="ledger" id="ledger"></div>
+              <div class="change" id="change">
+                <div class="change-head"><span class="ttl">Changed this cycle</span><span class="amt">+$60.00</span></div>
+                <div class="change-row"><span>2 team members added</span><span class="amt">+$12.00</span></div>
+                <div class="change-row"><span>6-month welcome rate ended</span><span class="amt">+$48.00</span></div>
+              </div>
+              <div class="why collapsed" id="why">
+                <button class="why-head" id="whyHead" type="button" aria-expanded="false">
+                  <span class="chev" aria-hidden="true"></span>
+                  <span>Why it changed</span>
+                </button>
+                <div class="why-body"><div>
+                  <p class="why-text">Two things changed this cycle. The 2 team members you added at $6 each add $12 and cover their payroll tax filings, and your 6-month welcome rate finished, which had been taking $48 off. Together those move your total from $228 to $288, an increase of $60. Everything else is the same plan you already had.</p>
+                </div></div>
+              </div>
+              <div class="widget-foot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z"/><path d="m9 12 2 2 4-4"/></svg>
+                <span>Mock data · read-only · verified account owner</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- LAYER B — the value-first options (crossfades in for the follow-up turn) -->
+          <div class="layer options" id="options" aria-hidden="true">
+            <div class="fu-user" id="fuUser">Is there any way to bring it down?</div>
+            <p class="fu-framing" id="fuFraming">Let us take a look. You may qualify to extend your welcome rate, and I can request that for you. Annual billing is another way to save, and a specialist can review plan options as your team grows. Pick whichever you would like to explore.</p>
+            <div class="fu-opts" id="fuOpts"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ZONE 3 — composer -->
+      <div class="composer">
+        <span class="fake" id="ghost">Ask anything…</span>
+        <button class="act" id="actbtn" type="button" aria-label="Replay the exchange">
+          <svg id="acticon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12a7 7 0 1 1 2 4.9"/><path d="M5 12V8m0 4h4"/></svg>
+        </button>
+      </div>
+    </section>
+  </main>
+
+<script>
+(() => {
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // ---- nodes ----
+  const livelbl = document.getElementById('livelbl');
+  const pin = document.getElementById('pin');
+  const nowrow = document.getElementById('nowrow');
+  const sparktext = document.getElementById('sparktext');
+  const rail = document.getElementById('rail');
+  const auditPip = document.getElementById('auditPip');
+  const stepsWrap = document.getElementById('steps');
+  const stepDots = [...stepsWrap.querySelectorAll('i')];
+  const framing = document.getElementById('framing');
+  const ledger = document.getElementById('ledger');
+  const change = document.getElementById('change');
+  const why = document.getElementById('why');
+  const whyHead = document.getElementById('whyHead');
+  const breakdown = document.getElementById('breakdown');
+  const options = document.getElementById('options');
+  const fuUser = document.getElementById('fuUser');
+  const fuFraming = document.getElementById('fuFraming');
+  const fuOpts = document.getElementById('fuOpts');
+  const ghost = document.getElementById('ghost');
+  const actbtn = document.getElementById('actbtn');
+  const acticon = document.getElementById('acticon');
+  const lane = document.getElementById('lane');
+  const inst = lane.closest('.inst');
+
+  // ---- icons ----
+  const CARD_ICO   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg>';
+  const SHIELD_ICO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z"/><path d="m9 12 2 2 4-4"/></svg>';
+  const PLAN_ICO   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></svg>';
+  const TEAM_ICO   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.2a3 3 0 0 1 0 5.6M17.5 19a5.5 5.5 0 0 0-3-4.9"/></svg>';
+  const CHECK_ICO  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4.5 4.5L19 7"/></svg>';
+  const RATE_ICO   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V3"/><path d="M16 7.5C16 5.6 14.2 4 12 4S8 5.4 8 7.2 9.6 10 12 10.5s4 1.5 4 3.3-1.8 3.2-4 3.2-4-1.4-4-3.4"/></svg>';
+  const CAL_ICO    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>';
+  const SPEC_ICO   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></svg>';
+
+  // ---- timing helpers (reduced-motion aware, live-toggle aware) ----
+  let timers = [];
+  let running = false;
+  let reduce = mq.matches;
+  // mobile gets ~15% slower pacing (narrow column reading fatigues faster)
+  const isMobile = window.matchMedia('(max-width: 460px)').matches;
+  const PACE = isMobile ? 1.15 : 1;
+
+  let hovered = false; // pause-on-hover: gate that holds the next wait
+  const wait = (ms) => new Promise((resolve) => {
+    if (reduce) return resolve();
+    const scaled = ms * PACE;
+    const tick = () => {
+      if (hovered) { const t = setTimeout(tick, 120); timers.push(t); return; }
+      resolve();
+    };
+    const t = setTimeout(tick, scaled);
+    timers.push(t);
+  });
+  const clearAll = () => { timers.forEach(clearTimeout); timers = []; };
+
+  const el = (tag, cls, html) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (html != null) n.innerHTML = html;
+    return n;
+  };
+
+  // stream text into a node, leaving a caret at the tip
+  function streamInto(node, text, speed = 15) {
+    return new Promise((resolve) => {
+      const caret = el('span', 'caret');
+      node.appendChild(caret);
+      if (reduce) { node.insertBefore(document.createTextNode(text), caret); caret.remove(); return resolve(); }
+      const words = text.split(/(\s+)/);
+      let i = 0;
+      const step = () => {
+        if (i >= words.length) { caret.remove(); return resolve(); }
+        node.insertBefore(document.createTextNode(words[i]), caret);
+        i++;
+        const t = setTimeout(step, (speed + Math.random() * speed) * PACE);
+        timers.push(t);
+      };
+      step();
+    });
+  }
+
+  // ---- data ----
+  const QUESTION = 'I see a $288 charge on my card I don’t recognize. Can you help me understand it?';
+
+  // the four tokens, in resolve order, each tied to the ledger line(s) it hydrates
+  const TOKENS = [
+    { ico: SHIELD_ICO, word: 'owner',   fills: [] },                 // verify_account_access
+    { ico: PLAN_ICO,   word: 'Plus',    fills: ['plan', 'payroll'] }, // get_plan -> $99 + $50
+    { ico: TEAM_ICO,   word: '16 · +2', fills: ['team'] },            // get_team -> 16 × $6 = $96
+    { ico: CARD_ICO,   word: '$288',    fills: ['pay', 'total'] },    // get_billing -> $43 + total
+  ];
+
+  // ghost ledger rows (drawn dim first, hydrated as tools resolve). Only the
+  // team row keeps a sub-label, because 16 active × $6.00 each = $96 is the math
+  // the customer needs to see; the rest are self-evident from the label.
+  const LINES = [
+    { id: 'plan',    lbl: 'Plus plan',           sub: null,                    amt: '$99.00 / mo' },
+    { id: 'payroll', lbl: 'Payroll',             sub: null,                    amt: '$50.00 / mo' },
+    { id: 'team',    lbl: 'Team members',        sub: '16 active × $6.00 each', amt: '$96.00 / mo' },
+    { id: 'pay',     lbl: 'Payments processing', sub: null,                    amt: '$43.00' },
+    { id: 'total',   lbl: 'New total',           sub: null,                    amt: '$288.00 / mo', total: true },
+  ];
+
+  // ---- step indicator ----
+  function setStep(n) {
+    stepDots.forEach((d, i) => {
+      d.classList.toggle('on', i < n);
+      d.classList.toggle('cur', i === n - 1);
+    });
+  }
+
+  // ---- build the ghost ledger immediately (so we never read as a blank/broken box) ----
+  function drawGhostLedger() {
+    ledger.innerHTML = '';
+    LINES.forEach((c) => {
+      const line = el('div', 'line ghost' + (c.total ? ' total' : ''));
+      line.dataset.id = c.id;
+      line.innerHTML = `
+        <span><span class="lbl">${c.lbl}</span>${c.sub ? `<span class="sub">${c.sub}</span>` : ''}</span>
+        <span class="amt">${c.amt}</span>`;
+      ledger.appendChild(line);
+    });
+  }
+
+  // hydrate one ledger line: ghost -> real, 250ms crossfade in place
+  function fillLine(id) {
+    const line = ledger.querySelector(`.line[data-id="${id}"]`);
+    if (line) { line.classList.remove('ghost'); line.classList.add('filled'); }
+  }
+
+  // ---- the lazy, lossless audit overlay (PiP inside lane bounds) ----
+  const AUDIT_HTML = `
+    <button class="pip-close" type="button" aria-label="Close detail">&times;</button>
+    <h4>Reasoning</h4>
+    <p class="ar">Confirm this is the account owner before showing any billing detail.</p>
+    <p class="ar">Pull the plan, the team count, and the charges, then see what changed since last cycle.</p>
+    <p class="ar">An increase usually means something was added or a rate ended. Find the specific reason.</p>
+    <h4 style="margin-top:9px">Sources · 4</h4>
+    <p class="ar"><b>verify_account_access</b> &middot; account owner, read-only billing</p>
+    <p class="ar"><b>get_plan</b> &middot; Plus plan, Payroll and Payments add-ons</p>
+    <p class="ar"><b>get_team</b> &middot; 16 active, +2 this cycle</p>
+    <p class="ar"><b>get_billing</b> &middot; +$60.00 vs last month, $288.00 total</p>`;
+  let auditBuilt = false;
+  let auditPillNode = null;
+  function buildAudit() {
+    if (auditBuilt) return;
+    auditPip.innerHTML = AUDIT_HTML;
+    auditPip.querySelector('.pip-close').addEventListener('click', () => toggleAudit(false));
+    auditBuilt = true;
+  }
+  function toggleAudit(force) {
+    buildAudit();
+    const open = force != null ? force : !auditPip.classList.contains('open');
+    auditPip.classList.toggle('open', open);
+    if (auditPillNode) auditPillNode.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  // ---- the main timeline ----
+  async function run() {
+    if (running) return;
+    running = true;
+    reduce = mq.matches;
+    resetView();
+    setActState('stop');
+    livelbl.textContent = 'live';
+
+    if (reduce) { renderEndState(); setActState('replay'); livelbl.textContent = 'replay'; running = false; return; }
+
+    // STEP 1 — question pins, ghost ledger already drawn. Dwell so the frame registers.
+    setStep(1);
+    pin.textContent = QUESTION;
+    await wait(60); pin.classList.add('in');
+    await wait(900);
+
+    // STEP 2 — the live "now" row streams the working state (honest, shimmer underline)
+    setStep(2);
+    nowrow.classList.add('in');
+    await wait(2600);
+
+    // STEP 3 — the now row DEMOTES into the completed rail; four tokens fill L->R,
+    //          each firing the matching ledger line below. The signature move.
+    setStep(3);
+    nowrow.classList.add('demote');
+    await wait(360);
+    nowrow.style.display = 'none';
+
+    // build the rail tokens (start hidden), then cascade them in at 120ms,
+    // hydrating ledger lines as each resolves
+    rail.classList.add('in');
+    const tokenNodes = TOKENS.map((tk) => {
+      const t = el('span', 'token', `<span class="ic">${CHECK_ICO}</span>${tk.word}`);
+      rail.appendChild(t);
+      return t;
+    });
+    for (let i = 0; i < TOKENS.length; i++) {
+      tokenNodes[i].classList.add('in');
+      TOKENS[i].fills.forEach((id) => fillLine(id));
+      await wait(560); // 120ms cascade + dwell so each fill is legible, not busy
+    }
+
+    // STEP 4 — the audit pill settles inline; the focal change block lands with the
+    //          one permitted spring; framing line streams above the ledger.
+    setStep(4);
+    auditPillNode = el('button', 'auditpill', `<span class="chev" aria-hidden="true"></span>Thought for 5s · 4 sources`);
+    auditPillNode.setAttribute('type', 'button');
+    auditPillNode.setAttribute('aria-expanded', 'false');
+    auditPillNode.setAttribute('aria-label', 'Show full reasoning and tool detail');
+    auditPillNode.addEventListener('click', () => toggleAudit());
+    rail.appendChild(auditPillNode);
+    await wait(120); auditPillNode.classList.add('in');
+
+    framing.innerHTML = '';
+    await streamInto(framing, 'Here is exactly what makes up the $288 this cycle.', 16);
+    await wait(420);
+
+    change.classList.add('in');     // the single scale-pop, because it IS the answer
+    await wait(2900);               // dwell so the multi-line change + why copy can be read
+
+    // STEP 5 — follow-up reuses the SAME result zone. Breakdown recedes in place,
+    //          options crossfade in as the new focal layer. Zero added height.
+    setStep(5);
+    breakdown.classList.add('recede');
+    options.classList.add('in');
+    options.setAttribute('aria-hidden', 'false');
+    await wait(120); fuUser.classList.add('in');
+    await wait(520); fuFraming.classList.add('in');
+
+    const FU = [
+      { ico: RATE_ICO, t: 'Extend my welcome rate', s: 'I can request this for you' },
+      { ico: CAL_ICO,  t: 'Switch to annual billing', s: 'Saves about 15%' },
+      { ico: SPEC_ICO, t: 'Talk to a specialist', s: 'Review plan options as you grow' },
+    ];
+    fuOpts.innerHTML = '';
+    FU.forEach((f) => {
+      const b = el('button', 'fu', `<span class="fu-ic">${f.ico}</span><span class="fu-tx">${f.t}<span class="fu-sub">${f.s}</span></span>`);
+      b.setAttribute('type', 'button');
+      fuOpts.appendChild(b);
+    });
+    await wait(220);
+    [...fuOpts.children].forEach((b, i) => {
+      const t = setTimeout(() => b.classList.add('in'), i * 90 * PACE);
+      timers.push(t);
+    });
+
+    // settle to the complete overview; offer replay (no auto-loop — WCAG 2.2.2 escape)
+    await wait(700);
+    setActState('replay');
+    livelbl.textContent = 'replay';
+    running = false;
+  }
+
+  // reset all nodes to their pre-run state
+  function resetView() {
+    clearAll();
+    setStep(1);
+    pin.className = 'pin'; pin.textContent = '';
+    nowrow.style.display = '';
+    nowrow.className = 'nowrow';
+    sparktext.textContent = 'Reading your account…';
+    rail.className = 'rail'; rail.innerHTML = '';
+    auditPip.classList.remove('open'); auditBuilt = false; auditPip.innerHTML = ''; auditPillNode = null;
+    framing.innerHTML = '';
+    drawGhostLedger();
+    change.className = 'change';
+    // during the animated run the disclosure stays collapsed so the focal change
+    // block and the full ledger fit the fixed window with zero scrolling; the full
+    // warm copy is one click away and is shown expanded in the reduced-motion path.
+    why.classList.add('collapsed'); whyHead.setAttribute('aria-expanded', 'false');
+    breakdown.className = 'layer breakdown';
+    breakdown.scrollTop = 0;
+    options.className = 'layer options'; options.setAttribute('aria-hidden', 'true');
+    fuUser.className = 'fu-user';
+    fuFraming.className = 'fu-framing';
+    fuOpts.innerHTML = '';
+  }
+
+  // ---- the complete static overview (reduced motion + snap target + stop target) ----
+  function renderEndState() {
+    clearAll();
+    setStep(5);
+    // lane: pinned question + four checked tokens + audit pill, all settled
+    pin.className = 'pin in'; pin.textContent = QUESTION;
+    nowrow.style.display = 'none';
+    rail.className = 'rail in'; rail.innerHTML = '';
+    TOKENS.forEach((tk) => {
+      const t = el('span', 'token in', `<span class="ic">${CHECK_ICO}</span>${tk.word}`);
+      rail.appendChild(t);
+    });
+    auditPillNode = el('button', 'auditpill in', `<span class="chev" aria-hidden="true"></span>Thought for 5s · 4 sources`);
+    auditPillNode.setAttribute('type', 'button');
+    auditPillNode.setAttribute('aria-expanded', 'false');
+    auditPillNode.setAttribute('aria-label', 'Show full reasoning and tool detail');
+    auditPillNode.addEventListener('click', () => toggleAudit());
+    rail.appendChild(auditPillNode);
+
+    // result: filled ledger, change block, expanded why, both layers legible
+    framing.textContent = 'Here is exactly what makes up the $288 this cycle.';
+    drawGhostLedger();
+    LINES.forEach((c) => fillLine(c.id));
+    change.className = 'change in';
+    why.classList.remove('collapsed'); whyHead.setAttribute('aria-expanded', 'true');
+    breakdown.className = 'layer breakdown recede';
+    options.className = 'layer options in'; options.setAttribute('aria-hidden', 'false');
+    fuUser.className = 'fu-user in';
+    fuFraming.className = 'fu-framing in';
+    const FU = [
+      { ico: RATE_ICO, t: 'Extend my welcome rate', s: 'I can request this for you' },
+      { ico: CAL_ICO,  t: 'Switch to annual billing', s: 'Saves about 15%' },
+      { ico: SPEC_ICO, t: 'Talk to a specialist', s: 'Review plan options as you grow' },
+    ];
+    fuOpts.innerHTML = '';
+    FU.forEach((f) => {
+      const b = el('button', 'fu in', `<span class="fu-ic">${f.ico}</span><span class="fu-tx">${f.t}<span class="fu-sub">${f.s}</span></span>`);
+      b.setAttribute('type', 'button');
+      fuOpts.appendChild(b);
+    });
+  }
+
+  // ---- "Why it changed" disclosure ----
+  whyHead.addEventListener('click', () => {
+    const collapsed = why.classList.toggle('collapsed');
+    whyHead.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+  });
+
+  // ---- pause on hover / focus so a viewer can dwell ----
+  inst.addEventListener('mouseenter', () => { hovered = true; });
+  inst.addEventListener('mouseleave', () => { hovered = false; });
+  inst.addEventListener('focusin', () => { hovered = true; });
+  inst.addEventListener('focusout', () => { hovered = false; });
+
+  // ---- composer control ----
+  function setActState(mode) {
+    if (mode === 'stop') {
+      acticon.innerHTML = '<rect x="6" y="6" width="12" height="12" rx="2.2" fill="currentColor" stroke="none"/>';
+      actbtn.classList.add('stop');
+      actbtn.setAttribute('aria-label', 'Stop generating');
+      ghost.textContent = 'Generating…';
+    } else {
+      acticon.innerHTML = '<path d="M5 12a7 7 0 1 1 2 4.9"/><path d="M5 12V8m0 4h4"/>';
+      actbtn.classList.remove('stop');
+      actbtn.setAttribute('aria-label', 'Replay the exchange');
+      ghost.textContent = 'Ask anything…';
+    }
+  }
+  actbtn.addEventListener('click', () => {
+    if (running) {
+      clearAll();
+      running = false;
+      renderEndState();          // stopping leaves the complete overview, never a half state
+      setActState('replay');
+      livelbl.textContent = 'replay';
+    } else {
+      run();
+    }
+  });
+
+  // ---- if the OS reduced-motion preference flips mid-run, snap to the static end state ----
+  const onReduceChange = () => {
+    reduce = mq.matches;
+    if (reduce && running) {
+      clearAll();
+      renderEndState();
+      setActState('replay');
+      livelbl.textContent = 'replay';
+      running = false;
+    }
+  };
+  if (mq.addEventListener) mq.addEventListener('change', onReduceChange);
+  else if (mq.addListener) mq.addListener(onReduceChange);
+
+  // draw the ghost frame immediately, then autoplay once
+  drawGhostLedger();
+  run();
+})();
+</script>
+</body>
+</html>
