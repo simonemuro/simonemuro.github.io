@@ -747,7 +747,7 @@
 
     const pre = el('span', null, '');
     ans.appendChild(pre);
-    await streamInto(pre, 'Happy to walk you through it. Here is exactly what makes up the $288, and why it is about $60 more than last month.', 15);
+    await streamInto(pre, 'Happy to walk you through it. Here is exactly what makes up the $288 this cycle.', 15);
 
     // inline rendered widget (a real charge breakdown, not a wall of text)
     const widget = el('div', 'widget');
@@ -791,7 +791,7 @@
     // close with the two reasons in plain terms, value woven in, nothing pushed
     const post = el('span', null, '');
     ans.appendChild(post);
-    await streamInto(post, ' The two new team members are $6 each, and that covers their payroll tax filings automatically. The bigger piece is your 6-month welcome rate finishing this cycle. Everything else is the same plan you already had.', 15);
+    await streamInto(post, ' You are likely seeing a different amount than usual this month, and two things changed it. You added 2 team members, each $6, which covers their payroll tax filings automatically. And your 6-month welcome rate finished this cycle. Everything else is the same plan you already had.', 15);
 
     await wait(reduce ? 0 : 760);
 
@@ -806,7 +806,7 @@
     await wait(40); ans2.classList.add('in');
     const a2 = el('span', null, '');
     ans2.appendChild(a2);
-    await streamInto(a2, 'Good news, there is room here. You may qualify to extend your welcome rate for a few more months, and I can request that for you right now. Switching to annual billing also saves about 15% across the whole account. Or I can connect you with a specialist to look at plan options that fit how you are growing. Want me to start with the rate extension?', 15);
+    await streamInto(a2, 'Of course. You may qualify to extend your welcome rate, and I can request that for you. Annual billing is another way to save, and a specialist can review plan options as your team grows. Pick whichever you would like to explore.', 15);
 
     // 8 — follow-up suggestions appear, settling in
     const fus = el('div', 'followups');
