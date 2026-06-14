@@ -41,24 +41,70 @@
   <iframe class="hero-agent" src="hero-agent.html" title="A live agentic billing-support exchange, autoplaying. Mock data." loading="eager"></iframe>
 </div></header>
 <script>
-  // The hero card is full-height (no inner scroll): the whole exchange stays on screen
-  // as it builds and the finished state shows the entire thread. Same-origin, so we
-  // measure the card directly and grow the iframe to fit as the conversation streams.
+  // The hero card is full-height (no inner scroll): the parent measures the same-origin
+  // card and grows the iframe to fit. It also wires the panel's window controls:
+  //   expand -> a centered lightbox over a dimmed page;  close -> minimize to a launcher.
   (function () {
     var f = document.querySelector('iframe.hero-agent');
     if (!f) return;
+    var mode = 'normal'; // normal | expanded | minimized
+    var backdrop = null, launcher = null;
+
+    function doc() { try { return f.contentWindow.document; } catch (e) { return null; } }
     function fit() {
-      try {
-        var d = f.contentWindow.document;
-        var h = Math.max(d.documentElement.scrollHeight, d.body.scrollHeight);
-        if (h > 0) f.style.height = h + 'px';
-      } catch (e) {}
+      if (mode !== 'normal') return;            // do not auto-size while expanded/minimized
+      var d = doc(); if (!d) return;
+      var h = Math.max(d.documentElement.scrollHeight, d.body.scrollHeight);
+      if (h > 0) f.style.height = h + 'px';
     }
-    f.addEventListener('load', function () {
+    function setStageWide(wide) {
+      var d = doc(); if (!d) return;
+      var s = d.querySelector('.stage'); if (s) s.style.maxWidth = wide ? '100%' : '';
+    }
+    function replayPanel() {
+      var d = doc(); if (!d) return;
+      var b = d.getElementById('replay'); if (b) b.click();
+    }
+    function ensureChrome() {
+      if (!backdrop) {
+        backdrop = document.createElement('div');
+        backdrop.className = 'hero-backdrop';
+        backdrop.addEventListener('click', function () { setMode('normal'); });
+        document.body.appendChild(backdrop);
+      }
+      if (!launcher) {
+        launcher = document.createElement('button');
+        launcher.type = 'button';
+        launcher.className = 'hero-launcher';
+        launcher.innerHTML = '<span class="dot"></span>Replay the Demo Billing Agent';
+        launcher.addEventListener('click', function () { setMode('normal'); replayPanel(); });
+        f.parentNode.insertBefore(launcher, f.nextSibling);
+      }
+    }
+    function setMode(m) {
+      ensureChrome();
+      mode = m;
+      f.classList.toggle('expanded', m === 'expanded');
+      f.classList.toggle('minimized', m === 'minimized');
+      backdrop.classList.toggle('show', m === 'expanded');
+      launcher.classList.toggle('show', m === 'minimized');
+      document.body.classList.toggle('hero-locked', m === 'expanded');
+      setStageWide(m === 'expanded');
+      if (m === 'normal') { f.style.height = ''; fit(); }
+    }
+    function wire() {
       fit();
-      try { new ResizeObserver(fit).observe(f.contentWindow.document.body); }
-      catch (e) { var n = 0, id = setInterval(function () { fit(); if (++n > 90) clearInterval(id); }, 400); }
-    });
+      var d = doc();
+      if (d) {
+        try { new ResizeObserver(fit).observe(d.body); }
+        catch (e) { var n = 0, id = setInterval(function () { fit(); if (++n > 90) clearInterval(id); }, 400); }
+        var exp = d.getElementById('expandbtn'), cls = d.getElementById('closebtn');
+        if (exp) exp.addEventListener('click', function () { setMode(mode === 'expanded' ? 'normal' : 'expanded'); });
+        if (cls) cls.addEventListener('click', function () { setMode(mode === 'expanded' ? 'normal' : 'minimized'); });
+      }
+    }
+    f.addEventListener('load', wire);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mode === 'expanded') setMode('normal'); });
   })();
 </script>
 
