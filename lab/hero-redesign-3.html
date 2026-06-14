@@ -281,10 +281,24 @@
   .caret { display: inline-block; width: 2px; height: 1em; vertical-align: -0.15em; background: var(--persimmon); margin-left: 1px; animation: blink 1s steps(1) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
 
-  .replaybar { display: flex; justify-content: flex-end; margin: 10px 6px 0; }
-  .replay { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.04em; color: var(--faint); background: none; border: 0; cursor: pointer; padding: 0; }
+  /* meta row below the panel: the subtle "how I built this" affordance + replay */
+  .meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 11px 6px 0; }
+  .howto, .replay {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.04em;
+    color: var(--faint); background: none; border: 0; cursor: pointer; padding: 0;
+    transition: color .15s;
+  }
+  .howto .arr { transition: transform .2s var(--settle); }
+  .howto:hover, .replay:hover { color: var(--persimmon); }
+  .howto[aria-expanded="true"] .arr { transform: translateX(2px); }
   .replay svg { width: 11px; height: 11px; }
-  .replay:hover { color: var(--persimmon); }
+  .build-note { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--settle); margin: 0 6px; }
+  .build-note.open { grid-template-rows: 1fr; }
+  .build-note > div { overflow: hidden; min-height: 0; }
+  .build-note p { margin: 12px 0 8px; font-size: 0.78rem; line-height: 1.6; color: var(--muted); max-width: 48ch; }
+  .build-note a { font-family: var(--mono); font-size: 0.71rem; color: var(--persimmon); text-decoration: none; }
+  .build-note a:hover { text-decoration: underline; }
 
   @media (prefers-reduced-motion: reduce) {
     .step, .resolve, .chip, .bd { opacity: 1 !important; transform: none !important; transition: none !important; }
@@ -311,10 +325,16 @@
         <span class="ico">+</span>
         <span class="field" id="field">Ask anything</span>
         <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3"/></svg></span>
-        <button class="ico send" id="send" type="button" aria-label="Replay"><svg id="sendico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
     </section>
-    <div class="replaybar"><button class="replay" id="replay" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12a7 7 0 1 1 2 4.9"/><path d="M5 12V8m0 4h4"/></svg>replay</button></div>
+    <div class="meta">
+      <button class="howto" id="howto" type="button" aria-expanded="false">How I built this <span class="arr">&rarr;</span></button>
+      <button class="replay" id="replay" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12a7 7 0 1 1 2 4.9"/><path d="M5 12V8m0 4h4"/></svg>replay</button>
+    </div>
+    <div class="build-note" id="buildnote"><div>
+      <p>I designed and built this interactive demo for the page. The agent plans before it acts, pulls from four separate sources, and explains in plain language, with the guardrails designed in rather than bolted on. Mock data, in the spirit of the agentic support experiences I design and build.</p>
+      <a href="billing-skill.html" target="_top">See the BillingSkill case &rarr;</a>
+    </div></div>
   </main>
 
 <script>
@@ -323,7 +343,8 @@
   const body = document.getElementById('body');
   const head = document.getElementById('head');
   const replay = document.getElementById('replay');
-  const send = document.getElementById('send');
+  const howto = document.getElementById('howto');
+  const buildnote = document.getElementById('buildnote');
   let timers = [], running = false;
 
   document.documentElement.style.setProperty('--chk', "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231b7f5c' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")");
@@ -429,8 +450,7 @@
         <div class="ch-head"><span class="t">Changed this cycle</span><span class="a">+$60.00</span></div>
         <div class="r"><span>2 team members added</span><span class="a">+$12.00</span></div>
         <div class="r"><span>6-month welcome rate ended</span><span class="a">+$48.00</span></div>
-      </div>
-      <div class="foot">Mock data · read-only · verified account owner</div>`);
+      </div>`);
     res.appendChild(bd);
     await wait(40); bd.classList.add('in');
     await wait(reduce ? 0 : 640);
@@ -456,16 +476,15 @@
   }
 
   function setSend(mode) {
-    const ico = document.getElementById('sendico');
     document.getElementById('field').textContent = mode === 'stop' ? 'Working…' : 'Ask anything';
-    ico.innerHTML = mode === 'stop'
-      ? '<rect x="6" y="6" width="12" height="12" rx="2.2" fill="currentColor" stroke="none"/>'
-      : '<path d="M5 12h14M13 6l6 6-6 6"/>';
   }
 
-  function restart() { clearAll(); running = false; setStatus('', 'ready'); run(); }
+  function restart() { clearAll(); running = false; setStatus(''); run(); }
   replay.addEventListener('click', restart);
-  send.addEventListener('click', () => { if (running) { clearAll(); running = false; setSend('replay'); setStatus('done', 'done'); } else restart(); });
+  howto.addEventListener('click', () => {
+    const open = buildnote.classList.toggle('open');
+    howto.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
 
   run();
 })();
