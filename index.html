@@ -115,8 +115,8 @@
       fit();
       var d = doc();
       if (d) {
-        try { new ResizeObserver(fit).observe(d.body); }
-        catch (e) { var n = 0, id = setInterval(function () { fit(); if (++n > 90) clearInterval(id); }, 400); }
+        try { new ResizeObserver(fit).observe(d.body); } catch (e) {}
+        setInterval(fit, 250);   // robust: keep the iframe synced to content height (grow AND shrink)
         var exp = d.getElementById('expandbtn'), cls = d.getElementById('closebtn');
         if (exp) exp.addEventListener('click', function () { setMode(mode === 'expanded' ? 'normal' : 'expanded'); });
         if (cls) cls.addEventListener('click', function () { setMode(mode === 'expanded' ? 'normal' : 'minimized'); });
