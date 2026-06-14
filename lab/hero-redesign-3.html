@@ -296,12 +296,10 @@
 </head>
 <body>
   <main class="stage">
-    <p class="caption"><b>The kind of agentic support experience I design.</b> One sleek panel. The agent plans and works in plain sight, across four sources, then resolves the $288 in a sentence. Mock data.</p>
-
     <section class="panel" aria-label="An agent resolving a billing question, demonstrated">
       <div class="head" id="head">
         <span class="mark"><i></i></span>
-        <span class="badge">demo</span>
+        <span class="name">Demo Billing Agent</span>
         <span class="ctrl">
           <button type="button" class="cbtn" aria-label="More" title="Example control"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></svg></button>
           <button type="button" class="cbtn" id="expandbtn" aria-label="Expand the window" title="Expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3m13 5h3a2 2 0 0 0 2-2v-3"/></svg></button>
@@ -445,7 +443,7 @@
     await wait(reduce ? 0 : 660);
     const a2 = el('div', 'say', '');
     fu.appendChild(a2);
-    await streamInto(a2, 'Let us take a look. You may qualify to extend your welcome rate, and I can request that for you. Annual billing is another way to save, and a specialist can review plan options as your team grows. Pick whichever you would like to explore.', 12);
+    await streamInto(a2, 'Let me take a look. You may qualify to extend your welcome rate, and I can request that for you. Annual billing is another way to save, and a specialist can review plan options as your team grows. Pick whichever you would like to explore.', 12);
 
     const chips = el('div', 'chips');
     ['Extend my welcome rate', 'Switch to annual billing', 'Talk to a specialist'].forEach(t => chips.appendChild(el('button', 'chip', t)));
