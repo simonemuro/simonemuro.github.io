@@ -48,14 +48,18 @@
     var f = document.querySelector('iframe.hero-agent');
     if (!f) return;
     var mode = 'normal'; // normal | expanded | minimized
-    var backdrop = null, launcher = null;
+    var backdrop = null, launcher = null, closeX = null;
 
     function doc() { try { return f.contentWindow.document; } catch (e) { return null; } }
     function fit() {
-      if (mode !== 'normal') return;            // do not auto-size while expanded/minimized
       var d = doc(); if (!d) return;
-      var h = Math.max(d.documentElement.scrollHeight, d.body.scrollHeight);
-      if (h > 0) f.style.height = h + 'px';
+      var s = d.querySelector('.stage');
+      var h = s ? Math.ceil(s.offsetTop + s.offsetHeight + 14) // true content height (+ body padding-bottom)
+                : Math.max(d.documentElement.scrollHeight, d.body.scrollHeight);
+      if (h <= 0) return;
+      if (mode === 'normal') f.style.height = h + 'px';
+      else if (mode === 'expanded') f.style.height = Math.min(h, Math.round(window.innerHeight * 0.88)) + 'px';
+      // minimized: iframe is hidden, leave it
     }
     function setStageWide(wide) {
       var d = doc(); if (!d) return;
@@ -80,6 +84,15 @@
         launcher.addEventListener('click', function () { setMode('normal'); replayPanel(); });
         f.parentNode.insertBefore(launcher, f.nextSibling);
       }
+      if (!closeX) {
+        closeX = document.createElement('button');
+        closeX.type = 'button';
+        closeX.className = 'hero-overlay-close';
+        closeX.setAttribute('aria-label', 'Close the expanded view');
+        closeX.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg><span>Close</span>';
+        closeX.addEventListener('click', function () { setMode('normal'); });
+        document.body.appendChild(closeX);
+      }
     }
     function setMode(m) {
       ensureChrome();
@@ -87,10 +100,18 @@
       f.classList.toggle('expanded', m === 'expanded');
       f.classList.toggle('minimized', m === 'minimized');
       backdrop.classList.toggle('show', m === 'expanded');
+      closeX.classList.toggle('show', m === 'expanded');
       launcher.classList.toggle('show', m === 'minimized');
       document.body.classList.toggle('hero-locked', m === 'expanded');
       setStageWide(m === 'expanded');
-      if (m === 'normal') { f.style.height = ''; fit(); }
+      f.style.height = '';                         // clear, then re-measure for the new mode
+      if (m !== 'minimized') {
+        fit();
+        requestAnimationFrame(function () {
+          fit();
+          if (m === 'expanded') { try { f.contentWindow.scrollTo(0, 0); } catch (e) {} }
+        });
+      }
     }
     function wire() {
       fit();
