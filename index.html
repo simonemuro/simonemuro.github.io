@@ -53,7 +53,10 @@
     function doc() { try { return f.contentWindow.document; } catch (e) { return null; } }
     function fit() {
       var d = doc(); if (!d) return;
-      var h = Math.max(d.documentElement.scrollHeight, d.body.scrollHeight);
+      var s = d.querySelector('.stage'); if (!s) return;
+      // measure the .stage (visible content) not scrollHeight, which over-counts the collapsed
+      // work section by ~160px; the 250ms poll below makes this reliable (the observer alone missed it).
+      var h = Math.ceil(s.offsetTop + s.offsetHeight + 14); // + body padding-bottom
       if (h <= 0) return;
       if (mode === 'normal') f.style.height = h + 'px';
       else if (mode === 'expanded') f.style.height = Math.min(h, Math.round(window.innerHeight * 0.88)) + 'px';
