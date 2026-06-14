@@ -53,9 +53,7 @@
     function doc() { try { return f.contentWindow.document; } catch (e) { return null; } }
     function fit() {
       var d = doc(); if (!d) return;
-      var s = d.querySelector('.stage');
-      var h = s ? Math.ceil(s.offsetTop + s.offsetHeight + 14) // true content height (+ body padding-bottom)
-                : Math.max(d.documentElement.scrollHeight, d.body.scrollHeight);
+      var h = Math.max(d.documentElement.scrollHeight, d.body.scrollHeight);
       if (h <= 0) return;
       if (mode === 'normal') f.style.height = h + 'px';
       else if (mode === 'expanded') f.style.height = Math.min(h, Math.round(window.innerHeight * 0.88)) + 'px';
