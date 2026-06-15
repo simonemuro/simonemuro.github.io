@@ -246,6 +246,35 @@
   /* ---- follow-up turn ---- */
   .fu { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--hairline); }
   .fu .say { margin-top: 11px; }
+  .fu .steps { margin-top: 12px; }
+
+  /* ---- confirmation summary (what I did / what to expect) ---- */
+  .summary {
+    margin-top: 13px; border: 1px solid var(--hairline2); border-radius: 12px;
+    overflow: hidden; background: var(--paper); opacity: 0; transform: translateY(6px);
+  }
+  .summary.in { opacity: 1; transform: none; transition: opacity .5s var(--settle), transform .55s var(--spring); }
+  .summary .sec { padding: 10px 13px 11px; }
+  .summary .sec + .sec { border-top: 1px solid var(--hairline); }
+  .summary .sec-h { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 7px; }
+  .summary .row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 3px 0; font-size: 0.8rem; }
+  .summary .row .k { color: var(--ink); }
+  .summary .row .v { font-family: var(--mono); font-size: 0.77rem; color: var(--ink); white-space: nowrap; }
+  .summary .row .v.credit { color: var(--signal); font-weight: 500; }
+  .summary .row .v.muted { color: var(--faint); }
+  .summary .foot { border-top: 1px solid var(--hairline); padding: 7px 13px; font-family: var(--mono); font-size: 0.6rem; color: var(--faint); letter-spacing: 0.04em; }
+
+  /* ---- quiet download affordance ---- */
+  .dl {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 13px;
+    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.02em; color: var(--muted);
+    border: 1px solid var(--hairline2); border-radius: 999px; padding: 6px 13px; background: var(--card);
+    cursor: pointer; opacity: 0; transform: translateY(5px);
+    transition: opacity .4s var(--settle), transform .4s var(--spring), border-color .15s, color .15s;
+  }
+  .dl.in { opacity: 1; transform: none; }
+  .dl:hover { border-color: var(--persimmon); color: var(--ink); }
+  .dl svg { width: 13px; height: 13px; }
 
   /* utility row */
   .util { display: flex; align-items: center; gap: 16px; margin: 14px 2px 4px; color: var(--faint); }
@@ -301,7 +330,7 @@
   .build-note a:hover { text-decoration: underline; }
 
   @media (prefers-reduced-motion: reduce) {
-    .step, .resolve, .chip, .bd { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .step, .resolve, .chip, .bd, .summary, .dl { opacity: 1 !important; transform: none !important; transition: none !important; }
     .step .res { max-height: 40px !important; opacity: 1 !important; }
     .work-head .sp i, .step .node b { animation: none !important; }
     .caret { display: none; }
@@ -378,7 +407,8 @@
     { act: 'Reading your plan', res: 'Plus plan · Payroll · Payments', dwell: 820 },
     { act: 'Counting your team', res: '16 active · 2 added this cycle', dwell: 820 },
     { act: 'Pulling this cycle’s charges', res: '$288.00 · $60 more than last month', dwell: 900 },
-    { act: 'Finding what changed', res: 'welcome rate ended <span class="em">+$48</span> · 2 seats +$12', dwell: 980 },
+    { act: 'Finding what changed', res: 'welcome rate ended <span class="em">+$48</span> · 2 seats +$12', dwell: 920 },
+    { act: 'Checking what could ease the increase', res: 'welcome rate may extend · annual billing available', dwell: 940 },
   ];
 
   async function run() {
@@ -408,7 +438,7 @@
       if (work.classList.contains('done')) work.classList.toggle('collapsed');
     });
 
-    await streamInto(plan, 'Let me confirm a few things before I open your billing, then trace why this cycle looks different.', 12);
+    await streamInto(plan, 'Let me confirm a few things before I open your billing, trace why this cycle looks different, and check whether any of it can be eased for you.', 12);
     await wait(reduce ? 0 : 420);
     setStatus('go', 'working');
 
@@ -455,21 +485,87 @@
     await wait(40); bd.classList.add('in');
     await wait(reduce ? 0 : 640);
 
-    // follow-up turn — value-first, never a cancel
+    // PROACTIVE OFFER -> ACCEPT -> ACT -> CONFIRM -> CLOSE
     const fu = el('div', 'fu');
     res.appendChild(fu);
-    const q2 = el('div', 'turn', 'Is there any way to bring it down?');
-    fu.appendChild(q2); fu.appendChild(el('div', 'clear'));
-    await wait(reduce ? 0 : 660);
-    const a2 = el('div', 'say', '');
-    fu.appendChild(a2);
-    await streamInto(a2, 'Let me take a look. You may qualify to extend your welcome rate, and I can request that for you. Annual billing is another way to save, and a specialist can review plan options as your team grows. Pick whichever you would like to explore.', 12);
+
+    // the agent volunteers the remedy it already found, before being asked
+    await wait(reduce ? 0 : 220);
+    const offer = el('div', 'say', '');
+    fu.appendChild(offer);
+    await streamInto(offer, 'One more thing I noticed while reviewing your account. The welcome rate that just ended was the largest part of this change, so I checked whether it could continue. It looks like you may qualify to extend it, and I can request that for you now.', 12);
 
     const chips = el('div', 'chips');
-    ['Extend my welcome rate', 'Switch to annual billing', 'Talk to a specialist'].forEach(t => chips.appendChild(el('button', 'chip', t)));
+    ['Yes, extend my welcome rate', 'Other ways to save', 'No thanks, all set'].forEach(t => chips.appendChild(el('button', 'chip', t)));
     fu.appendChild(chips);
     await wait(reduce ? 0 : 120);
     [...chips.children].forEach((c, i) => { const t = setTimeout(() => c.classList.add('in'), reduce ? 0 : i * 90); timers.push(t); });
+
+    // customer accepts
+    await wait(reduce ? 0 : 1000);
+    const yes = el('div', 'turn', 'Yes, extend my welcome rate.');
+    fu.appendChild(yes); fu.appendChild(el('div', 'clear'));
+    await wait(reduce ? 0 : 600);
+
+    // the agent ACTS — three real actions, executed on screen
+    const actWrap = el('div', 'steps');
+    fu.appendChild(actWrap);
+    const ACTIONS = [
+      { act: 'Extending your welcome rate', out: 'extended through September' },
+      { act: 'Crediting your card', out: '$48.00 refunded · card ending 4417' },
+      { act: 'Setting your reminder', out: 'email before the rate returns' },
+    ];
+    for (const a of ACTIONS) {
+      const row = el('div', 'step busy', `<span class="node"><b></b></span><span class="act"></span><span class="res"></span>`);
+      actWrap.appendChild(row);
+      await wait(40); row.classList.add('in');
+      await streamInto(row.querySelector('.act'), a.act, 10);
+      await wait(reduce ? 0 : 760);
+      row.querySelector('.res').textContent = a.out;
+      row.classList.remove('busy'); row.classList.add('ok');
+      await wait(reduce ? 0 : 220);
+    }
+    await wait(reduce ? 0 : 380);
+
+    // confirmation — brief intro + a clean visual summary
+    const conf = el('div', 'say', '');
+    fu.appendChild(conf);
+    await streamInto(conf, 'Done. Here is what I changed and what to expect.', 13);
+
+    const summary = el('div', 'summary', `
+      <div class="sec">
+        <div class="sec-h">What I did</div>
+        <div class="row"><span class="k">Refund to your card · ending 4417</span><span class="v credit">−$48.00</span></div>
+        <div class="row"><span class="k">Welcome rate extended</span><span class="v muted">through September</span></div>
+      </div>
+      <div class="sec">
+        <div class="sec-h">What to expect · each cycle</div>
+        <div class="row"><span class="k">Subscription · through September</span><span class="v">$197.00</span></div>
+        <div class="row"><span class="k">Subscription · from October</span><span class="v">$245.00</span></div>
+        <div class="row"><span class="k">Payments processing</span><span class="v muted">varies · was $43.00</span></div>
+      </div>
+      <div class="foot">Mock data</div>`);
+    fu.appendChild(summary);
+    await wait(40); summary.classList.add('in');
+    await wait(reduce ? 0 : 560);
+
+    const note = el('div', 'say', '');
+    fu.appendChild(note);
+    await streamInto(note, 'So about $240 a month while the discount holds, a little more or less with your payments. The extra $12 is your two new team members. I will email you before the rate returns in October.', 12);
+
+    // warm human close — the worried customer ends up looked after
+    await wait(reduce ? 0 : 760);
+    const thanks = el('div', 'turn', 'That is exactly what I was hoping for. Thank you.');
+    fu.appendChild(thanks); fu.appendChild(el('div', 'clear'));
+    await wait(reduce ? 0 : 640);
+    const bye = el('div', 'say', '');
+    fu.appendChild(bye);
+    await streamInto(bye, 'Happy to help. You are all set.', 13);
+
+    // a quiet record-keeping affordance
+    const dl = el('button', 'dl', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 10l5 5 5-5M5 21h14"/></svg>Download summary');
+    fu.appendChild(dl);
+    await wait(reduce ? 0 : 140); dl.classList.add('in');
 
     await wait(reduce ? 0 : 500);
     setSend('replay'); running = false;
