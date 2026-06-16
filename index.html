@@ -37,7 +37,7 @@
       <button class="btn ghost" type="button" onclick="window.SMAgentOpen &amp;&amp; window.SMAgentOpen()">Talk to my agent</button>
     </div>
   </div>
-  <iframe class="hero-agent" src="hero-agent.html" title="A live agentic billing-support exchange, autoplaying. Mock data." loading="eager"></iframe>
+  <iframe class="hero-agent" src="hero-agent.html" title="A billing-support agent demo. Press Play to run it. Mock data." loading="eager"></iframe>
 </div></header>
 <script>
   // The hero card is full-height (no inner scroll): the parent measures the same-origin
@@ -80,8 +80,8 @@
         launcher = document.createElement('button');
         launcher.type = 'button';
         launcher.className = 'hero-launcher';
-        launcher.innerHTML = '<span class="dot"></span>Replay the Demo Billing Agent';
-        launcher.addEventListener('click', function () { setMode('normal'); replayPanel(); });
+        launcher.innerHTML = '<span class="dot"></span>Show the Demo Billing Agent';
+        launcher.addEventListener('click', function () { setMode('normal'); });
         f.parentNode.insertBefore(launcher, f.nextSibling);
       }
       if (!closeX) {
@@ -129,11 +129,22 @@
   })();
 </script>
 
-<section class="record" aria-label="The record"><div class="shell">
-  <div class="rec"><span class="n" data-count="3.9" data-prefix="+">+3.9<small> pp</small></span><span class="c">containment lift, measured in production. GenAI voice on the 1-800 line.</span></div>
-  <div class="rec"><span class="n" data-count="96.6">96.6<small>%</small></span><span class="c">savability accuracy from the classifier prompt, in pre-launch evaluation.</span></div>
-  <div class="rec"><span class="n">3w <small>→</small> 1w</span><span class="c">golden-dataset turnaround after the pipeline I built and merged.</span></div>
-  <div class="rec"><span class="n" data-count="5">5<small> days</small></span><span class="c">to a working agent skill, built solo, with its own eval dataset.</span></div>
+<section class="record" aria-label="Impact in three projects"><div class="shell">
+  <a class="rec" href="quality-program.html">
+    <span class="src">Optimize</span>
+    <span class="n range">+8<small> to </small>+13<small> pp</small></span>
+    <span class="c">quality lift across three agents, with quality as the release gate: validated judges and regression gates hold the line, and dataset turnaround went from 3 weeks to 1.</span>
+  </a>
+  <a class="rec" href="voice-snippet.html">
+    <span class="src">Accelerate</span>
+    <span class="n" data-count="3.9" data-prefix="+">+3.9<small> pp</small></span>
+    <span class="c">containment lift on the 1-800 voice line, measured in production.</span>
+  </a>
+  <a class="rec" href="billing-skill.html">
+    <span class="src">Transform</span>
+    <span class="n">108<small> cases</small></span>
+    <span class="c">a personalized, ready-to-ship billing experience built solo, with its own evaluation set. The POC that moved an org from designers as manual evaluators to designers as builders.</span>
+  </a>
 </div></section>
 
 <section class="generations" id="about" aria-label="Three generations"><div class="shell">
