@@ -113,7 +113,9 @@
         });
       }
     }
+    var wired = false;
     function wire() {
+      if (wired) return; wired = true;   // attach the controls exactly once (no double-wire = no instant expand-then-collapse)
       fit();
       var d = doc();
       if (d) {
@@ -125,6 +127,8 @@
       }
     }
     f.addEventListener('load', wire);
+    // also wire if the iframe already finished loading before this listener attached (cache / back-forward cache)
+    try { if (doc() && doc().readyState === 'complete' && doc().getElementById('expandbtn')) wire(); } catch (e) {}
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mode === 'expanded') setMode('normal'); });
   })();
 </script>
