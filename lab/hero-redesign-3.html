@@ -91,6 +91,20 @@
   /* body */
   .body { padding: 16px 16px 6px; }
 
+  /* resting state: the panel at rest with a Play affordance (no autoplay) */
+  .idle { padding: 14px 4px 20px; text-align: center; }
+  .idle-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.55; margin: 0 auto 16px; max-width: 30ch; }
+  .idle-play {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 18px 9px 16px; border-radius: 999px; cursor: pointer;
+    border: 1px solid var(--hairline2); background: var(--card); color: var(--ink);
+    font-family: var(--sans); font-size: 0.88rem; font-weight: 500;
+    transition: border-color .15s, color .15s;
+  }
+  .idle-play svg { width: 15px; height: 15px; color: var(--persimmon); }
+  .idle-play:hover { border-color: var(--persimmon); }
+  .idle-play:focus-visible { outline: 2px solid var(--persimmon); outline-offset: 2px; }
+
   .turn {
     display: inline-block; align-self: flex-end;
     max-width: 86%; margin: 0 0 16px auto;
@@ -322,6 +336,7 @@
   .howto:hover, .replay:hover { color: var(--persimmon); }
   .howto[aria-expanded="true"] .arr { transform: translateX(2px); }
   .replay svg { width: 11px; height: 11px; }
+  .replay { display: none; }   /* hidden until the demo has run once (revealed by run()) */
   .build-note { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--settle); margin: 0 6px; }
   .build-note.open { grid-template-rows: 1fr; }
   .build-note > div { overflow: hidden; min-height: 0; }
@@ -349,7 +364,15 @@
           <button type="button" class="cbtn" id="closebtn" aria-label="Close the window" title="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
         </span>
       </div>
-      <div class="body" id="body"></div>
+      <div class="body" id="body">
+        <div class="idle" id="idle">
+          <p class="idle-desc">A billing-support agent I designed and built. Mock data.</p>
+          <button class="idle-play" id="playbtn" type="button" aria-label="Play the billing agent demo">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            <span>Play</span>
+          </button>
+        </div>
+      </div>
       <div class="composer">
         <span class="ico">+</span>
         <span class="field" id="field">Ask anything</span>
@@ -374,7 +397,8 @@
   const replay = document.getElementById('replay');
   const howto = document.getElementById('howto');
   const buildnote = document.getElementById('buildnote');
-  let timers = [], running = false;
+  const playbtn = document.getElementById('playbtn');
+  let timers = [], running = false, hasRun = false;
 
   document.documentElement.style.setProperty('--chk', "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231b7f5c' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E\")");
 
@@ -568,7 +592,8 @@
     await wait(reduce ? 0 : 140); dl.classList.add('in');
 
     await wait(reduce ? 0 : 500);
-    setSend('replay'); running = false;
+    setSend('replay'); running = false; hasRun = true;
+    replay.style.display = 'inline-flex';   // reveal the replay control once the demo has run
   }
 
   function setSend(mode) {
@@ -582,7 +607,8 @@
     howto.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
 
-  run();
+  // no autoplay: the demo waits for an explicit Play (keeps the mock flow still until invited)
+  if (playbtn) playbtn.addEventListener('click', () => { if (!running) run(); });
 })();
 </script>
 </body>
