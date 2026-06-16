@@ -91,19 +91,24 @@
   /* body */
   .body { padding: 16px 16px 6px; }
 
-  /* resting state: the panel at rest with a Play affordance (no autoplay) */
-  .idle { padding: 14px 4px 20px; text-align: center; }
-  .idle-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.55; margin: 0 auto 16px; max-width: 30ch; }
+  /* resting state: the whole demo collapses to ONE clickable line (no window, header, or composer) */
+  .stage:not(.running) .head,
+  .stage:not(.running) .composer,
+  .stage:not(.running) .meta { display: none; }
+  .stage:not(.running) .panel { border: 0; background: transparent; box-shadow: none; border-radius: 0; overflow: visible; }
+  .stage:not(.running) .body { padding: 0; }
+
+  .idle { padding: 2px; }
   .idle-play {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 9px 18px 9px 16px; border-radius: 999px; cursor: pointer;
-    border: 1px solid var(--hairline2); background: var(--card); color: var(--ink);
-    font-family: var(--sans); font-size: 0.88rem; font-weight: 500;
-    transition: border-color .15s, color .15s;
+    display: inline-flex; align-items: center; gap: 9px; cursor: pointer;
+    padding: 4px 0; border: 0; background: none;
+    font-family: var(--sans); font-size: 0.98rem; font-weight: 500; letter-spacing: -0.01em;
+    color: var(--ink); transition: color .15s;
   }
-  .idle-play svg { width: 15px; height: 15px; color: var(--persimmon); }
-  .idle-play:hover { border-color: var(--persimmon); }
-  .idle-play:focus-visible { outline: 2px solid var(--persimmon); outline-offset: 2px; }
+  .idle-play svg { width: 16px; height: 16px; color: var(--persimmon); flex: none; transition: transform .15s; }
+  .idle-play:hover { color: var(--persimmon); }
+  .idle-play:hover svg { transform: scale(1.1); }
+  .idle-play:focus-visible { outline: 2px solid var(--persimmon); outline-offset: 3px; border-radius: 4px; }
 
   .turn {
     display: inline-block; align-self: flex-end;
@@ -366,10 +371,9 @@
       </div>
       <div class="body" id="body">
         <div class="idle" id="idle">
-          <p class="idle-desc">A billing-support agent I designed and built. Mock data.</p>
-          <button class="idle-play" id="playbtn" type="button" aria-label="Play the billing agent demo">
+          <button class="idle-play" id="playbtn" type="button" aria-label="Play a sample agentic billing agent">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-            <span>Play</span>
+            <span>Play a sample agentic billing agent</span>
           </button>
         </div>
       </div>
@@ -384,8 +388,7 @@
       <button class="replay" id="replay" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12a7 7 0 1 1 2 4.9"/><path d="M5 12V8m0 4h4"/></svg>replay</button>
     </div>
     <div class="build-note" id="buildnote"><div>
-      <p>I designed and built this interactive demo for the page. The agent plans before it acts, pulls from four separate sources, and explains in plain language, with the guardrails designed in rather than bolted on. Mock data, in the spirit of the agentic support experiences I design and build.</p>
-      <a href="billing-skill.html" target="_top">See the BillingSkill case &rarr;</a>
+      <p>I built this prototype for the page, working with AI, to show how the agentic systems I design behave: it plans before it acts, pulls from separate sources, reasons in plain language, and resolves with the guardrails built in. Mock data.</p>
     </div></div>
   </main>
 
@@ -393,6 +396,7 @@
 (() => {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const body = document.getElementById('body');
+  const stage = document.querySelector('.stage');
   const head = document.getElementById('head');
   const replay = document.getElementById('replay');
   const howto = document.getElementById('howto');
@@ -437,6 +441,7 @@
 
   async function run() {
     if (running) return; running = true;
+    stage.classList.add('running');     // reveal the panel frame + chrome once the demo plays
     body.innerHTML = ''; setSend('stop');
 
     // the question — a quiet, soft bubble

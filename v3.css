@@ -222,8 +222,14 @@ body.hero-locked { overflow: hidden; }
    Three cells = three value modes (Optimize / Accelerate / Transform), each linked to its case. */
 .record { padding: 80px 0; background: var(--ink); }
 .record + .generations { border-top: 0; }
-.record .shell { display: grid; grid-template-columns: repeat(3, 1fr); }
-@media (max-width: 820px) { .record .shell { grid-template-columns: 1fr; } }
+.record .shell { display: grid; grid-template-columns: repeat(3, 1fr); row-gap: 46px; }
+@media (max-width: 820px) { .record .shell { grid-template-columns: 1fr; row-gap: 0; } }
+
+/* connective frame above the three cells: names the three kinds of impact */
+.rec-intro { grid-column: 1 / -1; }
+.rec-intro .kicker { color: rgba(250,249,246,0.45); margin: 0 0 12px; }
+.rec-intro .rec-line { font-size: 1.05rem; font-weight: 500; letter-spacing: -0.01em; line-height: 1.45; color: var(--paper); margin: 0; max-width: 46ch; }
+.rec-intro + .rec { border-left: 0; padding-left: 0; }
 
 .rec {
   display: block; text-decoration: none; color: inherit;
@@ -240,6 +246,8 @@ body.hero-locked { overflow: hidden; }
 .rec .n small { font-size: 1.15rem; color: rgba(250,249,246,0.5); font-weight: 400; letter-spacing: 0; }
 .rec .n.range { font-size: 2.2rem; }
 .rec .n.range small { font-size: 1.35rem; }
+.rec .n.word { font-size: 1.7rem; letter-spacing: -0.01em; }
+.rec .n.word small { font-size: 1.3rem; color: rgba(250,249,246,0.45); margin: 0 3px; font-weight: 400; }
 .rec .c { font-family: var(--mono); font-size: 0.7rem; color: rgba(250,249,246,0.6); line-height: 1.55; display: block; margin-top: 14px; }
 
 /* link affordance on the ink surface — paper-toned only; persimmon stays OFF the band */
