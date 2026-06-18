@@ -4,13 +4,52 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>BillingSkill · Simone Muro</title>
-<meta name="description" content="A conversation designer builds a working agent skill end to end in five days: skill instructions, a three-mode billing tool, and a 108-case golden dataset with machine-checkable gating criteria." />
+<meta name="description" content="I spent a year defining what a good agent answer looks like, then built one: a billing skill on a real local MCP server, a 108-case golden dataset judged by rubric, end to end on mock data. Designed and directed, built with an AI pair." />
 <meta property="og:title" content="BillingSkill · Simone Muro" />
-<meta property="og:description" content="A working agent skill, a 108-case eval, and an argument that landed. Built in five days." />
+<meta property="og:description" content="I built the thing I'd been grading: a real MCP skill, a 108-case eval, on mock data. Designer to builder." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./v3.css" />
+<style>
+  /* billing-case visuals (mock data, redacted) */
+  .bx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 680px) { .bx-grid { grid-template-columns: 1fr; } }
+  .bx-card { border: 1px solid var(--hairline2); border-radius: 12px; background: var(--paper); overflow: hidden; }
+  .bx-h { font-size: 0.84rem; font-weight: 500; letter-spacing: -0.01em; padding: 13px 15px 11px; }
+  .bx-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 15px; border-top: 1px solid var(--hairline); }
+  .bx-row .l { font-size: 0.82rem; color: var(--ink); }
+  .bx-row .l .s { display: block; font-family: var(--mono); font-size: 0.66rem; color: var(--faint); margin-top: 2px; }
+  .bx-row .a { font-family: var(--mono); font-size: 0.78rem; color: var(--ink); white-space: nowrap; }
+  .bx-row.total { border-top: 1.5px solid var(--hairline2); }
+  .bx-row.total .l { font-weight: 500; }
+  .bx-row.total .a { font-weight: 600; font-size: 0.86rem; }
+  .bx-foot { border-top: 1px solid var(--hairline); padding: 8px 15px; font-family: var(--mono); font-size: 0.62rem; color: var(--faint); letter-spacing: 0.03em; }
+  .bx-compare { display: flex; align-items: center; gap: 14px; padding: 15px; }
+  .bx-compare .p { flex: 1; }
+  .bx-compare .p .pl { display: block; font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--faint); }
+  .bx-compare .p .pa { display: block; font-size: 1.15rem; font-weight: 500; margin-top: 3px; letter-spacing: -0.01em; }
+  .bx-compare .arr { color: var(--faint); }
+  .bx-delta { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 15px; border-top: 1px solid var(--hairline); font-size: 0.8rem; color: var(--ink); }
+  .bx-delta .a { font-family: var(--mono); font-weight: 600; color: var(--persimmon); white-space: nowrap; }
+  .bx-note { padding: 11px 15px 14px; font-size: 0.74rem; color: var(--muted); line-height: 1.55; border-top: 1px solid var(--hairline); }
+  /* cancel human-in-the-loop chat */
+  .bx-chat { display: grid; gap: 12px; }
+  .bx-user { justify-self: end; max-width: 80%; background: var(--ink); color: var(--paper); padding: 9px 14px; border-radius: 14px 14px 4px 14px; font-size: 0.84rem; line-height: 1.45; }
+  .bx-bot { max-width: 92%; }
+  .bx-bot p { margin: 0 0 12px; font-size: 0.86rem; line-height: 1.55; color: var(--ink); }
+  .bx-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .bx-btn { font-family: var(--sans); font-size: 0.8rem; font-weight: 500; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--hairline2); background: var(--card); color: var(--ink); cursor: default; }
+  .bx-btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  /* architecture flow */
+  .bx-flow { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; }
+  .bx-node { flex: 1; min-width: 108px; border: 1px solid var(--hairline2); border-radius: 10px; background: var(--paper); padding: 12px 13px; }
+  .bx-node.hot { border-color: var(--persimmon); }
+  .bx-node .nl { display: block; font-size: 0.8rem; font-weight: 500; color: var(--ink); }
+  .bx-node .ns { display: block; font-family: var(--mono); font-size: 0.6rem; color: var(--faint); margin-top: 4px; line-height: 1.4; }
+  .bx-fa { align-self: center; color: var(--faint); font-size: 0.9rem; flex: none; }
+  @media (max-width: 640px) { .bx-flow { flex-direction: column; } .bx-fa { transform: rotate(90deg); margin-left: 20px; align-self: flex-start; } }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -19,7 +58,7 @@
   <a class="wordmark" href="index.html">SIMONE MURO</a>
   <div class="nav-links">
     <a href="index.html#work" aria-current="true">Work</a>
-    <a href="index.html#about">About</a>
+    <a href="index.html#about">Approach</a>
     <a href="resume.html" class="optional">Resume</a>
     <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
   </div>
@@ -29,13 +68,13 @@
 
 <section class="case-open"><div class="shell">
   <span class="no-big">No. 01 · BillingSkill</span>
-  <h1>The charge nobody could explain.</h1>
-  <p class="lede">Subscription billing drives roughly 800K customer contacts a year. The assistant answered every one of them with the same help article.</p>
+  <h1>I built the thing I'd been grading.</h1>
+  <p class="lede">For a year I defined what a good agent answer looks like, then handed the spec to the teams who build. Billing was where I built it myself. It's a top contact driver, and the assistant kept answering with the same help article, even though the data to give a real answer was right there.</p>
   <div class="factbox">
-    <div><b>Role</b>Solo build</div>
+    <div><b>Role</b>Solo build, AI-paired</div>
     <div><b>When</b>March – May 2026</div>
-    <div><b>Stack</b>Agent repo · Cursor · skill YAML · MCP</div>
-    <div><b>Outcome</b>Working skill + 108-case eval, submitted and judged</div>
+    <div><b>Stack</b>Agent repo · Cursor · skill YAML · local MCP server</div>
+    <div><b>Outcome</b>Working skill on a verified MCP server, 108-case eval, on mock data</div>
   </div>
 </div></section>
 
@@ -56,32 +95,59 @@
       "deferUntilVisible": true,
       "variants": {
         "after": [
-          {"k":"user","t":"Why was I charged $107 this month?"},
-          {"k":"tool","t":"billing_lookup · subscription + add-ons retrieved"},
-          {"k":"bot","t":"Your June charge is $107: QuickBooks Online Plus ($99/mo) plus the Payroll add-on you added May 14 ($8, prorated). Want the breakdown, or a look at plan options?"}
+          {"k":"user","t":"How much am I paying each month?"},
+          {"k":"tool","t":"billing_lookup · plan + add-ons retrieved"},
+          {"k":"bot","t":"You're at $224 a month: the Plus plan ($99), Payroll ($75), and Time tracking ($50). It went up $6 this cycle when you added a fifth team member. Want the line-by-line breakdown?"}
         ],
         "before": [
-          {"k":"user","t":"Why was I charged $107 this month?"},
+          {"k":"user","t":"How much am I paying each month?"},
           {"k":"bot","t":"To view your subscription charges, go to Settings → Billing & Subscription. You can review your plan and billing history there."}
         ]
       }
     }
     </script>
 
+    <figure class="inst" aria-label="The personalized answer the skill produces, on mock data">
+      <div class="inst-head"><span>the answer · personalized, on the data</span><span>mock data</span></div>
+      <div class="inst-body">
+        <div class="bx-grid">
+          <div class="bx-card">
+            <div class="bx-h">How your monthly charges add up</div>
+            <div class="bx-row"><span class="l">Plus plan</span><span class="a">$99.00</span></div>
+            <div class="bx-row"><span class="l">Payroll<span class="s">$45 base + $6 &times; 5 employees</span></span><span class="a">$75.00</span></div>
+            <div class="bx-row"><span class="l">Time tracking<span class="s">$20 base + $10 &times; 3 users</span></span><span class="a">$50.00</span></div>
+            <div class="bx-row total"><span class="l">Total each month</span><span class="a">$224.00</span></div>
+            <div class="bx-foot">Next charge May 15 &middot; invented account</div>
+          </div>
+          <div class="bx-card">
+            <div class="bx-h">Why it went up this month</div>
+            <div class="bx-compare">
+              <div class="p"><span class="pl">Last month</span><span class="pa">$218.00</span></div>
+              <span class="arr">&rarr;</span>
+              <div class="p"><span class="pl">This month</span><span class="pa">$224.00</span></div>
+            </div>
+            <div class="bx-delta"><span>You added a fifth team member</span><span class="a">+$6.00</span></div>
+            <div class="bx-note">The agent reads the change from the account and explains it in plain language, instead of sending a help article.</div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="inst-caption"><b>The "after."</b> The skill reads the account and answers on the first response, line by line. Account data invented; the behavior is the real design.</figcaption>
+    </figure>
+
     <div class="prose">
-      <p>The data to answer properly existed the whole time: the plan, the add-ons, the proration that turns $99 into $107. Nothing connected it to the conversation. I'd redesigned this support area once already, back when the best fix was a better article. This time the platform could act, and I wanted to be the one who made it.</p>
+      <p>The data to answer properly existed the whole time: the plan, the add-ons, the per-seat math that turns a $99 base into a full monthly bill. Nothing connected it to the conversation. I'd redesigned this support area once already, back when the best fix was a better article. This time the platform could act, and I wanted to be the one who made it.</p>
     </div>
 
-    <h2 class="beat">It started seven weeks before the hackathon.</h2>
+    <h2 class="beat">Building was never the new part.</h2>
     <div class="prose">
-      <p>In late March I built a proof of concept on my own time: a prototype that looked up a subscription charge and explained it with the customer's actual account data. A screen recording, a short deck, a working idea.</p>
-      <p>I'd spent the year before defining what good agent behavior looked like for other teams: golden datasets, gating criteria, judge models. Underneath the prototype sat a bigger question. Could the person who writes the evaluation build the thing being evaluated?</p>
-      <p>So when the company announced an internal builder hackathon for May, I wasn't starting a weekend hack. I was starting the third act. The bet: a conversation designer who already shapes how the agent behaves can use the existing agent repo to build a working skill end to end.</p>
+      <p>For years I built support experiences end to end, from idea to production: the chatbot and the voice assistants in the NLU era, then the hybrid systems when LLMs arrived.</p>
+      <p>In the agentic era the shape of the work changed. My team owned the behavior: the testing, the golden datasets, the end-to-end evaluation that decides whether an agent is good enough to ship. We defined the source of truth and handed it to the teams building the agents. Useful, but a spreadsheet of good, better, and best is not the thing itself.</p>
+      <p>There was a push across the company for everyone to build, and I was certain my design technologists could do more than define behavior. We could build it in the codebase: the agent instructions, the prompts, the tools, the skill, even a local MCP to stand in for the data. Billing was where I'd prove it. So I built the proof of concept myself, and used an internal hackathon to make it official.</p>
     </div>
 
-    <h2 class="beat">Five days, day by day.</h2>
+    <h2 class="beat">The build, day by day.</h2>
     <div class="prose">
-      <p>The hackathon window gave me five working days. Here's what each one held.</p>
+      <p>The hackathon gave me five focused days to take it from prototype to a working, evaluated skill. Here's what each one held.</p>
     </div>
     <div class="days">
       <div class="day">
@@ -94,21 +160,58 @@
       </div>
       <div class="day">
         <h3><span>DAY 3</span>Test end to end</h3>
-        <p>Ran the skill locally against the live agent through a Streamlit harness. Validated both permission paths: admins get the charge detail, non-admins get a safe redirect.</p>
+        <p>Ran the skill locally against the running agent through a local test harness. Validated both permission paths: admins get the charge detail, non-admins get a safe redirect.</p>
       </div>
       <div class="day">
-        <h3><span>DAY 4</span>Hit the wall, write the wall down</h3>
-        <p>Live billing-history APIs answered with a permissions block. Documented the blocker precisely for the platform team, then built the first 33-row golden dataset so evaluation wouldn't wait on access.</p>
+        <h3><span>DAY 4</span>Hit the wall, keep moving</h3>
+        <p>The live billing APIs answered with a permissions block. Rather than let the program stall on access, I documented the blocker precisely and decoupled evaluation from it: built the first 33-row golden dataset so the skill could be proven on mock data while the real connection waited.</p>
       </div>
       <div class="day">
         <h3><span>DAY 5</span>Real conversations widen the map</h3>
-        <p>Pulled 55 production conversations and rewrote the skill instructions for what people actually say: cancel intent, price-increase complaints, downgrades. The eval set grew to 108 cases across 13 intent categories.</p>
+        <p>Pulled real production conversations and rewrote the skill instructions for what people actually say: cancel intent, price-increase complaints, downgrades. The eval set grew to 108 cases across 13 intent categories.</p>
       </div>
     </div>
 
-    <h2 class="beat">The skill shipped with its own eval.</h2>
+    <h2 class="beat">What the research changed.</h2>
     <div class="prose">
-      <p>Every row in the golden dataset carries three things: a scenario, the mock account data the tool returns, and gating criteria written so a judge model can check them without a human in the room. This is one row. Run the judge yourself.</p>
+      <p>I'd scoped this as "explain the charge." Reading real conversations changed the shape of it. A large share of billing complaints were not really about the charge. They were cancellations and downgrades wearing a billing question. "Why is this so expensive" is often "I am about to leave."</p>
+      <p>So I redrew the skill from an answer engine into something closer to an intent router: read what the customer is actually trying to do, answer the billing question when that is what it is, and route the exit intents with care. That is where the eval grew from 33 rows to 108, and where the harder design lived.</p>
+    </div>
+
+    <h2 class="beat">Then I moved it to a real MCP server.</h2>
+    <div class="prose">
+      <p>The first version ran as tools inside the agent repo. That proved the behavior, but it was not how the platform actually reaches its tools. So I made the call to rebuild it on MCP, the protocol the agents use to call tools, and I learned it from scratch.</p>
+      <p>I stood up a local MCP server, registered it with the agent, and watched the agent discover its tools and call them end to end. The data behind it is still mock, and the live connection is stubbed until engineering wires it to the real systems. But the path the skill takes in production is real, and I proved it works.</p>
+    </div>
+
+    <figure class="inst" aria-label="The skill's architecture, from question to data">
+      <div class="inst-head"><span>architecture &middot; question to data</span><span>verified end to end</span></div>
+      <div class="inst-body">
+        <div class="bx-flow">
+          <div class="bx-node"><span class="nl">Customer question</span></div>
+          <span class="bx-fa">&rarr;</span>
+          <div class="bx-node"><span class="nl">Skill</span><span class="ns">reads intent, picks the path</span></div>
+          <span class="bx-fa">&rarr;</span>
+          <div class="bx-node"><span class="nl">Tool call</span></div>
+          <span class="bx-fa">&rarr;</span>
+          <div class="bx-node hot"><span class="nl">MCP server</span><span class="ns">local, protocol-speaking</span></div>
+          <span class="bx-fa">&rarr;</span>
+          <div class="bx-node"><span class="nl">Account data</span><span class="ns">mock &middot; live path stubbed</span></div>
+        </div>
+      </div>
+      <figcaption class="inst-caption"><b>I made the call to move to MCP, then proved it.</b> The agent discovered the tools on the local server and called them end to end. The live data connection is the one piece that needs engineering.</figcaption>
+    </figure>
+
+    <h2 class="beat">Where I caught the machine.</h2>
+    <div class="prose">
+      <p>Building with an AI pair is a skill of its own: knowing what to ask, what to verify yourself, and when to stop generating and read the code. Two bugs stand out, both invisible from inside the pair.</p>
+      <p>The skill loaded, but no tool calls were reaching the MCP server. I traced it to two layers: the config named the server but left out the list of tools it exposed, so the agent registered none of them, and the instruction to call the tool first was being read as call it after the customer confirms. I fixed both and watched the calls land.</p>
+      <p>Then the cancel flow looped. The confirmation buttons were swallowed on rerun, and "no thanks" sent customers back into the cancel path because the decline still contained the word cancel. I found each by testing, named the cause, and fixed it. The thinking was mine; the typing was shared.</p>
+    </div>
+
+    <h2 class="beat">It came with its own eval.</h2>
+    <div class="prose">
+      <p>Every row in the golden dataset carries three things: a scenario, the mock account data the tool returns, and gating criteria written as a rubric an LLM judge scores. Trusting that judge is its own discipline: validating it against human labels is the <a href="quality-program.html">Quality Program</a>. This is one row. Run the judge yourself.</p>
     </div>
   </div>
 
@@ -116,7 +219,7 @@
     <figure class="inst wide" data-instrument="inspector" data-config="cfg-billing-inspector" aria-label="One golden dataset row: scenario, mock data, and gating criteria, with a judge run">
       <div class="inst-head">
         <span>inspector · golden dataset · 108 cases / 13 intents</span>
-        <span>machine-checkable</span>
+        <span>rubric · judge-scored</span>
       </div>
       <div class="inst-body"></div>
       <figcaption class="inst-caption"><b>One row of 108.</b> Schema real, account data invented. The judge applies each gate to the agent's answer against the mock record.</figcaption>
@@ -136,7 +239,7 @@
         {
           "name": "mock data",
           "rows": [
-            ["plan", "<code>\"QuickBooks Online Plus\"</code>"],
+            ["plan", "<code>\"Plus plan\"</code>"],
             ["plan_cost_monthly", "<code>99.00</code>"],
             ["add_ons", "<code>[{ \"name\": \"Payroll\", \"added\": \"May 14\", \"cost\": 8.00, \"prorated\": true }]</code>"]
           ]
@@ -161,25 +264,29 @@
 
   <div class="narrow">
     <div class="prose">
-      <p>The set also caught the question hiding inside the question. When a billing complaint is really a cancellation, the skill offers a confirmation widget and a chance to fix the actual problem first. And before anything could collide with production behavior, I ran an overlap analysis against the 7 existing skills around billing.</p>
+      <p>The cancellation case is where the design earns its keep. When the intent is really an exit, the skill slows down: it reads the account, gives the real steps, and offers a person, but it never cancels for you. And before this could collide with what already ships, I ran an overlap analysis against the other billing skills and scoped this one to detect and route, not to own the cancel flow.</p>
     </div>
 
-    <h2 class="beat">How I built it.</h2>
+    <figure class="inst" aria-label="The cancel-intent confirmation, a human in the loop, on mock data">
+      <div class="inst-head"><span>cancel intent &middot; human in the loop</span><span>mock data</span></div>
+      <div class="inst-body">
+        <div class="bx-chat">
+          <div class="bx-user">I want to cancel my subscription.</div>
+          <div class="bx-bot">
+            <p>I can help you start that. You're on the Plus plan, and your next charge is May 15. Canceling is a few steps, and a specialist can walk you through it and check whether a smaller plan would fit before you go.</p>
+            <div class="bx-actions"><button class="bx-btn primary" type="button">Connect with a specialist</button><button class="bx-btn" type="button">Keep my plan</button></div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="inst-caption"><b>It never cancels for you.</b> The skill is read-only by design: on a cancel it surfaces the account, gives the steps, and offers a person, but it cannot execute the cancel itself. Safety from what it cannot do, not just what it's told. Account data invented.</figcaption>
+    </figure>
+
+    <h2 class="beat">How I'd know it worked, and what's left.</h2>
     <div class="prose">
-      <p>I forked the agent repo and worked in Cursor with Claude as my pair: reading how existing skills were structured, writing the code I needed, testing everything on my machine. I learned MCP from scratch along the way; that piece was the two of us vibe-coding a local prototype. I documented the API blockers precisely and handed them to the platform team.</p>
-      <p>Building this way is a craft of its own: knowing what to ask the pair, what to verify yourself, and when to stop generating and read the code. It's what turned a year of defining quality into working software in five days.</p>
+      <p>The skill, the tools, the MCP server, and the 108-case eval run end to end on mock data today. What's left is the production side: wiring the real data connection, hardening the admin gate from a prompt rule back into the tool, and a before-and-after read on real traffic. I scoped that work. It needs engineering, and that's the honest line.</p>
+      <p>If it shipped, I'd measure it on the outcome, not the answer: first-turn resolution on billing questions instead of a redirect to an article, the share of cancellations caught when they hide inside a billing complaint, and a confidently-wrong rate held at zero. I'd roll it out behind the eval as a gate, small and watched, before it ran wide.</p>
+      <p>What it already proves is the argument I'd been making all year. The people who define what good looks like can build it, not just spec it. I designed the behavior, wrote the evaluation, made the architecture call, stood up the server, and debugged it when it broke. The rest is engineering, and I know exactly where that line is.</p>
     </div>
-
-    <h2 class="beat">What came of it.</h2>
-    <div class="prose">
-      <p>I submitted on day five. The skill, the three-mode tool, and the 108-case eval put the argument I'd been making all year into working form: the people who define what good looks like can build at the source.</p>
-    </div>
-
-    <!-- PENDING SIGN-OFF: Simone's verbatim words from her May 21, 2026 note to the team. Publish only with her explicit sign-off. -->
-    <blockquote class="pull">
-      "I went, I completed the task, and I'm proud our team was represented."
-      <span class="attr">from my note to the team · May 2026</span>
-    </blockquote>
   </div>
 
 </article>

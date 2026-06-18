@@ -6,7 +6,7 @@
 <title>Cancellation Saves · Simone Muro</title>
 <meta name="description" content="From an NLU retention flow that beat its saves target to an LLM savability classifier at 96.6% accuracy: hearing the reason, cleaning the queue, and routing cancellations with one prompt. A conversational AI case study." />
 <meta property="og:title" content="Cancellation Saves · Simone Muro" />
-<meta property="og:description" content="Four months of tuning, fifteen points. One prompt, thirty-six. A savability classifier at 96.6% accuracy, shipped as a controlled experiment." />
+<meta property="og:description" content="Four months of NLU tuning bought fifteen points. One LLM prompt cleared thirty-six, at 96.6% accuracy, proven before the platform had a way to ship it." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
@@ -19,7 +19,7 @@
   <a class="wordmark" href="index.html">SIMONE MURO</a>
   <div class="nav-links">
     <a href="index.html#work" aria-current="true">Work</a>
-    <a href="index.html#about">About</a>
+    <a href="index.html#about">Approach</a>
     <a href="resume.html" class="optional">Resume</a>
     <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
   </div>
@@ -32,10 +32,10 @@
   <h1>“I want to cancel” isn’t one problem.</h1>
   <p class="lede">It’s a dozen problems wearing the same sentence, and only some of them are losses you have to accept. Teaching a support system to hear the difference took two generations of technology.</p>
   <div class="factbox">
-    <div><b>Role</b>Lead conversation designer &amp; prompt engineer</div>
-    <div><b>When</b>2022 – 2023</div>
-    <div><b>Stack</b>NLU intents · LLM classifier · strict JSON · low-code build</div>
-    <div><b>Outcome</b>96.6% classifier accuracy (pre-launch) · saves flow 12% vs 5% target</div>
+    <div><b>Role</b>Designed the NLU saves flow · built the LLM classifier</div>
+    <div><b>When</b>2022 – 2023, two generations of the tech</div>
+    <div><b>Stack</b>NLU intents · hybrid LLM classifier · strict JSON · low-code build</div>
+    <div><b>Outcome</b>96.6% classifier accuracy (pre-launch) · saves flow 12% vs 5% target (directional)</div>
   </div>
 </div></section>
 
@@ -70,8 +70,8 @@
     <h2 class="beat">One prompt, thirty-six points.</h2>
     <div class="prose">
       <p>When LLMs arrived in early 2023, I made the case: stop training intents and classify with a model that already understands natural language. The idea was mine to champion, and making it real meant partnering with the platform team to onboard the API that let the flow call an LLM at all.</p>
-      <p>The design was the prompt. A tightly specified classifier reads the customer’s words and returns <b>strict JSON</b>, intent, reason, sentiment, savability, that no human ever sees; it’s parsed downstream to make the routing call. The savability rules came from the people who knew the economics: the saves data and the analytics behind it. A customer closing the business or retiring counts as final; they get a respectful, efficient goodbye, not a pitch.</p>
-      <p>The few-shot examples came from real customer language in all its mess, and the iteration loop is the one that actually moves accuracy: find the failure, add the example that kills that class of error, re-test the whole set.<button class="note-ref" data-note="note-loop" aria-label="Margin note about the iteration loop">1</button> Months of NLU training per cycle collapsed into hours of prompt work.</p>
+      <p>The build was a hybrid system, and the judgment was where each piece belonged. NLU still mapped the intent. The LLM read the customer’s words and returned <b>strict JSON</b>, reason, sentiment, savability, that no human ever sees. A low-code tool parsed that JSON and applied the routing rules. The savability rules came from the people who knew the economics: the saves data and the analytics behind it. A customer closing the business or retiring counts as final; they get a respectful, efficient goodbye, not a pitch.</p>
+      <p>The few-shot examples came from real customer language in all its mess, and the iteration loop is the one that actually moves accuracy: find the failure, add the example that kills that class of error, re-test the whole set.<button class="note-ref" data-note="note-loop" aria-label="Margin note about the iteration loop">1</button> Months of NLU training per cycle collapsed into hours of prompt work. I costed the running model too: roughly <b>$756 a year</b> at the volume it handled, the build-versus-buy case made in a single line.</p>
       <div class="note-body" id="note-loop">The same loop later ran at platform scale: find the failure, add the example, re-run everything. It became the backbone of the golden-dataset discipline in No. 03, The Quality Program.</div>
       <p>Here’s the routing, reconstructed.</p>
     </div>
@@ -136,7 +136,7 @@
 
     <h2 class="beat">The evaluation came back clean.</h2>
     <div class="prose">
-      <p>I tested the classifier across hundreds of real customer utterances before it touched a live call. Savability accuracy: <b>96.6%</b>. The share of cancellations resolved to a known reason rose from <b>60% to 96%</b>, the thirty-six points the NLU ceiling never allowed.</p>
+      <p>I tested the classifier on a set of real customer utterances sized for <b>90% confidence</b>, before it touched a live call. Savability accuracy: <b>96.6%</b>. In evaluation, the share of cancellations it could resolve to a known reason went from <b>60% to 96%</b>, the thirty-six points the NLU ceiling never allowed. Accuracy, coverage, hallucination, and toxicity were each scored as separate checks.</p>
     </div>
 
     <figure class="inst wide" aria-label="Pre-launch evaluation readout: accuracy, classification coverage, safety findings, and run cost">
@@ -157,14 +157,14 @@
     </figure>
 
     <div class="prose">
-      <p>The saves motion it fed was already proven in production: across <b>8,814 cancellation calls</b> measured from December 2022 through March 2023, the routing flow saved <b>12% of customers against a 5% target</b>. Price calls, the reason a specialist has the most room to fix, saved at 43%.</p>
-      <p>The analytics team’s retention model, built on that 2022 experiment, projected <b>$2.9M in retention revenue</b> from routing this accurately.</p>
+      <p>The saves motion this fed had already been validated in the earlier routing experiment that started this whole thread. Across <b>8,814 cancellation calls</b> from December 2022 through March 2023, the flow directionally saved <b>12% of customers against a 5% target</b>, on expert-reported saves. Price calls, the reason a specialist has the most room to fix, saved at roughly 43%, about eight times the rate of calls where the business was simply closing. That gap is the whole argument for savability routing: the reason decides how rescuable the call is.</p>
+      <p>Built on that experiment, the retention case projected <b>$2.9M in recovered revenue</b> in the quarter that followed, the upside that justified getting savability right.</p>
     </div>
 
-    <h2 class="beat">From prototype to shipped experiment.</h2>
+    <h2 class="beat">I proved it before the platform could ship it.</h2>
     <div class="prose">
       <p>Proving the classifier was half the work. I drove it through the Responsible AI review: the safety checks, guardrails, and strict testing required of anything LLM-powered. Its output was JSON read by machines, never by customers, so that review was the gate that mattered, and it cleared.</p>
-      <p>Then I built the experience end to end in an internal low-code tool and shipped it as a controlled experiment. The approval pattern from that review became the team’s standard for LLM classification use cases, and the routing pattern carried across voice and chat: hear the reason, judge savability, route with context, keep the cancel path one step away.</p>
+      <p>What it didn’t have yet was a paved path to production. This was early 2023, before the company had a sanctioned way to ship generative AI, so I built the whole experience end to end in an internal low-code tool and proved it worked, ahead of the platform that would later carry it. The routing pattern is the part that outlived the wait: hear the reason, judge savability, route with context, keep the cancel path one step away.</p>
     </div>
 
   </div>

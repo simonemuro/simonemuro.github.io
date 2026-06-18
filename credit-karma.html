@@ -4,9 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Credit Karma: prompts in regulated finance · Simone Muro</title>
-<meta name="description" content="A prompt-engineering rotation at Credit Karma: production prompts for two GenAI features, model-specific prompt architecture, a legal guardrail that lets the model reason over data it never states, and prompts shipped through git." />
+<meta name="description" content="A prompt-engineering rotation at Credit Karma: production-track prompts for two GenAI features, model-specific prompt architecture, a legal guardrail that lets the model reason over data it never states, and a generic pitch turned into a personalized, head-to-head wallet comparison." />
 <meta property="og:title" content="Credit Karma · Simone Muro" />
-<meta property="og:description" content="Prompts that reason over what they're forbidden to say. Production GenAI in regulated finance." />
+<meta property="og:description" content="Prompts that reason over what they're forbidden to say. Production-track GenAI in regulated finance." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
@@ -19,7 +19,7 @@
   <a class="wordmark" href="index.html">SIMONE MURO</a>
   <div class="nav-links">
     <a href="index.html#work">Work</a>
-    <a href="index.html#about">About</a>
+    <a href="index.html#about">Approach</a>
     <a href="resume.html" class="optional">Resume</a>
     <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
   </div>
@@ -35,7 +35,7 @@
     <div><b>Role</b>Prompt engineer (rotation)</div>
     <div><b>When</b>August to late 2024</div>
     <div><b>Surfaces</b>"See Why" · "Analyze My Wallet"</div>
-    <div><b>Shipped</b>Versioned in git · merged PRs</div>
+    <div><b>Status</b>Versioned and reviewed in git · readied for release</div>
   </div>
 </div></section>
 
@@ -44,10 +44,44 @@
   <div class="narrow">
     <h2 class="beat">I joined work already in motion.</h2>
     <div class="prose">
-      <p>Credit Karma recommends credit cards to its members. Two GenAI features explained those recommendations in production: <b>"See Why,"</b> which tells a member why a specific card fits them, and <b>"Analyze My Wallet,"</b> which reads their whole card portfolio and suggests how to improve it. I authored and iterated the prompts behind both.</p>
+      <p>Credit Karma recommends credit cards to its members. Two GenAI features explained those recommendations: <b>"See Why,"</b> which tells a member why a specific card fits them, and <b>"Analyze My Wallet,"</b> which reads their whole card portfolio and suggests how to improve it. I authored and iterated the production-track prompts behind both.</p>
       <p>The brief sounds simple: explain someone's money to them, personally and plainly. The environment is anything but. Every sentence the model produces lands inside a regulated financial product, and some of the truest sentences available are off limits.</p>
     </div>
 
+    <h2 class="beat">I made the recommendation argue its own case.</h2>
+    <div class="prose">
+      <p>The prompt I inherited produced a generic pitch: here's a good card, here's why it's good. True, but it could have been written for anyone. So I fed the model the member's own context, the card it was being matched against and the cards already in their wallet, and rewrote the prompt to compare, not just describe. A thin task instruction became a personalized, persona-grounded system prompt that re-contextualizes per surface. A recommendation that knows what you already carry can say something only you would find useful.</p>
+    </div>
+  </div>
+
+  <div class="shell">
+    <figure class="inst wide" aria-label="Before and after: a generic single-card pitch versus a personalized head-to-head comparison against the member's current cards">
+      <div class="inst-head"><span>before / after · generic pitch → head-to-head</span></div>
+      <div class="inst-body">
+        <div class="diff">
+          <div class="col">
+            <h4>before · describes one card</h4>
+            <pre>This card earns 5% back in
+rotating categories and has
+no annual fee. A strong pick
+for everyday spending.</pre>
+          </div>
+          <div class="col">
+            <h4>after · compares to your wallet</h4>
+            <pre>You already earn a flat 2% on
+everything. This card adds 5%
+in rotating categories you
+actually spend in, with no
+annual fee, so it earns on top
+of what you carry, not instead.</pre>
+          </div>
+        </div>
+      </div>
+      <figcaption class="inst-caption"><b>Reconstructed in generic form.</b> Real card names and member data stay confidential; the move, from describing a card to comparing it against the member's actual wallet, is the change I made. The legal guardrail and a never-do-the-math rule hold in both.</figcaption>
+    </figure>
+  </div>
+
+  <div class="narrow">
     <h2 class="beat">Reason, but don't say.</h2>
     <div class="prose">
       <p>The sharpest constraint was legal. The model <b>reasons over approval-odds data</b>, because the odds shape which explanation makes sense for a member. And it is <b>legally forbidden from stating them</b>. Not "you're likely to be approved." Not a hint, a hedge, or a percentage.</p>
@@ -67,18 +101,18 @@
 
     <h2 class="beat">The same feature needed two different prompts.</h2>
     <div class="prose">
-      <p>A prompt is written <b>for a model</b>, not just for a task. "See Why" ran on two, and they wanted structurally different prompts to produce equivalent behavior. GPT-3.5-turbo skipped steps unless it was walked through its own reasoning, so its prompt scaffolded the thinking. GPT-4o wanted the opposite: clean numbered instructions and an explicit response format. The scaffolding that rescued one model was dead weight on the other.</p>
+      <p>A prompt is written <b>for a model</b>, not just for a task. "See Why" ran on two, and they wanted structurally different prompts to produce equivalent behavior. A GPT-3.5-class model skipped steps unless it was walked through its own reasoning, so its prompt scaffolded the thinking. A GPT-4-class model wanted the opposite: clean numbered instructions and an explicit response format. The scaffolding that rescued one model was dead weight on the other.</p>
       <p>The guardrail, though, travels with the feature. It appears in both architectures, because the law doesn't care which model is answering.</p>
     </div>
   </div>
 
   <div class="shell">
-    <figure class="inst wide" aria-label="Two prompt architectures for the same feature: GPT-3.5-turbo with chain-of-thought scaffolding, GPT-4o with numbered instructions and a response format. Both carry the same approval-odds rule.">
+    <figure class="inst wide" aria-label="Two prompt architectures for the same feature: a GPT-3.5-class model with chain-of-thought scaffolding, a GPT-4-class model with numbered instructions and a response format. Both carry the same approval-odds rule.">
       <div class="inst-head"><span>anatomy · one feature, two prompt architectures</span></div>
       <div class="inst-body">
         <div class="diff">
           <div class="col">
-            <h4>gpt-3.5-turbo · walk it through its reasoning</h4>
+            <h4>gpt-3.5-class · walk it through its reasoning</h4>
             <pre>Devise a plan for this
 recommendation first.
 
@@ -92,7 +126,7 @@ the explanation. Never state it.</mark>
 Then, and only then, answer.</pre>
           </div>
           <div class="col">
-            <h4>gpt-4o · numbered instructions + format</h4>
+            <h4>gpt-4-class · numbered instructions + format</h4>
             <pre>You write card recommendation
 explanations.
 
@@ -117,7 +151,7 @@ Respond in the format below.</pre>
 
     <h2 class="beat">Graded, not vibes.</h2>
     <div class="prose">
-      <p>Every revision was graded against a three-tier rubric, with eval criteria defined alongside the PM and quality engineering. The rubric is strict because the failure modes are expensive: a hallucinated card benefit or an invented number isn't a typo here, it's someone's financial decision.</p>
+      <p>Every revision was graded against a three-tier rubric, a cross-functional artifact defined with the PM, quality engineering, and legal. The rubric is strict because the failure modes are expensive: a hallucinated card benefit or an invented number isn't a typo here, it's someone's financial decision.</p>
     </div>
 
     <figure class="inst wide" aria-label="The grading rubric: Good, Acceptable, Unacceptable">
@@ -132,15 +166,15 @@ Respond in the format below.</pre>
       <figcaption class="inst-caption"><b>Two rules do quiet work.</b> The model never computes a number, because a model doing math about someone's money is a hallucination waiting to happen. And the fee is mandatory at $0, because the disclosure that's easiest to skip is the one the rubric can't let slip.</figcaption>
     </figure>
 
-    <h2 class="beat">The prompts shipped the way code ships.</h2>
+    <h2 class="beat">The prompts moved the way code moves.</h2>
     <div class="prose">
-      <p>Prompts lived in <b>git</b>, moved through pull requests, and went to production when a <b>PR merged</b>. Before any revision reached members, it ran through the platform's prompt tooling against <b>persona-spanning synthetic test profiles</b>: invented members spanning the credit bands, so a prompt tuned on one member's happy path couldn't quietly regress for everyone else's.</p>
+      <p>Prompts lived in <b>git</b>, moved through pull requests, and were readied for release through product, legal, and safety review rather than pushed live on a merge. Before any revision advanced, I checked it against a <b>handful of invented member profiles</b> spanning different credit situations, so a prompt tuned on one member's happy path wouldn't quietly break for another's. When a member's card data was missing, the prompt fell back to a standalone explanation instead of inventing a comparison: the degradation was designed, not left to chance.</p>
     </div>
 
     <h2 class="beat">Less than it knows, on purpose.</h2>
     <div class="prose">
       <p>That's the discipline regulated finance teaches faster than anywhere else. The model holds a signal it never speaks. The output follows a structure that leaves no room to improvise. And the explanation still has to read like it was written for one specific member, in plain language, about their actual wallet.</p>
-      <p>When the model can't say everything it knows, every word that remains is designed.</p>
+      <p>When the model can't say everything it knows, every word that remains is designed. These were one-shot explainers, but I proposed where they go next: a follow-up-capable conversational version, and a second vertical to carry the same pattern into. The constraint became a system I wanted to keep building.</p>
     </div>
   </div>
 
