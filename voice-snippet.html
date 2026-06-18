@@ -6,7 +6,7 @@
 <title>Voice Snippet · One chance to be heard · Simone Muro</title>
 <meta name="description" content="GenAI on a live phone call: Simone Muro prototyped the answer-summary concept in June 2023 and co-designed the production conversational AI voice experience that shipped in December 2024, with a +3.9 pp containment lift measured in production." />
 <meta property="og:title" content="Voice Snippet · Simone Muro" />
-<meta property="og:description" content="A generated answer on a live phone call: prototyped in 2023, shipped when the platform could carry it, measured in production." />
+<meta property="og:description" content="A generated answer on a live phone call: the riskiest GenAI surface, prototyped in 2023 and shipped first when I pushed for a platform path to carry it." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
@@ -19,7 +19,7 @@
   <a class="wordmark" href="index.html">SIMONE MURO</a>
   <div class="nav-links">
     <a href="index.html#work">Work</a>
-    <a href="index.html#about">About</a>
+    <a href="index.html#about">Approach</a>
     <a href="resume.html" class="optional">Resume</a>
     <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
   </div>
@@ -33,7 +33,7 @@
   <p class="lede">A generated answer on a live phone call is the hardest version of the GenAI problem. No screen, no scrolling back, one shot at being understood. I prototyped the concept in June 2023; the production version has been answering callers since December 2024.</p>
   <div class="factbox">
     <div><b>Surface</b>Phone support, the 1-800 line</div>
-    <div><b>Role</b>Originated the concept, co-designed the ship</div>
+    <div><b>Role</b>Prototyped the concept · co-designed the production ship</div>
     <div><b>Measured</b>+3.9 pp containment lift in production</div>
     <div><b>Live</b>Since December 2024</div>
   </div>
@@ -44,14 +44,14 @@
 
     <h2 class="beat">A caller can't scroll past a bad answer.</h2>
     <div class="prose">
-      <p>Phone calls were roughly <b>30% of support contact volume</b>, a <b>$70M+ opportunity</b> sitting on a <b>36% baseline containment rate</b>. And the channel ran on scripts: a caller with a specific problem heard a generic article read at them, repeated themselves, or got transferred with nothing traveling along.</p>
+      <p>Callers didn't trust being pointed at a help article. They'd reached out to a person, or thought they had, for a reason, and the channel answered by reading generic content at them: they repeated themselves, or got transferred with nothing traveling along. The phone was a large share of support contact volume and a containment opportunity scripts had barely touched, but the number that mattered was the behavior underneath it.</p>
       <p>Chat was the easy place to put GenAI first. A clumsy answer in chat is just a line you scroll past. On the phone, every generated word spends the caller's time and patience, and there's no taking it back. That's exactly what made the channel worth it.</p>
     </div>
 
-    <h2 class="beat">Prototyped in 2023, shipped when the platform could carry it.</h2>
+    <h2 class="beat">Highest-risk channel, so it shipped last.</h2>
     <div class="prose">
-      <p>The concept started in June 2023 as an answer summary: instead of reading help content at the caller, <b>generate a short, voice-tuned answer to their actual problem</b>. That same season, my LLM savability classifier cleared Responsible AI review and shipped as a controlled experiment.</p>
-      <p>This one couldn't follow it, and the difference was risk profile. The classifier's output was machine-read JSON no customer ever saw. This put <b>generated words directly in a customer's ear</b>, and customer-facing generation needed more than an approval: it needed the GenAI platform path, which didn't exist yet. When the platform could carry it, it shipped, in December 2024. The concept was mine. The ship was a team's.</p>
+      <p>The concept started in June 2023 as an answer summary: instead of reading help content at the caller, <b>generate a short, voice-tuned answer to their actual problem</b>. It was one of three GenAI use cases I worked up that season, and I triaged them by generative risk. Two were low-risk and moved. This one put <b>generated words directly into a customer's ear</b>, with no screen to soften a miss, so it was the riskiest of the three.</p>
+      <p>That risk is also why it waited. Customer-facing generation needed a platform path that didn't exist yet, and rather than sit on a working concept, I pushed for an alternative route and made the case for it until we could ship safely. It went live in December 2024 as the first GenAI voice experience on the line. I prototyped the concept; the production ship was a team's.</p>
     </div>
 
     <!-- PULL QUOTE: her words. PENDING SIMONE'S SIGN-OFF before publish. -->
@@ -80,7 +80,7 @@
 
     <h2 class="beat">The contract is the design.</h2>
     <div class="prose">
-      <p>My pieces of the production design were the behavior and the contract. The experience runs on a <b>six-field JSON output</b>, parsed downstream for routing and never read by a human. Every word a caller hears is a field with a job.</p>
+      <p>My pieces of the production design were the behavior and the contract. The experience runs on a <b>six-field JSON output</b>, parsed downstream for routing and never read by a human, and the hardest field to get right is the one a caller actually hears: a two-sentence spoken answer, voice-tuned, that has to land clearly the first and only time it's said. I authored and tuned that language. Every word a caller hears is a field with a job.</p>
     </div>
 
     <div class="spec" style="border:1px solid var(--hairline); border-radius:12px; overflow:hidden; margin:28px 0 36px; background:var(--card);" role="img" aria-label="The six-field output contract: customer question, action type, disambiguation, response, task complexity, and off-topic detection">
@@ -93,13 +93,13 @@
     </div>
 
     <div class="prose">
-      <p>The structure is the safety case and the content design at once. An out-of-scope request gets caught before a word is generated. Complexity routes the call to an expert with the context carried along, so the caller never starts over. And the answer stays short on purpose: <b>one clear next step a caller can hold in their head</b>, not an article performed at them.</p>
+      <p>The structure is the safety case and the content design at once. An out-of-scope request gets caught before a word is generated. Complexity routes the call to an expert with the context carried along, so the caller never starts over. And the answer stays short on purpose: <b>one clear next step a caller can hold in their head</b>, not an article performed at them. The contract above is reconstructed and redacted for a public version; the shape, and the job each field does, are real.</p>
     </div>
 
     <h2 class="beat">It's been on the line since December 2024.</h2>
     <div class="prose">
-      <p><b>+3.9 percentage points of containment lift</b>, measured in production. On a channel this size, small percentages are large dollars against a 36% baseline.</p>
-      <p>The quieter outcome outlived the ship. The rubric I authored to decide whether a generated answer was good enough to say out loud went on to seed the team's broader automated-evaluation rubric. Defining good for one experience became how the team defined good for all of them.</p>
+      <p><b>+3.9 percentage points of containment lift</b>, measured against a control in production. On a channel this size, a few points is a large number of calls that resolve without a human.</p>
+      <p>The other half of the work was the rubric. I authored the standard that decided whether a generated answer was good enough to say out loud, defining what "good" means for an answer a caller hears once and can't scroll back. Writing that for a live voice channel is its own discipline: every criterion has to survive being spoken, not just read.</p>
     </div>
 
   </div>

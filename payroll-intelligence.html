@@ -4,9 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Payroll Intelligence · Teaching an agent what experts know · Simone Muro</title>
-<meta name="description" content="Ground truth for a payroll agent on a one-week clock: golden answers for the top contact drivers, a retrievable-versus-ask data framework, and a generator that drafts diagnostic golden datasets for expert review. Conversational AI and agentic AI design." />
+<meta name="description" content="Ground truth for a payroll agent that didn't exist yet: golden answers for the high-volume questions, a retrievable-versus-ask data framework, a hallucination control, and a generator that drafts diagnostic golden datasets for expert review. Conversational AI and agentic AI design." />
 <meta property="og:title" content="Payroll Intelligence · Simone Muro" />
-<meta property="og:description" content="The agent was due in a week and its ground truth didn't exist. What got built instead of a heroic all-nighter." />
+<meta property="og:description" content="The agent's ground truth didn't exist, and a model asked for payroll knowledge will confidently invent it. So I built the framework that taught it what the experts know." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
@@ -19,7 +19,7 @@
   <a class="wordmark" href="index.html">SIMONE MURO</a>
   <div class="nav-links">
     <a href="index.html#work">Work</a>
-    <a href="index.html#about">About</a>
+    <a href="index.html#about">Approach</a>
     <a href="resume.html" class="optional">Resume</a>
     <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
   </div>
@@ -30,12 +30,12 @@
 <section class="case-open"><div class="shell">
   <span class="no-big">No. 02 · Payroll Intelligence</span>
   <h1>Teaching an agent what the experts know.</h1>
-  <p class="lede">January 2026. The payroll agent was being built on a one-week clock, and its ground truth didn't exist yet: golden answers for payroll's top contact drivers, the tools and data each answer depends on, the moments it must hand off to a human. The build was moving with or without it. Ground truth that arrives after the agent ships is trivia.</p>
+  <p class="lede">January 2026. A payroll agent was being built, and its ground truth didn't exist yet: golden answers for the high-volume questions, the tools and data each answer depends on, the moments it must hand off to a human. The build was moving with or without it, and ground truth that arrives after the agent ships is trivia.</p>
   <div class="factbox">
-    <div><b>Role</b>Led ground truth: templates, instructions, the generator</div>
-    <div><b>Scope</b>Top contact drivers + 9 diagnostic subdomains</div>
-    <div><b>Pace</b>Full set, above scope, in about 10 days</div>
-    <div><b>Adopted</b>Framework adopted by partner teams</div>
+    <div><b>Role</b>Authored the ground-truth framework: templates, instructions, the generator</div>
+    <div><b>Scope</b>The high-volume questions + 9 diagnostic subdomains</div>
+    <div><b>Pace</b>Full set in about ten days</div>
+    <div><b>Built</b>A reusable framework, not a one-off doc</div>
   </div>
 </div></section>
 
@@ -45,8 +45,8 @@
     <h2 class="beat">Instructions, not answers.</h2>
     <div class="prose">
       <p>Payroll is the worst place to wing it. It's regulated, so a wrong answer can create a compliance problem, not just a bad session. It's data-dependent, so the right answer changes with each account's setup. And behind every question sits the same one: <b>will my people get paid?</b></p>
-      <p>The target was payroll's top contact drivers: the high-traffic, high-complexity questions with do-it-for-me potential. One person hand-writing golden answers for all of them in a week was fantasy, so I made the move that scales. <b>I wrote the instructions instead of the answers.</b> Templates for what a complete golden answer looks like, which tool and data dependencies to capture, the exact format the agent team could consume. Then I mobilized designers plus product and content partners, and held the line on scope and timeline while the team produced.</p>
-      <p>The full set landed in about ten days, above the original scope, as a blueprint the agent team could keep extending rather than a one-off document. The agent team stopped asking design for opinions and started building on design's ground truth.</p>
+      <p>The target was payroll's highest-traffic, highest-complexity questions, the ones with do-it-for-me potential. One person hand-writing golden answers for all of them was fantasy, so I made the move that scales. <b>I wrote the instructions instead of the answers.</b> Templates for what a complete golden answer looks like, the tool and data dependencies to capture, the exact format the agent team could consume, and the gate each answer has to clear. One artifact, drafted so design, engineering, and quality could each pull the slice they needed from the same source of truth.</p>
+      <p>The full set landed in about ten days as a blueprint the agent team could keep extending, not a one-off document. I owned the framework and the prompts; the diagnostic knowledge inside them came from the experts who resolve these calls.</p>
     </div>
 
     <h2 class="beat">The agent already knows more than the expert.</h2>
@@ -117,7 +117,8 @@
     </figure>
 
     <div class="prose">
-      <p>Nothing generated ships as-is. Subject-matter experts review and edit every draft: <b>the generator does the structural labor, humans own the truth.</b> The framework was adopted by the partner teams building on it.</p>
+      <p>Nothing generated ships as-is. Subject-matter experts review and edit every draft: <b>the generator does the structural labor, humans own the truth.</b></p>
+      <p>And the generator is built to distrust the model. A control in the prompt bans payroll concepts the product doesn't actually have and locks the agent to a fixed set of verified tools, because the dangerous failure here isn't a wrong answer, it's a confident invented one. Every case also carries its own pass/fail gate: a handful of binary checks, each forcing the same question, can the agent infer this, or must it be told? <b>I didn't just write the answer; I wrote the test that decides whether an answer is good enough to ship.</b></p>
     </div>
 
     <h2 class="beat">The knowledge lived in people, not the model.</h2>
