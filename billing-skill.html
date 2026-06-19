@@ -152,7 +152,7 @@
     <div class="days">
       <div class="day">
         <h3><span>DAY 1</span>Scope from evidence</h3>
-        <p>Analyzed 500+ labeled customer utterances and defined 7 intent categories. Chose subscription charges as the target: highest volume, clearest data dependency.</p>
+        <p>I read 500+ labeled customer utterances, grouped them into 7 intent categories, and made the first call, subscription charges as the target, because it was the highest volume with the clearest data dependency.</p>
       </div>
       <div class="day">
         <h3><span>DAY 2</span>Write the skill, build the tool</h3>
@@ -164,11 +164,11 @@
       </div>
       <div class="day">
         <h3><span>DAY 4</span>Hit the wall, keep moving</h3>
-        <p>The live billing APIs answered with a permissions block. Rather than let the program stall on access, I documented the blocker precisely and decoupled evaluation from it: built the first 33-row golden dataset so the skill could be proven on mock data while the real connection waited.</p>
+        <p>The live billing APIs answered with a permissions block. So I made the call to decouple evaluation from access rather than let the build stall. I documented the blocker precisely and built the first 33-row golden dataset, so the skill could be proven on mock data while the real connection waited.</p>
       </div>
       <div class="day">
         <h3><span>DAY 5</span>Real conversations widen the map</h3>
-        <p>Pulled real production conversations and rewrote the skill instructions for what people actually say: cancel intent, price-increase complaints, downgrades. The eval set grew to 108 cases across 13 intent categories.</p>
+        <p>I pulled real production conversations and let what people actually say reset the design, cancel intent, price-increase complaints, downgrades. That's the decision that grew the eval set to 108 cases across 13 intent categories.</p>
       </div>
     </div>
 
@@ -264,7 +264,7 @@
 
   <div class="narrow">
     <div class="prose">
-      <p>The cancellation case is where the design earns its keep. When the intent is really an exit, the skill slows down: it reads the account, gives the real steps, and offers a person, but it never cancels for you. And before this could collide with what already ships, I ran an overlap analysis against the other billing skills and scoped this one to detect and route, not to own the cancel flow.</p>
+      <p>The cancellation case is where the design earns its keep. When the intent is really an exit, the skill slows down: it reads the account, gives the real steps, and offers a person, but it never cancels for you. Before it could collide with what already ships, I made the scoping call myself. I ran an overlap analysis against the other billing skills and held this one to detect and route, not own the cancel flow.</p>
     </div>
 
     <figure class="inst" aria-label="The cancel-intent confirmation, a human in the loop, on mock data">
@@ -285,7 +285,7 @@
     <div class="prose">
       <p>The skill, the tools, the MCP server, and the 108-case eval run end to end on mock data today. What's left is the production side: wiring the real data connection, hardening the admin gate from a prompt rule back into the tool, and a before-and-after read on real traffic. I scoped that work. It needs engineering, and that's the honest line.</p>
       <p>If it shipped, I'd measure it on the outcome, not the answer: first-turn resolution on billing questions instead of a redirect to an article, the share of cancellations caught when they hide inside a billing complaint, and a confidently-wrong rate held at zero. I'd roll it out behind the eval as a gate, small and watched, before it ran wide.</p>
-      <p>What it already proves is the argument I'd been making all year. The people who define what good looks like can build it, not just spec it. I designed the behavior, wrote the evaluation, made the architecture call, stood up the server, and debugged it when it broke. The rest is engineering, and I know exactly where that line is.</p>
+      <p>What it already proves is the argument I'd been making all year. The people who define what good looks like can build it, not just spec it. I designed the behavior, wrote the evaluation, made the architecture call, stood up the server, and debugged it when it broke. The rest is engineering, and I know exactly where that line is, which is the next thing I want to be standing on the other side of.</p>
     </div>
   </div>
 

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>How I Operate with AI · Simone Muro</title>
+<meta name="description" content="How I direct crews of AI agents to build and verify high-stakes work: brief, fan out, adversarially verify, approve. The fourth rung of a decade directing language systems, and this portfolio is the proof." />
+<meta property="og:title" content="How I Operate with AI · Simone Muro" />
+<meta property="og:description" content="I direct the systems I used to design: crews of agents, judge panels, an adversarial verify loop, and a portfolio built that way." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./v3.css" />
+<style>
+  /* director's loop visual (consistent with the case instruments) */
+  .dl-flow { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; }
+  .dl-node { flex: 1; min-width: 124px; border: 1px solid var(--hairline2); border-radius: 10px; background: var(--paper); padding: 13px 14px; }
+  .dl-node.hot { border-color: var(--persimmon); }
+  .dl-node .nl { display: block; font-size: 0.82rem; font-weight: 500; color: var(--ink); }
+  .dl-node .ns { display: block; font-family: var(--mono); font-size: 0.6rem; color: var(--faint); margin-top: 4px; line-height: 1.4; }
+  .dl-fa { align-self: center; color: var(--faint); font-size: 0.9rem; flex: none; }
+  .dl-loop { margin-top: 14px; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.04em; color: var(--faint); text-align: right; }
+  @media (max-width: 640px) { .dl-flow { flex-direction: column; } .dl-fa { transform: rotate(90deg); margin-left: 22px; align-self: flex-start; } }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav"><div class="shell">
+  <a class="wordmark" href="index.html">SIMONE MURO</a>
+  <div class="nav-links">
+    <a href="index.html#work" aria-current="true">Work</a>
+    <a href="index.html#about">Approach</a>
+    <a href="resume.html" class="optional">Resume</a>
+    <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
+  </div>
+</div></nav>
+
+<main id="main">
+
+<section class="case-open"><div class="shell">
+  <span class="no-big">No. 07 · How I operate with AI</span>
+  <h1>I direct the systems I used to design.</h1>
+  <p class="lede">For ten years I've directed language systems: first telling a model what to recognize, then how to reason, then how to produce structured truth at scale. Now I direct crews of AI agents that build and check their own work. This site is one of them.</p>
+  <div class="factbox">
+    <div><b>Role</b>Director of an AI agent crew</div>
+    <div><b>Method</b>Brief · fan out · adversarially verify · approve</div>
+    <div><b>Tools</b>Claude Code · Cursor · Codex</div>
+    <div><b>Proof</b>This portfolio, built this way</div>
+  </div>
+</div></section>
+
+<article class="case-body">
+
+  <div class="narrow">
+    <div class="prose">
+      <p>Most of what people call "using AI" is one person typing into one chat. That isn't how I work, and it isn't new for me. Directing AI is the fourth rung of a single craft I've practiced for a decade.</p>
+    </div>
+
+    <h2 class="beat">The job never changed. The altitude did.</h2>
+    <div class="prose">
+      <p>In the NLU years I told models what to recognize, intent by intent. When LLMs arrived, I stopped training and started instructing: telling a model how to reason, where to stop, and what it must never say. Then I built generators that draft structured evaluation data through parallel sub-agents, so a system could produce ground truth at scale instead of a person filling a blank row.</p>
+      <p>Each step, the unit of work got larger and I moved up a level: from labeling, to prompting, to directing a system that produces and checks its own output. Same craft, rising altitude.</p>
+    </div>
+
+    <h2 class="beat">I direct a crew, not a chatbot.</h2>
+    <div class="prose">
+      <p>When the work is large, I stand up a crew of agents, each with a written job. A narrative lead owns the story. A voice editor guards how it sounds. An evidence-and-redaction guardian checks every claim and keeps confidential material off the page. A panel of judges reads the work cold, from a skeptic's seat. I brief them, they fan out in parallel, and I read what comes back.</p>
+      <p>It's the shift every new manager makes. You stop doing the task and start writing the job description, the definition of good, and the line that says when something has gone wrong. Prompting was the old skill. Directing a system to produce and verify work is the new one.</p>
+    </div>
+
+    <!-- PULL QUOTE: her operating principle, her words. PENDING SIMONE'S SIGN-OFF before publish. -->
+    <blockquote class="pull">An agent isn't answering your question. It's picking up from where you left off, so the work is in how you set it up.<span class="attr">Simone, the principle behind the method</span></blockquote>
+
+    <h2 class="beat">Verification is the whole game.</h2>
+    <div class="prose">
+      <p>Generating is the easy half. The half that matters is proving the output is right before it ships, and that discipline is what I carry from a decade of evaluation work. So nothing the crew produces is trusted on sight.</p>
+      <p>Findings get handed to judges who try to refute them. Anything that touches a former employer goes through the redaction guardian, whose only job is to catch a confidential name or number before it reaches a public page. Claims that can't be defended cold get cut, even the flattering ones. The honest version is almost always the stronger one.</p>
+      <p>Here's the loop every piece of this site passed through.</p>
+    </div>
+  </div>
+
+  <div class="shell">
+    <figure class="inst wide" aria-label="The director's loop: brief, fan out, adversarially verify, approve, then repeat until it comes back clean">
+      <div class="inst-head"><span>the director's loop</span><span>fan out · verify · approve</span></div>
+      <div class="inst-body">
+        <div class="dl-flow">
+          <div class="dl-node"><span class="nl">Direct</span><span class="ns">the brief, the bar, the line that means stop</span></div>
+          <span class="dl-fa">&rarr;</span>
+          <div class="dl-node"><span class="nl">Fan out</span><span class="ns">a crew of agents works in parallel</span></div>
+          <span class="dl-fa">&rarr;</span>
+          <div class="dl-node hot"><span class="nl">Adversarially verify</span><span class="ns">judges refute, the guardian redacts</span></div>
+          <span class="dl-fa">&rarr;</span>
+          <div class="dl-node"><span class="nl">Approve</span><span class="ns">I ship only what holds</span></div>
+        </div>
+        <div class="dl-loop">&#8635;&nbsp; the loop repeats until it comes back clean</div>
+      </div>
+      <figcaption class="inst-caption"><b>How the work gets made.</b> I set the direction and the bar; the crew produces and the judges attack; I keep only what survives. The verify step is the one I never skip.</figcaption>
+    </figure>
+  </div>
+
+  <div class="narrow">
+    <h2 class="beat">The proof is the thing you're reading.</h2>
+    <div class="prose">
+      <p>This portfolio was built the way I just described. I set the direction; agent crews drafted, judged, and hardened the case studies; an adversarial pass scrubbed every page for anything confidential and every claim for anything it couldn't support; and I approved what shipped. The footer on every page says as much.</p>
+      <p>That's where the craft is heading, and where I want to be: not the person who specs a system and hands it off, but the one who directs a fleet of them to do high-stakes work, and proves it's right.</p>
+    </div>
+  </div>
+
+</article>
+
+<nav class="case-next" aria-label="Back to the work"><div class="shell">
+  <a href="index.html#work">
+    <span class="nxt">No. 07 · the last of seven</span>
+    <span class="t">Back to the work</span>
+  </a>
+</div></nav>
+
+</main>
+
+<footer class="colophon"><div class="shell">
+  <p>Designed and built AI-natively: directed by Simone, executed with AI agents, the way she works.</p>
+  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. Roles, process, design decisions, and measured outcomes are preserved. © 2026 Simone Muro · Bay Area, CA</p>
+</div></footer>
+
+<button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
+<script src="./v3.js" defer></script>
+</body>
+</html>
