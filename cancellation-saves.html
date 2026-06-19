@@ -30,7 +30,7 @@
 <section class="case-open"><div class="shell">
   <span class="no-big">No. 05 · Cancellation Saves</span>
   <h1>“I want to cancel” isn’t one problem.</h1>
-  <p class="lede">It’s a dozen problems wearing the same sentence, and only some of them are losses you have to accept. Teaching a support system to hear the difference took two generations of technology.</p>
+  <p class="lede">It’s a dozen problems wearing the same sentence, and only some of them are losses you have to accept. I spent two generations of technology teaching a support system to hear the difference, because the reason a customer is leaving is the one thing that decides whether you can keep them.</p>
   <div class="factbox">
     <div><b>Role</b>Designed the NLU saves flow · built the LLM classifier</div>
     <div><b>When</b>2022 – 2023, two generations of the tech</div>
@@ -63,13 +63,13 @@
 
     <h2 class="beat">Four months of tuning, fifteen points.</h2>
     <div class="prose">
-      <p>I led the NLU quality project first, because that was the tool we had. The intent model returned <b>unknown on roughly 40% of cancellation reasons</b>: no trained intent matched the real, messy ways people explain why they’re leaving.</p>
-      <p>Four months of tuning bought about fifteen points of precision on the reasons the model could identify, up to roughly <b>80%</b>. The unknowns barely moved. Meanwhile the saves teams kept <b>20 to 35% of customers when they knew the real reason</b>. Every unknown was money left on the table, and every tuning cycle took months.</p>
+      <p>I took on the NLU quality project first, because that was the only tool we had. The intent model returned <b>unknown on roughly 40% of cancellation reasons</b>: no trained intent matched the real, messy ways people explain why they’re leaving.</p>
+      <p>Four months of tuning bought me about fifteen points of precision on the reasons the model could identify, up to roughly <b>80%</b>. The unknowns barely moved. Meanwhile the saves teams kept <b>20 to 35% of customers when they knew the real reason</b>, so every unknown was money left on the table, and every tuning cycle took months. I knew the ceiling, and I knew I’d hit it.</p>
     </div>
 
     <h2 class="beat">One prompt, thirty-six points.</h2>
     <div class="prose">
-      <p>When LLMs arrived in early 2023, I made the case: stop training intents and classify with a model that already understands natural language. The idea was mine to champion, and making it real meant partnering with the platform team to onboard the API that let the flow call an LLM at all.</p>
+      <p>So when LLMs arrived in early 2023, I made the call: stop training intents and classify with a model that already understands natural language, because the bottleneck was never my tuning, it was the tool. The idea was mine to champion, and making it real meant partnering with the platform team to onboard the API that let the flow call an LLM at all.</p>
       <p>The build was a hybrid system, and the judgment was where each piece belonged. NLU still mapped the intent. The LLM read the customer’s words and returned <b>strict JSON</b>, reason, sentiment, savability, that no human ever sees. A low-code tool parsed that JSON and applied the routing rules. The savability rules came from the people who knew the economics: the saves data and the analytics behind it. A customer closing the business or retiring counts as final; they get a respectful, efficient goodbye, not a pitch.</p>
       <p>The few-shot examples came from real customer language in all its mess, and the iteration loop is the one that actually moves accuracy: find the failure, add the example that kills that class of error, re-test the whole set.<button class="note-ref" data-note="note-loop" aria-label="Margin note about the iteration loop">1</button> Months of NLU training per cycle collapsed into hours of prompt work. I costed the running model too: roughly <b>$756 a year</b> at the volume it handled, the build-versus-buy case made in a single line.</p>
       <div class="note-body" id="note-loop">The same loop later ran at platform scale: find the failure, add the example, re-run everything. It became the backbone of the golden-dataset discipline in No. 03, The Quality Program.</div>
@@ -164,7 +164,7 @@
     <h2 class="beat">I proved it before the platform could ship it.</h2>
     <div class="prose">
       <p>Proving the classifier was half the work. I drove it through the Responsible AI review: the safety checks, guardrails, and strict testing required of anything LLM-powered. Its output was JSON read by machines, never by customers, so that review was the gate that mattered, and it cleared.</p>
-      <p>What it didn’t have yet was a paved path to production. This was early 2023, before the company had a sanctioned way to ship generative AI, so I built the whole experience end to end in an internal low-code tool and proved it worked, ahead of the platform that would later carry it. The routing pattern is the part that outlived the wait: hear the reason, judge savability, route with context, keep the cancel path one step away.</p>
+      <p>What it didn’t have yet was a paved path to production. This was early 2023, before the company had a sanctioned way to ship generative AI, so I built the whole experience end to end in an internal low-code tool and proved it worked, ahead of the platform that would later carry it. The routing pattern is the part that outlived the wait: hear the reason, judge savability, route with context, keep the cancel path one step away. That pattern is the one I keep building on, because once you’ve taught a system to hear the difference, you stop designing flows and start designing judgment.</p>
     </div>
 
   </div>

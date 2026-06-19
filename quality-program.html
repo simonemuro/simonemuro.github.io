@@ -4,9 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Quality Program · Simone Muro</title>
-<meta name="description" content="Quality for an agentic AI platform: golden datasets with ground truth and expected actions, LLM judges validated against human labels, blind ground-truth audits, and a pre-population pipeline a designer shipped through code review. Quality became a release gate." />
+<meta name="description" content="Quality for an agentic AI platform: golden datasets with ground truth and expected actions, LLM judges validated against human labels, blind ground-truth audits, and a pre-population pipeline shipped through code review. Quality became a release gate." />
 <meta property="og:title" content="The Quality Program · Simone Muro" />
-<meta property="og:description" content="Golden datasets, validated judges, and eval tooling a designer shipped through the same review as the engineers. Quality became a release gate." />
+<meta property="og:description" content="Golden datasets, validated judges, and eval tooling shipped through code review. Quality became a release gate." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
@@ -30,7 +30,7 @@
 <section class="case-open"><div class="shell">
   <span class="no-big">No. 03 · The Quality Program</span>
   <h1>The answer sounded right.</h1>
-  <p class="lede">Agents on an agentic AI platform were taking real actions in customers' financial workflows. Sounding right isn't a quality bar for someone's books.</p>
+  <p class="lede">I read an answer that was flawless prose and wrong about a date. On an agentic platform that date isn't just words, it's an action taken in someone's books, so I stopped trusting fluent and built a bar that tests for what it hides.</p>
   <div class="factbox">
     <div><b>Role</b>Led the quality methodology and tooling</div>
     <div><b>When</b>2025 – 2026</div>
@@ -43,7 +43,7 @@
 
   <div class="narrow">
     <div class="prose">
-      <p>A judge model can grade whether an answer reads well. It's far weaker at knowing whether the agent took the right action in a payroll run or a billing workflow, and it drifts when the product underneath it changes. As the platform scaled, one judge grading answers stopped being enough.</p>
+      <p>What worried me about leaning on a judge model: it's good at fluent, far weaker at knowing whether the agent took the right action in a payroll run or a billing workflow, and it drifts when the product underneath it changes. As the platform scaled, one judge grading how answers read was never going to be enough.</p>
       <p>So I built the quality discipline as a loop, not a verdict. Golden datasets carry the correct answer <b>and the expected actions</b>. Offline judging gets checked against human labels on production samples. Multi-turn simulators, a GenAI bot playing the customer, surface the failures that only appear three turns deep. Regression runs make sure last month's quality is still this month's.</p>
     </div>
 
@@ -111,26 +111,24 @@
     <div class="prose">
       <p>Authoring golden datasets by hand was the slowest step in the loop. A designer opened a blank row and wrote everything: the scenario, the ground truth, the expected actions, the gating criteria.</p>
       <p>So I built a pre-population pipeline. An LLM pre-fills the evaluation data first; designers review and correct instead of authoring from blank. It turned blank-page authoring into review-and-correct across <b>3,000+ rows</b>, without adding headcount, and the same datasets fed new-skill development, not just the eval gate.</p>
-      <p>It shipped as a pull request through the same review process as platform code: <b>+1,590 lines, reviewed and merged</b>. It's generator-agnostic, discovering writable columns at runtime and reading new fields from a prompt contract, so the prompt could evolve through several versions in six weeks with no code changes. And it runs a dozen automated checks that fail the build like CI: a dropped column, a data leak, drift.</p>
-      <p>Then a reviewer caught the thing that mattered. The pipeline had a path where it could <b>silently overwrite a human's original ground truth</b> with model output, with no audit trail. I rebuilt the write logic so originals are never touched on any path, added a check that enforces it and fails the run if it's ever violated, and shipped the fix in about four hours.</p>
+      <p>It shipped as a pull request: <b>+1,590 lines, reviewed and merged</b>. It's generator-agnostic, discovering writable columns at runtime and reading new fields from a prompt contract, so the prompt could evolve through several versions in six weeks with no code changes. And it runs a dozen automated checks that fail the build like CI: a dropped column, a data leak, drift.</p>
     </div>
 
-    <!-- PENDING SIGN-OFF: Simone's verbatim words from her own portfolio doc about the pre-population PR. Publish only with her explicit sign-off. -->
-    <blockquote class="pull">
-      "This is platform code shipped through the same review pipeline as senior engineering work."
-      <span class="attr">from my notes · May 2026</span>
-    </blockquote>
-
-    <h2 class="beat">The ground truth had to be right.</h2>
+    <h2 class="beat">Then a reviewer caught the thing that mattered.</h2>
     <div class="prose">
-      <p>The evals are only as trustworthy as the ground truth under them. Designers re-audited expert ground truth as blind <b>KEEP or DELETE</b> calls, original labels hidden so nobody could anchor on the expert's answer: 1,200+ rows in the first wave. If the ground truth is wrong, everything downstream of it is confidently wrong.</p>
+      <p>The pipeline had a path where it could <b>silently overwrite a human's original ground truth</b> with model output, no audit trail. That's the kind of bug that doesn't announce itself; it just quietly poisons the data every downstream judge depends on. So I didn't guard the path, I deleted it: I rebuilt the write logic so originals are never touched on any path, added a check that enforces it and fails the run if it's ever violated, and shipped the fix in about four hours.</p>
+    </div>
+
+    <h2 class="beat">I made the audit blind.</h2>
+    <div class="prose">
+      <p>The evals are only as trustworthy as the ground truth under them, so I had the experts' own ground truth re-audited blind: original labels hidden, every row a fresh <b>KEEP or DELETE</b> call, so nobody could anchor on the expert's first answer. 1,200+ rows in the first wave. If the ground truth is wrong, everything downstream of it is confidently wrong.</p>
     </div>
 
     <h2 class="beat">Shipping started requiring evidence.</h2>
     <div class="prose">
       <!-- PROVENANCE PENDING: the 8-to-13-point lift stays in body text (not a hero number) until Simone confirms provenance. -->
       <p>By April 2026, quality scores had risen between 8 and 13 points across three skill domains.</p>
-      <p>The structural change runs deeper than the lift: a skill didn't ramp until its golden-set results cleared the launch bar. Quality stopped being a report someone wrote and became a gate releases pass through.</p>
+      <p>The structural change runs deeper than the lift: a skill didn't ramp until its golden-set results cleared the launch bar. Quality stopped being a report someone wrote and became a gate releases pass through. And a year spent defining what good looks like is why I now build to that bar myself.</p>
     </div>
   </div>
 
