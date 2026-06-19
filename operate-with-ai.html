@@ -3,24 +3,24 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>How I Operate with AI · Simone Muro</title>
-<meta name="description" content="How I direct crews of AI agents to build and verify high-stakes work: brief, fan out, adversarially verify, approve. The fourth rung of a decade directing language systems, and this portfolio is the proof." />
-<meta property="og:title" content="How I Operate with AI · Simone Muro" />
-<meta property="og:description" content="I direct the systems I used to design: crews of agents, judge panels, an adversarial verify loop, and a portfolio built that way." />
+<title>How I Built This Site · Simone Muro</title>
+<meta name="description" content="A decade in AI and only a slide deck to show for it, so I built a real portfolio with AI. The story: starting on Fable 5, moving to Opus 4.8 three hours in, directing the model with a minor-versus-major feedback loop, and spinning up a crew of specialist agents until the site sounded like me." />
+<meta property="og:title" content="How I Built This Site · Simone Muro" />
+<meta property="og:description" content="I built this portfolio with AI: Fable 5 to Opus 4.8, a real feedback method, and a crew of agents. This site is the artifact." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./v3.css" />
 <style>
-  /* director's loop visual (consistent with the case instruments) */
-  .dl-flow { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; }
-  .dl-node { flex: 1; min-width: 124px; border: 1px solid var(--hairline2); border-radius: 10px; background: var(--paper); padding: 13px 14px; }
-  .dl-node.hot { border-color: var(--persimmon); }
-  .dl-node .nl { display: block; font-size: 0.82rem; font-weight: 500; color: var(--ink); }
-  .dl-node .ns { display: block; font-family: var(--mono); font-size: 0.6rem; color: var(--faint); margin-top: 4px; line-height: 1.4; }
-  .dl-fa { align-self: center; color: var(--faint); font-size: 0.9rem; flex: none; }
-  .dl-loop { margin-top: 14px; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.04em; color: var(--faint); text-align: right; }
-  @media (max-width: 640px) { .dl-flow { flex-direction: column; } .dl-fa { transform: rotate(90deg); margin-left: 22px; align-self: flex-start; } }
+  /* the agent crew diagram (consistent with the case instruments) */
+  .crew-top { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.05em; color: var(--muted); text-align: center; padding-bottom: 12px; }
+  .crew { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  @media (max-width: 600px) { .crew { grid-template-columns: 1fr 1fr; } }
+  .crew-card { border: 1px solid var(--hairline2); border-radius: 10px; background: var(--paper); padding: 12px 13px; }
+  .crew-card .cl { display: block; font-size: 0.82rem; font-weight: 500; color: var(--ink); }
+  .crew-card .cs { display: block; font-family: var(--mono); font-size: 0.6rem; color: var(--faint); margin-top: 4px; line-height: 1.4; }
+  .crew-card.check { border-color: var(--persimmon); }
+  .crew-foot { margin-top: 14px; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.04em; color: var(--faint); text-align: center; }
 </style>
 </head>
 <body>
@@ -39,71 +39,69 @@
 <main id="main">
 
 <section class="case-open"><div class="shell">
-  <span class="no-big">No. 07 · How I operate with AI</span>
-  <h1>I direct the systems I used to design.</h1>
-  <p class="lede">For ten years I've directed language systems: first telling a model what to recognize, then how to reason, then how to produce structured truth at scale. Now I direct crews of AI agents that build and check their own work. This site is one of them.</p>
+  <span class="no-big">No. 07 · How I built this site</span>
+  <h1>A decade in AI, and all I had was a slide deck.</h1>
+  <p class="lede">I've spent ten years designing and building AI, and for most of them my own work lived in slide decks. When the newest models arrived, I decided the portfolio was overdue, and that I'd build it the way I now build everything: with AI, and a lot of direction. This site is the result, so it earns the last slot. Here is how it got built.</p>
   <div class="factbox">
-    <div><b>Role</b>Director of an AI agent crew</div>
-    <div><b>Method</b>Brief · fan out · adversarially verify · approve</div>
-    <div><b>Tools</b>Claude Code · Cursor · Codex</div>
-    <div><b>Proof</b>This portfolio, built this way</div>
+    <div><b>Role</b>Direction, end to end</div>
+    <div><b>Built with</b>Fable 5, then Opus 4.8 · Cursor · agent crews</div>
+    <div><b>When</b>June 2026</div>
+    <div><b>The result</b>The site you're reading</div>
   </div>
 </div></section>
 
 <article class="case-body">
 
   <div class="narrow">
+
+    <h2 class="beat">I started on the newest model in the room.</h2>
     <div class="prose">
-      <p>Most of what people call "using AI" is one person typing into one chat. That isn't how I work, and it isn't new for me. Directing AI is the fourth rung of a single craft I've practiced for a decade.</p>
+      <p>Anthropic had just put Fable 5 in front of the public, the most capable model available, and the timing was too good to pass up. I opened with the vision, not a task list: the shape of the site, the sections, the case studies, and the working prototypes I wanted embedded in the page rather than described in it. I handed over the spec and let the model reason toward the build.</p>
+      <p>Fable 5 got a surprising amount right from very little direction. On a long, open-ended job like this, it held the whole picture and filled gaps the way I would have.</p>
     </div>
 
-    <h2 class="beat">The job never changed. The altitude did.</h2>
+    <h2 class="beat">Three hours in, I lost Fable 5.</h2>
     <div class="prose">
-      <p>In the NLU years I told models what to recognize, intent by intent. When LLMs arrived, I stopped training and started instructing: telling a model how to reason, where to stop, and what it must never say. Then I built generators that draft structured evaluation data through parallel sub-agents, so a system could produce ground truth at scale instead of a person filling a blank row.</p>
-      <p>Each step, the unit of work got larger and I moved up a level: from labeling, to prompting, to directing a system that produces and checks its own output. Same craft, rising altitude.</p>
+      <p>My access to Fable 5 dropped about three hours into the project, and I moved to Opus 4.8 to keep going. The two models work differently, and the switch is what taught me where each one fits. Fable is the stronger model on long, autonomous stretches; it needed less hand-holding to take a big, ambiguous build in the right direction. Opus 4.8 wanted sharper specs from me, but once it had them it was fast, steady, and relentless, the better default for iterative work. So I tightened how I directed, and the build never stalled.</p>
+      <p>Knowing which model to reach for, and how to brief each one, is its own skill now. I'd rather make that call deliberately than run everything on one setting.</p>
     </div>
 
-    <h2 class="beat">I direct a crew, not a chatbot.</h2>
+    <h2 class="beat">I directed the model. I didn't chat with it.</h2>
     <div class="prose">
-      <p>When the work is large, I stand up a crew of agents, each with a written job. A narrative lead owns the story. A voice editor guards how it sounds. An evidence-and-redaction guardian checks every claim and keeps confidential material off the page. A panel of judges reads the work cold, from a skeptic's seat. I brief them, they fan out in parallel, and I read what comes back.</p>
-      <p>It's the shift every new manager makes. You stop doing the task and start writing the job description, the definition of good, and the line that says when something has gone wrong. Prompting was the old skill. Directing a system to produce and verify work is the new one.</p>
+      <p>The difference between using AI and directing it comes down to feedback. I set the bar up front, then sorted everything I said back into two kinds. Minor feedback was a tweak: change this line, tighten that section, keep going. Major feedback was a signal to stop and re-plan. When I pushed on something big, I had the model step back, re-evaluate its own strategy, and propose a new approach before it wrote another word. I also had it grade its own output against my direction, so it caught its own misses before I did.</p>
+      <p>That's the part most people skip. You're not asking for an answer; you're running a system. A system needs a definition of good, a way to tell a tweak from a rethink, and the discipline to re-plan when it has drifted.</p>
     </div>
 
-    <!-- PULL QUOTE: her operating principle, her words. PENDING SIMONE'S SIGN-OFF before publish. -->
-    <blockquote class="pull">An agent isn't answering your question. It's picking up from where you left off, so the work is in how you set it up.<span class="attr">Simone, the principle behind the method</span></blockquote>
-
-    <h2 class="beat">Verification is the whole game.</h2>
+    <h2 class="beat">Then I gave it a team.</h2>
     <div class="prose">
-      <p>Generating is the easy half. The half that matters is proving the output is right before it ships, and that discipline is what I carry from a decade of evaluation work. So nothing the crew produces is trusted on sight.</p>
-      <p>Findings get handed to judges who try to refute them. Anything that touches a former employer goes through the redaction guardian, whose only job is to catch a confidential name or number before it reaches a public page. Claims that can't be defended cold get cut, even the flattering ones. The honest version is almost always the stronger one.</p>
-      <p>Here's the loop every piece of this site passed through.</p>
+      <p>A portfolio isn't one job; it's a dozen crafts at once. So I had the model stand up a crew of specialist agents and run them in parallel, each with a brief of its own: content strategy, design and layout, motion and media, the interactive prototypes embedded in each case. Over several rounds I added a panel of judges to read the work cold from a skeptic's seat, and a guardian whose only job was to keep anything confidential off a public page. I set the direction; they produced and checked each other; I kept what held.</p>
     </div>
   </div>
 
   <div class="shell">
-    <figure class="inst wide" aria-label="The director's loop: brief, fan out, adversarially verify, approve, then repeat until it comes back clean">
-      <div class="inst-head"><span>the director's loop</span><span>fan out · verify · approve</span></div>
+    <figure class="inst wide" aria-label="The crew of specialist agents directed in parallel to build the site, plus the judges and guardian that verify the work">
+      <div class="inst-head"><span>the crew · directed in parallel</span><span>several iterations</span></div>
       <div class="inst-body">
-        <div class="dl-flow">
-          <div class="dl-node"><span class="nl">Direct</span><span class="ns">the brief, the bar, the line that means stop</span></div>
-          <span class="dl-fa">&rarr;</span>
-          <div class="dl-node"><span class="nl">Fan out</span><span class="ns">a crew of agents works in parallel</span></div>
-          <span class="dl-fa">&rarr;</span>
-          <div class="dl-node hot"><span class="nl">Adversarially verify</span><span class="ns">judges refute, the guardian redacts</span></div>
-          <span class="dl-fa">&rarr;</span>
-          <div class="dl-node"><span class="nl">Approve</span><span class="ns">I ship only what holds</span></div>
+        <div class="crew-top">I set the direction &middot; the crew fans out</div>
+        <div class="crew">
+          <div class="crew-card"><span class="cl">Content strategy</span><span class="cs">what each page argues, in what order</span></div>
+          <div class="crew-card"><span class="cl">Design &amp; layout</span><span class="cs">the system, type, the page itself</span></div>
+          <div class="crew-card"><span class="cl">Motion &amp; media</span><span class="cs">the reveals and the interactions</span></div>
+          <div class="crew-card"><span class="cl">Prototypes</span><span class="cs">the working demos embedded in each case</span></div>
+          <div class="crew-card check"><span class="cl">Judges</span><span class="cs">read it cold, from a skeptic's seat</span></div>
+          <div class="crew-card check"><span class="cl">Redaction guardian</span><span class="cs">keeps anything confidential off the page</span></div>
         </div>
-        <div class="dl-loop">&#8635;&nbsp; the loop repeats until it comes back clean</div>
+        <div class="crew-foot">&#8635;&nbsp; they report back, I keep what holds, we go again</div>
       </div>
-      <figcaption class="inst-caption"><b>How the work gets made.</b> I set the direction and the bar; the crew produces and the judges attack; I keep only what survives. The verify step is the one I never skip.</figcaption>
+      <figcaption class="inst-caption"><b>One brief, many specialists.</b> Each agent owns an area and works in parallel; the judges and the guardian attack the output before I approve it. The same shape I use to build agentic systems at work.</figcaption>
     </figure>
   </div>
 
   <div class="narrow">
-    <h2 class="beat">The proof is the thing you're reading.</h2>
+    <h2 class="beat">Until it sounded like me.</h2>
     <div class="prose">
-      <p>This portfolio was built the way I just described. I set the direction; agent crews drafted, judged, and hardened the case studies; an adversarial pass scrubbed every page for anything confidential and every claim for anything it couldn't support; and I approved what shipped. The footer on every page says as much.</p>
-      <p>That's where the craft is heading, and where I want to be: not the person who specs a system and hands it off, but the one who directs a fleet of them to do high-stakes work, and proves it's right.</p>
+      <p>We went round after round, on the voice most of all. A portfolio can be accurate and still sound like no one. So I cut anything that read as performance, kept pushing until the sentences were ones I'd actually say out loud, and only stopped when the site felt like me to read, not just correct.</p>
+      <p>That's the method, and you're standing in the result. I didn't type most of these words by hand. I directed every one of them, and I'd build your hardest problem the same way.</p>
     </div>
   </div>
 
