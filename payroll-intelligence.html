@@ -4,13 +4,32 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Payroll Intelligence · Teaching an agent what experts know · Simone Muro</title>
-<meta name="description" content="Ground truth for a payroll agent that didn't exist yet: golden answers for the high-volume questions, a retrievable-versus-ask data framework, a hallucination control, and a generator that drafts diagnostic golden datasets for expert review. Conversational AI and agentic AI design." />
+<meta name="description" content="Asked why an employee is missing from a payroll run, a good agent reads the account first, then asks the one question only the customer can answer. The diagnostic framework I built to teach a payroll agent what the experts know, before it answers anyone." />
 <meta property="og:title" content="Payroll Intelligence · Simone Muro" />
 <meta property="og:description" content="The agent's ground truth didn't exist, and a model asked for payroll knowledge will confidently invent it. So I built the framework that taught it what the experts know." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./v3.css" />
+<style>
+  /* payroll: interrogate vs read-first (mock data) */
+  .pr-ask { justify-self: start; max-width: 90%; background: var(--ink); color: var(--paper); padding: 9px 14px; border-radius: 14px 14px 14px 4px; font-size: 0.88rem; line-height: 1.45; margin-bottom: 14px; }
+  .pr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 680px) { .pr-grid { grid-template-columns: 1fr; } }
+  .pr-card { border: 1px solid var(--hairline2); border-radius: 12px; background: var(--paper); overflow: hidden; }
+  .pr-h { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); padding: 13px 15px 11px; border-bottom: 1px solid var(--hairline); }
+  .pr-body { padding: 13px 15px 15px; display: grid; gap: 9px; }
+  .pr-q { background: var(--card); border: 1px solid var(--hairline); padding: 9px 13px; border-radius: 12px; font-size: 0.84rem; line-height: 1.4; color: var(--ink); }
+  .pr-q .tag { display: block; font-family: var(--mono); font-size: 0.6rem; color: var(--persimmon); margin-top: 5px; letter-spacing: 0.02em; }
+  .pr-readhead { font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); margin-bottom: 8px; }
+  .pr-read { border: 1px solid var(--hairline2); border-radius: 10px; overflow: hidden; margin-bottom: 11px; }
+  .pr-read .rr { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 7px 12px; border-top: 1px solid var(--hairline); }
+  .pr-read .rr:first-child { border-top: 0; }
+  .pr-read .rr .k { font-family: var(--mono); font-size: 0.6rem; color: var(--faint); text-transform: uppercase; letter-spacing: 0.04em; }
+  .pr-read .rr .v { font-family: var(--mono); font-size: 0.74rem; color: var(--ink); }
+  .pr-read .rr .v .ok { color: var(--signal); margin-left: 5px; }
+  .pr-final { background: var(--card); border: 1px solid var(--hairline2); border-left: 2px solid var(--persimmon); padding: 10px 13px; border-radius: 4px 12px 12px 4px; font-size: 0.84rem; line-height: 1.45; color: var(--ink); }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -30,25 +49,52 @@
 <section class="case-open"><div class="shell">
   <span class="no-big">No. 02 · Payroll Intelligence</span>
   <h1>Teaching an agent what the experts know.</h1>
-  <p class="lede">January 2026. I was staring at a list of payroll's highest-traffic questions, the ones that keep experts on the phone, with no agent yet able to answer them. A payroll agent was being built, and its ground truth didn't exist yet: golden answers for those questions, the tools and data each answer depends on, the moments it must hand off to a human. The build was moving with or without it, and ground truth that arrives after the agent ships is trivia.</p>
+  <p class="lede">January 2026. A new payroll agent was being built, but the answers it needed didn't exist yet, at least not the verified ones. Ask a model a payroll question it can't look up and it will invent one, confidently. I built the framework that taught it what the experts actually know. The whole thing shows up in how it answers one question: where is my employee?</p>
   <div class="factbox">
     <div><b>Role</b>Authored the ground-truth framework: templates, instructions, the generator</div>
-    <div><b>Scope</b>The high-volume questions + 9 diagnostic subdomains</div>
+    <div><b>Scope</b>The high-volume questions + 9 troubleshooting domains</div>
     <div><b>Pace</b>Full set in about ten days</div>
-    <div><b>Built</b>A reusable framework, not a one-off doc</div>
+    <div><b>Built</b>A system prompt that drafts diagnostic datasets for experts to correct</div>
   </div>
 </div></section>
 
 <article class="case-body">
 
-  <div class="narrow">
-    <h2 class="beat">Instructions, not answers.</h2>
-    <div class="prose">
-      <p>Payroll is the worst place to wing it. It's regulated, so a wrong answer can create a compliance problem, not just a bad session. It's data-dependent, so the right answer changes with each account's setup. And behind every question sits the same one: <b>will my people get paid?</b></p>
-      <p>The target was payroll's highest-traffic, highest-complexity questions, the ones with do-it-for-me potential. One person hand-writing golden answers for all of them was fantasy. So I made the call that scales: <b>I wrote the instructions instead of the answers, because instructions compound where answers don't.</b> Templates for what a complete golden answer looks like, the tool and data dependencies to capture, the exact format the agent team could consume, and the gate each answer has to clear. One artifact, drafted so design, engineering, and quality could each pull the slice they needed from the same source of truth.</p>
-      <p>The full set landed in about ten days as a blueprint the agent team could keep extending, not a one-off document. I owned the framework and the prompts; the diagnostic knowledge inside them came from the experts who resolve these calls.</p>
-    </div>
+  <div class="shell">
+    <figure class="inst wide" aria-label="The same question answered two ways: an agent that interrogates the customer for facts it could look up, versus one that reads the account first and asks a single confirming question">
+      <div class="inst-head"><span>the same question, two agents · "my employee is missing from this run"</span><span>mock data</span></div>
+      <div class="inst-body">
+        <div class="pr-ask">"I ran payroll, but my employee Maria isn't on it."</div>
+        <div class="pr-grid">
+          <div class="pr-card">
+            <div class="pr-h">before &middot; asks what it could look up</div>
+            <div class="pr-body">
+              <div class="pr-q">What's the employee's full name?<span class="tag">the account already lists every employee</span></div>
+              <div class="pr-q">When did you add them?<span class="tag">the audit log has the date</span></div>
+              <div class="pr-q">What pay schedule are they on?<span class="tag">assigned in the account</span></div>
+              <div class="pr-q">Did you already run payroll this period?<span class="tag">it's in the run history</span></div>
+            </div>
+          </div>
+          <div class="pr-card">
+            <div class="pr-h">after &middot; reads the account, then asks once</div>
+            <div class="pr-body">
+              <div class="pr-readhead">reads first, silently</div>
+              <div class="pr-read">
+                <div class="rr"><span class="k">subscription</span><span class="v">active<span class="ok">&#10003;</span></span></div>
+                <div class="rr"><span class="k">employee</span><span class="v">Maria, added today<span class="ok">&#10003;</span></span></div>
+                <div class="rr"><span class="k">this run</span><span class="v">created before she was added<span class="ok">&#10003;</span></span></div>
+                <div class="rr"><span class="k">next run</span><span class="v">Maria already on it<span class="ok">&#10003;</span></span></div>
+              </div>
+              <div class="pr-final">Maria was added after this week's run was built, so she'll go out with next week's. Want me to move her into this one instead?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="inst-caption"><b>Same question, two agents.</b> The first interrogates the customer for facts the account already holds. The second reads the account first, then asks the one thing only the customer can answer: what they actually want to happen. Reconstructed with invented account data.</figcaption>
+    </figure>
+  </div>
 
+  <div class="narrow">
     <h2 class="beat">The agent already knows more than the expert.</h2>
     <div class="prose">
       <p>"My employee is missing from this payroll run" sounds like one question. It's half a dozen root causes wearing the same sentence. A human expert opens with a long interview because a human starts blind.</p>
@@ -86,35 +132,19 @@
   </div>
 
   <div class="narrow">
+    <h2 class="beat">Instructions, not answers.</h2>
+    <div class="prose">
+      <p>Payroll is the worst place to wing it. It's regulated, so a wrong answer can create a compliance problem, not just a bad session. It's data-dependent, so the right answer changes with each account's setup. And behind every question sits the same one: <b>will my people get paid?</b></p>
+      <p>The target was payroll's highest-traffic, highest-complexity questions, the ones an agent could resolve end to end, not just answer. One person hand-writing golden answers for all of them was fantasy. So I made the call that scales: <b>I wrote the instructions instead of the answers, because instructions compound where answers don't.</b> Templates for what a complete golden answer looks like, the tool and data dependencies to capture, the exact format the agent team could consume, and the gate each answer has to clear. One artifact, drafted so design, engineering, and quality could each pull the slice they needed from the same source of truth.</p>
+      <p>The full set landed in about ten days as a blueprint the agent team could keep extending, not a one-off document. I owned the framework and the prompts; the diagnostic knowledge inside them came from the experts who resolve these calls.</p>
+    </div>
+
     <h2 class="beat">A generator for the hardest questions.</h2>
     <div class="prose">
       <p>Golden answers work for how-to questions: one verified procedure, the same for every customer. Troubleshooting questions are different. They don't have golden answers; they have golden <b>decision trees</b>, and every branch needs expert-grade coverage.</p>
-      <p>Hand-writing nine of those would've taken weeks the agent team didn't have. So I built the <b>Diagnostic Golden Dataset Generator</b>: a system prompt that drafts a complete diagnostic golden dataset in eleven sections, in a fixed order, omitting none and combining none.<button class="note-ref" data-note="n1" aria-expanded="false">+</button></p>
+      <p>Hand-writing nine of those would've taken weeks the agent team didn't have. So I built the <b>Diagnostic Golden Dataset Generator</b>: a system prompt that drafts the whole decision tree in one validated structure, so an expert corrects a draft instead of authoring from a blank page.<button class="note-ref" data-note="n1" aria-expanded="false">+</button></p>
       <div class="note-body" id="n1">The prompt controls how the model reasons, not just what it outputs. It runs a six-step reasoning pass before writing anything, and it carries contrastive examples so the model learns the difference between an answer and an answer-shaped sentence: "check the settings" fails; "go to Settings → Payroll Settings → Tax Setup and verify the EIN field" passes. PII rules and a validation checklist gate the output.</div>
     </div>
-
-    <figure class="inst wide" aria-label="The generator's enforced output schema: eleven sections in a fixed order">
-      <div class="inst-head">
-        <span>schema · diagnostic golden dataset</span>
-        <span>11 sections · fixed order</span>
-      </div>
-      <div class="inst-body">
-        <div class="spec">
-          <div class="row2"><span class="k">header</span><span class="v">Title, the customer question verbatim, named expert reviewers, reference URLs</span></div>
-          <div class="row2"><span class="k">question</span><span class="v">Phrased the way a customer actually types it</span></div>
-          <div class="row2"><span class="k">scope</span><span class="v">What this topic covers, and explicitly what it doesn't</span></div>
-          <div class="row2"><span class="k">sub-variants</span><span class="v">Distinct flavors of the same complaint that need different handling</span></div>
-          <div class="row2"><span class="k">critical understanding</span><span class="v">What the agent must grasp about the domain before it acts</span></div>
-          <div class="row2"><span class="k">decision tree</span><span class="v">Explicit branching grammar: <code>If [condition] → Go to Step X</code>. No prose hand-waving</span></div>
-          <div class="row2"><span class="k">data · retrievable</span><span class="v">What the system can look up itself, listed per branch</span></div>
-          <div class="row2"><span class="k">data · must ask</span><span class="v">What only the customer knows. Each question carries a <code>Why:</code> proving it can't be retrieved</span></div>
-          <div class="row2"><span class="k">reference content</span><span class="v">The grounding content each branch draws on</span></div>
-          <div class="row2"><span class="k">handoff triggers</span><span class="v">The conditions under which the agent must escalate to a human</span></div>
-          <div class="row2"><span class="k">root-cause summary</span><span class="v">The map of causes the tree resolves, stated plainly</span></div>
-        </div>
-      </div>
-      <figcaption class="inst-caption"><b>From the generator's system prompt.</b> Structure redacted to its section names; the real schema enforces format, reasoning steps, and PII rules.</figcaption>
-    </figure>
 
     <div class="prose">
       <p>Nothing generated ships as-is. Subject-matter experts review and edit every draft: <b>the generator does the structural labor, humans own the truth.</b></p>
@@ -125,8 +155,8 @@
     <div class="prose">
       <p>The nine troubleshooting questions are umbrella subdomains, each one a whole territory of sub-questions, chosen by call volume, customer pain, and how long they keep experts on the phone. Auto-payroll blocked. Payroll run twice. Direct-deposit changes mid-cycle.</p>
       <p>Filling the trees took about a week and a half of interviews with the people who actually resolve these calls: support, engineering, the policy team. A model asked for institutional knowledge will confidently invent it. <b>The diagnostic paths had to come from humans.</b></p>
-      <p>Hand-built root causes age as the product changes, and a library of them is a real maintenance question at scale. The framework was the answer to that question: structure you regenerate, not documents you maintain. We started with the hardest questions first. </p>
-      <p>The deliverable encoded diagnostic knowledge that had lived only in experts' heads, in a form the agent team could keep regenerating rather than re-author. That's the through-line in what I build now: not the document, but the framework that produces it, the test that decides whether its output ships, and the judgment about which questions to point it at first.</p>
+      <p>Hand-built root causes age as the product changes, and a library of them is a real maintenance question at scale. The framework was the answer: structure the team regenerates as the product shifts, not a pile of documents to maintain by hand.</p>
+      <p>The deliverable encoded diagnostic knowledge that had lived only in experts' heads, in a form the agent team could keep regenerating. This is the shape of what I build now: the framework, the test that decides whether its output is good enough to ship, and the call on which questions to aim it at first.</p>
     </div>
   </div>
 

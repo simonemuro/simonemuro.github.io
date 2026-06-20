@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NLU Foundations · Building the measurement discipline · Simone Muro</title>
+<meta name="description" content="Before LLMs: I joined a young team that had just moved a support assistant from a phone tree to NLU, and built the measurement process that made its failures visible. I used it to lift intent-matching accuracy 69 to 79 percent, cut fallback 5.7 to 2.7 percent, and rebuild the intents customers were giving up on. The craft discipline the rest of my work is built on." />
+<meta property="og:title" content="NLU Foundations · Simone Muro" />
+<meta property="og:description" content="I built the ruler before I moved the numbers: the measurement discipline behind a support assistant, and the start of how I work." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./v3.css" />
+<style>
+  /* nlu case visuals (reconstructed from a year-end review) */
+  .nlu-board { display: grid; gap: 12px; }
+  .nlu-int { display: grid; grid-template-columns: 130px 1fr 84px; align-items: center; gap: 14px; }
+  @media (max-width: 560px) { .nlu-int { grid-template-columns: 104px 1fr 74px; gap: 10px; } }
+  .nlu-int .lab { font-family: var(--mono); font-size: 0.66rem; color: var(--muted); line-height: 1.3; }
+  .nlu-track { position: relative; height: 8px; background: var(--hairline); border-radius: 999px; }
+  .nlu-track .bar { position: absolute; left: 0; top: 0; bottom: 0; background: var(--persimmon); border-radius: 999px; }
+  .nlu-track .tick { position: absolute; top: -3px; bottom: -3px; width: 3px; background: var(--muted); border-radius: 2px; }
+  .nlu-int .num { font-family: var(--mono); font-size: 0.72rem; color: var(--ink); text-align: right; white-space: nowrap; }
+  .nlu-int .num .b { color: var(--faint); }
+  .nlu-ruler { display: grid; gap: 0; }
+  .nlu-stat { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; padding: 13px 2px; border-top: 1px solid var(--hairline); }
+  .nlu-stat:first-child { border-top: 0; }
+  .nlu-stat .k { font-family: var(--mono); font-size: 0.66rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .nlu-stat .v { font-family: var(--mono); font-size: 1.02rem; color: var(--ink); white-space: nowrap; }
+  .nlu-stat .v .b { color: var(--faint); }
+  .nlu-stat .v b { color: var(--persimmon); font-weight: 600; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav"><div class="shell">
+  <a class="wordmark" href="index.html">SIMONE MURO</a>
+  <div class="nav-links">
+    <a href="index.html#work" aria-current="true">Work</a>
+    <a href="index.html#about">Approach</a>
+    <a href="resume.html" class="optional">Resume</a>
+    <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
+  </div>
+</div></nav>
+
+<main id="main">
+
+<section class="case-open"><div class="shell">
+  <span class="no-big">No. 05 · NLU Foundations · 2020 – 2022</span>
+  <h1>I built the ruler before I moved the numbers.</h1>
+  <p class="lede">2020. I joined a young conversation-AI team that had just moved its support assistant off a phone tree and onto NLU, so customers could finally just say what they needed instead of pressing 1. The capability was thin, and no one could see where it was breaking down. So before I changed anything, I built a way to measure where it was failing. That measurement is what turned the assistant from guesswork into a system I could tune.</p>
+  <div class="factbox">
+    <div><b>Role</b>Conversation Designer, then Senior; the team's NLU SME</div>
+    <div><b>When</b>2020 – 2022</div>
+    <div><b>Built</b>The intent-matching measurement process and the team's NLU playbook</div>
+    <div><b>Outcome</b>Top performance rating; the discipline the rest of my work runs on</div>
+  </div>
+</div></section>
+
+<article class="case-body">
+
+  <div class="narrow">
+    <div class="prose">
+      <p>This is what a year of that work moved. Each bar is an intent I rebuilt, and the number is self-help acceptance: the share of customers who took the assistant's answer instead of asking for a person. Higher is the win. Reconstructed from my year-end review; intent names are generic.</p>
+    </div>
+  </div>
+
+  <div class="shell">
+    <figure class="inst wide" aria-label="Six intents redesigned, each showing self-help acceptance rising from a before value to an after value">
+      <div class="inst-head"><span>customers who self-served instead of asking for a person · six intents I rebuilt</span><span>from a year-end review</span></div>
+      <div class="inst-body">
+        <div class="nlu-board">
+          <div class="nlu-int">
+            <span class="lab">move to desktop</span>
+            <span class="nlu-track"><span class="bar" style="width:47%"></span><span class="tick" style="left:28%"></span></span>
+            <span class="num"><span class="b">28</span> &rarr; 47%</span>
+          </div>
+          <div class="nlu-int">
+            <span class="lab">subscription refund</span>
+            <span class="nlu-track"><span class="bar" style="width:56%"></span><span class="tick" style="left:38%"></span></span>
+            <span class="num"><span class="b">38</span> &rarr; 56%</span>
+          </div>
+          <div class="nlu-int">
+            <span class="lab">billing charge</span>
+            <span class="nlu-track"><span class="bar" style="width:38%"></span><span class="tick" style="left:27%"></span></span>
+            <span class="num"><span class="b">27</span> &rarr; 38%</span>
+          </div>
+          <div class="nlu-int">
+            <span class="lab">plan migration</span>
+            <span class="nlu-track"><span class="bar" style="width:29%"></span><span class="tick" style="left:18%"></span></span>
+            <span class="num"><span class="b">18</span> &rarr; 29%</span>
+          </div>
+          <div class="nlu-int">
+            <span class="lab">move to online</span>
+            <span class="nlu-track"><span class="bar" style="width:37%"></span><span class="tick" style="left:29%"></span></span>
+            <span class="num"><span class="b">29</span> &rarr; 37%</span>
+          </div>
+          <div class="nlu-int">
+            <span class="lab">tech support</span>
+            <span class="nlu-track"><span class="bar" style="width:27%"></span><span class="tick" style="left:25%"></span></span>
+            <span class="num"><span class="b">25</span> &rarr; 27%</span>
+          </div>
+        </div>
+      </div>
+      <figcaption class="inst-caption"><b>The tick is where each intent started; the bar is where it landed.</b> They range from a stubborn one that barely moved to a subscription-refund flow that went from giving up more than 6 in 10 customers to keeping more than half. I rebuilt every one of them by hand.</figcaption>
+    </figure>
+  </div>
+
+  <div class="narrow">
+    <h2 class="beat">First, I built a way to see it failing.</h2>
+    <div class="prose">
+      <p>No one could fix the assistant because no one could see where it was breaking. It matched what a customer said to a set of intents, and when it matched wrong, or matched nothing, the customer got "Sorry, I didn't quite get that" and a handoff to a person. But no one could tell you how often that was happening, or where.</p>
+      <p>So I stood up a process to measure exactly how well we were matching real customer utterances to intents. I used it to baseline the system, find the failures, and point my work at the worst-performing places first. Over that year, matching accuracy climbed and the fallback moment, the "I didn't get that," dropped by more than half.</p>
+    </div>
+
+    <figure class="inst" aria-label="The measurement she built, shown as two before and after stats: matching accuracy and fallback rate">
+      <div class="inst-head"><span>the measurement I built · before / after</span><span>over ~1 year</span></div>
+      <div class="inst-body">
+        <div class="nlu-ruler">
+          <div class="nlu-stat"><span class="k">intent-matching accuracy</span><span class="v"><span class="b">69%</span> &rarr; <b>79%</b></span></div>
+          <div class="nlu-stat"><span class="k">fallback &middot; &ldquo;Sorry, I didn't get that&rdquo;</span><span class="v"><span class="b">5.7%</span> &rarr; <b>2.7%</b></span></div>
+        </div>
+      </div>
+      <figcaption class="inst-caption"><b>The numbers came after the ruler.</b> Accuracy is a system metric; the bars above are the human one. Neither moved until I could measure where the assistant was failing.</figcaption>
+    </figure>
+  </div>
+
+  <div class="narrow">
+    <h2 class="beat">I built the parts that weren't there yet.</h2>
+    <div class="prose">
+      <p>Some questions had no intent at all. A customer would ask about activating, renewing, or being billed for their subscription, and the assistant had nothing to match, so it fell straight to a human. That's not a tuning problem, it's a coverage gap.</p>
+      <p>I built roughly a dozen new intents to close the biggest gaps, including a whole cluster around subscription and payments. Adding an intent isn't a drop-in; each one has to be trained and slotted into the existing architecture without pulling accuracy off the intents around it. Expanding coverage and holding accuracy are the same job, done carefully.</p>
+    </div>
+
+    <h2 class="beat">I became the person the team learned NLU from.</h2>
+    <div class="prose">
+      <p>The work made me the team's NLU expert, and the people around me started asking for the thinking behind it, not just the results. When they kept asking, I wrote it down: I authored our NLU best-practices guide and trained designers to think about intents and matching from the very start of a design, not as a cleanup step at the end.</p>
+      <p>That's the part I'm proudest of from this era. I didn't just do the work, I turned it into a discipline other people could run.</p>
+    </div>
+
+    <h2 class="beat">It earned the top rating. It also became the way I work.</h2>
+    <div class="prose">
+      <p>The year's work earned the highest performance rating Intuit gives, and the promotion to Senior that came with it. But the rating isn't the point. The point is the habit it set.</p>
+      <p>Build the measurement before you trust the result. Find the failures before you celebrate the wins. Turn what you learned into something the team can repeat. That's exactly what I went on to build for LLM-era agents years later, in the <a href="quality-program.html">quality program</a>, when the technology changed and the discipline didn't.</p>
+    </div>
+  </div>
+
+</article>
+
+<nav class="case-next" aria-label="Next case study"><div class="shell">
+  <a href="cancellation-saves.html">
+    <span class="nxt">Next · No. 06</span>
+    <span class="t">Cancellation Saves</span>
+  </a>
+</div></nav>
+
+</main>
+
+<footer class="colophon"><div class="shell">
+  <p>Designed and built AI-natively: directed by Simone, executed with AI agents, the way she works.</p>
+  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. Roles, process, design decisions, and measured outcomes are preserved. © 2026 Simone Muro · Bay Area, CA</p>
+</div></footer>
+
+<button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
+<script src="./v3.js" defer></script>
+</body>
+</html>
