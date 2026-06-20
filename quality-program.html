@@ -4,13 +4,34 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Quality Program · Simone Muro</title>
-<meta name="description" content="Quality for an agentic AI platform: golden datasets with ground truth and expected actions, LLM judges validated against human labels, blind ground-truth audits, and a pre-population pipeline shipped through code review. Quality became a release gate." />
+<meta name="description" content="An agent told a customer their payroll tax was filed on a date it made up. This is the quality system I built so a confident, fluent, wrong answer never ships, and how quality became a release gate." />
 <meta property="og:title" content="The Quality Program · Simone Muro" />
-<meta property="og:description" content="Golden datasets, validated judges, and eval tooling shipped through code review. Quality became a release gate." />
+<meta property="og:description" content="A confident answer that made up a date, caught. The eval system a designer built and shipped, so quality became a release gate." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./v3.css" />
+<style>
+  /* the catch: answer vs the record (mock data) */
+  .qc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 640px) { .qc-grid { grid-template-columns: 1fr; } }
+  .qc-card { border: 1px solid var(--hairline2); border-radius: 12px; background: var(--paper); overflow: hidden; }
+  .qc-h { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--faint); padding: 13px 16px 9px; }
+  .qc-answer { margin: 0; padding: 0 16px 16px; font-size: 0.95rem; line-height: 1.55; color: var(--ink); }
+  .qc-answer mark { background: rgba(232,85,47,0.16); color: var(--ink); padding: 0 3px; border-radius: 3px; font-weight: 500; }
+  .qc-rec { padding: 0 16px 10px; }
+  .qc-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--hairline); }
+  .qc-row:first-child { border-top: 0; }
+  .qc-row .k { font-family: var(--mono); font-size: 0.62rem; color: var(--faint); text-transform: uppercase; letter-spacing: 0.05em; }
+  .qc-row .v { color: var(--ink); font-family: var(--mono); font-size: 0.8rem; text-align: right; }
+  .qc-row .v.miss { color: var(--persimmon); }
+  .qc-gates { margin-top: 16px; display: grid; gap: 7px; }
+  .qc-gate { display: flex; align-items: center; gap: 11px; font-family: var(--mono); font-size: 0.76rem; color: var(--muted); }
+  .qc-gate .m { width: 15px; text-align: center; font-weight: 600; flex: none; }
+  .qc-gate.pass .m { color: var(--signal); }
+  .qc-gate.fail { color: var(--ink); }
+  .qc-gate.fail .m { color: var(--persimmon); }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -32,7 +53,7 @@
   <h1>The answer sounded right.</h1>
   <p class="lede">I read an answer that was flawless prose and wrong about a date. On an agentic platform that date isn't just words, it's an action taken in someone's books, so I stopped trusting fluent and built a bar that tests for what it hides.</p>
   <div class="factbox">
-    <div><b>Role</b>Led the quality methodology and tooling</div>
+    <div><b>Role</b>Built the eval datasets, tooling, and audits</div>
     <div><b>When</b>2025 – 2026</div>
     <div><b>Instruments</b>Golden datasets · LLM judges · simulators · blind audits</div>
     <div><b>Outcome</b>Quality became a release gate</div>
@@ -43,75 +64,56 @@
 
   <div class="narrow">
     <div class="prose">
-      <p>What worried me about leaning on a judge model: it's good at fluent, far weaker at knowing whether the agent took the right action in a payroll run or a billing workflow, and it drifts when the product underneath it changes. As the platform scaled, one judge grading how answers read was never going to be enough.</p>
-      <p>So I built the quality discipline as a loop, not a verdict. Golden datasets carry the correct answer <b>and the expected actions</b>. Offline judging gets checked against human labels on production samples. Multi-turn simulators, a GenAI bot playing the customer, surface the failures that only appear three turns deep. Regression runs make sure last month's quality is still this month's.</p>
-    </div>
-
-    <h2 class="beat">Trust the judge only after you test the judge.</h2>
-    <div class="prose">
-      <p>LLM judges are cheap, fast, and necessary. Before trusting them at scale, we validated them against a <b>200-task human-labeled set</b>.</p>
-      <p>The judges cleared it. On that evidence we cut a planned 2,000-row vendor labeling dataset we no longer needed: the judges were well tuned, and the spend wasn't justified. An evaluation program should tell you where quality is and where your money isn't required.</p>
-      <p>Here's a judge run against one golden row. One gate is supposed to fail.</p>
+      <p>This is the answer that started the program. The account data is mock, but the failure is the real one: asked whether a customer's federal payroll tax deposit went through, the agent answered in confident, fluent prose, and invented the date it was filed on.</p>
     </div>
   </div>
 
   <div class="shell">
-    <figure class="inst wide" data-instrument="inspector" data-config="cfg-quality-inspector" aria-label="One golden dataset row: scenario, ground truth, and gating criteria, with a judge run where one gate fails">
-      <div class="inst-head">
-        <span>inspector · golden dataset · one row of 3,000+</span>
-        <span>judges validated against human labels</span>
+    <figure class="inst wide" aria-label="A side by side: the agent's confident answer, which invented a filing date, versus what the account record actually held, with the gates that judge it">
+      <div class="inst-head"><span>the catch · the answer vs the record</span><span>mock data</span></div>
+      <div class="inst-body">
+        <div class="qc-grid">
+          <div class="qc-card">
+            <div class="qc-h">What the agent said</div>
+            <p class="qc-answer">"Your 941 federal deposit was filed <mark>on March 3</mark>, so you're all set. You can download the dated confirmation from your tax records."</p>
+          </div>
+          <div class="qc-card">
+            <div class="qc-h">What the record actually held</div>
+            <div class="qc-rec">
+              <div class="qc-row"><span class="k">filing</span><span class="v">941 federal deposit · March</span></div>
+              <div class="qc-row"><span class="k">status</span><span class="v">filed</span></div>
+              <div class="qc-row"><span class="k">filed on</span><span class="v miss">not in the record</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="qc-gates">
+          <div class="qc-gate pass"><span class="m">&#10003;</span> correctness &middot; reports the filing and its status exactly as the record shows</div>
+          <div class="qc-gate pass"><span class="m">&#10003;</span> completeness &middot; tells the customer how to get the formal confirmation</div>
+          <div class="qc-gate pass"><span class="m">&#10003;</span> behavior &middot; checked the filing record before answering</div>
+          <div class="qc-gate fail"><span class="m">&#10007;</span> no hallucination &middot; the answer invented "March 3"; the record holds no date</div>
+        </div>
       </div>
-      <div class="inst-body"></div>
-      <figcaption class="inst-caption"><b>One row, mock data.</b> The judge graded an answer that got everything right except a date it made up. Schema real; the filing is invented.</figcaption>
+      <figcaption class="inst-caption"><b>Sounds right, fails the bar.</b> Three gates pass; the one that matters catches the invented date. Ship on how an answer reads, and a customer gets told their taxes are filed on a day that never happened.</figcaption>
     </figure>
-    <script type="application/json" id="cfg-quality-inspector">
-    {
-      "runLabel": "Run the judge",
-      "tabs": [
-        {
-          "name": "scenario",
-          "rows": [
-            ["skill domain", "<code>payroll</code>"],
-            ["scenario", "Customer asks whether their federal payroll tax deposit went through"],
-            ["expected action", "Retrieve the filing record before answering"]
-          ]
-        },
-        {
-          "name": "ground truth",
-          "rows": [
-            ["filing", "<code>\"941 federal deposit · March\"</code>"],
-            ["status", "<code>\"filed\"</code>"],
-            ["filed_on", "not in the record yet"],
-            ["expected answer", "Confirms the deposit was filed and says the dated confirmation isn't available yet"]
-          ]
-        },
-        {
-          "name": "gating",
-          "rows": [
-            ["correctness", "Reports the filing and its status exactly as the record shows"],
-            ["completeness", "Tells the customer how to get the formal confirmation"],
-            ["no_hallucination", "Every fact in the answer traces to the record. No invented dates, amounts, or statuses"],
-            ["behavior", "Checks the filing record before answering, never routes to support first"]
-          ]
-        }
-      ],
-      "gates": [
-        { "label": "correctness", "pass": true, "detail": "deposit and filed status match the record" },
-        { "label": "completeness", "pass": true, "detail": "next step for formal confirmation included" },
-        { "label": "behavior", "pass": true, "detail": "filing record retrieved before the answer" },
-        { "label": "no_hallucination", "pass": false, "detail": "answer says \"filed on March 3\"; the record holds no date" }
-      ],
-      "failNote": "The answer was right about everything except a date it invented. A gate that never fires isn't a gate."
-    }
-    </script>
   </div>
 
   <div class="narrow">
+    <div class="prose">
+      <p>On a screen, a made-up date is a typo you scroll past. In someone's books, it's a confident wrong answer about whether the government got paid. That's the failure I had to design against, and a model that grades how an answer reads will never catch it.</p>
+      <p>So I built it as a loop that runs on every release, not a report someone writes once. Golden datasets carry the correct answer <b>and the expected actions</b>. Offline judging gets checked against human labels on production samples. Multi-turn simulators, a GenAI bot playing the customer, surface the failures that only appear three turns deep. Regression runs make sure last month's quality is still this month's.</p>
+    </div>
+
+    <h2 class="beat">Trust the judge only after you test the judge.</h2>
+    <div class="prose">
+      <p>LLM judges are cheap and fast, so we leaned on them. Before trusting them at scale, we validated them against a <b>200-task human-labeled set</b>.</p>
+      <p>The judges cleared it. On that evidence we cut a planned 2,000-row vendor labeling dataset we no longer needed: the judges were well tuned, and the spend wasn't justified. An evaluation program should tell you where quality is and where your money isn't required.</p>
+    </div>
+
     <h2 class="beat">I made the slowest step a review, not a rewrite.</h2>
     <div class="prose">
       <p>Authoring golden datasets by hand was the slowest step in the loop. A designer opened a blank row and wrote everything: the scenario, the ground truth, the expected actions, the gating criteria.</p>
       <p>So I built a pre-population pipeline. An LLM pre-fills the evaluation data first; designers review and correct instead of authoring from blank. It turned blank-page authoring into review-and-correct across <b>3,000+ rows</b>, without adding headcount, and the same datasets fed new-skill development, not just the eval gate.</p>
-      <p>It shipped as a pull request: <b>+1,590 lines, reviewed and merged</b>. It's generator-agnostic, discovering writable columns at runtime and reading new fields from a prompt contract, so the prompt could evolve through several versions in six weeks with no code changes. And it runs a dozen automated checks that fail the build like CI: a dropped column, a data leak, drift.</p>
+      <p>It shipped as a pull request: <b>+1,590 lines, reviewed and merged</b>. I built it so the generator's prompt could change through several versions in six weeks without anyone touching the code, and a dozen automated checks fail the build like CI the moment a column drops, data leaks, or the set drifts.</p>
     </div>
 
     <h2 class="beat">Then a reviewer caught the thing that mattered.</h2>
@@ -121,14 +123,15 @@
 
     <h2 class="beat">I made the audit blind.</h2>
     <div class="prose">
-      <p>The evals are only as trustworthy as the ground truth under them, so I had the experts' own ground truth re-audited blind: original labels hidden, every row a fresh <b>KEEP or DELETE</b> call, so nobody could anchor on the expert's first answer. 1,200+ rows in the first wave. If the ground truth is wrong, everything downstream of it is confidently wrong.</p>
+      <p>The evals are only as trustworthy as the ground truth under them, so I had the experts' own ground truth re-audited blind: original labels hidden, every row a fresh <b>KEEP or DELETE</b> call, so nobody could anchor on the expert's first answer. 1,200+ rows in the first wave. If the ground truth is wrong, everything built on it inherits the error.</p>
     </div>
 
     <h2 class="beat">Shipping started requiring evidence.</h2>
     <div class="prose">
       <!-- PROVENANCE PENDING: the 8-to-13-point lift stays in body text (not a hero number) until Simone confirms provenance. -->
-      <p>By April 2026, quality scores had risen between 8 and 13 points across three skill domains.</p>
-      <p>The structural change runs deeper than the lift: a skill didn't ramp until its golden-set results cleared the launch bar. Quality stopped being a report someone wrote and became a gate releases pass through. And a year spent defining what good looks like is why I now build to that bar myself.</p>
+      <p>By April 2026, scores were up 8 to 13 points across three of the skills.</p>
+      <p>The structural change runs deeper than the lift: a skill didn't ramp until its golden-set results cleared the launch bar. Quality stopped being a report someone wrote and became a gate releases pass through.</p>
+      <p>A year spent defining what good looks like is why I now build to that bar myself.</p>
     </div>
   </div>
 

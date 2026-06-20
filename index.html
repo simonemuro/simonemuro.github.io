@@ -11,6 +11,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./v3.css" />
+<style>
+  /* work-section: signature lead + range / body-of-work layer */
+  .work-lead { font-size: 1rem; line-height: 1.6; color: var(--muted); max-width: 46ch; margin: 0 0 22px; }
+  .range { margin-top: 30px; padding-top: 28px; border-top: 1px solid var(--hairline2); }
+  .range-k { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--persimmon); margin: 0 0 16px; }
+  .range-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 680px) { .range-grid { grid-template-columns: 1fr; } }
+  .rcard { display: flex; flex-direction: column; border: 1px solid var(--hairline2); border-radius: 12px; padding: 17px 19px; background: var(--paper); text-decoration: none; transition: border-color 0.18s ease; }
+  .rcard:hover { border-color: var(--persimmon); }
+  .rcard .re { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); }
+  .rcard .rt { font-size: 1.04rem; font-weight: 500; color: var(--ink); margin-top: 7px; letter-spacing: -0.01em; }
+  .rcard .rd { font-size: 0.86rem; line-height: 1.5; color: var(--muted); margin-top: 8px; }
+  .rcard .rmore { font-family: var(--mono); font-size: 0.7rem; color: var(--persimmon); margin-top: auto; padding-top: 12px; }
+  .range-foundations { font-size: 0.9rem; line-height: 1.7; color: var(--muted); margin: 18px 0 0; }
+  .range-foundations .rf-k { font-family: var(--mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); margin-right: 9px; }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -141,7 +157,7 @@
   <a class="rec" href="quality-program.html">
     <span class="src">Optimize</span>
     <span class="n range">+8<small> to </small>+13<small> pp</small></span>
-    <span class="c">quality lift across three agents, with quality as the release gate: validated judges and regression gates hold the line, and dataset turnaround went from 3 weeks to 1.</span>
+    <span class="c">quality lift across three agents, with quality as the release gate. Validated judges and regression gates hold the line, so a skill doesn't ship until it clears the bar.</span>
   </a>
   <a class="rec" href="voice-snippet.html">
     <span class="src">Accelerate</span>
@@ -184,38 +200,54 @@
 
 <section class="contents" id="work" aria-label="The work"><div class="shell">
   <p class="kicker">The work</p>
+  <p class="work-lead">Five signature builds where I designed the behavior and built the thing, spanning every generation of conversational AI. The rest of the work follows.</p>
   <a class="row flagship reveal" href="billing-skill.html">
     <span class="no">No. 01</span>
-    <span class="t">BillingSkill<span class="whisper">A working skill, a 108-case eval, and an argument that landed.</span></span>
-    <span class="fig">5 days · solo</span>
+    <span class="t">BillingSkill<span class="whisper">I built the agent skill I'd spent a year grading. 108-case eval, solo.</span></span>
+    <span class="fig">agentic build · solo</span>
   </a>
   <a class="row reveal" href="payroll-intelligence.html">
     <span class="no">No. 02</span>
-    <span class="t">Payroll Intelligence<span class="whisper">Teaching an agent what experts know, before it answers anyone.</span></span>
-    <span class="fig">top contact drivers · ~10 days</span>
+    <span class="t">Payroll Intelligence<span class="whisper">An agent that reads the account before it interrogates the customer.</span></span>
+    <span class="fig">behavior design · agentic</span>
   </a>
   <a class="row reveal" href="quality-program.html">
     <span class="no">No. 03</span>
-    <span class="t">The Quality Program<span class="whisper">Golden datasets, validated judges, and a pipeline that tripled the pace.</span></span>
-    <span class="fig">3,000+ rows · 3w → 1w</span>
+    <span class="t">The Quality Program<span class="whisper">An answer that sounded right and made up a date, and the system that catches it.</span></span>
+    <span class="fig">the quality bar · eval build</span>
   </a>
   <a class="row reveal" href="voice-snippet.html">
     <span class="no">No. 04</span>
     <span class="t">Voice Snippet<span class="whisper">GenAI on a live phone call, prototyped before the platform could carry it.</span></span>
     <span class="fig">+3.9 pp · in production</span>
   </a>
-  <a class="row reveal" href="cancellation-saves.html">
+  <a class="row reveal" href="nlu-foundations.html">
     <span class="no">No. 05</span>
-    <span class="t">Cancellation Saves<span class="whisper">Four months of tuning, fifteen points. One prompt, thirty-six.</span></span>
-    <span class="fig">96.6% · 60% → 96%</span>
+    <span class="t">NLU Foundations<span class="whisper">Before LLMs: I built the measurement that turned an assistant into a system I could tune.</span></span>
+    <span class="fig">NLU era · measurement discipline</span>
   </a>
-  <a class="row reveal" href="credit-karma.html">
-    <span class="no">No. 06</span>
-    <span class="t">Credit Karma<span class="whisper">Prompts that reason over what they're forbidden to say.</span></span>
-    <span class="fig">regulated finance · 2024</span>
-  </a>
+
+  <div class="range" aria-label="The broader body of work">
+    <p class="range-k">Range · the body of work</p>
+    <div class="range-grid">
+      <a class="rcard reveal" href="cancellation-saves.html">
+        <span class="re">No. 06 &middot; LLM era</span>
+        <span class="rt">Cancellation savability classifier</span>
+        <span class="rd">The first GenAI classifier in a cancellation flow. 96.6% accuracy, where months of model training had reached 60%.</span>
+        <span class="rmore">Read the case &rarr;</span>
+      </a>
+      <a class="rcard reveal" href="credit-karma.html">
+        <span class="re">No. 07 &middot; LLM era · regulated finance</span>
+        <span class="rt">Credit Karma · prompts that can't say what they know</span>
+        <span class="rd">Production-track GenAI prompts in a regulated financial product, reasoning over data they're legally forbidden to state.</span>
+        <span class="rmore">Read the case &rarr;</span>
+      </a>
+    </div>
+    <p class="range-foundations"><span class="rf-k">Before Intuit</span>Sam's Club, sole conversation designer for a retail support assistant, voice and chat &middot; Apple, speech recognition and synthesis for Siri &middot; Meta, language-model training for content safety.</p>
+  </div>
+
   <a class="row reveal" href="operate-with-ai.html">
-    <span class="no">No. 07</span>
+    <span class="no">No. 08</span>
     <span class="t">How I Built This Site<span class="whisper">Built the way I build anything hard, end to end.</span></span>
     <span class="fig">built with AI · this site</span>
   </a>
