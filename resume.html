@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Simone Muro · Resume</title>
-<meta name="description" content="Resume of Simone Muro: conversational AI and agentic AI design and development. Behavior design, prompt engineering, golden datasets, evaluation. Meta, Apple Siri, Sam's Club, Intuit, Credit Karma." />
+<meta name="description" content="Request Simone Muro's full resume by email. Conversational and agentic AI: behavior design, working builds, and the evaluation that proves them. The case studies show the work in detail." />
 <meta property="og:title" content="Simone Muro · Resume" />
 <meta property="og:description" content="Conversation and agentic AI: behavior design, working builds, and the evaluation that proves them." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -62,6 +62,23 @@
 
   .r-actions { display: flex; gap: 14px; flex-wrap: wrap; padding: 44px 0 80px; }
 
+  /* ---------- resume-by-request block ---------- */
+  .req { max-width: 60ch; }
+  .req-lead { font-size: 1.16rem; line-height: 1.55; color: var(--ink); font-weight: 500; letter-spacing: -0.01em; margin: 0 0 16px; }
+  .req-why { font-size: 0.98rem; line-height: 1.7; color: var(--muted); margin: 0 0 26px; }
+  .req-cta { margin: 0 0 16px; }
+  .req-fallback { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 0.9rem; color: var(--muted); margin: 0; }
+  .req-fallback a { color: var(--ink); text-underline-offset: 3px; }
+  .req-fallback a:hover { color: var(--persimmon); }
+  .req-copy { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); background: transparent; border: 1px solid var(--hairline2); border-radius: 6px; padding: 4px 10px; cursor: pointer; transition: border-color .15s, color .15s; }
+  .req-copy:hover { border-color: var(--persimmon); color: var(--persimmon); }
+  .req-copy:focus-visible { outline: 2px solid var(--persimmon); outline-offset: 2px; }
+  .req-reply { font-size: 0.85rem; color: var(--faint); margin: 14px 0 0; }
+  .req-links { display: flex; gap: 24px; flex-wrap: wrap; margin: 0; }
+  .req-links a { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.02em; color: var(--ink); text-underline-offset: 4px; }
+  .req-links a:hover { color: var(--persimmon); }
+  .req-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
   /* ---------- print: clean black on white ---------- */
   @media print {
     :root { --paper: #fff; --card: #fff; --ink: #000; --muted: #333; --faint: #555; --hairline: #ccc; --persimmon: #000; --signal: #000; }
@@ -88,7 +105,7 @@
   <a class="wordmark" href="index.html">SIMONE MURO</a>
   <div class="nav-links">
     <a href="index.html#work">Work</a>
-    <a href="index.html#about">Approach</a>
+    <a href="index.html#about">About</a>
     <a href="resume.html" class="optional">Resume</a>
     <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
   </div>
@@ -99,107 +116,36 @@
 <header class="r-head"><div class="rwrap">
   <h1>Simone Muro</h1>
   <p class="r-role">Agentic AI Design &amp; Development</p>
-  <p class="r-meta"><a href="mailto:[removed-private-contact]">[removed-private-contact]</a> · Bay Area, CA · <a href="https://www.linkedin.com/in/simonemuro" rel="me">LinkedIn</a> · <a href="index.html">portfolio</a> · <span class="r-tip">tip: print this page to save a PDF</span></p>
+  <p class="r-meta">Bay Area, CA · <a href="https://www.linkedin.com/in/simonemuro" rel="me">LinkedIn</a> · <a href="index.html">portfolio</a></p>
 </div></header>
 
 <div class="rwrap">
 
 <section class="r-sec">
-  <h2>Summary</h2>
-  <p class="r-summary">
-    Builds AI agents that deliver trusted guidance and next-best actions inside live product workflows, grounded in validated expert content and measured against real outcomes. Nine years designing and shipping conversational and agentic AI across voice, chat, and LLM-powered products, hands-on with Claude Code, Cursor, and Codex. Works as a builder: prototypes solutions with lightweight AI tools, then scales what works from MVP to production. Finds where users get stuck, defines the agent behavior and guardrails that resolve it, and drives measurable adoption. Turns technical detail into a clear plan that product, engineering, and leadership can act on.
-  </p>
-</section>
-
-<section class="r-sec">
-  <h2>Highlights</h2>
-  <div>
-  <p class="r-note">Metrics and product names are masked for confidentiality compliance; exact figures available on request.</p>
-  <ul class="r-record">
-    <li><b>Scaled Customer Success AI outcomes:</b> Led the conversational AI strategy within a multi-year self-service assistant program serving millions of customers, driving double-digit containment and interaction lifts and tens of millions of dollars in measured business impact.</li>
-    <li><b>Advanced NLU-based conversational AI systems to agentic AI:</b> Redesigned customer-facing assistants from rules-based and intent-based logic into agents that orchestrate, plan, decide, and act, while staying aligned with brand and quality expectations.</li>
-    <li><b>Built Agentic AI quality systems:</b> Established golden dataset and human evaluation systems for an enterprise agentic assistant platform, improving conversation quality across three AI agents by 8 to 13 percentage points through clearer response standards, evaluation rubrics, and regression gates.</li>
-    <li><b>Connected AI behavior to retention and revenue:</b> Designed and shipped a GenAI cancellation-saves experience that classified save likelihood with 96.6% accuracy and routed saveable customers to specialized retention experts trained to address their specific cancellation reason, with a multi-million-dollar retention revenue lift projected from the improved routing.</li>
-  </ul>
+  <h2>Resume</h2>
+  <div class="req">
+    <p class="req-lead">I design how AI agents behave, then build and evaluate them. Nine years across voice, NLU, LLM, and agentic systems, from behavior design to working build to the evaluation that proves it.</p>
+    <p class="req-why">I tailor my resume to each role, and it carries specific results from prior work that I keep off a public, indexed page, so I share it directly. Tell me a little about the role and I will send the full version, usually within a day.</p>
+    <p class="req-cta">
+      <a class="btn solid" href="mailto:[removed-private-contact]?subject=Resume%20request&amp;body=Hi%20Simone%2C%0D%0A%0D%0AI%27d%20like%20to%20request%20your%20full%20resume.%0D%0A%0D%0AName%3A%20%0D%0ACompany%2Frole%3A%20%0D%0AWhat%20you%27re%20hiring%20for%3A%20%0D%0A%0D%0AThanks%21" aria-label="Email Simone Muro at [removed-private-contact] at gmail dot com to request her full resume">Request the full resume</a>
+    </p>
+    <p class="req-fallback">Or email me directly: <a href="mailto:[removed-private-contact]">[removed-private-contact]</a><button type="button" id="copyEmail" class="req-copy" aria-label="Copy email address to clipboard">Copy</button></p>
+    <p class="req-reply">I read every message and usually reply within a day.</p>
+    <span id="copyStatus" class="req-sr" aria-live="polite"></span>
   </div>
 </section>
 
 <section class="r-sec">
-  <h2>Experience</h2>
-  <div>
-
-    <div class="job">
-      <div class="job-head"><span class="org">Intuit · QuickBooks &amp; Credit Karma</span><span class="yrs">Oct 2020 – May 2026 · Mountain View, CA</span></div>
-      <table class="roles-table">
-        <tbody>
-          <tr><td>Conversational AI Manager (Manager II)</td><td class="yr">Aug 2025 – May 2026</td></tr>
-          <tr><td>Staff Design Technologist</td><td class="yr">2024 – 2025</td></tr>
-          <tr><td>Prompt Engineer, Credit Karma (rotation)</td><td class="yr">Aug 2024 – late 2024</td></tr>
-          <tr><td>Senior Design Technologist</td><td class="yr">2022 – 2024</td></tr>
-          <tr><td>Design Technologist</td><td class="yr">Oct 2020 – 2022</td></tr>
-        </tbody>
-      </table>
-      <ul>
-        <li>Led conversational AI design across the company's agentic assistant, virtual agent, and voice assistant platforms, owning agent behavior and the quality bar for millions of customers across customer support, payroll, banking, and payments.</li>
-        <li>Built the model evaluation practice: golden datasets, source-of-truth answers and expected actions, response rubrics, multi-turn user-simulator instructions, expert audits, regression gates; validated LLM judges against a 200-task human-labeled set.</li>
-        <li>Prompt engineer on Credit Karma's GenAI features (Aug–late 2024): iterated production prompts across GPT-3.5 and GPT-4o under hard legal constraints, versioned in git and shipped through merged PRs, with persona-spanning synthetic test profiles and a graded evaluation rubric.</li>
-        <li>Designed model behavior for subscription and billing support: LLM cancellation-saves classification with empathetic expert handoff; built an LLM billing-query classifier end to end, lifting self-help resolution <b>12 points</b> (containment ~50% → 61%) on a ~800K-contact support area.</li>
-        <li>Established a reusable Responsible AI approval pattern (umbrella + addendum) that became the team standard for shipping LLM classification use cases.</li>
-        <li>Voice: four iterative login/password-reset experiments raised self-help acceptance 35% → 57% and containment 17% → 29%: the highest-performing voice redesign in the product line that year.</li>
-        <li>Served as interim PM for the customer-support voice assistant: ran business-partner intake and prioritization, distributed work across two designers and a contractor, and drove sprint planning, backlog grooming, and escalation, keeping the channel reliable.</li>
-        <li>Managed a team of three designers and design technologists; championed a promotion to Senior Design Technologist; led senior-designer hiring screens and helped craft the team's interview exercise.</li>
-      </ul>
-    </div>
-
-    <div class="job">
-      <div class="job-head"><span class="org">Sam's Club (Walmart)</span><span class="yrs">Dec 2019 – Oct 2020 · San Bruno, CA</span></div>
-      <p class="role-line">Lead Conversation Designer</p>
-      <ul>
-        <li>Sole design owner for the customer-support voice assistant and chatbot across a retail membership and e-commerce environment: dialogue architecture, escalation paths, production quality standards.</li>
-      </ul>
-    </div>
-
-    <div class="job">
-      <div class="job-head"><span class="org">Apple</span><span class="yrs">Oct 2018 – Dec 2019 · Cupertino, CA</span></div>
-      <p class="role-line">Language Engineer, Siri</p>
-      <ul>
-        <li>Improved Siri ASR and TTS for Brazilian Portuguese: training-data curation, grammar and pronunciation rules, lexicon expansion, quality review with linguists, engineers, and QA.</li>
-      </ul>
-    </div>
-
-    <div class="job">
-      <div class="job-head"><span class="org">Meta (Facebook)</span><span class="yrs">Oct 2016 – Oct 2018 · Menlo Park, CA</span></div>
-      <p class="role-line">Content &amp; Language Analyst</p>
-      <ul>
-        <li>Partnered with ML engineers on language-model training for content-policy detection: taxonomy refinement, labeling quality, trend analysis.</li>
-      </ul>
-    </div>
-
+  <h2>Elsewhere</h2>
+  <div class="req">
+    <p class="req-why">The case studies are the proof the resume points to: the artifacts and the decisions behind each system, not just the claims.</p>
+    <p class="req-links">
+      <a href="index.html#work">See the work</a>
+      <a href="https://www.linkedin.com/in/simonemuro" rel="me">LinkedIn</a>
+      <a href="index.html#contact">Contact</a>
+    </p>
   </div>
 </section>
-
-<section class="r-sec">
-  <h2>Skills</h2>
-  <div class="r-skills">
-    <p class="r-skill"><b>AI craft</b> Prompt engineering, conversational AI &amp; model UX design, agent &amp; skill design, retrieval-grounded responses (RAG), structured JSON output, golden datasets, ground truth, LLM evaluation, LLM-as-judge, human-in-the-loop labeling, multi-turn simulators, Responsible AI, NLU design &amp; tuning.</p>
-    <p class="r-skill"><b>Build</b> Claude Code, Cursor, Codex, MCP, Python, Git &amp; GitHub, Streamlit (test harness), Langfuse.</p>
-    <p class="r-skill"><b>Voice &amp; conversation</b> Vapi, Voiceflow, Dialogflow, Amazon Lex, IVR/telephony design, voice &amp; tone systems, disambiguation, error recovery, human handoff.</p>
-    <p class="r-skill"><b>Evidence</b> A/B experimentation, containment/self-help/quality metrics, Tableau, Qlik, Splunk.</p>
-  </div>
-</section>
-
-<section class="r-sec">
-  <h2>Education</h2>
-  <p class="r-edu">
-    Prompt Engineering for Developers, DeepLearning.AI · Python for Data Science, Udemy · Conversational AI, Coursera ·
-    Front-End Development, Udacity · Law (LL.B.), Univale, Brazil · Languages: English (fluent), Portuguese (native).
-  </p>
-</section>
-
-<div class="r-actions">
-  <a class="btn solid" href="index.html#contact">Get in touch</a>
-  <a class="btn ghost" href="index.html#work">Back to the work</a>
-</div>
 
 </div>
 
@@ -211,6 +157,29 @@
 </div></footer>
 
 <button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
+<script>
+  // Copy-to-clipboard for the visible email fallback, with a screen-reader announcement.
+  (function () {
+    var btn = document.getElementById('copyEmail');
+    if (!btn) return;
+    var status = document.getElementById('copyStatus');
+    var addr = '[removed-private-contact]';
+    var reset;
+    btn.addEventListener('click', function () {
+      function done() {
+        btn.textContent = 'Copied';
+        if (status) status.textContent = 'Email address copied to clipboard';
+        clearTimeout(reset);
+        reset = setTimeout(function () { btn.textContent = 'Copy'; if (status) status.textContent = ''; }, 2000);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(addr).then(done, done);
+      } else {
+        done();
+      }
+    });
+  })();
+</script>
 <script src="./v3.js" defer></script>
 </body>
 </html>
