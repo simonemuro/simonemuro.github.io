@@ -65,7 +65,7 @@
       src: "source: this page" }
   ];
   var FALLBACK = {
-    a: "That's outside my scope. I speak to Simone's work, from her published case studies. Ask about her builds, her evals, or her voice work, or email her directly: googsicle@gmail.com.",
+    a: "That's outside my scope. I speak to Simone's work, from her published case studies. Ask about her builds, her evals, or her voice work, or email her directly: simonermuro@gmail.com.",
     src: "refusal boundary"
   };
 
