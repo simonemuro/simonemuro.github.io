@@ -220,7 +220,7 @@
     { id: "agent", chip: "How was this agent built?", match: ["this agent", "this bot", "how was this", "how do you work", "scripted", "real", "twin"],
       a: "Two layers. Live mode runs Claude behind a guardrailed system prompt Simone wrote, with a golden eval set (injection attempts included) it must pass before it ships. Curated mode, running now, answers from responses she wrote and tested, so it never improvises about her career.", src: "this site" }
   ];
-  var FALLBACK = { a: "That's outside my scope. I speak to Simone's work, from the case studies on this site. Ask about her builds, her evals, or her voice work, or email her: [removed-private-contact].", src: "refusal boundary" };
+  var FALLBACK = { a: "That's outside my scope. I speak to Simone's work, from the case studies on this site. Ask about her builds, her evals, or her voice work, or email her: simonermuro@gmail.com.", src: "refusal boundary" };
 
   SM.agent = function () {
     var door = document.querySelector(".agent-door");
