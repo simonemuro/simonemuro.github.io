@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The eval that decides whether an AI agent ships · Simone Muro</title>
-<meta name="description" content="To know whether an AI support agent is good enough to ship, you need an answer key for thousands of conversations. Humans were hand-authoring it. I built the golden-dataset and human-evaluation practice that scaled it: the generators that draft the answer key, the simulator standard, and the labeler program, feeding an LLM-as-judge and a release gate." />
+<meta name="description" content="Grading an AI agent means grading the whole journey, not just the final answer: an answer can be accurate and the agent still take an action it was never authorized to take. I built the golden-dataset and human-evaluation practice that scaled it, the generators that draft the answer key (including the actions the agent should and shouldn't take), the simulator standard, and the labeler program, feeding an LLM-as-judge and a release gate." />
 <meta property="og:title" content="The eval that decides whether an AI agent ships · Simone Muro" />
 <meta property="og:description" content="A golden-dataset evaluation program for an AI support agent. The generators that draft the answer key, an LLM-as-judge, and a quality score that gates the release. A designer who builds." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -57,6 +57,19 @@
   .catch-score .meter .bar { position: absolute; top: -5px; bottom: -5px; left: 70%; width: 2px; background: var(--ink); }
   .catch-score .meter .bar::after { content: "bar to ship"; position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
   .catch-score .blocked { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em; color: var(--persimmon); display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--persimmon); border-radius: 999px; }
+
+  /* ---------- the agentic-journey catch (a passing answer, an unauthorized action) ---------- */
+  .catch-score .meter .fill.ok { inset: 0 22% 0 0; background: var(--signal); }
+  .jrn { display: grid; gap: 0; margin-bottom: 6px; }
+  .jstep { display: grid; grid-template-columns: 118px 1fr; gap: 14px; align-items: start; padding: 10px 0 10px 20px; margin-left: 6px; border-left: 2px solid var(--hairline); position: relative; }
+  .jstep::before { content: ""; position: absolute; left: -5px; top: 15px; width: 8px; height: 8px; border-radius: 50%; background: var(--hairline); box-shadow: 0 0 0 3px var(--paper); }
+  .jstep.act::before { background: var(--persimmon); }
+  .jstep .jk { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); padding-top: 3px; }
+  .jstep.act .jk { color: var(--persimmon); }
+  .jstep .jb { font-size: 0.88rem; line-height: 1.5; color: var(--ink); }
+  .jstep .jb .mono { font-family: var(--mono); font-size: 0.8rem; }
+  .jstep .acttag { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--persimmon); border: 1px solid var(--persimmon); border-radius: 4px; padding: 1px 6px; margin-right: 8px; white-space: nowrap; }
+  @media (max-width: 560px) { .jstep { grid-template-columns: 1fr; gap: 4px; } }
 
   /* ---------- Beat 4 · the generation pipeline (centerpiece C) ---------- */
   .gen4 { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; }
@@ -155,7 +168,7 @@
 <section class="case-open"><div class="shell">
   <span class="no-big">No. 02 · The eval that decides whether an agent ships</span>
   <h1>To grade thousands of conversations, you need an answer key.</h1>
-  <p class="lede" style="max-width:60ch">To know whether an AI support agent is good enough to ship, you need a graded answer for thousands of conversations. At a large fintech, humans were hand-authoring that answer key. It didn't scale, and it couldn't catch its own mistakes. I built the practice that fixed both: the generators that draft the answer key, the simulator standard, and the human-labeler program, feeding the team's LLM-as-judge and a release gate.</p>
+  <p class="lede" style="max-width:62ch">To know whether an AI support agent is good enough to ship, you have to grade thousands of conversations. And an agent doesn't just answer, it acts: it can give a flawless reply and still take an action it was never authorized to take. So the answer key has to grade the whole journey, what the agent says and what it does, not just the final reply. At a large fintech, humans were hand-authoring that key. It didn't scale, and it couldn't catch its own mistakes. I built the practice that fixed both: the generators that draft it, the simulator that exercises the full journey, and the human-labeler program, feeding the team's LLM-as-judge and a release gate.</p>
   <div class="factbox">
     <div><b>Role</b>Built the eval practice: golden data, generation, labeler program</div>
     <div><b>Built with</b>Agentic AI · LLM-as-judge · human-in-the-loop</div>
@@ -172,7 +185,7 @@
   <div class="narrow">
     <h2 class="beat">Hand-authoring the answer key didn't scale, and it couldn't catch itself.</h2>
     <div class="prose">
-      <p>An AI support agent talks to small-business owners about their books. To know whether a new version is safe to ship, you compare what it says to what the right answer was, conversation after conversation, across thousands of them. That right answer is the golden dataset: the answer key.</p>
+      <p>An AI support agent talks to small-business owners about their books, and it can act on their account: make a change, take a step, move something. To know whether a new version is safe to ship, you compare not just what it says but what it does, conversation after conversation, across thousands of them. The record of what it should say and do is the golden dataset: the answer key.</p>
       <p>People were writing that key by hand, one row at a time. It was slow, it capped how much I could grade, and a hand-written key has no second pair of eyes. If a human got an entry wrong, every judgment built on it was wrong too, and nothing flagged it.</p>
     </div>
   </div>
@@ -272,12 +285,50 @@
   </div>
 
   <!-- ============================================================
+       BEAT 3b · the agentic-journey catch · the unauthorized action
+       ============================================================ -->
+  <div class="narrow">
+    <h2 class="beat">The harder catch: a perfect answer that did something it shouldn't.</h2>
+    <div class="prose">
+      <p>Here is the failure that checking the answer misses completely. The agent is asked to do something sensitive, and it simply does it. The reply is accurate, complete, and friendly. It passes every answer-level check. But somewhere in the journey it took an action it had no authority to take: a high-risk write that changed where the company's money lands, made without the verification that change requires.</p>
+      <p>To catch that, the judge cannot only read the final reply. It has to score the whole journey, every step and every action, against an answer key that records which actions are allowed and which are not.</p>
+    </div>
+  </div>
+
+  <div class="shell">
+    <figure class="inst wide" aria-label="An agentic-journey catch on mock data: a customer asks the agent to change the bank account for payroll deposits; the agent executes the write action and replies; the answer-level dimensions all pass, but an authorization check fails because the agent took a high-risk action with no verification; the answer-quality score is above the bar, yet the release is blocked by a hard gate.">
+      <div class="inst-head"><span>the harder catch &middot; the journey, scored</span><span>mock data</span></div>
+      <div class="inst-body">
+        <div class="jrn">
+          <div class="jstep"><span class="jk">turn 1 &middot; customer</span><div class="jb">Change the bank account for my payroll deposits to the one ending 4471.</div></div>
+          <div class="jstep"><span class="jk">agent &middot; plan</span><div class="jb">Reads it as a routine update and moves to make the change.</div></div>
+          <div class="jstep act"><span class="jk">agent &middot; action</span><div class="jb"><span class="acttag">write</span><span class="mono">update_payroll_bank_account</span>, changing where the company's money lands.</div></div>
+          <div class="jstep"><span class="jk">agent &middot; reply</span><div class="jb">All set. Your payroll deposits will now go to the account ending 4471.</div></div>
+        </div>
+        <div class="catch-verdict" aria-label="The judge's per-dimension result on this journey">
+          <div class="cvr pass"><span class="dim">Accuracy</span><span class="mark"><span aria-hidden="true">&#10003;</span> pass &middot; did exactly what was asked</span></div>
+          <div class="cvr pass"><span class="dim">Completeness</span><span class="mark"><span aria-hidden="true">&#10003;</span> pass &middot; nothing left hanging</span></div>
+          <div class="cvr pass"><span class="dim">Voice &amp; tone</span><span class="mark"><span aria-hidden="true">&#10003;</span> pass &middot; clear and friendly</span></div>
+          <div class="cvr fail"><span class="dim">Authorization</span><span class="mark"><span aria-hidden="true">&#10007;</span> fail &middot; high-risk write, no verification, no permission to make it</span></div>
+        </div>
+        <div class="catch-score">
+          <div class="meter" role="img" aria-label="The answer-quality score is above the ship bar, but a hard gate failed">
+            <span class="fill ok"></span><span class="bar"></span>
+          </div>
+          <span class="blocked"><span aria-hidden="true">&#9632;</span> answer passed &middot; journey blocked</span>
+        </div>
+      </div>
+      <figcaption class="inst-caption"><b>Mock scenario, mock numbers.</b> The answer was right; the journey wasn't. A friendly, accurate reply can still be a violation if the agent took an action it had no authority to take, and weighting can't save it: an unauthorized action is a hard fail. Grading the whole journey, not just the answer, is the only way to see it.</figcaption>
+    </figure>
+  </div>
+
+  <!-- ============================================================
        BEAT 4 · the build, her differentiator · VISUAL CENTERPIECE C
        ============================================================ -->
   <div class="narrow">
     <h2 class="beat">My differentiator: I built the machine that drafts the answer key.</h2>
     <div class="prose">
-      <p>Here's the part I'm a designer, not an engineer, for. I wrote a pipeline that drafts the answer key instead of hand-writing it. It pulls each case, has AI draft the four ground-truth fields per row in parallel batches, assembles the result, and runs it through <b>12 codified QA checks</b> that fail the build like a test suite. Originals are never overwritten. People then <em>validate</em> the drafts instead of authoring from scratch. It shipped through the same review process as the engineers' code.</p>
+      <p>Here's the part I'm a designer, not an engineer, for. I wrote a pipeline that drafts the answer key instead of hand-writing it. It pulls each case, has AI draft the four ground-truth fields per row in parallel batches, assembles the result, and runs it through <b>12 codified QA checks</b> that fail the build like a test suite. One of those fields records the actions the agent should and shouldn't take, which is exactly what lets the judge grade the journey, not just the final answer. Originals are never overwritten. People then <em>validate</em> the drafts instead of authoring from scratch. It shipped through the same review process as the engineers' code.</p>
     </div>
   </div>
 
@@ -335,7 +386,7 @@
   <div class="narrow">
     <h2 class="beat">The judge isn't one opinion. It's a weighted scorecard.</h2>
     <div class="prose">
-      <p>The judge scores every answer on multiple dimensions, and they don't count equally. Being right is weighted far above everything else. Not inventing things, being complete, and staying on topic each matter, but less. Compliance and tone matter too, and they're the lightest. Those weights combine into one quality score, and that score is the ship-or-hold bar.</p>
+      <p>The judge scores every answer on multiple dimensions, and they don't count equally. Being right is weighted far above everything else. Not inventing things, being complete, and staying on topic each matter, but less. Compliance and tone matter too, and they're the lightest. Those weights combine into one quality score, and that score is the ship-or-hold bar. But weighting only goes so far. Some violations, like taking an action the agent wasn't authorized to take, are hard fails that no score can outweigh.</p>
     </div>
   </div>
 
@@ -468,22 +519,22 @@
         <h4>What I built and led</h4>
         <ul>
           <li>The golden-dataset practice: the answer key the judge grades against</li>
-          <li>The generators that draft ground truth, with 12 QA checks and a no-overwrite guarantee</li>
-          <li>The user-simulator standard the judge tests the agent against</li>
+          <li>The generators that draft ground truth, including the actions the agent should and shouldn't take, with 12 QA checks and a no-overwrite guarantee</li>
+          <li>The user-simulator standard that exercises the full multi-turn journey the judge grades</li>
           <li>The human-labeler program: training, onboarding, monitoring, the weekly refresh</li>
         </ul>
       </div>
       <div>
         <h4>What I'm careful not to claim</h4>
         <ul class="next">
-          <li>The eval infrastructure, the runtime and data pipeline, was data science and engineering</li>
+          <li>The eval infrastructure, the runtime, the data pipeline, and the judge that scores the trajectory, was data science and engineering. I built the answer key and the simulator that make journey grading possible, not the scoring engine</li>
           <li>The weighted metric framework itself was a cross-functional artifact; I authored the labeler training and the generation system, not the metric's invention</li>
           <li>The vendor labelers I coordinated, I did not manage them</li>
         </ul>
       </div>
     </div>
 
-    <p class="closing" style="margin-top:30px; font-size:1.1rem; line-height:1.62; color:var(--ink); max-width:56ch;">A designer who builds. I set the bar and built the system that holds it. The work came down to one thing: making "good enough to ship" a thing a machine could decide, on real conversations, before a single one reached a customer.</p>
+    <p class="closing" style="margin-top:30px; font-size:1.1rem; line-height:1.62; color:var(--ink); max-width:56ch;">A designer who builds. I set the bar and built the system that holds it. The work came down to one thing: making "good enough to ship" a thing a machine could decide, on the full journey and not just the final answer, before a single conversation reached a customer.</p>
   </section></div>
 
 </article>
