@@ -71,6 +71,19 @@
   .jstep .acttag { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--persimmon); border: 1px solid var(--persimmon); border-radius: 4px; padding: 1px 6px; margin-right: 8px; white-space: nowrap; }
   @media (max-width: 560px) { .jstep { grid-template-columns: 1fr; gap: 4px; } }
 
+  /* ---------- the skill-onboarding gate (evals decide what joins the agent) ---------- */
+  .sobrow { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; }
+  .sobrow .sob { display: block; flex: 1; min-width: 120px; border: 1px solid var(--hairline); border-radius: 10px; background: var(--paper); padding: 13px 14px; }
+  .sobrow .sob .sobl { font-size: 0.84rem; font-weight: 500; color: var(--ink); display: block; line-height: 1.25; }
+  .sobrow .sob .sobs { font-family: var(--mono); font-size: 0.56rem; color: var(--faint); display: block; margin-top: 5px; line-height: 1.5; }
+  .sobrow .sob.sobgate { flex: 1.7; border-color: var(--persimmon); background: rgba(232,85,47,0.04); }
+  .sobrow .sobcrit { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 11px; }
+  .sobrow .sobc { font-family: var(--mono); font-size: 0.62rem; color: var(--ink); border: 1px solid var(--hairline); border-radius: 6px; padding: 4px 9px; background: var(--paper); line-height: 1.3; }
+  .sobrow .soba { align-self: center; color: var(--faint); flex: none; font-size: 0.95rem; }
+  .sobrow .sob.sobout .soby { color: var(--signal); font-family: var(--mono); font-size: 0.72rem; line-height: 1.45; display: block; }
+  .sobrow .sob.sobout .sobn { color: var(--faint); font-family: var(--mono); font-size: 0.72rem; line-height: 1.45; display: block; margin-top: 9px; }
+  @media (max-width: 768px) { .sobrow { flex-direction: column; } .sobrow .soba { transform: rotate(90deg); margin-left: 20px; align-self: flex-start; } }
+
   /* ---------- Beat 4 · the generation pipeline (centerpiece C) ---------- */
   .gen4 { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; }
   .gen4 .g4 { flex: 1; min-width: 118px; border: 1px solid var(--hairline); border-radius: 10px; background: var(--paper); padding: 12px 13px; }
@@ -433,6 +446,32 @@
         </div>
       </div>
       <figcaption class="inst-caption">Generic dimension labels; the weights are the abstracted shape of the real rubric. The design choice that matters: accuracy is weighted highest, because an answer that is friendly and on-tone but wrong is the most dangerous kind.</figcaption>
+    </figure>
+  </div>
+
+  <!-- ============================================================
+       BEAT 5b · evals decide what the agent can do (skill onboarding)
+       ============================================================ -->
+  <div class="narrow">
+    <h2 class="beat">The gate decided more than releases. It decided what the agent could do.</h2>
+    <div class="prose">
+      <p>Shipping a new version was one decision. The bigger one was composition: a new skill only joined the agent if it earned its place. Run against the same answer key, a candidate had to clear the bar, leave the other skills no worse off, and improve its own domain. Evaluation wasn't a check at the end; it was the filter on what the agent became, and the answer key I built was what that filter ran on.</p>
+    </div>
+  </div>
+
+  <div class="shell">
+    <figure class="inst wide" aria-label="The skill-onboarding gate: a candidate skill is evaluated against the golden answer key on three criteria (clears the quality bar, does no harm to the other skills, improves its own domain); if it passes it joins the agent, otherwise it is sent back.">
+      <div class="inst-head"><span>skill onboarding &middot; evals as the filter on the agent</span></div>
+      <div class="inst-body">
+        <div class="sobrow">
+          <div class="sob"><span class="sobl">A new skill</span><span class="sobs">a candidate capability for the agent</span></div>
+          <span class="soba" aria-hidden="true">&rarr;</span>
+          <div class="sob sobgate"><span class="sobl">Run against the answer key</span><div class="sobcrit"><span class="sobc">clears the quality bar</span><span class="sobc">no harm to the other skills</span><span class="sobc">improves its own domain</span></div></div>
+          <span class="soba" aria-hidden="true">&rarr;</span>
+          <div class="sob sobout"><span class="soby">&#10003; earns its place, joins the agent</span><span class="sobn">&#10007; sent back until it does</span></div>
+        </div>
+      </div>
+      <figcaption class="inst-caption">A capability had to prove itself on the same golden set before it shipped, so the agent grew by evidence, not by opinion. The gate logic was the team's; the answer key it judged against was mine.</figcaption>
     </figure>
   </div>
 
