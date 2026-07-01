@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The generator that drafts an AI agent's answer key · Simone Muro</title>
-<meta name="description" content="To ship an AI support agent you grade the whole journey, what it says and what it does, across thousands of conversations. On the AI quality-evaluation team, I owned the offline datasets and ground truth and authored the generator that pre-fills them, cutting golden-dataset turnaround from about three weeks to one across 3,000+ rows." />
+<meta name="description" content="To ship an AI support agent you grade it against an answer key, the golden dataset, across thousands of conversations. People authored it by hand; I automated the drafting so experts validate a strong first draft instead of filling a blank sheet, cutting turnaround from about three weeks to one across 3,000+ rows." />
 <meta property="og:title" content="The generator that drafts an AI agent's answer key · Simone Muro" />
 <meta property="og:description" content="A generator that pre-fills the ground truth an AI agent is graded against, so evaluation keeps pace with the agents. Owned the offline eval datasets; authored the generator; partnered on the rubrics." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -69,6 +69,54 @@
   .jstep .acttag { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--persimmon); border: 1px solid var(--persimmon); border-radius: 4px; padding: 1px 6px; margin-right: 8px; white-space: nowrap; }
   @media (max-width: 560px) { .jstep { grid-template-columns: 1fr; gap: 4px; } }
 
+  /* ---------- the prompt snippet (the generator's identity section) ---------- */
+  .psnip { border: 1px solid var(--hairline); border-radius: 12px; overflow: hidden; background: var(--card); }
+  .psnip .psh { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 14px; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--hairline); background: var(--paper); }
+  .psnip pre { margin: 0; padding: 14px 16px; font-family: var(--mono); font-size: 0.76rem; line-height: 1.62; color: var(--ink); white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere; }
+  .psnip pre b { color: var(--persimmon); font-weight: 500; letter-spacing: 0.02em; }
+
+  /* ---------- how she directed the model (a redacted direction quote) ---------- */
+  .direct { border: 1px solid var(--hairline); border-left: 3px solid var(--persimmon); border-radius: 0 12px 12px 0; background: var(--card); padding: 15px 20px; margin: 18px 0 0; }
+  .direct .dl { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--persimmon); display: block; margin-bottom: 9px; }
+  .direct p { margin: 0; font-size: 0.98rem; line-height: 1.6; color: var(--ink); }
+
+  /* ---------- the version log ---------- */
+  .vlog { display: grid; gap: 0; }
+  .vrow { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: start; padding: 11px 0; border-top: 1px solid var(--hairline); }
+  .vrow:first-child { border-top: 0; }
+  .vrow .vv { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; color: var(--persimmon); padding-top: 1px; }
+  .vrow .vc { font-size: 0.86rem; line-height: 1.5; color: var(--ink); }
+  @media (max-width: 560px) { .vrow { grid-template-columns: 1fr; gap: 3px; } }
+
+  /* ---------- the chunker flow (split -> draft -> reassemble -> check) ---------- */
+  .cflow { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; }
+  .cflow .cn { flex: 1 1 130px; min-width: 0; border: 1px solid var(--hairline); border-radius: 12px; padding: 13px 14px; }
+  .cflow .cn.hot { border-color: var(--persimmon); background: rgba(232,85,47,0.04); }
+  .cflow .cnt { font-size: 0.9rem; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; line-height: 1.35; }
+  .cflow .cn.hot .cnt { color: var(--persimmon); }
+  .cflow .cns { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.03em; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+  .cflow .carrow { display: flex; align-items: center; color: var(--faint); font-size: 1.05rem; padding: 0 1px; }
+  @media (max-width: 640px) {
+    .cflow { flex-direction: column; }
+    .cflow .cn { flex: 1 1 auto; }
+    .cflow .carrow { justify-content: center; transform: rotate(90deg); }
+  }
+
+  /* ---------- the output row (original -> recommended -> validated) ---------- */
+  .orow { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  @media (max-width: 720px) { .orow { grid-template-columns: 1fr; } }
+  .orow .oc { border: 1px solid var(--hairline); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+  .orow .oc.locked { opacity: 0.72; }
+  .orow .oc.rec { border-color: var(--persimmon); background: rgba(232,85,47,0.04); }
+  .orow .oc.val { border-style: dashed; }
+  .orow .oc h4 { margin: 0; padding: 9px 14px; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); font-weight: 500; border-bottom: 1px solid var(--hairline); background: var(--paper); }
+  .orow .oc.rec h4 { color: var(--persimmon); }
+  .orow .oc .ocb { padding: 13px 14px; font-size: 0.86rem; line-height: 1.5; color: var(--ink); flex: 1; }
+  .orow .oc.val .ocb { min-height: 34px; }
+  .orow .oc .ocs { padding: 0 14px 12px; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.02em; color: var(--faint); line-height: 1.45; }
+  .orow-ask { margin: 0 0 14px; padding: 9px 14px; background: var(--ink); color: var(--paper); border-radius: 14px 14px 14px 4px; font-size: 0.88rem; width: fit-content; max-width: 86%; }
+  .orow-ask .who { display: block; font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(250,249,246,0.55); margin-bottom: 5px; }
+
   /* ---------- role line ---------- */
   .rolel { font-size: 0.98rem; line-height: 1.62; color: var(--muted); max-width: 64ch; margin: 0 0 18px; }
   .rolel b { color: var(--ink); font-weight: 500; }
@@ -93,7 +141,7 @@
 <section class="case-open"><div class="shell">
   <span class="no-big">No. 02 · Scaling the answer key behind AI evaluation</span>
   <h1>To grade thousands of conversations, you need an answer key.</h1>
-  <p class="lede" style="max-width:60ch">An AI support agent doesn't just answer, it acts, so to ship a new version safely you grade the whole journey, what it says and what it does, across thousands of conversations. On a large fintech's AI quality-evaluation team, I owned the offline datasets and the ground truth, and authored the generator that drafts them, so evaluation could keep pace with the agents.</p>
+  <p class="lede" style="max-width:60ch">An AI support agent talks to small-business owners about their books, and it can act on their accounts. To ship a new version safely, you grade it against an answer key, the golden dataset, across thousands of conversations. People were authoring that key by hand, and it didn't scale. So I automated the drafting, and handed the experts a strong first draft to validate instead of a blank sheet to fill.</p>
   <div class="factbox">
     <div><b>Role</b>AI quality-eval team: owned offline datasets + ground truth; authored the pre-fill generator</div>
     <div><b>Built with</b>Golden datasets · pre-fill generation · LLM-as-judge</div>
@@ -108,20 +156,154 @@
        PROBLEM
        ============================================================ -->
   <div class="narrow">
-    <h2 class="beat">The bottleneck: you can't ship what you can't grade.</h2>
+    <h2 class="beat">The bottleneck: authoring the answer key by hand.</h2>
     <div class="prose">
-      <p>An AI support agent talks to small-business owners about their books, and it can act on their accounts. The record of the right answer, what it should say and what it should do, is the golden dataset: the answer key.</p>
-      <p>People were authoring that answer key by hand, one row at a time. It took about three weeks per dataset, and it couldn't keep pace with the agents and skills stacking up behind it.</p>
+      <p>To grade an AI agent you need a golden dataset: the right answer for thousands of conversations, covering what the agent should say and what it should do. People were writing it by hand, one row at a time. It took about three weeks per dataset, it was error-prone, and it couldn't keep pace with the agents and skills stacking up behind it.</p>
     </div>
   </div>
 
   <!-- ============================================================
-       WHAT I BUILT  +  OUTCOME (the shift)
+       THE PROCESS · 4 stages
        ============================================================ -->
   <div class="narrow">
-    <h2 class="beat">What I built: a generator that drafts the answer key.</h2>
     <div class="prose">
-      <p>I wrote a generator that pre-fills the ground truth, both what the agent should say and which actions it may take, against criteria the team defined. A person validates the draft instead of writing it from scratch. That one change is the difference between authoring and reviewing.</p>
+      <p>So I automated the drafting. Not to replace the experts, but to hand them a strong first draft so they could spend their time on judgment instead of typing. Here is how it came together.</p>
+    </div>
+  </div>
+
+  <!-- ---- Stage 1 ---- -->
+  <div class="narrow">
+    <h2 class="beat">First, learn what a good answer key actually is.</h2>
+    <div class="prose">
+      <p>I audited the hand-authored dataset and found the same errors over and over: answers written into the wrong field, missing simulator instructions, mislabeled turns. Then I studied how the experts actually work, their training, their good-and-bad examples, and the criteria the team had agreed on. I pulled all of it into one context document and gave it to the model as its brief. The experts' judgment became the generator's rules.</p>
+    </div>
+  </div>
+
+  <!-- ---- Stage 2 ---- -->
+  <div class="narrow">
+    <h2 class="beat">Then write the generator, and rewrite it, and rewrite it.</h2>
+    <div class="prose">
+      <p>The generator is not a script; it is a long instruction set the model follows. I built it up over about seven versions in six weeks, and almost every version answered something real: a working call redefined what counts as a turn; feedback that it was doing too much led me to strip it back to only the ground truth; a teammate's differently shaped sheet pushed me to make it read any column layout. One rewrite mattered most: I stopped telling it to fill fields and started telling it to think like the most experienced labeler on the team. When it got something wrong, I fixed the principle behind it, not the single example.</p>
+    </div>
+    <figure class="direct">
+      <span class="dl">how I directed the model &middot; redacted</span>
+      <p>"Don't hyper-focus on fixing this one example. Update the generator's principles so they extrapolate, as if training a superlative expert to follow principles, not specific rules for specific cases. Then commit it for versioning."</p>
+    </figure>
+  </div>
+
+  <div class="shell">
+    <figure class="inst wide" aria-label="The generator is an instruction set, iterated: a redacted excerpt of its identity section reads as principles for a senior evaluation specialist, accuracy over completeness and judgment over rules; a version log shows the iterations that changed the generator the most, each answering a real failure, a labeler's note, or a team decision.">
+      <div class="inst-head"><span>the generator &middot; an instruction set, iterated</span></div>
+      <div class="inst-body">
+        <div class="psnip">
+          <div class="psh"><span>redacted excerpt</span><span>the identity section</span></div>
+          <pre><b>IDENTITY AND OPERATIONAL MANDATE</b>
+
+You are a senior Evaluation Specialist and ground-truth architect for the AI evaluation pipeline. You are not a form-filler. You are the most experienced human labeler on the team: someone who has read thousands of customer queries and written hundreds of ground truths, and who knows what makes an evaluation row useful versus misleading.
+
+A ground truth is not just a correct answer. It is the definition of what "good" looks like for a specific customer question. A bad ground truth creates downstream evaluation failures that are hard to trace.
+
+<b>ACCURACY OVER COMPLETENESS.</b> If you are not confident an element adds value, do not add it. A missing element is recoverable. A wrong one trains the evaluator to score incorrect behavior as correct.
+
+<b>JUDGMENT OVER RULES.</b> When a case does not fit a named pattern, ask: "what would the best human labeler do here?" Then do that.</pre>
+        </div>
+        <div class="vlog" style="margin-top:16px" aria-label="Version log">
+          <div class="vrow"><span class="vv">v2</span><span class="vc">Originals locked. Every generated value moved into new recommended columns, so the source was never at risk.</span></div>
+          <div class="vrow"><span class="vv">v3</span><span class="vc">New identity. Stopped telling it to fill fields; told it to reason like a senior evaluator, judgment over rules.</span></div>
+          <div class="vrow"><span class="vv">v4</span><span class="vc">Charts stand alone. It had been repeating numbers in both text and chart; now the chart carries the data and text only adds an insight.</span></div>
+          <div class="vrow"><span class="vv">v6</span><span class="vc">Less is more. Stripped out everything the generator should not write, so it did one job well.</span></div>
+          <div class="vrow"><span class="vv">v7</span><span class="vc">Met the team where they were. Matched the exact column layout of the sheet the experts already used.</span></div>
+        </div>
+      </div>
+      <figcaption class="inst-caption">About seven versions in six weeks; these are the ones that changed the generator the most. Each answered a real failure, a labeler's note, or a team decision, not a whim.</figcaption>
+    </figure>
+  </div>
+
+  <!-- ---- Stage 3 ---- -->
+  <div class="narrow">
+    <h2 class="beat">Keep the model sharp by never asking too much at once.</h2>
+    <div class="prose">
+      <p>A thousand-row sheet in one pass is a trap: the model loses the thread and the context window overflows, so the later rows get worse. A Python pipeline I wrote splits the sheet into small batches, runs them in parallel, stitches the results back together, and runs twelve automated checks before a human sees anything. The script's real job is discipline: keep every call small enough to stay accurate, then prove the reassembly changed nothing it should not.</p>
+    </div>
+  </div>
+
+  <div class="shell">
+    <figure class="inst wide" aria-label="The pipeline splits, drafts, reassembles, and checks: a 1,000-plus row sheet is too big for one pass, so it is split into roughly 50-row batches that each stay inside a reliable context window, drafted in parallel, one model pass per batch, reassembled into the sheet, then gated by 12 automated checks that fail the run on any error.">
+      <div class="inst-head"><span>the pipeline &middot; split, draft, reassemble, check</span></div>
+      <div class="inst-body">
+        <div class="cflow">
+          <div class="cn">
+            <div class="cnt">1,000+ row sheet</div>
+            <div class="cns">too big for one pass</div>
+          </div>
+          <div class="carrow" aria-hidden="true">&rarr;</div>
+          <div class="cn hot">
+            <div class="cnt">~50-row batches</div>
+            <div class="cns">each call stays inside a reliable window</div>
+          </div>
+          <div class="carrow" aria-hidden="true">&rarr;</div>
+          <div class="cn">
+            <div class="cnt">parallel drafts</div>
+            <div class="cns">one model pass per batch</div>
+          </div>
+          <div class="carrow" aria-hidden="true">&rarr;</div>
+          <div class="cn">
+            <div class="cnt">reassemble</div>
+            <div class="cns">merge back into the sheet</div>
+          </div>
+          <div class="carrow" aria-hidden="true">&rarr;</div>
+          <div class="cn">
+            <div class="cnt">12 automated checks</div>
+            <div class="cns">gate the run, fail on any error</div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="inst-caption">One giant prompt would overflow the context window and degrade on the later rows. Small batches keep every call sharp; a failed batch re-runs on its own.</figcaption>
+    </figure>
+  </div>
+
+  <!-- ---- Stage 4 ---- -->
+  <div class="narrow">
+    <h2 class="beat">Draft into the margins; never touch the original.</h2>
+    <div class="prose">
+      <p>Every value the generator produces lands in a new recommended column. The original ground truth is byte-for-byte identical, input to output, and a check fails the run if that is ever not true. Experts read the recommendations, fix what needs fixing, and promote the ones they trust. The machine drafts; the expert judges, and the expert can trust that the machine never overwrote their work.</p>
+    </div>
+  </div>
+
+  <div class="shell">
+    <figure class="inst wide" aria-label="What the generator produces for one row on mock data: a customer asks how to print all their contractor checks at once; the original ground truth column stays locked and untouched, the generator writes a clean draft into the recommended column, and a designer-validated column is left blank for the expert to confirm or fix.">
+      <div class="inst-head"><span>what it produces &middot; one row</span><span>mock data</span></div>
+      <div class="inst-body">
+        <div class="orow-ask"><span class="who">customer asks</span>How do I print all my contractor checks at once?</div>
+        <div class="orow">
+          <div class="oc locked">
+            <h4>original ground truth</h4>
+            <div class="ocb">go to contractors, select them, print</div>
+            <div class="ocs">the rough source, left untouched</div>
+          </div>
+          <div class="oc rec">
+            <h4>recommended</h4>
+            <div class="ocb">Open the contractor payments screen, select the contractors you want, and choose Print. Every selected check prints together.</div>
+            <div class="ocs">the generator's clean draft</div>
+          </div>
+          <div class="oc val">
+            <h4>designer-validated</h4>
+            <div class="ocb"></div>
+            <div class="ocs">blank, for the expert to confirm or fix</div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="inst-caption">Mock row. The generator drafts into the recommended column; the original stays locked; the expert has the final say.</figcaption>
+    </figure>
+  </div>
+
+  <!-- ============================================================
+       OUTCOME (the shift)
+       ============================================================ -->
+  <div class="narrow">
+    <h2 class="beat">The result: authoring became reviewing.</h2>
+    <div class="prose">
+      <p>The team adopted the generator to pre-fill ground truth before experts validated it. What had taken about three weeks by hand took about one, across thousands of rows, and the experts spent their time on judgment instead of typing.</p>
     </div>
   </div>
 
@@ -154,9 +336,9 @@
        PROOF · the two catches
        ============================================================ -->
   <div class="narrow">
-    <h2 class="beat">Why the answer key has to cover what the agent does, not just what it says.</h2>
+    <h2 class="beat">Why the answer key had to be this good.</h2>
     <div class="prose">
-      <p>A good answer key earns its keep on the failures a quick read would miss. Two very different ones, both caught only because the ground truth records what the agent should say <em>and</em> do.</p>
+      <p>Ground truth is the only reason the eval can catch the failures that matter, and the two that matter most look nothing alike.</p>
     </div>
   </div>
 
