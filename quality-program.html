@@ -3,37 +3,35 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The eval that decides whether an AI agent ships · Simone Muro</title>
-<meta name="description" content="Grading an AI agent means grading the whole journey, not just the final answer: an answer can be accurate and the agent still take an action it was never authorized to take. I built the golden-dataset and human-evaluation practice that scaled it, the generators that draft the answer key (including the actions the agent should and shouldn't take), the simulator standard, and the labeler program, feeding an LLM-as-judge and a release gate." />
-<meta property="og:title" content="The eval that decides whether an AI agent ships · Simone Muro" />
-<meta property="og:description" content="A golden-dataset evaluation program for an AI support agent. The generators that draft the answer key, an LLM-as-judge, and a quality score that gates the release. A designer who builds." />
+<title>The generator that drafts an AI agent's answer key · Simone Muro</title>
+<meta name="description" content="To ship an AI support agent you grade the whole journey, what it says and what it does, across thousands of conversations. On the AI quality-evaluation team, I owned the offline datasets and ground truth and authored the generator that pre-fills them, cutting golden-dataset turnaround from about three weeks to one across 3,000+ rows." />
+<meta property="og:title" content="The generator that drafts an AI agent's answer key · Simone Muro" />
+<meta property="og:description" content="A generator that pre-fills the ground truth an AI agent is graded against, so evaluation keeps pace with the agents. Owned the offline eval datasets; authored the generator; partnered on the rubrics." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./v3.css" />
 <style>
   /* ============================================================
-     Scoped instruments for the Quality case.
-     Reuses the v3 .inst frame; adds four new figures.
+     Scoped instruments for the Quality case (tight rebuild).
+     Kept: the two catches. Added: the author->validate shift.
      ============================================================ */
 
-  /* ---------- Beat 2 · the eval pipeline (centerpiece A) ---------- */
-  .pipe { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; }
-  .pipe .pn { flex: 1; min-width: 124px; border: 1px solid var(--hairline2, var(--hairline)); border-radius: 10px; background: var(--paper); padding: 13px 14px; display: flex; flex-direction: column; gap: 6px; }
-  .pipe .pn .pl { font-size: 0.84rem; font-weight: 500; color: var(--ink); line-height: 1.25; }
-  .pipe .pn .ps { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.04em; color: var(--faint); line-height: 1.5; }
-  .pipe .pn.feed { border-style: dashed; }
-  .pipe .pn.judge { border-color: var(--persimmon); background: rgba(232,85,47,0.04); }
-  .pipe .pa { align-self: center; color: var(--faint); flex: none; font-size: 0.95rem; }
-  @media (max-width: 720px) { .pipe { flex-direction: column; } .pipe .pa { transform: rotate(90deg); margin-left: 22px; align-self: flex-start; } }
-  .pipe-gate { display: flex; align-items: stretch; gap: 8px; margin-top: 12px; }
-  .pipe-gate .pg { flex: 1; border-radius: 10px; padding: 11px 14px; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.04em; display: flex; align-items: center; gap: 9px; }
-  .pipe-gate .pg .mk { font-size: 0.9rem; }
-  .pipe-gate .pg.ship { border: 1px solid rgba(27,127,92,0.45); color: var(--signal); background: rgba(27,127,92,0.05); }
-  .pipe-gate .pg.hold { border: 1px solid var(--hairline); color: var(--muted); }
-  @media (max-width: 460px) { .pipe-gate { flex-direction: column; } }
+  /* ---------- the shift: author -> validate (the outcome) ---------- */
+  .shift { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: stretch; }
+  @media (max-width: 640px) { .shift { grid-template-columns: 1fr; } }
+  .shift .sc { border: 1px solid var(--hairline); border-radius: 12px; padding: 16px 18px; }
+  .shift .sc.after { border-color: var(--persimmon); background: rgba(232,85,47,0.04); }
+  .shift .sct { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--faint); }
+  .shift .sc.after .sct { color: var(--persimmon); }
+  .shift .scn { font-size: 1.9rem; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; margin: 7px 0 6px; }
+  .shift .scd { font-size: 0.85rem; line-height: 1.5; color: var(--muted); }
+  .shift .sar { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+  .shift .sarl { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--persimmon); text-align: center; max-width: 92px; line-height: 1.4; }
+  .shift .sarrow { color: var(--faint); font-size: 1.1rem; }
+  @media (max-width: 640px) { .shift .sar { flex-direction: row-reverse; justify-content: flex-start; } .shift .sarrow { transform: rotate(90deg); } }
 
-  /* ---------- Beat 3 · the hallucination catch (centerpiece B) ---------- */
+  /* ---------- the hallucination catch ---------- */
   .catch { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   @media (max-width: 720px) { .catch { grid-template-columns: 1fr; } }
   .catch .cc { border: 1px solid var(--hairline); border-radius: 12px; overflow: hidden; }
@@ -54,12 +52,12 @@
   .catch-score { display: flex; align-items: center; gap: 14px; margin-top: 16px; flex-wrap: wrap; }
   .catch-score .meter { flex: 1; min-width: 180px; height: 12px; border-radius: 999px; background: var(--hairline); position: relative; overflow: hidden; }
   .catch-score .meter .fill { position: absolute; inset: 0 64% 0 0; background: var(--persimmon); }
+  .catch-score .meter .fill.ok { inset: 0 22% 0 0; background: var(--signal); }
   .catch-score .meter .bar { position: absolute; top: -5px; bottom: -5px; left: 70%; width: 2px; background: var(--ink); }
   .catch-score .meter .bar::after { content: "bar to ship"; position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
   .catch-score .blocked { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em; color: var(--persimmon); display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--persimmon); border-radius: 999px; }
 
-  /* ---------- the agentic-journey catch (a passing answer, an unauthorized action) ---------- */
-  .catch-score .meter .fill.ok { inset: 0 22% 0 0; background: var(--signal); }
+  /* ---------- the agentic-journey catch ---------- */
   .jrn { display: grid; gap: 0; margin-bottom: 6px; }
   .jstep { display: grid; grid-template-columns: 118px 1fr; gap: 14px; align-items: start; padding: 10px 0 10px 20px; margin-left: 6px; border-left: 2px solid var(--hairline); position: relative; }
   .jstep::before { content: ""; position: absolute; left: -5px; top: 15px; width: 8px; height: 8px; border-radius: 50%; background: var(--hairline); box-shadow: 0 0 0 3px var(--paper); }
@@ -71,95 +69,9 @@
   .jstep .acttag { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--persimmon); border: 1px solid var(--persimmon); border-radius: 4px; padding: 1px 6px; margin-right: 8px; white-space: nowrap; }
   @media (max-width: 560px) { .jstep { grid-template-columns: 1fr; gap: 4px; } }
 
-  /* ---------- the skill-onboarding gate (evals decide what joins the agent) ---------- */
-  .sobrow { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; }
-  .sobrow .sob { display: block; flex: 1; min-width: 120px; border: 1px solid var(--hairline); border-radius: 10px; background: var(--paper); padding: 13px 14px; }
-  .sobrow .sob .sobl { font-size: 0.84rem; font-weight: 500; color: var(--ink); display: block; line-height: 1.25; }
-  .sobrow .sob .sobs { font-family: var(--mono); font-size: 0.56rem; color: var(--faint); display: block; margin-top: 5px; line-height: 1.5; }
-  .sobrow .sob.sobgate { flex: 1.7; border-color: var(--persimmon); background: rgba(232,85,47,0.04); }
-  .sobrow .sobcrit { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 11px; }
-  .sobrow .sobc { font-family: var(--mono); font-size: 0.62rem; color: var(--ink); border: 1px solid var(--hairline); border-radius: 6px; padding: 4px 9px; background: var(--paper); line-height: 1.3; }
-  .sobrow .soba { align-self: center; color: var(--faint); flex: none; font-size: 0.95rem; }
-  .sobrow .sob.sobout .soby { color: var(--signal); font-family: var(--mono); font-size: 0.72rem; line-height: 1.45; display: block; }
-  .sobrow .sob.sobout .sobn { color: var(--faint); font-family: var(--mono); font-size: 0.72rem; line-height: 1.45; display: block; margin-top: 9px; }
-  @media (max-width: 768px) { .sobrow { flex-direction: column; } .sobrow .soba { transform: rotate(90deg); margin-left: 20px; align-self: flex-start; } }
-
-  /* ---------- Beat 4 · the generation pipeline (centerpiece C) ---------- */
-  .gen4 { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; }
-  .gen4 .g4 { flex: 1; min-width: 118px; border: 1px solid var(--hairline); border-radius: 10px; background: var(--paper); padding: 12px 13px; }
-  .gen4 .g4 .gp { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--persimmon); display: block; }
-  .gen4 .g4 .gn { font-size: 0.86rem; font-weight: 500; color: var(--ink); display: block; margin-top: 6px; line-height: 1.25; }
-  .gen4 .g4 .gd { font-family: var(--mono); font-size: 0.56rem; color: var(--faint); display: block; margin-top: 7px; line-height: 1.5; }
-  .gen4 .g4.draft { border-color: var(--persimmon); background: rgba(232,85,47,0.04); }
-  .gen4 .ga { align-self: center; color: var(--faint); flex: none; font-size: 0.95rem; }
-  @media (max-width: 720px) { .gen4 { flex-direction: column; } .gen4 .ga { transform: rotate(90deg); margin-left: 20px; align-self: flex-start; } }
-  .gen4-foot { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
-  @media (max-width: 560px) { .gen4-foot { grid-template-columns: 1fr; } }
-  .gen4-foot .gf { border: 1px solid var(--hairline); border-radius: 10px; padding: 12px 14px; display: flex; gap: 11px; align-items: flex-start; }
-  .gen4-foot .gf .qn { font-family: var(--mono); font-weight: 600; font-size: 1.05rem; color: var(--persimmon); line-height: 1; flex: none; }
-  .gen4-foot .gf .gft { font-size: 0.82rem; line-height: 1.45; color: var(--ink); }
-  .gen4-foot .gf .gft b { font-weight: 600; }
-  .gen4-foot .gf .gft span { display: block; font-family: var(--mono); font-size: 0.6rem; color: var(--faint); margin-top: 4px; }
-  .gen4-foot .gf .sh { font-family: var(--mono); color: var(--signal); font-size: 1.05rem; line-height: 1; flex: none; }
-  .handoff { display: flex; align-items: center; gap: 12px; margin-top: 15px; padding: 11px 15px; border-radius: 10px; background: var(--card); border: 1px solid var(--hairline); font-size: 0.85rem; color: var(--ink); }
-  .handoff .ho { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--persimmon); white-space: nowrap; }
-
-  /* ---------- Beat 5 · the weighted rubric (centerpiece D) ---------- */
-  .rub { display: grid; gap: 9px; }
-  .rub .rr { display: grid; grid-template-columns: 132px 1fr 44px; align-items: center; gap: 12px; }
-  @media (max-width: 560px) { .rub .rr { grid-template-columns: 110px 1fr 38px; gap: 9px; } }
-  .rub .rl { font-size: 0.82rem; color: var(--ink); }
-  .rub .rl.top { font-weight: 600; }
-  .rub .rt { height: 14px; border-radius: 4px; background: var(--hairline); overflow: hidden; }
-  .rub .rt i { display: block; height: 100%; background: var(--muted); border-radius: 4px; }
-  .rub .rr.top .rt i { background: var(--persimmon); }
-  .rub .rw { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-align: right; }
-  .rub .rr.top .rw { color: var(--persimmon); }
-  .rub-arrow { display: flex; align-items: center; gap: 12px; margin-top: 16px; font-family: var(--mono); font-size: 0.66rem; color: var(--faint); }
-  .rub-arrow .qs { border: 1px solid var(--persimmon); border-radius: 8px; padding: 8px 14px; color: var(--persimmon); font-weight: 500; }
-
-  /* ---------- Beat 6 · the labeler UI + refresh loop ---------- */
-  .lab { display: grid; grid-template-columns: 1.25fr 1fr; gap: 16px; align-items: start; }
-  @media (max-width: 760px) { .lab { grid-template-columns: 1fr; } }
-  .lab-ui { border: 1px solid var(--hairline); border-radius: 12px; overflow: hidden; background: var(--card); }
-  .lab-ui .lh { padding: 9px 14px; border-bottom: 1px solid var(--hairline); background: var(--paper); font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
-  .lab-ui .lt { padding: 13px 14px; display: grid; gap: 9px; }
-  .lab-ui .lm { font-size: 0.84rem; line-height: 1.45; padding: 8px 12px; border-radius: 12px; max-width: 90%; }
-  .lab-ui .lm.u { margin-left: auto; background: var(--ink); color: var(--paper); border-radius: 12px 12px 4px 12px; }
-  .lab-ui .lm.a { background: var(--paper); border: 1px solid var(--hairline); border-radius: 12px 12px 12px 4px; color: var(--ink); }
-  .lab-ui .lq { border-top: 1px solid var(--hairline); padding: 12px 14px; display: grid; gap: 13px; }
-  .lab-ui .lqg { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); display: block; margin-bottom: 7px; }
-  .lab-ui .radios { display: flex; gap: 8px; flex-wrap: wrap; }
-  .lab-ui .radios .rd { font-family: var(--mono); font-size: 0.7rem; padding: 6px 13px; border-radius: 999px; border: 1px solid var(--hairline); color: var(--muted); display: inline-flex; align-items: center; gap: 7px; }
-  .lab-ui .radios .rd .o { width: 11px; height: 11px; border-radius: 50%; border: 1px solid var(--faint); flex: none; }
-  .lab-ui .radios .rd.on { border-color: var(--signal); color: var(--ink); }
-  .lab-ui .radios .rd.on .o { border-color: var(--signal); background: var(--signal); box-shadow: inset 0 0 0 2px var(--card); }
-  .lab-ui .radios .rd.on.no { border-color: var(--persimmon); }
-  .lab-ui .radios .rd.on.no .o { border-color: var(--persimmon); background: var(--persimmon); }
-  .loop { border: 1px solid var(--hairline); border-radius: 12px; padding: 15px 16px; background: var(--paper); }
-  .loop .ls { display: flex; gap: 11px; align-items: flex-start; padding: 8px 0; }
-  .loop .ls .ln { font-family: var(--mono); font-size: 0.62rem; color: var(--persimmon); font-weight: 500; flex: none; width: 18px; }
-  .loop .ls .lx { font-size: 0.82rem; line-height: 1.45; color: var(--ink); }
-  .loop .lcad { margin-top: 9px; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.04em; color: var(--muted); border-top: 1px solid var(--hairline); padding-top: 11px; display: inline-flex; align-items: center; gap: 8px; }
-  .loop .lcad .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--persimmon); }
-
-  /* ---------- record + role ---------- */
-  .rec3 { display: flex; flex-wrap: wrap; gap: 16px 36px; align-items: baseline; }
-  .rec3 .r { display: flex; align-items: baseline; gap: 11px; }
-  .rec3 .rn { font-size: 1.5rem; font-weight: 600; color: var(--ink); letter-spacing: -0.015em; white-space: nowrap; }
-  .rec3 .rn .ar { color: var(--faint); font-weight: 400; margin: 0 4px; }
-  .rec3 .rc { font-size: 0.82rem; color: var(--muted); max-width: 24ch; line-height: 1.4; }
-  .owned { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 30px; }
-  @media (max-width: 600px) { .owned { grid-template-columns: 1fr; gap: 22px; } }
-  .owned h4 { font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--faint); margin: 0 0 12px; }
-  .owned ul { margin: 0; padding: 0; list-style: none; }
-  .owned li { position: relative; padding: 5px 0 5px 17px; font-size: 0.92rem; line-height: 1.5; color: var(--ink); }
-  .owned li::before { content: ""; position: absolute; left: 1px; top: 12px; width: 5px; height: 5px; border-radius: 50%; background: var(--persimmon); }
-  .owned.next li::before { background: var(--faint); }
-  .sec-k { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--persimmon); margin: 0 0 16px; }
-
-  /* fallback for the one var the model uses across cases */
-  :root { --hairline2: var(--hairline); }
+  /* ---------- role line ---------- */
+  .rolel { font-size: 0.98rem; line-height: 1.62; color: var(--muted); max-width: 64ch; margin: 0 0 18px; }
+  .rolel b { color: var(--ink); font-weight: 500; }
 </style>
 </head>
 <body>
@@ -179,96 +91,78 @@
 
 <!-- ===== hero / open ===== -->
 <section class="case-open"><div class="shell">
-  <span class="no-big">No. 02 · The eval that decides whether an agent ships</span>
+  <span class="no-big">No. 02 · Scaling the answer key behind AI evaluation</span>
   <h1>To grade thousands of conversations, you need an answer key.</h1>
-  <p class="lede" style="max-width:62ch">To know whether an AI support agent is good enough to ship, you have to grade thousands of conversations. And an agent doesn't just answer, it acts: it can give a flawless reply and still take an action it was never authorized to take. So the answer key has to grade the whole journey, what the agent says and what it does, not just the final reply. At a large fintech, humans were hand-authoring that key. It didn't scale, and it couldn't catch its own mistakes. I built the practice that fixed both: the generators that draft it, the simulator that exercises the full journey, and the human-labeler program, feeding the team's LLM-as-judge and a release gate.</p>
+  <p class="lede" style="max-width:60ch">An AI support agent doesn't just answer, it acts, so to ship a new version safely you grade the whole journey, what it says and what it does, across thousands of conversations. On a large fintech's AI quality-evaluation team, I owned the offline datasets and the ground truth, and authored the generator that drafts them, so evaluation could keep pace with the agents.</p>
   <div class="factbox">
-    <div><b>Role</b>Built the eval practice: golden data, generation, labeler program</div>
-    <div><b>Built with</b>Agentic AI · LLM-as-judge · human-in-the-loop</div>
+    <div><b>Role</b>AI quality-eval team: owned offline datasets + ground truth; authored the pre-fill generator</div>
+    <div><b>Built with</b>Golden datasets · pre-fill generation · LLM-as-judge</div>
     <div><b>When</b>2025&ndash;2026</div>
-    <div><b>The result</b>Quality became a release gate; graded cases scaled ~1,200 to ~3,000</div>
+    <div><b>Outcome</b>Golden-dataset turnaround ~3 weeks → ~1 week, across 3,000+ rows</div>
   </div>
 </div></section>
 
 <article class="case-body">
 
   <!-- ============================================================
-       BEAT 1 · open / problem
+       PROBLEM
        ============================================================ -->
   <div class="narrow">
-    <h2 class="beat">Hand-authoring the answer key didn't scale, and it couldn't catch itself.</h2>
+    <h2 class="beat">The bottleneck: you can't ship what you can't grade.</h2>
     <div class="prose">
-      <p>An AI support agent talks to small-business owners about their books, and it can act on their account: make a change, take a step, move something. To know whether a new version is safe to ship, you compare not just what it says but what it does, conversation after conversation, across thousands of them. The record of what it should say and do is the golden dataset: the answer key.</p>
-      <p>People were writing that key by hand, one row at a time. It was slow, it capped how much I could grade, and a hand-written key has no second pair of eyes. If a human got an entry wrong, every judgment built on it was wrong too, and nothing flagged it.</p>
+      <p>An AI support agent talks to small-business owners about their books, and it can act on their accounts. The record of the right answer, what it should say and what it should do, is the golden dataset: the answer key.</p>
+      <p>People were authoring that answer key by hand, one row at a time. It took about three weeks per dataset, and it couldn't keep pace with the agents and skills stacking up behind it.</p>
     </div>
   </div>
 
   <!-- ============================================================
-       BEAT 2 · the eval pipeline · VISUAL CENTERPIECE A
+       WHAT I BUILT  +  OUTCOME (the shift)
        ============================================================ -->
   <div class="narrow">
-    <h2 class="beat">How a release gets graded, end to end.</h2>
+    <h2 class="beat">What I built: a generator that drafts the answer key.</h2>
     <div class="prose">
-      <p>The pipeline is one line. A golden dataset and a user-simulator drive the agent through real conversations. The agent answers. An LLM-as-judge scores each answer against the ground truth on a weighted rubric. The scores roll up to one quality number, and that number decides: ship, or hold.</p>
+      <p>I wrote a generator that pre-fills the ground truth, both what the agent should say and which actions it may take, against criteria the team defined. A person validates the draft instead of writing it from scratch. That one change is the difference between authoring and reviewing.</p>
     </div>
   </div>
 
   <div class="shell">
-    <figure class="inst wide" aria-label="The evaluation pipeline, left to right: a golden dataset and a user-simulator drive the AI agent; the agent produces an answer; an LLM-as-judge scores it against ground truth; the scores become a quality score; a release gate decides ship or hold.">
-      <div class="inst-head"><span>pipeline · golden data to release gate</span></div>
+    <figure class="inst wide" aria-label="Before and after: authoring golden-dataset ground truth by hand took about three weeks per dataset; with the generator pre-filling the ground truth and a person validating it, turnaround dropped to about one week, across 3,000-plus rows and many agents and skills.">
+      <div class="inst-head"><span>the shift &middot; author &rarr; validate</span></div>
       <div class="inst-body">
-        <div class="pipe">
-          <div class="pn feed">
-            <span class="pl">Golden dataset</span>
-            <span class="ps">the answer key, per conversation</span>
+        <div class="shift">
+          <div class="sc">
+            <span class="sct">before &middot; by hand</span>
+            <div class="scn">~3 weeks</div>
+            <div class="scd">Author every row of ground truth, one at a time. It capped how much could be graded and couldn't scale across agents and skills.</div>
           </div>
-          <div class="pn feed">
-            <span class="pl">User-simulator</span>
-            <span class="ps">plays the customer, multi-turn</span>
+          <div class="sar">
+            <span class="sarl">the generator I authored</span>
+            <span class="sarrow" aria-hidden="true">&rarr;</span>
           </div>
-          <span class="pa" aria-hidden="true">&rarr;</span>
-          <div class="pn">
-            <span class="pl">AI support agent</span>
-            <span class="ps">the version under test</span>
+          <div class="sc after">
+            <span class="sct">after &middot; pre-filled</span>
+            <div class="scn">~1 week</div>
+            <div class="scd">The generator drafts the ground truth, say and do; a person validates. Across 3,000+ rows and many agents and skills.</div>
           </div>
-          <span class="pa" aria-hidden="true">&rarr;</span>
-          <div class="pn">
-            <span class="pl">The agent's answer</span>
-            <span class="ps">what it actually said and did</span>
-          </div>
-          <span class="pa" aria-hidden="true">&rarr;</span>
-          <div class="pn judge">
-            <span class="pl">LLM-as-judge</span>
-            <span class="ps">scores answer vs. ground truth</span>
-          </div>
-          <span class="pa" aria-hidden="true">&rarr;</span>
-          <div class="pn">
-            <span class="pl">Quality score</span>
-            <span class="ps">one number, weighted</span>
-          </div>
-        </div>
-        <div class="pipe-gate">
-          <div class="pg ship"><span class="mk" aria-hidden="true">&#10003;</span> above the bar &rarr; ship</div>
-          <div class="pg hold"><span class="mk" aria-hidden="true">&#9679;</span> below the bar &rarr; hold</div>
         </div>
       </div>
-      <figcaption class="inst-caption">The golden dataset is the answer key; the judge is the grader. The whole point is that the score, not a person's read, decides whether a release moves.</figcaption>
+      <figcaption class="inst-caption">Pre-filling the golden datasets against defined criteria cut turnaround from roughly three weeks to one, and let offline evaluation keep pace with the agents. Figures reflect the real change, abstracted.</figcaption>
     </figure>
   </div>
 
   <!-- ============================================================
-       BEAT 3 · the hallucination catch · VISUAL CENTERPIECE B
+       PROOF · the two catches
        ============================================================ -->
   <div class="narrow">
-    <h2 class="beat">This is what the gate is for: catching a confident wrong answer.</h2>
+    <h2 class="beat">Why the answer key has to cover what the agent does, not just what it says.</h2>
     <div class="prose">
-      <p>A customer asks a simple question. The agent answers with total confidence and invents the specifics, a date and an amount that were never in the data. To a person skimming, it reads fine. The judge doesn't skim. It compares the answer to the ground truth, the <b>no-hallucination</b> and <b>correctness</b> dimensions fail, the quality score drops below the bar, and the release is blocked.</p>
+      <p>A good answer key earns its keep on the failures a quick read would miss. Two very different ones, both caught only because the ground truth records what the agent should say <em>and</em> do.</p>
     </div>
   </div>
 
   <div class="shell">
     <figure class="inst wide" aria-label="A before-and-after catch on mock data: a customer asks when their next payroll tax payment is due; the agent invents a specific date and dollar amount; the ground truth shows the real answer depends on the filing schedule; the judge fails the no-hallucination and correctness dimensions; the quality score falls below the bar and the release is blocked.">
-      <div class="inst-head"><span>the catch &middot; a hallucination, scored</span><span>mock data</span></div>
+      <div class="inst-head"><span>catch 1 &middot; a confident wrong answer</span><span>mock data</span></div>
       <div class="inst-body">
         <div class="catch-ask"><span class="who">customer asks</span>When is my next payroll tax payment due, and how much?</div>
         <div class="catch">
@@ -293,24 +187,13 @@
           <span class="blocked"><span aria-hidden="true">&#9632;</span> ship blocked</span>
         </div>
       </div>
-      <figcaption class="inst-caption"><b>Mock scenario, mock numbers.</b> The figures here are invented for the example and represent nothing real. The point is the mechanism: a fluent, friendly answer can still be flatly wrong, and a weighted judge catches it where a person skimming would not.</figcaption>
+      <figcaption class="inst-caption"><b>Mock scenario, mock numbers.</b> A fluent, friendly answer can still be flatly wrong. The ground truth is what lets the judge catch it where a person skimming would not.</figcaption>
     </figure>
-  </div>
-
-  <!-- ============================================================
-       BEAT 3b · the agentic-journey catch · the unauthorized action
-       ============================================================ -->
-  <div class="narrow">
-    <h2 class="beat">The harder catch: a perfect answer that did something it shouldn't.</h2>
-    <div class="prose">
-      <p>Here is the failure that checking the answer misses completely. The agent is asked to do something sensitive, and it simply does it. The reply is accurate, complete, and friendly. It passes every answer-level check. But somewhere in the journey it took an action it had no authority to take: a high-risk write that changed where the company's money lands, made without the verification that change requires.</p>
-      <p>To catch that, the judge cannot only read the final reply. It has to score the whole journey, every step and every action, against an answer key that records which actions are allowed and which are not.</p>
-    </div>
   </div>
 
   <div class="shell">
     <figure class="inst wide" aria-label="An agentic-journey catch on mock data: a customer asks the agent to change the bank account for payroll deposits; the agent executes the write action and replies; the answer-level dimensions all pass, but an authorization check fails because the agent took a high-risk action with no verification; the answer-quality score is above the bar, yet the release is blocked by a hard gate.">
-      <div class="inst-head"><span>the harder catch &middot; the journey, scored</span><span>mock data</span></div>
+      <div class="inst-head"><span>catch 2 &middot; a right answer that did a wrong thing</span><span>mock data</span></div>
       <div class="inst-body">
         <div class="jrn">
           <div class="jstep"><span class="jk">turn 1 &middot; customer</span><div class="jb">Change the bank account for my payroll deposits to the one ending 4471.</div></div>
@@ -331,250 +214,17 @@
           <span class="blocked"><span aria-hidden="true">&#9632;</span> answer passed &middot; journey blocked</span>
         </div>
       </div>
-      <figcaption class="inst-caption"><b>Mock scenario, mock numbers.</b> The answer was right; the journey wasn't. A friendly, accurate reply can still be a violation if the agent took an action it had no authority to take, and weighting can't save it: an unauthorized action is a hard fail. Grading the whole journey, not just the answer, is the only way to see it.</figcaption>
+      <figcaption class="inst-caption"><b>Mock scenario, mock numbers.</b> The answer was right; the journey wasn't. Because the ground truth records which actions are allowed, an unauthorized write is a hard fail, no matter how good the reply reads.</figcaption>
     </figure>
   </div>
 
   <!-- ============================================================
-       BEAT 4 · the build, her differentiator · VISUAL CENTERPIECE C
+       ROLE + CLOSE
        ============================================================ -->
-  <div class="narrow">
-    <h2 class="beat">My differentiator: I built the machine that drafts the answer key.</h2>
-    <div class="prose">
-      <p>Here's the part I'm a designer, not an engineer, for. I wrote a pipeline that drafts the answer key instead of hand-writing it. It pulls each case, has AI draft the four ground-truth fields per row in parallel batches, assembles the result, and runs it through <b>12 codified QA checks</b> that fail the build like a test suite. One of those fields records the actions the agent should and shouldn't take, which is exactly what lets the judge grade the journey, not just the final answer. Originals are never overwritten. People then <em>validate</em> the drafts instead of authoring from scratch. It shipped through the same review process as the engineers' code.</p>
-    </div>
+  <div class="narrow" style="margin-top:56px">
+    <p class="rolel">On the AI quality-evaluation team, I <b>owned the offline datasets and the ground truth</b>, <b>authored the generator</b> and the LLM-as-judge simulator instructions, and <b>partnered on the quality rubrics</b>. The eval infrastructure, the judge, and the release gate were the wider team's. A quality program this size is never one person's work.</p>
+    <p class="closing" style="font-size:1.1rem; line-height:1.62; color:var(--ink); max-width:54ch;">The generator was mine, and it's the reason evaluation could keep pace with the agents.</p>
   </div>
-
-  <div class="shell">
-    <figure class="inst wide" aria-label="The generation pipeline in four phases: extract each case; AI drafts the four ground-truth fields per row in parallel batches; assemble; run twelve codified QA checks. Originals are never overwritten. Humans then validate the drafts instead of hand-authoring them.">
-      <div class="inst-head"><span>the build &middot; a pipeline that drafts the answer key</span></div>
-      <div class="inst-body">
-        <div class="gen4">
-          <div class="g4">
-            <span class="gp">phase 1</span>
-            <span class="gn">Extract</span>
-            <span class="gd">pull each case to be graded</span>
-          </div>
-          <span class="ga" aria-hidden="true">&rarr;</span>
-          <div class="g4 draft">
-            <span class="gp">phase 2</span>
-            <span class="gn">AI drafts the row</span>
-            <span class="gd">four ground-truth fields, in parallel batches</span>
-          </div>
-          <span class="ga" aria-hidden="true">&rarr;</span>
-          <div class="g4">
-            <span class="gp">phase 3</span>
-            <span class="gn">Assemble</span>
-            <span class="gd">stitch the drafts back into rows</span>
-          </div>
-          <span class="ga" aria-hidden="true">&rarr;</span>
-          <div class="g4">
-            <span class="gp">phase 4</span>
-            <span class="gn">QA</span>
-            <span class="gd">12 checks that fail the build</span>
-          </div>
-        </div>
-        <div class="gen4-foot">
-          <div class="gf">
-            <span class="qn">12</span>
-            <span class="gft"><b>codified QA checks.</b> Automated gates on every run, so reviewing a thousand drafts isn't itself a thousand manual checks.<span>fail like a test suite</span></span>
-          </div>
-          <div class="gf">
-            <span class="sh" aria-hidden="true">&#9679;</span>
-            <span class="gft"><b>Originals are never overwritten.</b> A human's authored ground truth stays byte-identical on every path; a check fails the run if that's ever violated.</span>
-          </div>
-        </div>
-        <div class="handoff">
-          <span class="ho">the shift</span>
-          <span>People stop hand-authoring the answer key and start validating the drafts. The machine does the first pass; experts say yes or fix.</span>
-        </div>
-      </div>
-      <figcaption class="inst-caption">Built by a designer, shipped through the same review pipeline as the engineering team's code. The outcome was capacity: graded cases scaled from roughly 1,200 to roughly 3,000.</figcaption>
-    </figure>
-  </div>
-
-  <!-- ============================================================
-       BEAT 5 · the rubric to the gate · VISUAL CENTERPIECE D
-       ============================================================ -->
-  <div class="narrow">
-    <h2 class="beat">The judge isn't one opinion. It's a weighted scorecard.</h2>
-    <div class="prose">
-      <p>The judge scores every answer on multiple dimensions, and they don't count equally. Being right is weighted far above everything else. Not inventing things, being complete, and staying on topic each matter, but less. Compliance and tone matter too, and they're the lightest. Those weights combine into one quality score, and that score is the ship-or-hold bar. But weighting only goes so far. Some violations, like taking an action the agent wasn't authorized to take, are hard fails that no score can outweigh.</p>
-    </div>
-  </div>
-
-  <div class="shell">
-    <figure class="inst wide" aria-label="The weighted judge rubric as a bar list: correctness about 45 percent, no-hallucination about 15 percent, completeness about 15 percent, relevance about 15 percent, compliance about 5 percent, voice and tone about 5 percent. The weights combine into one quality score, which is the ship-or-hold bar.">
-      <div class="inst-head"><span>the rubric &middot; weighted into one score</span></div>
-      <div class="inst-body">
-        <div class="rub">
-          <div class="rr top">
-            <span class="rl top">Correctness</span>
-            <span class="rt"><i style="width:100%"></i></span>
-            <span class="rw">~45%</span>
-          </div>
-          <div class="rr">
-            <span class="rl">No-hallucination</span>
-            <span class="rt"><i style="width:33%"></i></span>
-            <span class="rw">~15%</span>
-          </div>
-          <div class="rr">
-            <span class="rl">Completeness</span>
-            <span class="rt"><i style="width:33%"></i></span>
-            <span class="rw">~15%</span>
-          </div>
-          <div class="rr">
-            <span class="rl">Relevance</span>
-            <span class="rt"><i style="width:33%"></i></span>
-            <span class="rw">~15%</span>
-          </div>
-          <div class="rr">
-            <span class="rl">Compliance</span>
-            <span class="rt"><i style="width:11%"></i></span>
-            <span class="rw">~5%</span>
-          </div>
-          <div class="rr">
-            <span class="rl">Voice &amp; tone</span>
-            <span class="rt"><i style="width:11%"></i></span>
-            <span class="rw">~5%</span>
-          </div>
-        </div>
-        <div class="rub-arrow">
-          <span>weighted into one quality score</span>
-          <span aria-hidden="true">&rarr;</span>
-          <span class="qs">the ship / no-ship bar</span>
-        </div>
-      </div>
-      <figcaption class="inst-caption">Generic dimension labels; the weights are the abstracted shape of the real rubric. The design choice that matters: accuracy is weighted highest, because an answer that is friendly and on-tone but wrong is the most dangerous kind.</figcaption>
-    </figure>
-  </div>
-
-  <!-- ============================================================
-       BEAT 5b · evals decide what the agent can do (skill onboarding)
-       ============================================================ -->
-  <div class="narrow">
-    <h2 class="beat">The gate decided more than releases. It decided what the agent could do.</h2>
-    <div class="prose">
-      <p>Shipping a new version was one decision. The bigger one was composition: a new skill only joined the agent if it earned its place. Run against the same answer key, a candidate had to clear the bar, leave the other skills no worse off, and improve its own domain. Evaluation wasn't a check at the end; it was the filter on what the agent became, and the answer key I built was what that filter ran on.</p>
-    </div>
-  </div>
-
-  <div class="shell">
-    <figure class="inst wide" aria-label="The skill-onboarding gate: a candidate skill is evaluated against the golden answer key on three criteria (clears the quality bar, does no harm to the other skills, improves its own domain); if it passes it joins the agent, otherwise it is sent back.">
-      <div class="inst-head"><span>skill onboarding &middot; evals as the filter on the agent</span></div>
-      <div class="inst-body">
-        <div class="sobrow">
-          <div class="sob"><span class="sobl">A new skill</span><span class="sobs">a candidate capability for the agent</span></div>
-          <span class="soba" aria-hidden="true">&rarr;</span>
-          <div class="sob sobgate"><span class="sobl">Run against the answer key</span><div class="sobcrit"><span class="sobc">clears the quality bar</span><span class="sobc">no harm to the other skills</span><span class="sobc">improves its own domain</span></div></div>
-          <span class="soba" aria-hidden="true">&rarr;</span>
-          <div class="sob sobout"><span class="soby">&#10003; earns its place, joins the agent</span><span class="sobn">&#10007; sent back until it does</span></div>
-        </div>
-      </div>
-      <figcaption class="inst-caption">A capability had to prove itself on the same golden set before it shipped, so the agent grew by evidence, not by opinion. The gate logic was the team's; the answer key it judged against was mine.</figcaption>
-    </figure>
-  </div>
-
-  <!-- ============================================================
-       BEAT 6 · the other half · online evals
-       ============================================================ -->
-  <div class="narrow">
-    <h2 class="beat">The other half: real traffic, labeled by trained humans.</h2>
-    <div class="prose">
-      <p>The offline gate is only half the picture. Real customers ask things no answer key anticipated, so I ran the online side too: a small, stratified sample of real conversations, scored by trained humans. I wrote the instructions and the training, onboarded and monitored the labelers, and coordinated internal labeling alongside two labeling vendors. Failures flow back into the golden set on a roughly weekly cadence, so the answer key keeps learning from production.</p>
-    </div>
-  </div>
-
-  <div class="shell">
-    <figure class="inst wide" aria-label="A mock labeler interface showing a customer-agent transcript with accuracy radio buttons and a task-attempted toggle, beside the weekly refresh loop that moves production failures back into the golden set.">
-      <div class="inst-head"><span>online evals &middot; label, then refresh the answer key</span><span>mock UI</span></div>
-      <div class="inst-body">
-        <div class="lab">
-          <div class="lab-ui">
-            <div class="lh">labeler view &middot; one sampled conversation</div>
-            <div class="lt">
-              <div class="lm u">How do I record a refund I gave a customer?</div>
-              <div class="lm a">You can record it as a credit memo, then apply it to the original invoice so your books and the customer's balance both stay right.</div>
-            </div>
-            <div class="lq">
-              <div>
-                <span class="lqg">Was the answer accurate?</span>
-                <div class="radios">
-                  <span class="rd on"><span class="o"></span> Accurate</span>
-                  <span class="rd">Partly</span>
-                  <span class="rd no">Inaccurate</span>
-                </div>
-              </div>
-              <div>
-                <span class="lqg">Did the agent attempt the task?</span>
-                <div class="radios">
-                  <span class="rd on"><span class="o"></span> Yes</span>
-                  <span class="rd no">No</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="loop" aria-label="The weekly refresh loop">
-            <div class="ls"><span class="ln">1</span><span class="lx">Sample a small, stratified slice of real conversations.</span></div>
-            <div class="ls"><span class="ln">2</span><span class="lx">Trained humans label accuracy and task-attempted.</span></div>
-            <div class="ls"><span class="ln">3</span><span class="lx">Failures move into the golden set as new cases.</span></div>
-            <div class="ls"><span class="ln">4</span><span class="lx">The offline gate now grades against them too.</span></div>
-            <div class="lcad"><span class="dot"></span> roughly weekly cadence</div>
-          </div>
-        </div>
-      </div>
-      <figcaption class="inst-caption"><b>Reconstructed UI on mock data.</b> The real labeling tool, transcripts, and customer data stay confidential. The structure is real: a transcript, an accuracy judgment, a task-attempted judgment, and a loop that feeds production failures back into the answer key.</figcaption>
-    </figure>
-  </div>
-
-  <!-- ============================================================
-       BEAT 7 · the lesson · pull-quote
-       ============================================================ -->
-  <div class="narrow">
-    <h2 class="beat">The bug that taught the lesson.</h2>
-    <div class="prose">
-      <p>My pipeline had a fallback path that, in one case, would silently overwrite existing ground truth instead of failing. No error, no flag, just a quietly corrupted answer key poisoning every judgment downstream. A reviewer caught it. I removed the fallback, shipped a safe auto-promote in its place in a few hours, and every one of the 12 checks passed. The fix was easy. The lesson stuck.</p>
-    </div>
-  </div>
-
-  <div class="narrow"><p class="pull">
-    Fallback paths are silent failure paths in disguise.
-    <span class="attr">Simone Muro</span>
-  </p></div>
-
-  <!-- ============================================================
-       Role + record + close
-       ============================================================ -->
-  <div class="shell"><section class="beat" style="margin-top:64px">
-    <p class="sec-k">The record</p>
-    <div class="rec3">
-      <div class="r"><span class="rn">~1,200 <span class="ar" aria-hidden="true">&rarr;</span> ~3,000</span><span class="rc">graded cases, once the generators drafted the answer key</span></div>
-      <div class="r"><span class="rn">12</span><span class="rc">codified QA checks that fail the build like a test suite</span></div>
-      <div class="r"><span class="rn">two halves</span><span class="rc">an offline release gate and an online labeler program</span></div>
-    </div>
-
-    <div class="owned">
-      <div>
-        <h4>What I built and led</h4>
-        <ul>
-          <li>The golden-dataset practice: the answer key the judge grades against</li>
-          <li>The generators that draft ground truth, including the actions the agent should and shouldn't take, with 12 QA checks and a no-overwrite guarantee</li>
-          <li>The user-simulator standard that exercises the full multi-turn journey the judge grades</li>
-          <li>The human-labeler program: training, onboarding, monitoring, the weekly refresh</li>
-        </ul>
-      </div>
-      <div>
-        <h4>What I'm careful not to claim</h4>
-        <ul class="next">
-          <li>The eval infrastructure, the runtime, the data pipeline, and the judge that scores the trajectory, was data science and engineering. I built the answer key and the simulator that make journey grading possible, not the scoring engine</li>
-          <li>The weighted metric framework itself was a cross-functional artifact; I authored the labeler training and the generation system, not the metric's invention</li>
-          <li>The vendor labelers I coordinated, I did not manage them</li>
-        </ul>
-      </div>
-    </div>
-
-    <p class="closing" style="margin-top:30px; font-size:1.1rem; line-height:1.62; color:var(--ink); max-width:56ch;">A designer who builds. I set the bar and built the system that holds it. The work came down to one thing: making "good enough to ship" a thing a machine could decide, on the full journey and not just the final answer, before a single conversation reached a customer.</p>
-  </section></div>
 
 </article>
 
@@ -589,7 +239,7 @@
 
 <footer class="colophon"><div class="shell">
   <p>Designed and built AI-natively: directed by Simone, executed with AI agents, the way she works.</p>
-  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. The agent, transcripts, and interface shown are generic reconstructions on mock data; product, platform, and tool names are omitted, and every number on this page is either explicitly mock or an abstracted figure. Roles, process, design decisions, and measured outcomes are preserved. © 2026 Simone Muro · Bay Area, CA</p>
+  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. The transcripts and interface shown are generic reconstructions on mock data; product, platform, and tool names are omitted, and every number is either explicitly mock or an abstracted figure. Roles, process, design decisions, and measured outcomes are preserved. © 2026 Simone Muro · Bay Area, CA</p>
 </div></footer>
 
 <button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
