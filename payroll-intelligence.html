@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Payroll Intelligence · Teaching an agent what experts know · Simone Muro</title>
+<meta name="description" content="Asked why an employee is missing from a payroll run, a good agent reads the account first, then asks the one question only the customer can answer. The diagnostic framework I built to teach a payroll agent what the experts know, before it answers anyone." />
+<meta property="og:title" content="Payroll Intelligence · Simone Muro" />
+<meta property="og:description" content="The agent's ground truth didn't exist, and a model asked for payroll knowledge will confidently invent it. So I built the framework that taught it what the experts know." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./v3.css" />
+<style>
+  /* payroll: interrogate vs read-first (mock data) */
+  .pr-ask { justify-self: start; max-width: 90%; background: var(--ink); color: var(--paper); padding: 9px 14px; border-radius: 14px 14px 14px 4px; font-size: 0.88rem; line-height: 1.45; margin-bottom: 14px; }
+  .pr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 680px) { .pr-grid { grid-template-columns: 1fr; } }
+  .pr-card { border: 1px solid var(--hairline2); border-radius: 12px; background: var(--paper); overflow: hidden; }
+  .pr-h { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); padding: 13px 15px 11px; border-bottom: 1px solid var(--hairline); }
+  .pr-body { padding: 13px 15px 15px; display: grid; gap: 9px; }
+  .pr-q { background: var(--card); border: 1px solid var(--hairline); padding: 9px 13px; border-radius: 12px; font-size: 0.84rem; line-height: 1.4; color: var(--ink); }
+  .pr-q .tag { display: block; font-family: var(--mono); font-size: 0.6rem; color: var(--persimmon); margin-top: 5px; letter-spacing: 0.02em; }
+  .pr-readhead { font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); margin-bottom: 8px; }
+  .pr-read { border: 1px solid var(--hairline2); border-radius: 10px; overflow: hidden; margin-bottom: 11px; }
+  .pr-read .rr { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 7px 12px; border-top: 1px solid var(--hairline); }
+  .pr-read .rr:first-child { border-top: 0; }
+  .pr-read .rr .k { font-family: var(--mono); font-size: 0.6rem; color: var(--faint); text-transform: uppercase; letter-spacing: 0.04em; }
+  .pr-read .rr .v { font-family: var(--mono); font-size: 0.74rem; color: var(--ink); }
+  .pr-read .rr .v .ok { color: var(--signal); margin-left: 5px; }
+  .pr-final { background: var(--card); border: 1px solid var(--hairline2); border-left: 2px solid var(--persimmon); padding: 10px 13px; border-radius: 4px 12px 12px 4px; font-size: 0.84rem; line-height: 1.45; color: var(--ink); }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav"><div class="shell">
+  <a class="wordmark" href="index.html">SIMONE MURO</a>
+  <div class="nav-links">
+    <a href="index.html#work">Work</a>
+    <a href="index.html#about">About</a>
+    <a href="resume.html" class="optional">Resume</a>
+    <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
+  </div>
+</div></nav>
+
+<main id="main">
+
+<section class="case-open"><div class="shell">
+  <span class="no-big">No. 02 · Payroll Intelligence</span>
+  <h1>Teaching an agent what the experts know.</h1>
+  <p class="lede">January 2026. A new payroll agent was being built, and the hard part wasn't what it should say. It was what it should do: when to answer, when to read the account and verify, when to ask the customer, and when to stop and hand off to a human. Ask a model a payroll question it can't look up and it will invent one, confidently. I built the framework that made those calls and taught the agent what the experts actually know. The whole thing shows up in how it handles one question: where is my employee?</p>
+  <div class="factbox">
+    <div><b>Role</b>Designed the agent's diagnostic behavior; authored the framework, instructions, and generator</div>
+    <div><b>Scope</b>The high-volume questions + 9 troubleshooting domains</div>
+    <div><b>Pace</b>Full set in about ten days</div>
+    <div><b>Built</b>A system prompt that drafts diagnostic datasets for experts to correct</div>
+  </div>
+</div></section>
+
+<article class="case-body">
+
+  <div class="shell">
+    <figure class="inst wide" aria-label="The same question answered two ways: an agent that interrogates the customer for facts it could look up, versus one that reads the account first and asks a single confirming question">
+      <div class="inst-head"><span>the same question, two agents · "my employee is missing from this run"</span><span>mock data</span></div>
+      <div class="inst-body">
+        <div class="pr-ask">"I ran payroll, but my employee Maria isn't on it."</div>
+        <div class="pr-grid">
+          <div class="pr-card">
+            <div class="pr-h">before &middot; asks what it could look up</div>
+            <div class="pr-body">
+              <div class="pr-q">What's the employee's full name?<span class="tag">the account already lists every employee</span></div>
+              <div class="pr-q">When did you add them?<span class="tag">the audit log has the date</span></div>
+              <div class="pr-q">What pay schedule are they on?<span class="tag">assigned in the account</span></div>
+              <div class="pr-q">Did you already run payroll this period?<span class="tag">it's in the run history</span></div>
+            </div>
+          </div>
+          <div class="pr-card">
+            <div class="pr-h">after &middot; reads the account, then asks once</div>
+            <div class="pr-body">
+              <div class="pr-readhead">reads first, silently</div>
+              <div class="pr-read">
+                <div class="rr"><span class="k">subscription</span><span class="v">active<span class="ok">&#10003;</span></span></div>
+                <div class="rr"><span class="k">employee</span><span class="v">Maria, added today<span class="ok">&#10003;</span></span></div>
+                <div class="rr"><span class="k">this run</span><span class="v">created before she was added<span class="ok">&#10003;</span></span></div>
+                <div class="rr"><span class="k">next run</span><span class="v">Maria already on it<span class="ok">&#10003;</span></span></div>
+              </div>
+              <div class="pr-final">Maria was added after this week's run was built, so she'll go out with next week's. Want me to move her into this one instead?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="inst-caption"><b>Same question, two agents.</b> The first interrogates the customer for facts the account already holds. The second reads the account first, then asks the one thing only the customer can answer: what they actually want to happen. Reconstructed with invented account data.</figcaption>
+    </figure>
+  </div>
+
+  <div class="narrow">
+    <h2 class="beat">The agent already knows more than the expert.</h2>
+    <div class="prose">
+      <p>"My employee is missing from this payroll run" sounds like one question. It's half a dozen root causes wearing the same sentence. A human expert opens with a long interview because a human starts blind.</p>
+      <p>The agent doesn't. Before its first reply it can already read the account: subscription status, employee records, pay schedules, the audit log. So the rule I wrote into the framework: <b>don't mimic the expert's question sequence.</b> Match the customer's state against the known root causes first, then ask one confirming question, and only for what only the customer can know.</p>
+    </div>
+  </div>
+
+  <div class="shell">
+    <figure class="inst wide" data-instrument="sorter" data-config="cfg-payroll-sorter" aria-label="Interactive sorter: which data points can the agent retrieve itself, and which must it ask the customer?">
+      <div class="inst-head">
+        <span>sorter · “my employee is missing from this run”</span>
+        <span>retrievable vs must-ask</span>
+      </div>
+      <div class="inst-body" style="min-height:280px"></div>
+      <figcaption class="inst-caption"><b>From the diagnostic framework.</b> Reconstructed example with invented account data. Every must-ask question in the real dataset carries a written justification for why it can't be retrieved.</figcaption>
+    </figure>
+    <script type="application/json" id="cfg-payroll-sorter">
+    {
+      "prompt": "Six things the agent needs before it can answer. Click each one: can the system retrieve it, or must the customer say it?",
+      "bucketLabels": {
+        "sys": "The agent already knows",
+        "ask": "Only the customer knows"
+      },
+      "items": [
+        {"label": "payroll subscription status", "bucket": "sys", "why": "Active, trial, or lapsed: the account already says."},
+        {"label": "employee list and status", "bucket": "sys", "why": "Who exists and who's active is in the system of record."},
+        {"label": "pay schedule assignments", "bucket": "sys", "why": "Who's assigned to which run is readable before the first reply."},
+        {"label": "audit log of recent changes", "bucket": "sys", "why": "What changed lately, and who changed it, is logged."},
+        {"label": "“Is this employee brand new, or did they appear in past runs?”", "bucket": "ask", "why": "What the customer expected to happen isn't in any table."},
+        {"label": "“Do you see them in the run list at all, even excluded?”", "bucket": "ask", "why": "What's on the customer's screen right now, only the customer can confirm."}
+      ],
+      "moral": "An agent that mimics the human question sequence wastes what it already knows. Sort first, ask second, and only what only the customer can know."
+    }
+    </script>
+  </div>
+
+  <div class="narrow">
+    <h2 class="beat">And it has to know when to stop.</h2>
+    <div class="prose">
+      <p>Reading the account and asking one smart question is the right move for most cases. For some, it isn't. Payroll has changes too sensitive or too regulated for an agent to make on its own, and questions where the safe answer is a person. So every decision tree carries its own <b>handoff triggers</b>: the conditions under which the agent should stop trying and pass the case to a human, with everything it already gathered, so the customer never starts over.</p>
+    </div>
+  </div>
+
+  <div class="narrow">
+    <h2 class="beat">Instructions, not answers.</h2>
+    <div class="prose">
+      <p>Payroll is the worst place to wing it. It's regulated, so a wrong answer can create a compliance problem, not just a bad session. It's data-dependent, so the right answer changes with each account's setup. And behind every question sits the same one: <b>will my people get paid?</b></p>
+      <p>The target was payroll's highest-traffic, highest-complexity questions, the ones an agent could resolve end to end, not just answer. One person hand-writing golden answers for all of them was fantasy. So I made the call that scales: <b>I wrote the instructions instead of the answers, because instructions compound where answers don't.</b> Templates for what a complete golden answer looks like, the tool and data dependencies to capture, the exact format the agent team could consume, and the gate each answer has to clear. One artifact, drafted so design, engineering, and quality could each pull the slice they needed from the same source of truth.</p>
+      <p>The full set landed in about ten days as a blueprint the agent team could keep extending, not a one-off document. I owned the framework and the prompts; the diagnostic knowledge inside them came from the experts who resolve these calls.</p>
+    </div>
+
+    <h2 class="beat">A generator for the hardest questions.</h2>
+    <div class="prose">
+      <p>Golden answers work for how-to questions: one verified procedure, the same for every customer. Troubleshooting questions are different. They don't have golden answers; they have golden <b>decision trees</b>, and every branch needs expert-grade coverage.</p>
+      <p>Hand-writing nine of those would've taken weeks the agent team didn't have. So I built the <b>Diagnostic Golden Dataset Generator</b>: a system prompt that drafts the whole decision tree in one validated structure, so an expert corrects a draft instead of authoring from a blank page.<button class="note-ref" data-note="n1" aria-expanded="false">+</button></p>
+      <div class="note-body" id="n1">The prompt controls how the model reasons, not just what it outputs. It runs a six-step reasoning pass before writing anything, and it carries contrastive examples so the model learns the difference between an answer and an answer-shaped sentence: "check the settings" fails; "go to Settings → Payroll Settings → Tax Setup and verify the EIN field" passes. PII rules and a validation checklist gate the output.</div>
+    </div>
+
+    <div class="prose">
+      <p>Nothing generated ships as-is. Subject-matter experts review and edit every draft: <b>the generator does the structural labor, humans own the truth.</b></p>
+      <p>And the generator is built to distrust the model. A control in the prompt bans payroll concepts the product doesn't actually have and locks the agent to a fixed set of verified tools, because the dangerous failure here isn't a wrong answer, it's a confident invented one. Every case also carries its own pass/fail gate: a handful of binary checks, each forcing the same question, can the agent infer this, or must it be told? <b>I didn't just write the answer; I wrote the test that decides whether an answer is good enough to ship.</b></p>
+    </div>
+
+    <h2 class="beat">The knowledge lived in people, not the model.</h2>
+    <div class="prose">
+      <p>The nine troubleshooting questions are umbrella subdomains, each one a whole territory of sub-questions, chosen by call volume, customer pain, and how long they keep experts on the phone. Auto-payroll blocked. Payroll run twice. Direct-deposit changes mid-cycle.</p>
+      <p>Filling the trees took about a week and a half of interviews with the people who actually resolve these calls: support, engineering, the policy team. A model asked for institutional knowledge will confidently invent it. <b>The diagnostic paths had to come from humans.</b></p>
+      <p>Hand-built root causes age as the product changes, and a library of them is a real maintenance question at scale. The framework was the answer: structure the team regenerates as the product shifts, not a pile of documents to maintain by hand.</p>
+      <p>The deliverable encoded diagnostic knowledge that had lived only in experts' heads, in a form the agent team could keep regenerating. This is the shape of what I build now: the framework, the test that decides whether its output is good enough to ship, and the call on which questions to aim it at first.</p>
+    </div>
+  </div>
+
+  <!-- No pull quote on this page by design: the dossiers hold no verbatim payroll-related quote in Simone's own words, and colleague words are banned. If she supplies one, it goes after the sorter, pending her sign-off. -->
+
+</article>
+
+<nav class="case-next" aria-label="Next case study"><div class="shell">
+  <a href="quality-program.html">
+    <span class="nxt">Next · No. 03</span>
+    <span class="t">The Quality Program</span>
+  </a>
+</div></nav>
+
+</main>
+
+<footer class="colophon"><div class="shell">
+  <p>Designed and built AI-natively: directed by Simone, executed with AI agents, the way she works.</p>
+  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. Roles, process, design decisions, and measured outcomes are preserved. © 2026 Simone Muro · Bay Area, CA</p>
+</div></footer>
+
+<button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
+<script src="./v3.js" defer></script>
+</body>
+</html>
