@@ -80,6 +80,16 @@
   .direct .dl { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--persimmon); display: block; margin-bottom: 9px; }
   .direct p { margin: 0; font-size: 0.98rem; line-height: 1.6; color: var(--ink); }
 
+  /* ---------- one row of ground truth (the complexity) ---------- */
+  .gtrow { display: grid; gap: 10px; }
+  .gtrow .gf { border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden; background: var(--paper); }
+  .gtrow .gf .gfh { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 8px 14px; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--hairline); }
+  .gtrow .gf .gfb { padding: 11px 14px; font-size: 0.86rem; line-height: 1.5; color: var(--ink); }
+  .gtrow .gf .gfb code { font-family: var(--mono); font-size: 0.73rem; color: var(--ink); word-break: break-word; }
+  .gtrow .gf.chart { border-color: var(--persimmon); }
+  .gtrow .gf.chart .gfh { color: var(--persimmon); }
+  .gtrow .gf pre { margin: 0; padding: 12px 14px; font-family: var(--mono); font-size: 0.7rem; line-height: 1.55; color: var(--ink); white-space: pre-wrap; word-break: break-word; }
+
   /* ---------- the version log ---------- */
   .vlog { display: grid; gap: 0; }
   .vrow { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: start; padding: 11px 0; border-top: 1px solid var(--hairline); }
@@ -158,8 +168,46 @@
   <div class="narrow">
     <h2 class="beat">The bottleneck: authoring the answer key by hand.</h2>
     <div class="prose">
-      <p>To grade an AI agent you need a golden dataset: the right answer for thousands of conversations, covering what the agent should say and what it should do. People were writing it by hand, one row at a time. It took about three weeks per dataset, it was error-prone, and it couldn't keep pace with the agents and skills stacking up behind it.</p>
+      <p>To grade an AI agent you need a golden dataset: the right answer for thousands of conversations. But the right answer was not a sentence. As the agent learned to do more than reply, to take actions, render interactive widgets, and draw charts, every row had to spell out all of it: the answer text, the exact actions, the widgets, and the chart data, point by point.</p>
+      <p>People hand-entered all of it, one row at a time. Charting a single correct answer meant typing every label and every value on every axis. It took about three weeks per dataset, it was error-prone, and it was exactly the wrong use of an expert's judgment.</p>
     </div>
+  </div>
+
+  <div class="shell">
+    <figure class="inst wide" aria-label="One row of ground truth is a structured object with four parts: the answer text, the actions the agent should take, the widgets it should render, and the chart data. The chart is nested data with a label and a numeric value for every point on every axis, all hand-entered.">
+      <div class="inst-head"><span>one row of ground truth &middot; not a sentence</span><span>mock data</span></div>
+      <div class="inst-body">
+        <div class="gtrow">
+          <div class="gf">
+            <div class="gfh"><span>ground truth &middot; answer</span><span>text</span></div>
+            <div class="gfb">Your total debits last quarter were $9,298.00.</div>
+          </div>
+          <div class="gf">
+            <div class="gfh"><span>ground truth &middot; actions</span><span>what the agent should do</span></div>
+            <div class="gfb"><code>[{ "name": "create_invoice", "input": { ... }, "status": "success" }]</code></div>
+          </div>
+          <div class="gf">
+            <div class="gfh"><span>ground truth &middot; widgets</span><span>what it should render</span></div>
+            <div class="gfb"><code>[{ "type": "widget", "id": "confirm-dialog" }]</code></div>
+          </div>
+          <div class="gf chart">
+            <div class="gfh"><span>ground truth &middot; chart</span><span>every value, by hand</span></div>
+            <pre>[
+  {
+    "type": "bar-chart",
+    "title": "Debits by month",
+    "labels": ["Jan", "Feb", "Mar"],
+    "datasets": [
+      { "label": "Entries",      "data": [40, 18, 2] },
+      { "label": "Total debits", "data": [258000, 376000, 400000] }
+    ]
+  }
+]</pre>
+          </div>
+        </div>
+      </div>
+      <figcaption class="inst-caption"><b>Mock row.</b> The answer was the easy part. As the agent learned to act, to render widgets, and to draw charts, the ground truth grew to match, and a person hand-entered all of it, including every label and value on every chart axis, across thousands of rows.</figcaption>
+    </figure>
   </div>
 
   <!-- ============================================================
@@ -167,7 +215,7 @@
        ============================================================ -->
   <div class="narrow">
     <div class="prose">
-      <p>So I automated the drafting. Not to replace the experts, but to hand them a strong first draft so they could spend their time on judgment instead of typing. Here is how it came together.</p>
+      <p>So I automated the drafting. The generator reads a conversation transcript and pre-fills every part of the row, the answer, the actions, the widgets, and the chart data, so the experts validate instead of hand-enter. Not to replace them, but to spend their judgment where it counted. Here is how it came together.</p>
     </div>
   </div>
 
@@ -272,7 +320,7 @@ A ground truth is not just a correct answer. It is the definition of what "good"
 
   <div class="shell">
     <figure class="inst wide" aria-label="What the generator produces for one row on mock data: a customer asks how to print all their contractor checks at once; the original ground truth column stays locked and untouched, the generator writes a clean draft into the recommended column, and a designer-validated column is left blank for the expert to confirm or fix.">
-      <div class="inst-head"><span>what it produces &middot; one row</span><span>mock data</span></div>
+      <div class="inst-head"><span>what it produces &middot; original, recommended, validated</span><span>mock data</span></div>
       <div class="inst-body">
         <div class="orow-ask"><span class="who">customer asks</span>How do I print all my contractor checks at once?</div>
         <div class="orow">
