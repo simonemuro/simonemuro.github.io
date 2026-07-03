@@ -1,18 +1,18 @@
-# Simone Muro — Portfolio (v4)
+# Simone Muro · Portfolio (v4)
 
 Static portfolio site for `https://simonemuro.github.io/`. Version 4: an AI behavior design
 portfolio built around sealed decisions, replayable traces, and judgment-first case studies.
 
 ## Structure
 
-- `index.html` — homepage: thesis, work index, refusal widget, contact.
+- `index.html` · homepage: thesis, work index, refusal widget, contact.
 - Case studies (numbered chain): `billing-skill.html`, `payroll-intelligence.html`,
   `quality-program.html`, `cancellation-saves.html`, `voice.html`, `credit-karma.html`,
   `operate-with-ai.html`.
-- `resume.html` — printable resume (browser print → Save as PDF). `404.html` — not-found page.
-- `v4.css` / `v4.js` — shared visual system and interactions. `fonts/` — self-hosted webfonts.
-- `V4-COMPONENTS.md` — component reference. `.nojekyll` — serve static files as-is.
-- `agent-worker/` — Cloudflare Worker scaffold for the future live agent (not deployed).
+- `resume.html` · printable resume (browser print → Save as PDF). `404.html` · not-found page.
+- `v4.css` / `v4.js` · shared visual system and interactions. `fonts/` · self-hosted webfonts.
+- `V4-COMPONENTS.md` · component reference. `.nojekyll` · serve static files as-is.
+- `agent-worker/` · Cloudflare Worker scaffold for the future live agent (not deployed).
 
 ## Local preview
 
