@@ -4,278 +4,285 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="An agent skill built end to end: the skill spec, a local MCP tool server, and the 108-case judge-scored eval that proves it. Case 01. Solo build, AI-paired.">
+<meta name="description" content="A billing question answered like a person would: the before and after experiences, the design decisions, the MCP build, the 108-case eval, and the measured results. Case 01.">
 <meta property="og:title" content="BillingSkill · Simone Muro">
-<meta property="og:description" content="An agent skill built end to end: the skill spec, a local MCP tool server, and the 108-case judge-scored eval that proves it.">
+<meta property="og:description" content="A billing question answered like a person would: the before and after experiences, the design decisions, the build, and the measured results.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/billing-skill.html">
 <meta name="twitter:card" content="summary">
 <title>BillingSkill · Simone Muro</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231e2bd0'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23ffffff' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="v4.css">
-<script src="v4.js" defer></script>
-<style>
-/* ---------- page-scoped: billing-skill · v4 tokens only ---------- */
-
-/* free prose inside bands */
-.prose{max-width:62ch;margin-top:26px;}
-.prose p{margin-top:14px;}
-.prose p:first-child{margin-top:0;}
-.prose a{color:inherit;text-decoration-color:var(--hair-strong);text-underline-offset:4px;}
-.prose a:hover{color:var(--accent);}
-
-/* golden row: one eval case, hairline rows, pre-rendered judge scores */
-.goldrow{margin-top:clamp(28px,4vh,44px);border:1px solid var(--hair);background:var(--paper);}
-.gr-hd{display:flex;justify-content:space-between;gap:10px 18px;flex-wrap:wrap;
-  padding:10px 16px;border-bottom:1px solid var(--hair);color:var(--sub);}
-.gr-hd .gr-mark{color:var(--accent);}
-.gr-rows{padding:4px 16px 8px;}
-.gr-row{display:grid;grid-template-columns:180px minmax(0,1fr);gap:6px 20px;
-  padding:10px 0;border-top:1px solid var(--hair);}
-.gr-row:first-child{border-top:0;}
-.gr-row dt{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--sub);padding-top:3px;}
-.gr-row dd{font-size:.95rem;line-height:1.5;max-width:62ch;}
-.gr-row dd code{font-family:var(--mono);font-size:.72rem;color:var(--sub);overflow-wrap:anywhere;}
-.gr-row.gate dt{color:var(--accent);}
-.gr-row.gate dd{display:flex;justify-content:space-between;gap:16px;}
-.gr-res{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--accent);font-weight:400;white-space:nowrap;padding-top:3px;}
-.gr-foot{padding:10px 16px 12px;border-top:1px solid var(--hair);color:var(--sub);font-size:.6rem;}
-@media (max-width:640px){
-  .gr-row{grid-template-columns:1fr;}
-  .gr-row.gate dd{flex-direction:column;gap:6px;}
-}
-</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="v5.css">
 </head>
-<body>
+<body class="v5">
 
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="masthead" role="banner">
-  <div class="shell masthead-inner">
+  <div class="wrap masthead-inner">
     <a class="brand" href="index.html">Simone Muro</a>
     <nav class="mast-nav mono" aria-label="Primary">
       <a href="index.html#work">Work</a>
       <a href="resume.html">Resume</a>
       <a href="index.html#contact">Contact</a>
     </nav>
-    <div class="progress" id="progress" aria-hidden="true"></div>
   </div>
 </header>
 
 <main id="main">
 
-  <!-- ================= CASE OPEN · skim layer ================= -->
-  <section class="shell hero" aria-labelledby="case-h" data-state="answering">
-    <div>
-      <p class="hero-kicker mono io" style="--d:0">
-        <span>Case No. 01 · BillingSkill</span>
-        <span>agentic era · 2026</span>
-      </p>
-      <h1 id="case-h" class="io" style="--d:1">I built the thing I had been <em>grading</em>.</h1>
-      <p class="hero-led io" style="--d:2">For a year I defined what a good agent answer looks like and handed the spec to the teams who build. Billing is where I built it myself.</p>
-      <p class="hero-sub io" style="--d:3">A top contact driver, answered with the same help article on every ask, while the data for a real answer sat in the account. So I built the skill that reads it.</p>
+  <!-- ================= title block ================= -->
+  <section class="wrap titleblock" aria-labelledby="case-h">
+    <p class="kicker mono">
+      <span class="knum">Case No. 01</span>
+      <span>BillingSkill</span>
+      <span>QuickBooks support</span>
+    </p>
+    <h1 id="case-h">From a page of links to a real answer.</h1>
+    <p class="lede">Customers asking about a charge got a list of help articles. Most gave up and called. I designed the answer they should have gotten: what the charge is, why the amount changed, and what to do next, in one reply.</p>
 
-      <dl class="factbox io" style="--d:4">
-        <div class="fact fact-outcome"><dt>Outcome</dt><dd>An agent skill built end to end: spec, local MCP tool server, and a 108-case judge-scored eval</dd></div>
-        <div class="fact"><dt>Role</dt><dd>Solo build, AI-paired</dd></div>
-        <div class="fact"><dt>When</dt><dd>2026 · agentic era</dd></div>
-        <div class="fact"><dt>Status</dt><dd>Runs end to end on mock data · live connection scoped for engineering</dd></div>
-      </dl>
+    <dl class="factrow">
+      <div><dt>Surface</dt><dd>The QuickBooks support assistant, subscription billing</dd></div>
+      <div><dt>Role</dt><dd>Conversation designer for the surface; later built the agent skill solo, AI-paired</dd></div>
+      <div><dt>Scale</dt><dd>About 800,000 billing support contacts a year</dd></div>
+      <div><dt>Results</dt><dd>Self-help resolution up 12 points; containment about 61%</dd></div>
+    </dl>
+  </section>
+
+  <!-- ================= 01 · background ================= -->
+  <section class="wrap part" id="background" aria-labelledby="p1-h">
+    <p class="kicker mono part-head"><span class="knum">01</span><span>Background</span></p>
+    <h2 id="p1-h">Where this work sat, and what I owned.</h2>
+    <div class="prose">
+      <p>QuickBooks is accounting software for small businesses. Inside it sits a support assistant, the chat people open when something looks wrong. Billing is one of the top reasons they open it: a charge is higher than usual, a subscription renewed, an amount on the statement does not match what they expected.</p>
+      <p>The people asking are small business owners and the office managers who keep their books. They are busy, and they are asking about their own money.</p>
+      <p>My role, stated plainly: I owned the conversation design for billing support in the assistant. I decided what the answers should say, made the boundary calls, and later built a working agent skill for this surface myself, end to end, with an AI pair for the code.</p>
     </div>
   </section>
 
-  <!-- ================= 01 · THE DECISION ================= -->
-  <section class="shell band" id="decision" aria-labelledby="dec-band-h" data-state="deciding">
-    <div class="spine-head">
-      <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>The decision</span></p>
-      <h2 id="dec-band-h" class="io" style="--d:1">One boundary scoped the whole skill.</h2>
-      <p class="band-lede io" style="--d:2">The account is open, the intent is unmistakable, and the platform could let the skill finish the job in the chat. The hard question is not what the skill can do. It is what it may do. The skill could answer with the steps, execute the cancel on request, confirm and then cancel, refuse outright, or read the account and hand off. Her call: hand off.</p>
+  <!-- ================= 02 · the problem ================= -->
+  <section class="wrap part" id="problem" aria-labelledby="p2-h">
+    <p class="kicker mono part-head"><span class="knum">02</span><span>The problem</span></p>
+    <h2 id="p2-h">What customers actually got.</h2>
+    <div class="prose">
+      <p>Here is the experience, recreated. A customer asks why the charge went up.</p>
     </div>
 
-    <article class="decision" id="decision-01" aria-labelledby="dec-h">
-      <div>
-        <p class="d-kicker mono io" style="--d:0">
-          <span class="d-no">The decision</span>
-          <span>BillingSkill</span>
-          <span>boundary design</span>
-        </p>
-        <h3 id="dec-h" class="visually-hidden">The decision: the cancel moment</h3>
-        <blockquote class="situation quoted io" style="--d:1">
-          <p>I want to cancel my subscription.</p>
-          <cite>A customer, in the production conversations that reset the scope</cite>
-        </blockquote>
-
-        <div class="d-grid">
-          <div class="d-setup io" style="--d:2">
-            <span class="label mono">The setup</span>
-            <p class="body">Cancellation lives inside billing. The skill has the account open: plan, add-ons, next charge date. It recognizes the exit for what it is, and cancellation endpoints exist on the platform. Nothing technical stops the skill from finishing the job.</p>
-            <div class="score" aria-label="Boundary scorecard">
-              <div class="score-row"><span>exit intent, detected</span><span class="val-pass">pass</span></div>
-              <div class="score-row"><span>authority to execute</span><span class="val-fail">withheld</span></div>
-            </div>
-          </div>
-          <div class="io" style="--d:3">
-            <h4 class="call-h">Her call</h4>
-            <p class="call-verb">hand off.</p>
-            <p class="call-line">Detect the exit, read the account, put a person in the loop. The skill never cancels for you.</p>
-            <div class="receipt">
-              <span class="label mono">The receipt</span>
-              <p>A large share of billing complaints are cancellations and downgrades wearing a billing question. The skill catches them, reads the account, gives the real steps, and offers a person. The shipped design holds that line in pixels: an agent turn that names the plan, the next charge, and the smaller plan worth checking before anyone goes, then two buttons, Connect with a specialist and Keep my plan. Neither button is cancel. Execution stays out by design: the tools are read-only, and payment capture never enters the channel. An answer that is wrong costs a retry; a cancel that is wrong costs the account. Scoped against the billing skills already shipping, this one detects and routes. It never owns the cancel.</p>
-            </div>
+    <div class="mockwrap">
+      <div class="mock" role="img" aria-label="Recreated chat: the customer asks why the charge went up and the assistant replies with a list of help articles">
+        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Support assistant</span><span class="mtag">Recreation</span></div>
+        <div class="mock-body">
+          <div class="m-user">Why did my charge go up this month? I was billed $108.00 and it is usually $76.00.</div>
+          <div class="m-agent">
+            <p>Here are some helpful articles about subscription billing:</p>
+            <ul class="m-links">
+              <li><span class="m-link">Understand your subscription fees</span><span class="arr" aria-hidden="true">&#8250;</span></li>
+              <li><span class="m-link">View your billing history</span><span class="arr" aria-hidden="true">&#8250;</span></li>
+              <li><span class="m-link">Manage or change your subscription</span><span class="arr" aria-hidden="true">&#8250;</span></li>
+              <li><span class="m-link">Compare plans and pricing</span><span class="arr" aria-hidden="true">&#8250;</span></li>
+            </ul>
+            <p>If you still need help, you can browse more topics in our support center.</p>
           </div>
         </div>
-
+        <div class="m-composer" aria-hidden="true">Ask anything</div>
+        <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
       </div>
-    </article>
-  </section>
+      <p class="mock-cap">The before experience. Recreated from shipped work. Interface and data simplified; the conversation shape is real. Business name and amounts are invented.</p>
+    </div>
 
-  <!-- ================= 02 · THE BUILD, AND THE WALL ================= -->
-  <section class="shell band" id="build" aria-labelledby="build-h" data-state="building">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The build, and the wall</span></p>
-      <h2 id="build-h" class="io" style="--d:1">Spec, tool, server. Then the wall.</h2>
-      <p class="band-lede io" style="--d:2">Scope came from evidence: 500+ labeled customer utterances, grouped and ranked, and one target chosen for volume and data dependency: subscription charges. The question the assistant kept deflecting was the one the account could already answer.</p>
-
-      <div class="range-grid">
-        <div class="range-cell io" style="--d:3">
-          <span class="label mono">The skill and the tool</span>
-          <p class="body">A skill spec first: tone, when-to-use conditions, graceful handling, and an admin check, so admins get charge detail and everyone else gets a safe redirect. Behind it, a billing lookup tool with three modes: live for the real API, eval for scenario injection, dev for mock data. Tested end to end through a local harness, both permission paths.</p>
-        </div>
-        <div class="range-cell io" style="--d:4">
-          <span class="label mono">The move to MCP</span>
-          <p class="body">The first version ran as tools inside the agent repo. That proved the behavior, not the path: in production the platform reaches its tools over MCP. So I learned the protocol from scratch, stood up a local MCP server, registered it, and watched the agent discover the tools and call them end to end.</p>
-        </div>
-        <div class="range-cell io" style="--d:5">
-          <span class="label mono">The wall · the live API said no</span>
-          <p class="body">Mid-build, the live billing API answered with a permissions block, and access sat weeks deep in someone else&rsquo;s queue. So evaluation stopped depending on access: the eval ran on scenario injection and mock data, the live mode stayed stubbed behind a precisely documented blocker, and the first golden set, 33 rows, went in the same day. Nothing waited.</p>
-        </div>
-        <div class="range-cell io" style="--d:6">
-          <span class="label mono">What I did not build</span>
-          <p class="body">The live data connection. The skill, the server, and the eval are proven end to end on mock data; wiring the real systems is engineering work, and it is scoped, named, and waiting on access. That is the honest line.</p>
-        </div>
-      </div>
-
-      <div class="prose io" style="--d:7">
-        <p>Building with an AI pair is a discipline of its own: knowing what to verify yourself, and when to stop generating and read the code. The bug that proved it was invisible from inside the pair. The skill loaded clean. The server ran. And not one tool call arrived.</p>
-      </div>
-
-      <figure class="trace io" style="--d:8" data-trace="the config bug">
-        <figcaption class="trace-hd mono">
-          <span>trace · the config bug, found and fixed</span>
-          <span class="trace-state" data-trace-state>complete</span>
-          <button class="trace-replay" type="button" data-trace-replay>replay</button>
-        </figcaption>
-        <ol class="trace-rows">
-          <li class="t-row t-note" data-d="480">
-            <span class="t-time" aria-hidden="true">00.0</span>
-            <div class="t-main">symptom: the skill loads clean · zero tool calls arrive</div>
-          </li>
-          <li class="t-row t-tool" data-d="440">
-            <span class="t-time" aria-hidden="true">00.5</span>
-            <div class="t-main"><code>call <b>billing_lookup(account)</b> &#8594; never sent · the agent registered no tools</code></div>
-          </li>
-          <li class="t-row t-note" data-d="460">
-            <span class="t-time" aria-hidden="true">01.1</span>
-            <div class="t-main">cause: the config names the server but omits its tool list</div>
-          </li>
-          <li class="t-row t-note" data-d="440">
-            <span class="t-time" aria-hidden="true">01.6</span>
-            <div class="t-main">fix: declare the tools · re-register the server · run again</div>
-          </li>
-          <li class="t-row t-tool" data-d="420">
-            <span class="t-time" aria-hidden="true">02.0</span>
-            <div class="t-main"><code>read <b>billing_lookup(plan, add_ons)</b> &#8594; <span class="ok">ok</span> · plan + add-ons returned</code></div>
-          </li>
-          <li class="t-row t-note" data-d="400">
-            <span class="t-time" aria-hidden="true">02.4</span>
-            <div class="t-main">verified: calls land end to end on the local server</div>
-          </li>
-        </ol>
-        <p class="trace-foot mono">reconstructed from the build log · pre-rendered, no live model · the same testing pass caught two more: the instruction to call the tool first read as call it after the customer confirms, and a &ldquo;no thanks&rdquo; that sent customers back into the cancel path because the decline still contained the word cancel · found by testing, named, fixed · the thinking was mine; the typing was shared</p>
-      </figure>
+    <div class="prose">
+      <p class="opens">The assistant recognized the topic and handed back a reading list. The customer had to open each article, find their own situation inside it, and do the math alone. Most did not. They called.</p>
+      <p>The part that made this hard to accept: the account already held the answer. The plan, the add-on, the date it changed. The assistant never looked.</p>
+      <p>And this is not a small surface. Subscription billing drives about 800,000 support contacts a year.</p>
     </div>
   </section>
 
-  <!-- ================= 03 · THE EVAL ================= -->
-  <section class="shell band" id="eval" aria-labelledby="eval-h" data-state="scoring">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>The eval</span></p>
-      <h2 id="eval-h" class="io" style="--d:1">It came with its own eval.</h2>
-      <p class="band-lede io" style="--d:2">Every row in the golden dataset carries three things: a scenario, the mock account data the tool returns, and gating criteria written as a rubric an LLM judge scores. The set started at 33 rows, scoped to subscription charges. Then production conversations reset the map: cancel intent, price-increase complaints, downgrades. The set grew to 108 cases across 13 intent categories, and the skill grew from an answer engine into an intent router.</p>
-
-      <figure class="goldrow io" style="--d:3" aria-label="One golden dataset row: scenario, mock data, gating criteria, and the judge scores">
-        <figcaption class="gr-hd mono">
-          <span>golden row · 1 of 108 · 13 intents</span>
-          <span class="gr-mark">judge: 3 of 3 gates pass</span>
-        </figcaption>
-        <dl class="gr-rows">
-          <div class="gr-row"><dt>intent</dt><dd><code>price_increase_inquiry</code></dd></div>
-          <div class="gr-row"><dt>scenario</dt><dd>The customer asks why the monthly charge went up.</dd></div>
-          <div class="gr-row"><dt>expected action</dt><dd>Call <code>billing_lookup</code> before answering.</dd></div>
-          <div class="gr-row"><dt>mock data</dt><dd><code>plan: "Plus plan" · plan_cost_monthly: 99.00 · add_ons: [Payroll · added May 14 · 8.00 · prorated]</code></dd></div>
-          <div class="gr-row gate"><dt>gate · correctness</dt><dd><span>Names the plan and its cost from the mock record.</span><b class="gr-res">pass</b></dd></div>
-          <div class="gr-row gate"><dt>gate · no hallucination</dt><dd><span>Every amount stated traces to the data.</span><b class="gr-res">pass</b></dd></div>
-          <div class="gr-row gate"><dt>gate · behavior</dt><dd><span>Reads the account before any redirect or handoff.</span><b class="gr-res">pass</b></dd></div>
-        </dl>
-        <p class="gr-foot mono">schema real, account data invented · scores pre-rendered from a completed judge run · no live model</p>
-      </figure>
-
-      <div class="prose io" style="--d:4">
-        <p>Trusting the judge is its own discipline. Validating judges against human labels is Case 03, <a href="quality-program.html">the Quality Program</a>.</p>
-      </div>
+  <!-- ================= 03 · why it mattered ================= -->
+  <section class="wrap part" id="why" aria-labelledby="p3-h">
+    <p class="kicker mono part-head"><span class="knum">03</span><span>Why it mattered</span></p>
+    <h2 id="p3-h">The cost of a page of links.</h2>
+    <div class="prose">
+      <p>A deflected chat becomes a phone call, and a phone call costs many times what a chat answer costs. At this volume, every point of deflection is real money.</p>
+      <p>The quieter cost is trust. A customer who cannot understand a charge starts to believe the product is careless with their money. Many billing complaints are not questions at all. They are cancellation decisions already in progress, wearing a billing question.</p>
+      <p>So the problem was never writing better articles. It was answering the question.</p>
     </div>
   </section>
 
-  <!-- ================= 04 · THE HANDOFF ================= -->
-  <section class="shell band" id="handoff" aria-labelledby="handoff-h" data-state="handing off">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>The handoff</span></p>
-      <h2 id="handoff-h" class="io" style="--d:1">What it proves, and what is left.</h2>
+  <!-- ================= 04 · exploring solutions ================= -->
+  <section class="wrap part" id="solutions" aria-labelledby="p4-h">
+    <p class="kicker mono part-head"><span class="knum">04</span><span>Exploring solutions</span></p>
+    <h2 id="p4-h">What we considered, and the wall we hit.</h2>
+    <div class="prose">
+      <p>There were three ways to go. Write better help articles: cheap, but the customer still does the work. Build a guided flow for every billing question: better, but rigid, and each new question means new screens. Or let the assistant read the account and answer the specific question. I wanted the third one, so I scoped it with evidence: more than 500 labeled customer utterances, grouped and ranked, and one target chosen for volume and data dependency. Subscription charges.</p>
+      <p>Then the wall. Mid-build, the live billing API answered with a permission block, and access sat weeks deep in someone else&rsquo;s queue. I did not wait. I designed the lookup tool with three modes: live for the real API, eval for scenario injection, dev for mock data. Evaluation stopped depending on access. The live mode stayed stubbed behind a documented blocker, and nothing else stopped.</p>
+    </div>
+  </section>
 
-      <div class="prose io" style="--d:2">
-        <p>The skill, the tools, the MCP server, and the 108-case eval run end to end on mock data. What is left is production: wire the live data connection, harden the admin check into the tool itself, and read the results on real traffic.</p>
-        <p>Shipped, I would measure the outcome, not the answer: first-turn resolution instead of a redirect, cancellations caught while they still look like billing complaints, and a confidently-wrong rate held at zero. It ships behind the eval as a gate, small and watched.</p>
-        <p>The argument the build settles: the people who define what good looks like can build it. I designed the behavior, wrote the eval, made the boundary call, stood up the server, and fixed it when it broke.</p>
-      </div>
+  <!-- ================= 05 · design decisions ================= -->
+  <section class="wrap part" id="design" aria-labelledby="p5-h">
+    <p class="kicker mono part-head"><span class="knum">05</span><span>Design decisions</span></p>
+    <h2 id="p5-h">The conversation design itself.</h2>
+    <div class="prose">
+      <p>Four decisions define the after experience. Each one is visible in the recreated conversation in part seven.</p>
+    </div>
+    <ol class="decisions">
+      <li>
+        <span class="dnum" aria-hidden="true">5.1</span>
+        <div>
+          <h3>Answer first, then the detail.</h3>
+          <p>The first sentence names the charge and why it changed. The breakdown rows come after, for anyone who wants to check the math. Nobody has to scroll to learn the answer.</p>
+        </div>
+      </li>
+      <li>
+        <span class="dnum" aria-hidden="true">5.2</span>
+        <div>
+          <h3>The reasoning collapses to one line.</h3>
+          <p>The lookups the agent ran sit behind a quiet Work done line. A customer can open it and see what was checked. Nobody is made to read it.</p>
+        </div>
+      </li>
+      <li>
+        <span class="dnum" aria-hidden="true">5.3</span>
+        <div>
+          <h3>Hand off when the exit shows.</h3>
+          <p>When a billing question is really a cancellation decision, the skill reads the account, gives the real steps, and offers a person. A specialist can save an account. A chatbot arguing cannot.</p>
+        </div>
+      </li>
+      <li>
+        <span class="dnum" aria-hidden="true">5.4</span>
+        <div>
+          <h3>There are things the agent must never do.</h3>
+          <p>It never cancels for you. The handoff card closes with two choices, talk to a specialist or keep my plan, and neither one is cancel. Payment capture stays out of the channel entirely. And every amount the agent states must trace to account data. No guessed numbers.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
 
-      <ol class="cases" aria-label="Next case">
-        <li class="case io" style="--d:3">
-          <span class="case-no" aria-hidden="true">02</span>
-          <div class="case-body">
-            <h3><a href="payroll-intelligence.html">Next · Payroll Intelligence</a></h3>
-            <p>The diagnostic behavior: read the account, ask once, hand off with context.</p>
-            <span class="case-role"><b>role</b> · authored the ground-truth framework</span>
-          </div>
-          <div class="case-meta">
-            <span class="case-stat">1</span>
-            <span class="case-unit">question asked</span>
-            <span class="case-era">agentic</span>
-          </div>
-        </li>
+  <!-- ================= 06 · the build ================= -->
+  <section class="wrap part" id="build" aria-labelledby="p6-h">
+    <p class="kicker mono part-head"><span class="knum">06</span><span>The build</span></p>
+    <h2 id="p6-h">Skill, server, eval gate.</h2>
+    <div class="prose">
+      <p>The skill is a spec before it is code: tone, when to use, graceful handling, and an admin check, so admins get charge detail and everyone else gets a safe redirect. Behind the spec sits the billing lookup tool. In production the platform reaches its tools over MCP, so I learned the protocol from scratch, stood up a local MCP server, registered it, and watched the agent discover the tools and call them end to end.</p>
+      <p>It broke once in a way worth telling. The skill loaded clean. The server ran. And not one tool call arrived.</p>
+    </div>
+
+    <figure class="trace" aria-label="Reconstructed trace of the config bug, found and fixed">
+      <figcaption class="trace-hd mono"><span>trace &middot; the config bug, found and fixed</span><span>reconstructed</span></figcaption>
+      <ol class="trace-rows">
+        <li><span class="t-time" aria-hidden="true">00.0</span><div>Symptom: the skill loads clean. Zero tool calls arrive.</div></li>
+        <li><span class="t-time" aria-hidden="true">00.5</span><div><code>call <b>billing_lookup(account)</b> &#8594; never sent &middot; the agent registered no tools</code></div></li>
+        <li><span class="t-time" aria-hidden="true">01.1</span><div>Cause: the config names the server but omits its tool list.</div></li>
+        <li><span class="t-time" aria-hidden="true">01.6</span><div>Fix: declare the tools, re-register the server, run again.</div></li>
+        <li><span class="t-time" aria-hidden="true">02.0</span><div><code>read <b>billing_lookup(plan, add_ons)</b> &#8594; <span class="ok">ok</span> &middot; plan and add-ons returned</code></div></li>
+        <li><span class="t-time" aria-hidden="true">02.4</span><div>Verified: calls land end to end on the local server.</div></li>
       </ol>
+      <p class="trace-foot">reconstructed from the build log &middot; pre-rendered, no live model &middot; the same testing pass caught two more bugs: a tool call that waited for a confirmation it should not have waited for, and a polite no thanks that fell back into the cancel path because the reply still contained the word cancel</p>
+    </figure>
+
+    <div class="prose">
+      <p class="opens">The eval came with the skill, not after it. Every row in the golden dataset carries a scenario, the mock account data the tool returns, and gating criteria an LLM judge scores. The set started at 33 rows, scoped to subscription charges. Then 55 real production conversations reset the map: cancel intent, price complaints, downgrades. The set grew to 108 cases across 13 intent categories, and the skill grew from an answer engine into an intent router.</p>
     </div>
+
+    <figure class="goldrow" aria-label="One golden dataset row: scenario, mock data, gating criteria, and the judge scores">
+      <figcaption class="gr-hd mono"><span>golden row &middot; 1 of 108 &middot; 13 intents</span><span class="gr-mark">judge: 3 of 3 gates pass</span></figcaption>
+      <dl class="gr-rows">
+        <div class="gr-row"><dt>intent</dt><dd><code>price_increase_inquiry</code></dd></div>
+        <div class="gr-row"><dt>scenario</dt><dd>The customer asks why the monthly charge went up.</dd></div>
+        <div class="gr-row"><dt>expected action</dt><dd>Call <code>billing_lookup</code> before answering.</dd></div>
+        <div class="gr-row"><dt>mock data</dt><dd><code>plan: "Essentials" &middot; plan_cost_monthly: 76.00 &middot; add_ons: [Payroll &middot; added May 14 &middot; 32.00]</code></dd></div>
+        <div class="gr-row gate"><dt>gate &middot; correctness</dt><dd><span>Names the plan and its cost from the mock record.</span><b class="gr-res">pass</b></dd></div>
+        <div class="gr-row gate"><dt>gate &middot; no hallucination</dt><dd><span>Every amount stated traces to the data.</span><b class="gr-res">pass</b></dd></div>
+        <div class="gr-row gate"><dt>gate &middot; behavior</dt><dd><span>Reads the account before any redirect or handoff.</span><b class="gr-res">pass</b></dd></div>
+      </dl>
+      <p class="gr-foot">schema real, account data invented &middot; scores pre-rendered from a completed judge run &middot; no live model</p>
+    </figure>
+
+    <div class="prose">
+      <p class="opens">The eval is the gate. A change that fails a row does not ship.</p>
+    </div>
+  </section>
+
+  <!-- ================= 07 · results ================= -->
+  <section class="wrap part" id="results" aria-labelledby="p7-h">
+    <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
+    <h2 id="p7-h">The same question, answered.</h2>
+    <div class="prose">
+      <p>Here is the after experience, recreated. Same customer, same question.</p>
+    </div>
+
+    <div class="mockwrap">
+      <div class="mock" aria-label="Recreated chat: the same billing question answered with the specific charge, a breakdown, and a human handoff">
+        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Support assistant</span><span class="mtag">Recreation</span></div>
+        <div class="mock-body">
+          <div class="m-user">Why did my charge go up this month? I was billed $108.00 and it is usually $76.00.</div>
+          <div class="m-agent">
+            <details class="m-work">
+              <summary><span class="chev" aria-hidden="true">&#8250;</span>Work done</summary>
+              <p class="m-worknote">Looked up the subscription, active add-ons, and the last two charges for Harbor Lane Pottery.</p>
+            </details>
+            <p>Your June 1 charge was $108.00. It is higher than your usual $76.00 because Payroll was added to this subscription on May 14. Your base plan price did not change.</p>
+            <div class="m-rows" role="table" aria-label="Charge breakdown">
+              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Essentials plan</b><span class="rsub">monthly subscription</span></span><span class="ramt" role="cell">$76.00</span></div>
+              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Payroll add-on</b><span class="rsub">added May 14</span></span><span class="ramt" role="cell">$32.00</span></div>
+              <div class="m-row total" role="row"><span class="rlab" role="cell">Total charged June 1</span><span class="ramt" role="cell">$108.00</span></div>
+            </div>
+            <p>If you did not add Payroll, or you want to look at your options, I can bring in a person.</p>
+            <div class="m-handoff">
+              <p class="hff-t">Review this charge with a specialist</p>
+              <p class="hff-p">A billing specialist can walk through this charge and your plan options with you.</p>
+              <div class="m-actions">
+                <span class="m-btn primary">Talk to a specialist</span>
+                <span class="m-btn ghost">Keep my plan</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="m-composer" aria-hidden="true">Ask anything</div>
+        <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
+      </div>
+      <p class="mock-cap">The after experience. Recreated from shipped work. Interface and data simplified; the conversation shape is real. Business name and amounts are invented. Neither closing button is cancel.</p>
+    </div>
+
+    <div class="prose">
+      <p class="opens">The redesigned billing experience shipped, and the numbers moved.</p>
+    </div>
+
+    <div class="stats" role="list" aria-label="Measured outcomes">
+      <div role="listitem"><span class="num">+12 pts</span><span class="lab">self-help resolution on billing questions</span></div>
+      <div role="listitem"><span class="num">~61%</span><span class="lab">containment: billing questions resolved without a human expert</span></div>
+    </div>
+
+    <div class="prose">
+      <p class="opens">The agent skill that extends this design runs end to end on mock data: the skill, the MCP server, and the 108-case eval. Wiring the live data connection is engineering work, scoped and named. That is the honest line.</p>
+    </div>
+  </section>
+
+  <!-- ================= 08 · learnings ================= -->
+  <section class="wrap part" id="learnings" aria-labelledby="p8-h">
+    <p class="kicker mono part-head"><span class="knum">08</span><span>Learnings</span></p>
+    <h2 id="p8-h">What I learned, and what I would do differently.</h2>
+    <div class="prose">
+      <p>Production conversations beat my assumptions. My first 33 eval rows tested the skill I had planned. The 55 real conversations showed the skill customers needed, and it was a different one. Next time I start with the transcripts.</p>
+      <p>An AI pair speeds up the typing, not the judgment. The config bug was invisible from inside the pair; I found it by stopping and reading the code. Knowing what to verify yourself is the actual skill.</p>
+      <p>Never let evaluation depend on access. The three-mode tool design came out of a blocked API, and it is the part of the build I would keep exactly as it is.</p>
+      <p>Two things I would do differently. I would request API access on day one, not when the build hit the wall. And I would push the admin check down into the tool itself, so the boundary lives in code instead of instructions.</p>
+    </div>
+  </section>
+
+  <!-- ================= next case ================= -->
+  <section class="wrap nextcase" aria-label="Next case">
+    <p class="kicker mono part-head"><span class="knum">Next</span><span>Case No. 02</span></p>
+    <p><a href="payroll-intelligence.html">Payroll Intelligence</a>: the diagnostic behavior. Read the account, ask once, hand off with context.</p>
   </section>
 
 </main>
 
 <footer class="footer" role="contentinfo">
-  <div class="shell">
-    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · her call <b>stated</b> plainly · numbers <b>receipted</b> · <b>handed off</b> to case 02</p>
-    <p class="footer-inner mono">
-      <span>Simone Muro · Portfolio, 4th edition · 2026</span>
-      <span><a href="index.html">Home</a> · <a href="index.html#work">Work</a> · <a href="resume.html">Resume</a></span>
-    </p>
+  <div class="wrap footer-inner mono">
+    <span>Simone Muro &middot; Portfolio &middot; 2026</span>
+    <span><a href="index.html">Home</a> &middot; <a href="index.html#work">Work</a> &middot; <a href="resume.html">Resume</a></span>
   </div>
 </footer>
-
-<noscript>
-  <style>
-    .io,.rule-io{opacity:1 !important;transform:none !important;}
-    .progress,.trace-replay{display:none !important;}
-  </style>
-</noscript>
 
 </body>
 </html>
