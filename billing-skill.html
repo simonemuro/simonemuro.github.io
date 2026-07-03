@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="A billing question answered like a person would: the before and after experiences, the design decisions, the MCP build, the 108-case eval, and the measured results. Case 01.">
+<meta name="description" content="The target state from the charge-lookup case, built as a working agent skill: the boundaries, the MCP build, the 108-case eval, and the honest status. Case 02.">
 <meta property="og:title" content="BillingSkill · Simone Muro">
-<meta property="og:description" content="A billing question answered like a person would: the before and after experiences, the design decisions, the build, and the measured results.">
+<meta property="og:description" content="The target state from the charge-lookup case, built as a working agent skill: the boundaries, the MCP build, the 108-case eval, and the honest status.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/billing-skill.html">
 <meta name="twitter:card" content="summary">
@@ -34,86 +34,59 @@
   <!-- ================= title block ================= -->
   <section class="wrap titleblock" aria-labelledby="case-h">
     <p class="kicker mono">
-      <span class="knum">Case No. 01</span>
+      <span class="knum">Case No. 02</span>
       <span>BillingSkill</span>
-      <span>QuickBooks support</span>
+      <span>Intuit Intelligence</span>
     </p>
-    <h1 id="case-h">From a page of links to a real answer.</h1>
-    <p class="lede">Customers asking about a charge got a list of help articles. Most gave up and called. I designed the answer they should have gotten: what the charge is, why the amount changed, and what to do next, in one reply.</p>
+    <h1 id="case-h">The target state, built working.</h1>
+    <p class="lede">The <a href="charge-lookup.html">charge-lookup case</a> ends on a pivot: the personalized charge explanation moved to Intuit Intelligence, and I moved with it. I built that answer as a working agent skill, end to end, with an AI pair for the code: the skill, a local MCP tool server, and the 108-case eval that gates it.</p>
 
     <dl class="factrow">
-      <div><dt>Surface</dt><dd>The QuickBooks support assistant, subscription billing</dd></div>
-      <div><dt>Role</dt><dd>Conversation designer for the surface; later built the agent skill solo, AI-paired</dd></div>
-      <div><dt>Scale</dt><dd>About 800,000 billing support contacts a year</dd></div>
-      <div><dt>Results</dt><dd>Self-help resolution up 12 points; containment about 61%</dd></div>
+      <div><dt>Surface</dt><dd>Intuit Intelligence, subscription billing for QuickBooks</dd></div>
+      <div><dt>Role</dt><dd>Conversation designer for the surface; later built the agent skill solo, AI-paired &middot; 2026</dd></div>
+      <div><dt>Build</dt><dd>A skill spec, a local MCP tool server, a golden dataset grown from 33 to 108 cases</dd></div>
+      <div><dt>Status</dt><dd>Runs end to end on mock data; live data wiring scoped as engineering work</dd></div>
     </dl>
   </section>
 
   <!-- ================= 01 · background ================= -->
   <section class="wrap part" id="background" aria-labelledby="p1-h">
     <p class="kicker mono part-head"><span class="knum">01</span><span>Background</span></p>
-    <h2 id="p1-h">Where this work sat, and what I owned.</h2>
+    <h2 id="p1-h">The pivot, the mandate, and my element.</h2>
     <div class="prose">
-      <p>QuickBooks is accounting software for small businesses. Inside it sits a support assistant, the chat people open when something looks wrong. Billing is one of the top reasons they open it: a charge is higher than usual, a subscription renewed, an amount on the statement does not match what they expected.</p>
-      <p>The people asking are small business owners and the office managers who keep their books. They are busy, and they are asking about their own money.</p>
-      <p>My role, stated plainly: I owned the conversation design for billing support in the assistant. I decided what the answers should say, made the boundary calls, and later built a working agent skill for this surface myself, end to end, with an AI pair for the code.</p>
+      <p>The <a href="charge-lookup.html">charge-lookup case</a> ends where this one begins. To provide a real charge explanation we needed to onboard billing APIs, and by then Intuit was building Intuit Intelligence, a unified central conversational experience, center stage in the product. The platform I had been building in was being superseded. We banked on the gains we already produced, and moved on to collaborating with the Intuit Intelligence teams, building agents to onboard the billing experience there.</p>
+      <p>At the same time, the company had a mandate that all teams, designers, product managers, managers, also become builders. I found myself in my element with that mandate. I proceeded to understand how the Intuit Intelligence platform and its experiences worked, and that is how the billing skill was born.</p>
+      <p>I built it myself, end to end, with an AI pair for the code. This case is the build.</p>
     </div>
   </section>
 
   <!-- ================= 02 · the problem ================= -->
   <section class="wrap part" id="problem" aria-labelledby="p2-h">
     <p class="kicker mono part-head"><span class="knum">02</span><span>The problem</span></p>
-    <h2 id="p2-h">What customers actually got.</h2>
+    <h2 id="p2-h">A real answer needs data the agent could not touch.</h2>
     <div class="prose">
-      <p>Here is the experience, recreated. A customer asks why the charge went up.</p>
-    </div>
-
-    <div class="mockwrap">
-      <div class="mock" role="img" aria-label="Recreated chat: the customer asks why the charge went up and the assistant replies with a list of help articles">
-        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Support assistant</span><span class="mtag">Recreation</span></div>
-        <div class="mock-body">
-          <div class="m-user">Why did my charge go up this month? I was billed $108.00 and it is usually $76.00.</div>
-          <div class="m-agent">
-            <p>Here are some helpful articles about subscription billing:</p>
-            <ul class="m-links">
-              <li><span class="m-link">Understand your subscription fees</span><span class="arr" aria-hidden="true">&#8250;</span></li>
-              <li><span class="m-link">View your billing history</span><span class="arr" aria-hidden="true">&#8250;</span></li>
-              <li><span class="m-link">Manage or change your subscription</span><span class="arr" aria-hidden="true">&#8250;</span></li>
-              <li><span class="m-link">Compare plans and pricing</span><span class="arr" aria-hidden="true">&#8250;</span></li>
-            </ul>
-            <p>If you still need help, you can browse more topics in our support center.</p>
-          </div>
-        </div>
-        <div class="m-composer" aria-hidden="true">Ask anything</div>
-        <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
-      </div>
-      <p class="mock-cap">The before experience. Recreated from shipped work. Interface and data simplified; the conversation shape is real. Business name and amounts are invented.</p>
-    </div>
-
-    <div class="prose">
-      <p class="opens">The assistant recognized the topic and handed back a reading list. The customer had to open each article, find their own situation inside it, and do the math alone. Most did not. They called.</p>
-      <p>The part that made this hard to accept: the account already held the answer. The plan, the add-on, the date it changed. The assistant never looked.</p>
-      <p>And this is not a small surface. Subscription billing drives about 800,000 support contacts a year.</p>
+      <p>The target answer from the charge-lookup case names the charge, names what changed, and shows the math. That is a data problem before it is a language problem. To say why a charge changed, the agent has to read the plan, the active add-ons, the promotional dates, and the recent charges, live, for that specific account.</p>
+      <p>The agent could not touch any of it. There was no billing tool for it to call. And without one, every reply is either generic, which is the article problem all over again, or guessed. A guessed number about someone&rsquo;s money is worse than no answer.</p>
+      <p>So the problem was not writing the reply. It was giving the agent something true to say it with, inside boundaries that hold.</p>
     </div>
   </section>
 
   <!-- ================= 03 · why it mattered ================= -->
   <section class="wrap part" id="why" aria-labelledby="p3-h">
     <p class="kicker mono part-head"><span class="knum">03</span><span>Why it mattered</span></p>
-    <h2 id="p3-h">The cost of a page of links.</h2>
+    <h2 id="p3-h">From a roadmap slide to a running agent.</h2>
     <div class="prose">
-      <p>A deflected chat becomes a phone call, and a phone call costs many times what a chat answer costs. At this volume, every point of deflection is real money.</p>
-      <p>The quieter cost is trust. A customer who cannot understand a charge starts to believe the product is careless with their money. Many billing complaints are not questions at all. They are cancellation decisions already in progress, wearing a billing question.</p>
-      <p>So the problem was never writing better articles. It was answering the question.</p>
+      <p>The charge-lookup work proved what customers needed and moved the numbers a shipped MVP could move. What it could not prove, from inside a PRD, was that the target answer was buildable: safe boundaries, real account data, verifiable behavior. A working skill is a different kind of argument. It turns get buy-in into watch it run.</p>
+      <p>And building it myself was the point of the mandate. Decisions about agent behavior are cheap to state and expensive to keep. Owning the build meant every boundary I designed had to survive contact with the code.</p>
     </div>
   </section>
 
   <!-- ================= 04 · exploring solutions ================= -->
   <section class="wrap part" id="solutions" aria-labelledby="p4-h">
     <p class="kicker mono part-head"><span class="knum">04</span><span>Exploring solutions</span></p>
-    <h2 id="p4-h">What we considered, and the wall we hit.</h2>
+    <h2 id="p4-h">Skill plus server, and the wall we hit.</h2>
     <div class="prose">
-      <p>There were three ways to go. Write better help articles: cheap, but the customer still does the work. Build a guided flow for every billing question: better, but rigid, and each new question means new screens. Or let the assistant read the account and answer the specific question. I wanted the third one, so I scoped it with evidence: more than 500 labeled customer utterances, grouped and ranked, and one target chosen for volume and data dependency. Subscription charges.</p>
+      <p>On Intuit Intelligence, an experience is a skill: a spec that tells the agent how to behave, backed by tools it can call. So the shape was clear early. A billing skill, and behind it one lookup tool the agent calls for account data. The boundary call came first: the tool is read-only. It can read plans, add-ons, and charges. It cannot change a subscription, and payment capture stays out of the channel entirely.</p>
       <p>Then the wall. Mid-build, the live billing API answered with a permission block, and access sat weeks deep in someone else&rsquo;s queue. I did not wait. I designed the lookup tool with three modes: live for the real API, eval for scenario injection, dev for mock data. Evaluation stopped depending on access. The live mode stayed stubbed behind a documented blocker, and nothing else stopped.</p>
     </div>
   </section>
@@ -123,7 +96,7 @@
     <p class="kicker mono part-head"><span class="knum">05</span><span>Design decisions</span></p>
     <h2 id="p5-h">The conversation design itself.</h2>
     <div class="prose">
-      <p>Four decisions define the after experience. Each one is visible in the recreated conversation in part seven.</p>
+      <p>Four decisions define the answer. Each one is visible in the recreated conversation in part seven.</p>
     </div>
     <ol class="decisions">
       <li>
@@ -151,7 +124,7 @@
         <span class="dnum" aria-hidden="true">5.4</span>
         <div>
           <h3>There are things the agent must never do.</h3>
-          <p>It never cancels for you. The handoff card closes with two choices, talk to a specialist or keep my plan, and neither one is cancel. Payment capture stays out of the channel entirely. And every amount the agent states must trace to account data. No guessed numbers.</p>
+          <p>It never cancels for you. The handoff card closes with two choices, talk to a specialist or keep my plan, and neither one is cancel. And every amount the agent states must trace to account data. No guessed numbers.</p>
         </div>
       </li>
     </ol>
@@ -205,9 +178,9 @@
   <!-- ================= 07 · results ================= -->
   <section class="wrap part" id="results" aria-labelledby="p7-h">
     <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
-    <h2 id="p7-h">The same question, answered.</h2>
+    <h2 id="p7-h">The target state, running.</h2>
     <div class="prose">
-      <p>Here is the after experience, recreated. Same customer, same question.</p>
+      <p>Here is the answer, as the skill produces it on mock account data. This is the conversation the <a href="charge-lookup.html">charge-lookup case</a> could only point to.</p>
     </div>
 
     <div class="mockwrap">
@@ -240,20 +213,12 @@
         <div class="m-composer" aria-hidden="true">Ask anything</div>
         <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
       </div>
-      <p class="mock-cap">The after experience. Recreated from shipped work. Interface and data simplified; the conversation shape is real. Business name and amounts are invented. Neither closing button is cancel.</p>
+      <p class="mock-cap">The skill&rsquo;s answer, on mock account data. Recreated from a working end-to-end run. Interface simplified. Business name and amounts are invented. Neither closing button is cancel.</p>
     </div>
 
     <div class="prose">
-      <p class="opens">The redesigned billing experience shipped, and the numbers moved.</p>
-    </div>
-
-    <div class="stats" role="list" aria-label="Measured outcomes">
-      <div role="listitem"><span class="num">+12 pts</span><span class="lab">self-help resolution on billing questions</span></div>
-      <div role="listitem"><span class="num">~61%</span><span class="lab">containment: billing questions resolved without a human expert</span></div>
-    </div>
-
-    <div class="prose">
-      <p class="opens">The agent skill that extends this design runs end to end on mock data: the skill, the MCP server, and the 108-case eval. Wiring the live data connection is engineering work, scoped and named. That is the honest line.</p>
+      <p class="opens">The whole thing runs end to end on mock data: the skill, the MCP server, and the 108-case eval. Wiring the live data connection is engineering work, scoped and named. That is the honest line.</p>
+      <p>The shipped numbers on this problem live in the charge-lookup case, where they belong. This case earns something different: proof that the target state holds up as a working agent, boundaries and all.</p>
     </div>
   </section>
 
@@ -271,8 +236,8 @@
 
   <!-- ================= next case ================= -->
   <section class="wrap nextcase" aria-label="Next case">
-    <p class="kicker mono part-head"><span class="knum">Next</span><span>Case No. 02</span></p>
-    <p><a href="payroll-intelligence.html">Payroll Intelligence</a>: the diagnostic behavior. Read the account, ask once, hand off with context.</p>
+    <p class="kicker mono part-head"><span class="knum">Next</span><span>Case No. 03</span></p>
+    <p><a href="payroll-intelligence.html">Payroll Intelligence</a>: the diagnostic behavior. Read the account, ask once, hand off with context. Or start this story at the beginning: <a href="charge-lookup.html">Charge lookup</a>.</p>
   </section>
 
 </main>
