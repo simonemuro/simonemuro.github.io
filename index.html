@@ -20,6 +20,19 @@
 <meta name="agent-endpoint" content="https://simone-portfolio-agent.YOUR-SUBDOMAIN.workers.dev">
 -->
 <script src="v4.js" defer></script>
+<style>
+  /* homepage scoped: hero receipts strip · structural only, house tokens */
+  .hero{padding-top:clamp(52px,8vh,110px);}
+  .hero-sub.mono{max-width:none;font-size:.66rem;letter-spacing:.1em;}
+  .receipts{display:flex;flex-wrap:wrap;margin-top:clamp(12px,1.5vh,22px);color:var(--sub);font-size:.64rem;letter-spacing:.08em;}
+  .receipts .rc{display:inline-flex;align-items:baseline;gap:7px;padding:3px 12px 3px 0;}
+  .receipts .rc+.rc{border-left:1px solid var(--hair);padding-left:12px;}
+  .receipts a{color:var(--sub);text-decoration:none;}
+  .receipts a b{font-weight:400;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .receipts a:hover,.receipts a:focus-visible{color:var(--accent);}
+  .receipts a:hover b,.receipts a:focus-visible b{color:var(--accent);}
+  @media (max-width:760px){ .receipts .rc{border-left:0 !important;padding-left:0;} }
+</style>
 </head>
 <body>
 
@@ -52,7 +65,14 @@
       <p class="hero-sub io" style="--d:3">Nine years across Meta, Apple Siri, Sam&rsquo;s Club, Intuit and Credit Karma. Three eras: NLU, LLM, agentic.</p>
       <p class="hero-sub mono io" style="--d:4">Most recently Interim Product Manager and Conversational AI Manager at Intuit · led a team of three · Bay Area</p>
 
-      <ul class="verb-ruler io" style="--d:5" aria-label="The seven verbs of agent behavior">
+      <p class="receipts mono" aria-label="Three receipted results, each linked to its case">
+        <span class="rc">receipts</span>
+        <a class="rc" href="quality-program.html">payroll agent quality <b>+9.8 points</b></a>
+        <a class="rc" href="cancellation-saves.html">savability classifier <b>96.6%</b></a>
+        <a class="rc" href="voice.html"><b>$135,160</b> realized on the phone line</a>
+      </p>
+
+      <ul class="verb-ruler io" style="--d:6" aria-label="The seven verbs of agent behavior">
         <li><span class="vn">01</span>answer</li>
         <li><span class="vn">02</span>ask</li>
         <li><span class="vn">03</span>act</li>
@@ -62,7 +82,7 @@
         <li><span class="vn">07</span>hand off</li>
       </ul>
     </div>
-    <aside class="bnote io" style="--d:6" aria-label="Behavior note 01">
+    <aside class="bnote io" style="--d:7" aria-label="Behavior note 01">
       <span class="bnote-id">Note 01</span>
       <p>Answered first. The one thing you came to find out is the first line on the page.</p>
     </aside>
@@ -360,7 +380,7 @@
           <span class="case-no" aria-hidden="true">03</span>
           <div class="case-body">
             <h3><a href="quality-program.html">The Quality Program</a></h3>
-            <p>The generator that drafts the eval answer key. About three weeks of grading became about one, across 3,000+ rows.</p>
+            <p>The generator that drafts the eval answer key. About three weeks of authoring became about one, across 3,000+ rows.</p>
             <span class="case-role"><b>role</b> · built the generator</span>
           </div>
           <div class="case-meta">
@@ -475,7 +495,7 @@
             { "match": ["case", "work", "portfolio", "project"],
               "reply": "Seven cases in the index above. Start with 01, BillingSkill: a skill spec, a local MCP tool server, and a 108-case judge-scored eval:", "href": "billing-skill.html", "link": "billing-skill.html" },
             { "match": ["eval", "golden", "dataset"],
-              "reply": "She writes them, runs them, and built the generator that drafts the answer key: about three weeks of grading became about one, across 3,000+ rows. Case 03:", "href": "quality-program.html", "link": "quality-program.html" },
+              "reply": "She writes them, runs them, and built the generator that drafts the answer key: about three weeks of authoring became about one, across 3,000+ rows. Case 03:", "href": "quality-program.html", "link": "quality-program.html" },
             { "match": ["voice", "phone", "1-800", "ivr"],
               "reply": "GenAI answers on the 1-800 line, and a login redesign that moved acceptance from 32 to 56 percent. Case 05:", "href": "voice.html", "link": "voice.html" },
             { "match": ["linkedin"],

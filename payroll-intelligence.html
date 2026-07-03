@@ -14,6 +14,11 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231e2bd0'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23ffffff' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="v4.css">
 <script src="v4.js" defer></script>
+<style>
+  /* case 02 scoped: prompt excerpt block, mirrors case 04 · house tokens only */
+  .prompt-pre{margin:0;padding:18px 20px;font-family:var(--mono);font-size:.74rem;line-height:1.8;color:var(--ink);overflow-x:auto;}
+  .sprint-foot{margin-top:clamp(18px,3vh,28px);padding-left:0;padding-right:0;}
+</style>
 </head>
 <body>
 
@@ -46,7 +51,7 @@
       <p class="hero-sub io" style="--d:3">January 2026. A payroll agent was being built, and the hard part was not what it should say: it was what it should do, and when. A model asked for payroll knowledge it cannot look up will invent it, confidently. So the diagnostic ground truth had to be written down, tested, and validated by the people who already knew it. This page is that framework, and the behavior it produced.</p>
 
       <dl class="factbox io" style="--d:4">
-        <div class="fact fact-outcome"><dt>Outcome</dt><dd>Payroll conversation quality up 9.8 points in a year · one question asked where the old flow interrogated</dd></div>
+        <div class="fact fact-outcome"><dt>Outcome</dt><dd>Payroll conversation quality up 9.8 points in a year, measured by the program&rsquo;s judge · one question asked where the old flow interrogated</dd></div>
         <div class="fact"><dt>Role</dt><dd>Designed the agent&rsquo;s diagnostic behavior; authored the ground-truth framework</dd></div>
         <div class="fact"><dt>Scope</dt><dd>The top contact drivers: high traffic, high complexity, do-it-for-me potential · nine troubleshooting territories</dd></div>
         <div class="fact"><dt>When</dt><dd>2026 · agentic era</dd></div>
@@ -283,13 +288,71 @@
           <p class="body">The agent. The payroll agent, its product vision, and its roadmap belong to the team that ships it. What I owned sits underneath: the ground truth for its diagnostic behavior, the generator that drafts it, and the gates that decide when it is good enough.</p>
         </div>
       </div>
+
+      <figure class="trace io" style="--d:9" aria-label="Redacted excerpt of the working generator system prompt">
+        <figcaption class="trace-hd mono">
+          <span>artifact · the diagnostic golden dataset generator</span>
+          <span>redacted excerpt · 2026</span>
+        </figcaption>
+<pre class="prompt-pre">SYSTEM PROMPT: DIAGNOSTIC GOLDEN DATASET GENERATOR
+
+The golden datasets you produce are NOT simple FAQ answers. They are
+detailed diagnostic decision trees that enable an AI agent to
+systematically identify root causes, determine what data to retrieve
+versus what questions to ask, and either resolve the issue or
+escalate appropriately.
+
+Before generating the diagnostic golden dataset, you must complete
+this internal reasoning:
+  Step 1: Problem Space Analysis     Step 4: Dependency Mapping
+  Step 2: Variant Identification     Step 5: Edge Case Enumeration
+  Step 3: Data Inventory             Step 6: Resolution Path Design
+
+Data Not Retrievable (Must Ask User)
+  - Each question MUST have a "Why:" explanation
+  - Limit to 2-5 questions maximum - be selective
+  - Only include questions for data that truly cannot be retrieved
+
+  - NEVER leave the agent without a clear next action
+  - Every path must terminate in either resolution or escalation</pre>
+        <p class="trace-foot mono">four slices of the working prompt · lines omitted between slices, text otherwise verbatim, list formatting flattened · the full artifact adds output templates, branching rules, contrastive examples, and a validation checklist</p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= THE SPRINT ================= -->
+  <section class="shell band" id="sprint" aria-labelledby="sprint-h" data-state="directing">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">05</span><span>Leading the sprint</span></p>
+      <h2 id="sprint-h" class="io" style="--d:1">Directed work, on the record.</h2>
+      <p class="band-lede io" style="--d:2">The framework had one author. The delivery was a team I directed, and the division of labor survives in the sprint&rsquo;s own artifacts.</p>
+
+      <div class="range-grid">
+        <div class="range-cell io" style="--d:3">
+          <span class="label mono">What stayed with me</span>
+          <p class="body">The generator system prompt, the answer templates, the pass or fail gates, and the plan: which territories, in what order, against a deadline measured in days. I set the structure every draft had to land in, and the bar every draft had to clear.</p>
+        </div>
+        <div class="range-cell io" style="--d:4">
+          <span class="label mono">What the team ran</span>
+          <p class="body">The team of three I led drafted the territories with the generator, correcting drafts instead of authoring from a blank page. Same framework, same validated structure, whoever held the pen.</p>
+        </div>
+        <div class="range-cell io" style="--d:5">
+          <span class="label mono">What the experts corrected</span>
+          <p class="body">Nothing shipped as drafted. The class of correction on the record: drafts that assumed the product could see everything. The expert pass caught steps that depend on data living outside the product, in systems the agent cannot read, where the honest instruction is manual.</p>
+        </div>
+        <div class="range-cell io" style="--d:6">
+          <span class="label mono">How many rounds it took</span>
+          <p class="body">The deepest territory, the diagnostic for an automated payroll run that silently fails, reached <span class="num">version ten</span> before it settled. One of the three then owned the closing accuracy pass: scope, root causes, decision points, and every decision tree, verified with the experts and signed off across the full set.</p>
+        </div>
+      </div>
+      <p class="trace-foot sprint-foot mono io" style="--d:7">sourced from the sprint&rsquo;s own record: the generator prompt and versioned datasets in my files, and the validation log on the shared working document · names withheld</p>
     </div>
   </section>
 
   <!-- ================= NEXT ================= -->
   <section class="shell band" aria-label="Next case and handoff" data-state="continuing">
     <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">05</span><span>Next case</span></p>
+      <p class="kicker mono io" style="--d:0"><span class="knum">06</span><span>Next case</span></p>
       <ul class="contact-links io" style="--d:1">
         <li>
           <a href="quality-program.html">
