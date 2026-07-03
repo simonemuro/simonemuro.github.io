@@ -33,11 +33,13 @@
     /* ---------- keyboard access for scrollable strips (WCAG 2.1.1) ---------- */
     function markScrollables() {
       var strips = document.querySelectorAll("pre, .t-tool .t-main code");
+      var n = document.querySelectorAll('[aria-label^="Scrollable excerpt"]').length;
       strips.forEach(function (el) {
         if (el.scrollWidth > el.clientWidth + 1 && !el.hasAttribute("tabindex")) {
+          n += 1;
           el.setAttribute("tabindex", "0");
           el.setAttribute("role", "region");
-          el.setAttribute("aria-label", "Scrollable excerpt");
+          el.setAttribute("aria-label", "Scrollable excerpt " + n);
         }
       });
     }
@@ -140,13 +142,16 @@
        Worker → render {reply, sources}. On any fetch failure it
        degrades back to curated mode and says so honestly. */
 
-  /* live-mode endpoint: meta tag wins, then a pre-set global */
+  /* live-mode endpoint: meta tag wins, then a pre-set global.
+     An unedited placeholder never counts as a live endpoint. */
   function agentEndpoint() {
     var meta = document.querySelector('meta[name="agent-endpoint"]');
     if (meta && meta.getAttribute("content")) {
       window.SM_AGENT_ENDPOINT = meta.getAttribute("content");
     }
-    return window.SM_AGENT_ENDPOINT || "";
+    var ep = window.SM_AGENT_ENDPOINT || "";
+    if (ep.indexOf("YOUR-SUBDOMAIN") !== -1) return "";
+    return ep;
   }
 
   function initRefusal(w) {
