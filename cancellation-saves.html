@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="v4.css">
 <style>
   /* page-local, structural only: shared tokens, no new colors or radii */
+  .score-row .val-fail{display:inline;} /* decision shown open: resolved value renders inline */
   .case-prose{margin-top:26px;max-width:60ch;}
   .case-prose p+p{margin-top:14px;}
   .prompt-pre{margin:0;padding:18px 20px;font-family:var(--mono);font-size:.74rem;line-height:1.8;color:var(--ink);overflow-x:auto;}
@@ -59,36 +60,22 @@
     </div>
     <aside class="bnote io" style="--d:4" aria-label="Behavior note 01">
       <span class="bnote-id">Note 01</span>
-      <p>The outcome is above. The call that produced it stays sealed below until you make yours.</p>
+      <p>The outcome is above. The call that produced it is stated plainly below, receipt attached.</p>
     </aside>
   </section>
 
-  <!-- ================= THE BET: the one sealed decision ================= -->
+  <!-- ================= THE BET: the decision, stated openly ================= -->
   <section class="shell band" id="bet" aria-labelledby="bet-band-h" data-state="deciding">
 
     <div class="spine-head with-note">
       <div>
         <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>The bet</span></p>
         <h2 id="bet-band-h" class="io" style="--d:1">Keep tuning, or bet the queue on an unproven model?</h2>
-        <p class="band-lede io" style="--d:2">Four months in, precision on the reasons the model knew sat near 80 percent, and the curve had gone flat. The unknowns barely moved. Make the call before I show you mine.</p>
+        <p class="band-lede io" style="--d:2">Four months in, precision on the reasons the model knew sat near 80 percent, and the curve had gone flat. The unknowns barely moved. She could settle for the model as it stood, commission another tuning cycle, build a bigger eval first, or hand the problem to a modeling team. Her call: act. Swap the engine and let an LLM classify the reason.</p>
       </div>
     </div>
 
-    <article class="decision with-note" id="decision-01" data-decision aria-labelledby="bet-h">
-      <script type="application/json" data-decision-config>
-      {
-        "her": "act",
-        "name": "the cancel bet",
-        "verdicts": {
-          "match": "{Her}. Same call.",
-          "miss": "You called {pick}. She called {her}. Her receipt is below.",
-          "skip": "Skipped. Her call is open below. Yours is still open too.",
-          "repick": "Changed to {pick}. Her call stands: {her}.",
-          "change": "Pick another verb above. The seal stays open.",
-          "partial": { "verify": "Half of it. She did verify: about 300 real utterances before one live call. But the eval proved the bet, it did not replace it. Her call: act." }
-        }
-      }
-      </script>
+    <article class="decision with-note" id="decision-01" aria-labelledby="bet-h">
       <div>
         <p class="d-kicker mono io" style="--d:0">
           <span class="d-no">The decision</span>
@@ -108,57 +95,21 @@
             <div class="score" aria-label="The stall, in numbers">
               <div class="score-row"><span>precision on known reasons</span><span class="val-pass">near 80%, flat</span></div>
               <div class="score-row"><span>reasons resolved</span><span class="val-pass">stalled near 60%</span></div>
-              <div class="score-row"><span>the bottleneck</span><span class="val-pending">?</span><span class="val-fail">the tool, not the tuning</span></div>
+              <div class="score-row"><span>the bottleneck</span><span class="val-fail">the tool, not the tuning</span></div>
             </div>
           </div>
-          <div class="d-choice io" style="--d:3">
-            <span class="label mono" id="bet-q">Your call. The tuning has stalled. What do you do?</span>
-            <div class="options" role="group" aria-labelledby="bet-q">
-              <button class="opt" type="button" data-verb="answer" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">a.</span><span class="verb">answer</span><span class="tag">your call</span></span>
-                <span class="gloss">settle: 80 percent on the reasons it knows is defensible</span>
-              </button>
-              <button class="opt" type="button" data-verb="ask" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">b.</span><span class="verb">ask</span><span class="tag">your call</span></span>
-                <span class="gloss">commission another tuning cycle: more labels, more months</span>
-              </button>
-              <button class="opt" type="button" data-verb="act" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">c.</span><span class="verb">act</span><span class="tag">your call</span></span>
-                <span class="gloss">swap the engine: classify the reason with an LLM, unproven here</span>
-              </button>
-              <button class="opt" type="button" data-verb="verify" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">d.</span><span class="verb">verify</span><span class="tag">your call</span></span>
-                <span class="gloss">build a bigger eval of the stalled model before moving</span>
-              </button>
-              <button class="opt" type="button" data-verb="stop" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">e.</span><span class="verb">stop</span><span class="tag">your call</span></span>
-                <span class="gloss">retire reason routing: one clean cancel path for everyone</span>
-              </button>
-              <button class="opt" type="button" data-verb="hand off" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">f.</span><span class="verb">hand off</span><span class="tag">your call</span></span>
-                <span class="gloss">give the problem to a dedicated modeling team; classifiers are their craft</span>
-              </button>
+          <div class="io" style="--d:3">
+            <h4 class="call-h">Her call</h4>
+            <p class="call-verb">act.</p>
+            <p class="call-line">Stop training intents. Let a model that already reads natural language classify the reason.</p>
+            <div class="receipt">
+              <span class="label mono">The receipt</span>
+              <p>The bottleneck was never the tuning, it was the tool. Championing the swap meant partnering with the platform team to onboard the API that let a flow call an LLM at all. In evaluation, classification coverage rose from 60 to 96 percent, and savability accuracy came in at 96.6 percent, measured on about 300 real customer utterances, a sample sized for 90 percent confidence. Months of training per cycle became hours of prompt work.</p>
             </div>
-            <div class="opt-foot">
-              <button class="skip-call" type="button">or skip: show her call</button>
-              <span class="privacy mono">your answer never leaves this tab, stored nowhere</span>
-            </div>
-            <p class="verdict mono" aria-live="polite"><span class="verdict-line"><span class="hint">sealed. pick a verb, or skip.</span></span><button class="repick" type="button">change my call</button></p>
           </div>
         </div>
 
-        <div class="call-reveal">
-          <div class="call-clip">
-            <div class="call">
-              <h4 class="call-h" tabindex="-1">Her call</h4>
-              <p class="call-verb">act.</p>
-              <p class="call-line">Stop training intents. Let a model that already reads natural language classify the reason.</p>
-              <div class="receipt">
-                <span class="label mono">The receipt</span>
-                <p>The bottleneck was never the tuning, it was the tool. Championing the swap meant partnering with the platform team to onboard the API that let a flow call an LLM at all. In evaluation, classification coverage rose from 60 to 96 percent, and savability accuracy came in at 96.6 percent, measured on about 300 real customer utterances, a sample sized for 90 percent confidence. Months of training per cycle became hours of prompt work.</p>
-              </div>
-
-              <figure class="trace" data-trace="the routing">
+        <figure class="trace io" style="--d:4" data-trace="the routing">
                 <figcaption class="trace-hd mono">
                   <span>trace · the routing, both ways</span>
                   <span class="trace-state" data-trace-state>complete</span>
@@ -202,11 +153,8 @@
                     <div class="t-main">final reason · clean goodbye, no pitch, no queue</div>
                   </li>
                 </ol>
-                <p class="trace-foot mono">dialogue reconstructed from the shipped flow · pre-rendered, no live model</p>
-              </figure>
-            </div>
-          </div>
-        </div>
+          <p class="trace-foot mono">dialogue reconstructed from the shipped flow · pre-rendered, no live model</p>
+        </figure>
       </div>
     </article>
 
@@ -331,7 +279,7 @@ Customer feedback: ```${customer_feedback}```</pre>
 
 <footer class="footer" role="contentinfo">
   <div class="shell">
-    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · <b>sealed</b> one call · numbers <b>receipted</b> · $2.9M kept <b>projected</b> · <b>handoff</b> to No. 05</p>
+    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · her call <b>stated</b> plainly · numbers <b>receipted</b> · $2.9M kept <b>projected</b> · <b>handoff</b> to No. 05</p>
     <p class="footer-inner mono">
       <span>Simone Muro · Portfolio, 4th edition · 2026</span>
       <span><a href="index.html">Home</a> · <a href="index.html#work">Work</a> · <a href="resume.html">Resume</a></span>
@@ -342,12 +290,7 @@ Customer feedback: ```${customer_feedback}```</pre>
 <noscript>
   <style>
     .io,.rule-io{opacity:1 !important;transform:none !important;}
-    .call-reveal{grid-template-rows:1fr !important;}
-    .call{visibility:visible !important;}
-    .val-pending{display:none !important;}
-    .val-fail{display:inline !important;}
-    .verdict,.opt-foot,.opt .tag{display:none !important;}
-    .progress,.trace-replay,.refusal-form,.refusal-foot{display:none !important;}
+    .progress,.trace-replay{display:none !important;}
   </style>
 </noscript>
 

@@ -125,24 +125,10 @@
     <div class="spine-head">
       <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>The decision</span></p>
       <h2 id="decision-h" class="io" style="--d:1">What do you do with half an understanding?</h2>
-      <p class="band-lede io" style="--d:2">The system knows it is login trouble. It does not know which kind. Guessing is fast and often wrong; asking spends a turn on a channel where every second is spoken. One call from the shipped work. Make it before I show you mine.</p>
+      <p class="band-lede io" style="--d:2">The system knows it is login trouble. It does not know which kind. Guessing is fast and often wrong; asking spends a turn on a channel where every second is spoken. The system could read out the closest fix, route on the best guess, check the account before speaking, or send every lockout to a person. Her call: repair. One clarifying question, then act on the answer.</p>
     </div>
 
-    <article class="decision" id="decision-05" data-decision aria-labelledby="d5-h">
-      <script type="application/json" data-decision-config>
-      {
-        "her": "repair",
-        "name": "voice call",
-        "verdicts": {
-          "match": "{Her}. Same call.",
-          "miss": "You called {pick}. She called {her}. Her receipt is below.",
-          "skip": "Skipped. Her call is open below. Yours is still open too.",
-          "repick": "Changed to {pick}. Her call stands: {her}.",
-          "change": "Pick another verb above. The seal stays open.",
-          "partial": { "ask": "Half of it. The move is a question. Her call is what the question is for: fixing a half-understanding before it becomes a wrong route." }
-        }
-      }
-      </script>
+    <article class="decision" id="decision-05" aria-labelledby="d5-h">
       <div>
         <p class="d-kicker mono io" style="--d:0">
           <span class="d-no">The decision</span>
@@ -160,52 +146,13 @@
             <span class="label mono">The setup</span>
             <p class="body">The intent match is half there: account access, clearly. But four different problems share that sentence: a forgotten password, a reset that never landed, a locked account, a username mix-up. Each has a different fix, and reading the wrong one aloud costs the whole call.</p>
           </div>
-          <div class="d-choice io" style="--d:3">
-            <span class="label mono" id="d5-q">Your call. What does the system do with it?</span>
-            <div class="options" role="group" aria-labelledby="d5-q">
-              <button class="opt" type="button" data-verb="answer" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">a.</span><span class="verb">answer</span><span class="tag">your call</span></span>
-                <span class="gloss">read out the closest matching fix; the top match is right more often than not</span>
-              </button>
-              <button class="opt" type="button" data-verb="ask" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">b.</span><span class="verb">ask</span><span class="tag">your call</span></span>
-                <span class="gloss">open wide: ask what is going on and listen for a better clue</span>
-              </button>
-              <button class="opt" type="button" data-verb="act" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">c.</span><span class="verb">act</span><span class="tag">your call</span></span>
-                <span class="gloss">route on the best guess: most lockouts are password resets</span>
-              </button>
-              <button class="opt" type="button" data-verb="verify" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">d.</span><span class="verb">verify</span><span class="tag">your call</span></span>
-                <span class="gloss">check the account for a lock flag before speaking</span>
-              </button>
-              <button class="opt" type="button" data-verb="repair" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">e.</span><span class="verb">repair</span><span class="tag">your call</span></span>
-                <span class="gloss">one clarifying question, built for voice, then act on the answer</span>
-              </button>
-              <button class="opt" type="button" data-verb="hand off" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">f.</span><span class="verb">hand off</span><span class="tag">your call</span></span>
-                <span class="gloss">skip the guessing: send every lockout call to an expert</span>
-              </button>
-            </div>
-            <div class="opt-foot">
-              <button class="skip-call" type="button">or skip: show her call</button>
-              <span class="privacy mono">your answer never leaves this tab, stored nowhere</span>
-            </div>
-            <p class="verdict mono" aria-live="polite"><span class="verdict-line"><span class="hint">sealed. pick a verb, or skip.</span></span><button class="repick" type="button">change my call</button></p>
-          </div>
-        </div>
-
-        <div class="call-reveal">
-          <div class="call-clip">
-            <div class="call">
-              <h4 class="call-h" tabindex="-1">Her call</h4>
-              <p class="call-verb">repair.</p>
-              <p class="call-line">One clarifying question, shaped for voice. Then act on what the caller says.</p>
-              <div class="receipt">
-                <span class="label mono">The receipt</span>
-                <p>Disambiguation is repair design: the behavior for the moment the system lacks the information to proceed safely. The login and password reset flow got this repair in 2024. Self-help acceptance rose from 32 to 56 percent, and containment, the share of calls resolved without an expert, from 20 to 32. Realized savings: $135,160. The same pattern had already proved out on payroll tax calls in 2022: containment 12.5 to 18.3 percent, acceptance 23 to 32.</p>
-              </div>
+          <div class="io" style="--d:3">
+            <h4 class="call-h">Her call</h4>
+            <p class="call-verb">repair.</p>
+            <p class="call-line">One clarifying question, shaped for voice. Then act on what the caller says.</p>
+            <div class="receipt">
+              <span class="label mono">The receipt</span>
+              <p>Disambiguation is repair design: the behavior for the moment the system lacks the information to proceed safely. The login and password reset flow got this repair in 2024. Self-help acceptance rose from 32 to 56 percent, and containment, the share of calls resolved without an expert, from 20 to 32. Realized savings: $135,160. The same pattern had already proved out on payroll tax calls in 2022: containment 12.5 to 18.3 percent, acceptance 23 to 32.</p>
             </div>
           </div>
         </div>
@@ -533,7 +480,7 @@ gerunds, and passive sentence constructions.</code></pre>
 
 <footer class="footer" role="contentinfo">
   <div class="shell">
-    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · <b>sealed</b> one call · three patterns <b>audible</b> · numbers <b>receipted</b> · <b>handed off</b> to no. 06</p>
+    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · her call <b>stated</b> plainly · three patterns <b>audible</b> · numbers <b>receipted</b> · <b>handed off</b> to no. 06</p>
     <p class="footer-inner mono">
       <span>Simone Muro · Portfolio, 4th edition · 2026</span>
       <span><a href="index.html">Home</a> · <a href="index.html#work">Work</a> · <a href="resume.html">Resume</a></span>
@@ -544,12 +491,7 @@ gerunds, and passive sentence constructions.</code></pre>
 <noscript>
   <style>
     .io,.rule-io{opacity:1 !important;transform:none !important;}
-    .call-reveal{grid-template-rows:1fr !important;}
-    .call{visibility:visible !important;}
-    .val-pending{display:none !important;}
-    .val-fail{display:inline !important;}
-    .verdict,.opt-foot,.opt .tag{display:none !important;}
-    .progress,.trace-replay,.refusal-form,.refusal-foot{display:none !important;}
+    .progress,.trace-replay{display:none !important;}
   </style>
 </noscript>
 

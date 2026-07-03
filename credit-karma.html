@@ -16,6 +16,7 @@
 <script src="v4.js" defer></script>
 <style>
   /* page-scoped, tokens only (see v4.css) */
+  .score-row .val-fail{display:inline;} /* decision shown open: resolved value renders inline */
   .case-open{padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(8px,2vh,24px);}
   .case-h{font-family:var(--serif);font-weight:400;font-size:clamp(2.5rem,6.6vw,5.6rem);line-height:1;letter-spacing:-.012em;max-width:18ch;}
 
@@ -116,32 +117,15 @@
     </dl>
   </section>
 
-  <!-- ================= THE CALL (sealed decision) ================= -->
+  <!-- ================= THE CALL (the decision, stated openly) ================= -->
   <section class="shell band" id="call" aria-labelledby="call-h2" data-state="deciding">
     <div class="spine-head">
       <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>The call</span></p>
       <h2 id="call-h2" class="io" style="--d:1">One question decided the whole surface.</h2>
-      <p class="band-lede io" style="--d:2">The member&rsquo;s question is the reasonable one. The model holds the answer in its context. Make the call before I show you mine.</p>
+      <p class="band-lede io" style="--d:2">The member&rsquo;s question is the reasonable one. The model holds the answer in its context. It could state the odds, refuse the topic outright, or send the member to the issuer. Her call: act. The odds choose the cards; the number never ships.</p>
     </div>
 
-    <article class="decision with-note" id="decision-odds" data-decision aria-labelledby="d1-h">
-      <script type="application/json" data-decision-config>
-      {
-        "her": "act",
-        "name": "odds call",
-        "verdicts": {
-          "match": "{Her}. Same call.",
-          "miss": "You called {pick}. She called {her}. Her receipt is below.",
-          "skip": "Skipped. Her call is open below. Yours is still open too.",
-          "repick": "Changed to {pick}. Her call stands: {her}.",
-          "change": "Pick another verb above. The seal stays open.",
-          "partial": {
-            "stop": "Half of it. The number stops. The recommendation does not. Her call: act, with the odds sealed inside.",
-            "verify": "A fresher number is still a number, and no number may ship. Her call: act."
-          }
-        }
-      }
-      </script>
+    <article class="decision with-note" id="decision-odds" aria-labelledby="d1-h">
       <div>
         <p class="d-kicker mono io" style="--d:0">
           <span class="d-no">The decision</span>
@@ -160,62 +144,23 @@
             <p class="body">The model reads the member&rsquo;s wallet and credit profile, and it holds one more signal: approval-likelihood data. It is the most useful fact in the room, it shapes which cards make sense, and the member just asked for it.</p>
             <div class="score" aria-label="Rubric scorecard">
               <div class="score-row"><span>plain-language recommendation</span><span class="val-pass">pass</span></div>
-              <div class="score-row"><span>approval odds in the copy</span><span class="val-pending">?</span><span class="val-fail">hard fail</span></div>
+              <div class="score-row"><span>approval odds in the copy</span><span class="val-fail">hard fail</span></div>
             </div>
           </div>
-          <div class="d-choice io" style="--d:3">
-            <span class="label mono" id="d1-q">Your call. The member asked for the number. What does the model do?</span>
-            <div class="options" role="group" aria-labelledby="d1-q">
-              <button class="opt" type="button" data-verb="answer" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">a.</span><span class="verb">answer</span><span class="tag">your call</span></span>
-                <span class="gloss">state the odds: the model holds them, and the member asked</span>
-              </button>
-              <button class="opt" type="button" data-verb="ask" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">b.</span><span class="verb">ask</span><span class="tag">your call</span></span>
-                <span class="gloss">clarify the goal first: rewards, credit building, a big purchase</span>
-              </button>
-              <button class="opt" type="button" data-verb="act" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">c.</span><span class="verb">act</span><span class="tag">your call</span></span>
-                <span class="gloss">let the odds choose the cards it shows, and keep the number out of every sentence</span>
-              </button>
-              <button class="opt" type="button" data-verb="verify" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">d.</span><span class="verb">verify</span><span class="tag">your call</span></span>
-                <span class="gloss">re-score the member&rsquo;s profile so the number it quotes is current</span>
-              </button>
-              <button class="opt" type="button" data-verb="stop" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">e.</span><span class="verb">stop</span><span class="tag">your call</span></span>
-                <span class="gloss">refuse the topic: no odds, and no recommendation near them</span>
-              </button>
-              <button class="opt" type="button" data-verb="hand off" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">f.</span><span class="verb">hand off</span><span class="tag">your call</span></span>
-                <span class="gloss">send the member to the card issuer, who makes the approval decision anyway</span>
-              </button>
-            </div>
-            <div class="opt-foot">
-              <button class="skip-call" type="button">or skip: show her call</button>
-              <span class="privacy mono">your answer never leaves this tab, stored nowhere</span>
-            </div>
-            <p class="verdict mono" aria-live="polite"><span class="verdict-line"><span class="hint">sealed. pick a verb, or skip.</span></span><button class="repick" type="button">change my call</button></p>
-          </div>
-        </div>
-
-        <div class="call-reveal">
-          <div class="call-clip">
-            <div class="call">
-              <h4 class="call-h" tabindex="-1">Her call</h4>
-              <p class="call-verb">act.</p>
-              <p class="call-line">Let the signal steer the recommendation. The number itself never ships.</p>
-              <div class="receipt">
-                <span class="label mono">The receipt</span>
-                <p>The legal line was exact: the model reasons over approval-likelihood data and may never state it, in any form. Not a percentage, not a range, not great chances. A flat ban would have been the easy prompt to write. The harder one lets the signal do its work in silence, across every member profile, every time. Compliance here was a design material, not a limiter.</p>
-              </div>
+          <div class="io" style="--d:3">
+            <h4 class="call-h">Her call</h4>
+            <p class="call-verb">act.</p>
+            <p class="call-line">Let the signal steer the recommendation. The number itself never ships.</p>
+            <div class="receipt">
+              <span class="label mono">The receipt</span>
+              <p>The legal line was exact: the model reasons over approval-likelihood data and may never state it, in any form. Not a percentage, not a range, not great chances. A flat ban would have been the easy prompt to write. The harder one lets the signal do its work in silence, across every member profile, every time. Compliance here was a design material, not a limiter.</p>
             </div>
           </div>
         </div>
       </div>
       <aside class="bnote io" style="--d:4" aria-label="Behavior note 01">
         <span class="bnote-id">Note 01</span>
-        <p>Held her call sealed until you acted. The model holds the odds the same way: in use, never on screen.</p>
+        <p>The page states her call outright. The model holds the odds the other way: in use, never on screen.</p>
       </aside>
     </article>
   </section>
@@ -371,7 +316,7 @@
 
 <footer class="footer" role="contentinfo">
   <div class="shell">
-    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · <b>sealed</b> one call · every mock <b>labeled</b> reconstructed · <b>handoff</b> to Case 07</p>
+    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · her call <b>stated</b> plainly · every mock <b>labeled</b> reconstructed · <b>handoff</b> to Case 07</p>
     <p class="footer-inner mono">
       <span>Simone Muro · Portfolio, 4th edition · 2026</span>
       <span><a href="index.html">Home</a> · <a href="index.html#work">Work</a> · <a href="resume.html">Resume</a></span>
@@ -382,12 +327,7 @@
 <noscript>
   <style>
     .io,.rule-io{opacity:1 !important;transform:none !important;}
-    .call-reveal{grid-template-rows:1fr !important;}
-    .call{visibility:visible !important;}
-    .val-pending{display:none !important;}
-    .val-fail{display:inline !important;}
-    .verdict,.opt-foot,.opt .tag{display:none !important;}
-    .progress,.trace-replay,.refusal-form,.refusal-foot{display:none !important;}
+    .progress{display:none !important;}
   </style>
 </noscript>
 

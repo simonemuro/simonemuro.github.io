@@ -17,6 +17,9 @@
 <style>
 /* ---------- page-scoped: billing-skill · v4 tokens only ---------- */
 
+/* decision shown open: the resolved boundary value renders inline */
+.score-row .val-fail{display:inline;}
+
 /* free prose inside bands */
 .prose{max-width:62ch;margin-top:26px;}
 .prose p{margin-top:14px;}
@@ -113,27 +116,10 @@
     <div class="spine-head">
       <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>The decision</span></p>
       <h2 id="dec-band-h" class="io" style="--d:1">One boundary scoped the whole skill.</h2>
-      <p class="band-lede io" style="--d:2">The account is open, the intent is unmistakable, and the platform could let the skill finish the job in the chat. The hard question is not what the skill can do. It is what it may do. Make the call before I show you mine.</p>
+      <p class="band-lede io" style="--d:2">The account is open, the intent is unmistakable, and the platform could let the skill finish the job in the chat. The hard question is not what the skill can do. It is what it may do. The skill could answer with the steps, execute the cancel on request, confirm and then cancel, refuse outright, or read the account and hand off. Her call: hand off.</p>
     </div>
 
-    <article class="decision with-note" id="decision-01" data-decision aria-labelledby="dec-h">
-      <script type="application/json" data-decision-config>
-      {
-        "her": "hand off",
-        "name": "billing call",
-        "verdicts": {
-          "match": "{Her}. Same call.",
-          "miss": "You called {pick}. She called {her}. Her receipt is below.",
-          "skip": "Skipped. Her call is open below. Yours is still open too.",
-          "repick": "Changed to {pick}. Her call stands: {her}.",
-          "change": "Pick another verb above. The seal stays open.",
-          "partial": {
-            "stop": "Half of it. The skill does refuse to execute. But a bare refusal strands a customer who is already unhappy. Her call: hand off.",
-            "verify": "Consent on record does not repair a wrong cancel. The boundary lives in the tool list, not the dialogue. Her call: hand off."
-          }
-        }
-      }
-      </script>
+    <article class="decision with-note" id="decision-01" aria-labelledby="dec-h">
       <div>
         <p class="d-kicker mono io" style="--d:0">
           <span class="d-no">The decision</span>
@@ -152,84 +138,45 @@
             <p class="body">Cancellation lives inside billing. The skill has the account open: plan, add-ons, next charge date. It recognizes the exit for what it is, and cancellation endpoints exist on the platform. Nothing technical stops the skill from finishing the job.</p>
             <div class="score" aria-label="Boundary scorecard">
               <div class="score-row"><span>exit intent, detected</span><span class="val-pass">pass</span></div>
-              <div class="score-row"><span>authority to execute</span><span class="val-pending">?</span><span class="val-fail">withheld</span></div>
+              <div class="score-row"><span>authority to execute</span><span class="val-fail">withheld</span></div>
             </div>
           </div>
-          <div class="d-choice io" style="--d:3">
-            <span class="label mono" id="dec-q">Your call. The customer asked to cancel. What may the skill do?</span>
-            <div class="options" role="group" aria-labelledby="dec-q">
-              <button class="opt" type="button" data-verb="answer" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">a.</span><span class="verb">answer</span><span class="tag">your call</span></span>
-                <span class="gloss">give the cancellation steps and end the turn there</span>
-              </button>
-              <button class="opt" type="button" data-verb="ask" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">b.</span><span class="verb">ask</span><span class="tag">your call</span></span>
-                <span class="gloss">open with save questions: why leave, what changed</span>
-              </button>
-              <button class="opt" type="button" data-verb="act" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">c.</span><span class="verb">act</span><span class="tag">your call</span></span>
-                <span class="gloss">execute the cancellation in the chat, on request</span>
-              </button>
-              <button class="opt" type="button" data-verb="verify" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">d.</span><span class="verb">verify</span><span class="tag">your call</span></span>
-                <span class="gloss">confirm they mean it, then cancel with consent on record</span>
-              </button>
-              <button class="opt" type="button" data-verb="stop" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">e.</span><span class="verb">stop</span><span class="tag">your call</span></span>
-                <span class="gloss">refuse: cancellation does not belong to this skill</span>
-              </button>
-              <button class="opt" type="button" data-verb="hand off" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">f.</span><span class="verb">hand off</span><span class="tag">your call</span></span>
-                <span class="gloss">read the account, give the steps, offer a person</span>
-              </button>
+          <div class="io" style="--d:3">
+            <h4 class="call-h">Her call</h4>
+            <p class="call-verb">hand off.</p>
+            <p class="call-line">Detect the exit, read the account, put a person in the loop. The skill never cancels for you.</p>
+            <div class="receipt">
+              <span class="label mono">The receipt</span>
+              <p>A large share of billing complaints are cancellations and downgrades wearing a billing question. The skill catches them, reads the account, gives the real steps, and offers a person. Execution stays out by design: the tools are read-only, and payment capture never enters the channel. An answer that is wrong costs a retry; a cancel that is wrong costs the account. Scoped against the billing skills already shipping, this one detects and routes. It never owns the cancel.</p>
             </div>
-            <div class="opt-foot">
-              <button class="skip-call" type="button">or skip: show her call</button>
-              <span class="privacy mono">your answer never leaves this tab, stored nowhere</span>
-            </div>
-            <p class="verdict mono" aria-live="polite"><span class="verdict-line"><span class="hint">sealed. pick a verb, or skip.</span></span><button class="repick" type="button">change my call</button></p>
           </div>
         </div>
 
-        <div class="call-reveal">
-          <div class="call-clip">
-            <div class="call">
-              <h4 class="call-h" tabindex="-1">Her call</h4>
-              <p class="call-verb">hand off.</p>
-              <p class="call-line">Detect the exit, read the account, put a person in the loop. The skill never cancels for you.</p>
-              <div class="receipt">
-                <span class="label mono">The receipt</span>
-                <p>A large share of billing complaints are cancellations and downgrades wearing a billing question. The skill catches them, reads the account, gives the real steps, and offers a person. Execution stays out by design: the tools are read-only, and payment capture never enters the channel. An answer that is wrong costs a retry; a cancel that is wrong costs the account. Scoped against the billing skills already shipping, this one detects and routes. It never owns the cancel.</p>
+        <figure class="hitl io" style="--d:4" aria-label="The cancel moment as designed: a static exhibit of the confirmation widget, on invented account data">
+          <figcaption class="hitl-hd mono">
+            <span>the widget · cancel intent, human in the loop</span>
+            <span>mock data</span>
+          </figcaption>
+          <div class="hitl-body">
+            <div class="hitl-turn">
+              <span class="t-role">customer</span>
+              <p class="hitl-quote">I want to cancel my subscription.</p>
+            </div>
+            <div class="hitl-turn hitl-agent">
+              <span class="t-role">agent</span>
+              <p>I can help you start that. You are on the Plus plan, and your next charge is May 15. Canceling takes a few steps, and a specialist can walk you through it and check whether a smaller plan would fit before you go.</p>
+              <div class="hitl-actions" aria-label="The two actions the design offers">
+                <span class="hitl-btn primary">Connect with a specialist</span>
+                <span class="hitl-btn">Keep my plan</span>
               </div>
-
-              <figure class="hitl" aria-label="The cancel moment as designed: a static exhibit of the confirmation widget, on invented account data">
-                <figcaption class="hitl-hd mono">
-                  <span>the widget · cancel intent, human in the loop</span>
-                  <span>mock data</span>
-                </figcaption>
-                <div class="hitl-body">
-                  <div class="hitl-turn">
-                    <span class="t-role">customer</span>
-                    <p class="hitl-quote">I want to cancel my subscription.</p>
-                  </div>
-                  <div class="hitl-turn hitl-agent">
-                    <span class="t-role">agent</span>
-                    <p>I can help you start that. You are on the Plus plan, and your next charge is May 15. Canceling takes a few steps, and a specialist can walk you through it and check whether a smaller plan would fit before you go.</p>
-                    <div class="hitl-actions" aria-label="The two actions the design offers">
-                      <span class="hitl-btn primary">Connect with a specialist</span>
-                      <span class="hitl-btn">Keep my plan</span>
-                    </div>
-                  </div>
-                </div>
-                <p class="hitl-foot mono">the shipped design, reconstructed on invented account data · two buttons, neither of them cancel</p>
-              </figure>
             </div>
           </div>
-        </div>
+          <p class="hitl-foot mono">the shipped design, reconstructed on invented account data · two buttons, neither of them cancel</p>
+        </figure>
       </div>
-      <aside class="bnote io" style="--d:4" aria-label="Behavior note 02">
+      <aside class="bnote io" style="--d:5" aria-label="Behavior note 02">
         <span class="bnote-id">Note 02</span>
-        <p>Sealed until you acted. And the widget under her call offers two buttons: specialist and keep. Cancel is not one of them.</p>
+        <p>Her call is stated plainly, receipt attached. And the widget under it offers two buttons: specialist and keep. Cancel is not one of them.</p>
       </aside>
     </article>
   </section>
@@ -386,7 +333,7 @@
 
 <footer class="footer" role="contentinfo">
   <div class="shell">
-    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · <b>sealed</b> one call · numbers <b>receipted</b> · <b>handed off</b> to case 02</p>
+    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · her call <b>stated</b> plainly · numbers <b>receipted</b> · <b>handed off</b> to case 02</p>
     <p class="footer-inner mono">
       <span>Simone Muro · Portfolio, 4th edition · 2026</span>
       <span><a href="index.html">Home</a> · <a href="index.html#work">Work</a> · <a href="resume.html">Resume</a></span>
@@ -397,12 +344,7 @@
 <noscript>
   <style>
     .io,.rule-io{opacity:1 !important;transform:none !important;}
-    .call-reveal{grid-template-rows:1fr !important;}
-    .call{visibility:visible !important;}
-    .val-pending{display:none !important;}
-    .val-fail{display:inline !important;}
-    .verdict,.opt-foot,.opt .tag{display:none !important;}
-    .progress,.trace-replay,.refusal-form,.refusal-foot{display:none !important;}
+    .progress,.trace-replay{display:none !important;}
   </style>
 </noscript>
 
