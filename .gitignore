@@ -1,0 +1,8 @@
+
+# secrets never committed
+.env
+.env.*
+*.pem
+*.key
+secrets*
+.dev.vars
