@@ -13,6 +13,7 @@
 <title>Charge lookup &middot; Simone Muro</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="v5.css">
+<script src="v5-proto.js" defer></script>
 </head>
 <body class="v5">
 
@@ -182,10 +183,10 @@
         <div class="mock-body">
           <div class="m-user">Why was I charged $70.00 this month? My subscription has been $49.00 for the last three months.</div>
           <div class="m-agent">
-            <p>It sounds like you are asking about a price increase on your subscription, not a duplicate or unfamiliar charge. Let us look at what is behind that $70.00 together, right here.</p>
+            <p>Happy to help. The charge lookup tool shows you the details behind the charge you received.</p>
             <div class="m-handoff">
               <p class="hff-t">Look up this charge</p>
-              <p class="hff-p">Enter the amount and the date from your statement to see a breakdown of the charges behind it, without leaving this chat.</p>
+              <p class="hff-p">Enter the amount and the date from your statement to see the details behind the charge.</p>
               <div class="m-actions">
                 <span class="m-btn primary">Open charge lookup</span>
                 <span class="m-btn ghost">That is not my question</span>
@@ -200,7 +201,8 @@
     </div>
 
     <div class="prose">
-      <p class="opens">Those updates alone moved both channels.</p>
+      <p class="opens">The improvement, stated plainly. Before, the assistant answered this question with articles that described where to go and what to do once you got there, and the customer left the conversation to chase the answer alone. Now the assistant understands which billing question it is hearing, and it hands the customer the tool that answers it, inside the same conversation.</p>
+      <p>Those updates alone moved both channels.</p>
     </div>
 
     <div class="stats" role="list" aria-label="Measured outcomes">
@@ -210,34 +212,87 @@
     </div>
 
     <div class="prose">
-      <p class="opens">The phased roadmap pointed further than the MVP. This was the target state it was onboarding APIs toward:</p>
+      <p class="opens">The phased roadmap pointed further than the MVP. This was the target state it was onboarding APIs toward, and it is not a drawing. Here is the agentic prototype I built of that experience, with mock data: the agent plans its work in the open, reads the account, explains the charge in plain terms, and eases it where it can once the customer agrees. The whole conversation is on the page as it stands, and you can press play to watch the agent run through it.</p>
     </div>
 
     <div class="mockwrap">
-      <div class="mock" role="img" aria-label="Design mock of the target state: the same question answered with a personalized breakdown and the reason for the increase">
-        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Support assistant</span><span class="mtag">Target design</span></div>
-        <div class="mock-body">
-          <div class="m-user">Why was I charged $70.00 this month? My subscription has been $49.00 for the last three months.</div>
+      <div class="mock proto" id="proto" aria-label="Working prototype of the target state: the agent plans its work, reads the account, explains the $288.00 charge, and extends the welcome rate after the customer agrees. Pre-scripted run on mock data.">
+        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Demo billing agent</span><span class="mtag mtag-proto">Target &middot; prototype</span></div>
+        <div class="mock-body" id="proto-body">
+          <div class="m-user">I see a $288 charge on my card I do not recognize. Can you help me understand it?</div>
           <div class="m-agent">
-            <p>Your March 1 charge was $70.00. It is higher than the $49.00 you paid the last three months because a promotional discount on your subscription ended on February 21. Your plan price did not change.</p>
-            <div class="m-rows" role="table" aria-label="Charge explanation">
-              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Plus plan</b><span class="rsub">monthly list price</span></span><span class="ramt" role="cell">$70.00</span></div>
-              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Your promotional price</b><span class="rsub">December through February, ended February 21</span></span><span class="ramt" role="cell">$49.00</span></div>
-              <div class="m-row total" role="row"><span class="rlab" role="cell">Charged March 1</span><span class="ramt" role="cell">$70.00</span></div>
+            <details class="m-work proto-work">
+              <summary><span class="chev" aria-hidden="true">&#8250;</span><span class="wlab">Work done</span></summary>
+              <div class="proto-workbody">
+                <p class="proto-plan">Let me confirm a few things before I open your billing, trace why this cycle looks different, and check whether any of it can be eased for you.</p>
+                <div class="proto-steps">
+                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Verifying account access</span><span class="pres">account owner &middot; verified</span></div>
+                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Reading your plan</span><span class="pres">Plus plan &middot; Payroll &middot; Payments</span></div>
+                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Counting your team</span><span class="pres">16 active &middot; 2 added this cycle</span></div>
+                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Pulling this cycle&rsquo;s charges</span><span class="pres">$288.00 &middot; $60 more than last month</span></div>
+                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Finding what changed</span><span class="pres">welcome rate ended <span class="em">+$48</span> &middot; 2 seats +$12</span></div>
+                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Checking what could ease the increase</span><span class="pres">welcome rate may extend &middot; annual billing available</span></div>
+                </div>
+              </div>
+            </details>
+            <p class="proto-lead">Here is what is behind the $288.00 this cycle.</p>
+            <p>Two things changed it. First, you added 2 team members at $6 each, which adds $12 and covers their payroll tax filings automatically. Second, your 6-month welcome rate finished this cycle, which had been taking $48 off your bill. Together those bring your monthly total from $228 to $288, an increase of $60. Everything else is the same plan you already had.</p>
+            <div class="m-rows" role="table" aria-label="Charge breakdown, this cycle">
+              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Plus plan</b><span class="rsub">base subscription, monthly</span></span><span class="ramt" role="cell">$99.00</span></div>
+              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Payroll</b><span class="rsub">monthly subscription</span></span><span class="ramt" role="cell">$50.00</span></div>
+              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Team members</b><span class="rsub">16 active, $6.00 each</span></span><span class="ramt" role="cell">$96.00</span></div>
+              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Payments processing</b><span class="rsub">card fees this month</span></span><span class="ramt" role="cell">$43.00</span></div>
+              <div class="m-row total" role="row"><span class="rlab" role="cell">Total this cycle</span><span class="ramt" role="cell">$288.00</span></div>
             </div>
-            <p>If this does not look right, or you want to review your plan options, I can bring in a person.</p>
+            <div class="proto-change">
+              <div class="pch-head"><span>Changed this cycle</span><span class="pch-amt">+$60.00</span></div>
+              <div class="pch-row"><span>2 team members added</span><span class="pch-amt">+$12.00</span></div>
+              <div class="pch-row"><span>6-month welcome rate ended</span><span class="pch-amt">+$48.00</span></div>
+            </div>
+            <p>One more thing I noticed while reviewing your account. The welcome rate that just ended was the largest part of this change, so I checked whether it could continue. You may qualify to extend it, and I can request that for you now.</p>
+          </div>
+          <div class="m-user">Yes, extend my welcome rate.</div>
+          <div class="m-agent">
+            <div class="proto-steps">
+              <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Extending your welcome rate</span><span class="pres">extended through September</span></div>
+              <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Crediting your card</span><span class="pres">$48.00 refunded &middot; card ending 4417</span></div>
+              <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Setting your reminder</span><span class="pres">an email before the rate returns</span></div>
+            </div>
+            <p>Done. Here is what I changed and what to expect.</p>
+            <div class="proto-summary">
+              <div class="psec">
+                <p class="psec-h">What I did</p>
+                <div class="prow"><span>Refund to your card ending 4417</span><span class="pv">$48.00</span></div>
+                <div class="prow"><span>Welcome rate extended</span><span class="pv">through September</span></div>
+              </div>
+              <div class="psec">
+                <p class="psec-h">What to expect &middot; each cycle</p>
+                <div class="prow"><span>Subscription through September</span><span class="pv">$197.00</span></div>
+                <div class="prow"><span>Subscription from October</span><span class="pv">$245.00</span></div>
+                <div class="prow"><span>Payments processing</span><span class="pv">varies &middot; was $43.00</span></div>
+              </div>
+              <p class="pfoot">Mock data</p>
+            </div>
+            <p>So about $240 a month while the discount holds, a little more or less with your payments. The extra $12 is your two new team members. I will email you before the rate returns in October.</p>
+          </div>
+          <div class="m-user">That is exactly what I was hoping for. Thank you.</div>
+          <div class="m-agent">
+            <p>Happy to help. You are all set.</p>
           </div>
         </div>
         <div class="m-composer" aria-hidden="true">Ask anything</div>
         <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
       </div>
-      <p class="mock-cap">The target state. This answer did not ship in this program: full personalization required billing APIs the phased roadmap was still onboarding. Shown here as the design target it was. Business details invented; amounts illustrative.</p>
+      <div class="proto-ctl" id="proto-ctl" hidden>
+        <button type="button" class="proto-play" id="proto-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg><span id="proto-play-lab">Play the prototype</span></button>
+      </div>
+      <p class="mock-cap">The target state, as the working prototype I built, AI-paired: a pre-scripted agentic run, no live model, mock data only. The full conversation reads above as it stands; play animates the run. This answer did not ship in this program. The built version, as an agent skill on Intuit Intelligence, is the next case.</p>
     </div>
 
     <div class="prose">
       <p class="opens">But we knew that to provide a real charge explanation and a personalized experience, we needed to onboard APIs and bring in the specific subscription charges for that account. That is when I hit a roadblock. At that time, teams at Intuit were building Intuit Intelligence, a unified central conversational experience that would live outside the help panel, center stage in the product, as the new chat experience customers would interact with. I did not get buy-in from teams to connect and build APIs into the platform I was building in, because that experience was moving to Intuit Intelligence.</p>
       <p>We banked on the gains we already produced, and moved on to collaborating with the Intuit Intelligence teams, building agents to onboard the billing experience there.</p>
-      <p>The target state above later became a working build, as an agent skill for Intuit Intelligence. That is the next case: <a href="billing-skill.html">BillingSkill</a>.</p>
+      <p>The heart of the target state above, the personalized charge explanation, later became a working build, as an agent skill for Intuit Intelligence. That is the next case: <a href="billing-skill.html">BillingSkill</a>.</p>
     </div>
   </section>
 
