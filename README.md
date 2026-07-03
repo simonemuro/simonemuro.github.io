@@ -1,18 +1,18 @@
-# Simone Muro — Portfolio
+# Simone Muro — Portfolio (v4)
 
-Static portfolio site for `https://simonemuro.github.io/`. A staff-level content design and model UX
-writing portfolio: leads with LLM response quality, anchored in voice, and backed by judgment-first
-case studies.
+Static portfolio site for `https://simonemuro.github.io/`. Version 4: an AI behavior design
+portfolio built around sealed decisions, replayable traces, and judgment-first case studies.
 
 ## Structure
 
-- `index.html` — homepage: thesis, proof bar, four case studies, career arc, principles, contact.
-- `case-credit-karma.html` — "See Why" & "Analyze My Wallet" (prompt engineering, regulated finance).
-- `case-cancellation.html` — LLM savability classifier (retention, structured output).
-- `case-voice-snippet.html` — GenAI voice support (voice AI, response evaluation).
-- `case-quality-legacy.html` — agentic-AI quality evaluation at scale (response quality + leadership).
-- `resume.html` — printable resume (browser print → Save as PDF).
-- `styles.css` — shared visual system. `.nojekyll` — serve static files as-is.
+- `index.html` — homepage: thesis, work index, refusal widget, contact.
+- Case studies (numbered chain): `billing-skill.html`, `payroll-intelligence.html`,
+  `quality-program.html`, `cancellation-saves.html`, `voice.html`, `credit-karma.html`,
+  `operate-with-ai.html`.
+- `resume.html` — printable resume (browser print → Save as PDF). `404.html` — not-found page.
+- `v4.css` / `v4.js` — shared visual system and interactions. `fonts/` — self-hosted webfonts.
+- `V4-COMPONENTS.md` — component reference. `.nojekyll` — serve static files as-is.
+- `agent-worker/` — Cloudflare Worker scaffold for the future live agent (not deployed).
 
 ## Local preview
 
