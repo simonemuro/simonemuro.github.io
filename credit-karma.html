@@ -56,7 +56,7 @@
   /* evaluation grid: four grades, no percentages */
   .eg{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 16px;align-items:center;}
   .eg-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);text-align:right;white-space:nowrap;}
-  .eg-row{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;}
+  .eg-row{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;}
   .eg-cell{aspect-ratio:1/1;border:1px solid var(--hair);}
   .g-strike{background:var(--accent);border-color:var(--accent);}
   .g-low{background:var(--hair-strong);border-color:var(--hair-strong);}
@@ -310,31 +310,31 @@
   <section class="shell band" id="evaluation" aria-labelledby="eval-h" data-state="grading">
     <div>
       <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>The evaluation</span></p>
-      <h2 id="eval-h" class="io" style="--d:1">Ten profiles, three revisions, one strike.</h2>
-      <p class="band-lede io" style="--d:2">Tuning was not on vibes. Ten member profiles spanning real credit situations: a thin file with no cards, a high-utilization revolver, a premium member with a long history. Three prompt revisions. Every cell graded on a four-step rubric, and the rubric was one-strike: a single invented benefit, a stray number, or an approval-odds slip made the cell a strike, no matter how well the rest read.</p>
-      <p class="band-lede io" style="--d:3">From the first draft to the second revision the strikes drain out. The prompts lived in git, moved through reviewed pull requests, and were readied for release through product, legal, and safety review, not a merge button.</p>
+      <h2 id="eval-h" class="io" style="--d:1">Nine profiles, a dozen revisions, one strike.</h2>
+      <p class="band-lede io" style="--d:2">Tuning was not on vibes. Nine synthetic member profiles spanning real credit situations: a thin file with no cards, a high-utilization revolver, a premium member with a long history. About a dozen prompt revisions. Every cell graded on a three-tier rubric plus a hard strike: a single invented benefit, a stray number, or an approval-odds slip made the cell a strike, no matter how well the rest read.</p>
+      <p class="band-lede io" style="--d:3">From the first draft to the release candidate the strikes drain out. The prompts lived in git, moved through reviewed pull requests, and were readied for release through product, legal, and safety review, not a merge button.</p>
 
-      <figure class="exhibit io" style="--d:4" aria-label="The evaluation grid: ten member profiles across, three prompt revisions down. Strikes and below-standard cells in the first draft drain out to mostly ideal by the second revision.">
+      <figure class="exhibit io" style="--d:4" aria-label="The evaluation grid: nine member profiles across, three of the prompt revisions down. Strikes and below-standard cells in the first draft drain out to mostly ideal by the release candidate.">
         <figcaption class="exhibit-hd mono">
-          <span>evaluation · ten profiles · three revisions</span>
+          <span>evaluation · nine profiles · three of about a dozen revisions</span>
           <span>reconstructed</span>
         </figcaption>
         <div class="exhibit-bd">
           <div class="eg" aria-hidden="true">
             <div class="eg-label">initial</div>
             <div class="eg-row">
-              <div class="eg-cell g-strike"></div><div class="eg-cell g-low"></div><div class="eg-cell g-strike"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-low"></div><div class="eg-cell g-strike"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-low"></div><div class="eg-cell g-strike"></div><div class="eg-cell g-low"></div>
+              <div class="eg-cell g-strike"></div><div class="eg-cell g-low"></div><div class="eg-cell g-strike"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-low"></div><div class="eg-cell g-strike"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-low"></div><div class="eg-cell g-strike"></div>
             </div>
             <div class="eg-label">revision 1</div>
             <div class="eg-row">
-              <div class="eg-cell g-low"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-low"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-low"></div><div class="eg-cell g-ok"></div>
+              <div class="eg-cell g-low"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-low"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-low"></div>
             </div>
             <div class="eg-label">revision 2</div>
             <div class="eg-row">
-              <div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-pass"></div>
+              <div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-ok"></div>
             </div>
           </div>
-          <p class="visually-hidden">Initial draft: four of ten profiles break a legal or safety rule, four are below standard, two are acceptable. Revision one: no rule breaks, three below standard, five acceptable, two ideal. Revision two: eight ideal, two acceptable, no strikes.</p>
+          <p class="visually-hidden">Initial draft: four of nine profiles break a legal or safety rule, three are below standard, two are acceptable. Revision one: no rule breaks, three below standard, four acceptable, two ideal. Revision two: seven ideal, two acceptable, no strikes.</p>
           <div class="eg-legend" aria-hidden="true">
             <div><i class="g-strike"></i> strike: breaks a legal or safety rule</div>
             <div><i class="g-low"></i> below standard</div>
@@ -342,7 +342,7 @@
             <div><i class="g-pass"></i> ideal</div>
           </div>
         </div>
-        <figcaption class="exhibit-cap"><b>Reconstructed; the improvement is real.</b> The grid is how a prompt earned release: not because it read well once, but because it held across ten different members, three revisions in a row. No percentages in the rubric: four grades, one strike.</figcaption>
+        <figcaption class="exhibit-cap"><b>Reconstructed; the improvement is real.</b> The grid is how a prompt earned release: not because it read well once, but because it held across nine different member profiles, revision after revision. No percentages in the rubric: three tiers and a hard strike.</figcaption>
       </figure>
     </div>
   </section>

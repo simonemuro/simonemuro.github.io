@@ -19,7 +19,7 @@ Every page uses this head and shell (copy from `index.html`):
 1. **ONE sealed decision spread per case page.** The homepage has two; that is the exception.
 2. **Margin notes: at most 2 per page**, and only checkable observations about what the page just did. Never adjectives.
 3. **Colophon table (`.evaltable`) is homepage-only.** Case pages use the one-line footer variant (`.foot-score`).
-4. **Numbers only from `00_command_center/VERIFIED_CLAIMS.md`.** $2.9M is always "projected". Never 35->57, 17->29, 92%, "realized $2.9M", "fallback >10% to <5%".
+4. **Numbers only from the private verified-claims ledger.** Projections are always labeled projected. No unreceipted figures anywhere.
 5. **Zero em or en dashes in rendered text.** Use periods, colons, "·", or "to".
 6. **No manifesto-speak, no vocabulary cosplay.** Verbs only appear with evidence and constraint behind them. The phrase "judgment made visible" never appears.
 7. **Reduced motion**: scroll reveals render complete, but sealed calls STAY sealed until click (open is instant). Never pre-open.

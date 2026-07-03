@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light">
 <meta name="description" content="Case 04. Intent training stalled near 60 percent of cancellation reasons. One LLM classifier took coverage to 96 and savability accuracy to 96.6, at $63 a month. The shipped prompt is on the page, redacted.">
 <meta property="og:title" content="Cancellation Saves · Simone Muro">
-<meta property="og:description" content="Four months of tuning bought fifteen points, then stalled. The bet: classify the reason with an LLM. Coverage 60 to 96 percent, savability accuracy 96.6, run cost $63 a month.">
+<meta property="og:description" content="Four months of tuning had gone flat, with two in five reasons still unknown. The bet: classify the reason with an LLM. Coverage 60 to 96 percent, savability accuracy 96.6, run cost $63 a month.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/cancellation-saves.html">
 <meta name="twitter:card" content="summary">
@@ -51,7 +51,7 @@
       <p class="hero-sub io" style="--d:2">&ldquo;I want to cancel&rdquo; is a dozen problems wearing one sentence, and only some of them are losses you have to accept. The reason a customer gives is the thing that decides whether you can keep them. By early 2023 I had spent four months teaching an intent model to hear it, and the teaching had stopped working.</p>
 
       <dl class="factbox io" style="--d:3">
-        <div class="fact fact-outcome"><dt>Outcome</dt><dd>96.6% savability accuracy, where model training had stalled near 60</dd></div>
+        <div class="fact fact-outcome"><dt>Outcome</dt><dd>96.6% savability accuracy · classification coverage up from 60 to 96 percent, where tuning had stalled</dd></div>
         <div class="fact"><dt>Role</dt><dd>Designed the NLU saves flow · built the LLM classifier</dd></div>
         <div class="fact"><dt>When</dt><dd>2022 to 2023 · NLU into LLM</dd></div>
         <div class="fact"><dt>Run cost</dt><dd>$63 a month · $756 a year</dd></div>
@@ -70,7 +70,7 @@
       <div>
         <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>The bet</span></p>
         <h2 id="bet-band-h" class="io" style="--d:1">Keep tuning, or bet the queue on an unproven model?</h2>
-        <p class="band-lede io" style="--d:2">Four months of intent tuning had bought about fifteen points of precision on the reasons the model knew, and then the curve went flat. The unknowns barely moved. Make the call before I show you mine.</p>
+        <p class="band-lede io" style="--d:2">Four months in, precision on the reasons the model knew sat near 80 percent, and the curve had gone flat. The unknowns barely moved. Make the call before I show you mine.</p>
       </div>
     </div>
 
@@ -106,7 +106,7 @@
             <span class="label mono">The setup</span>
             <p class="body">Tuning meant labeling utterances against trained intents, months per cycle, and precision on known reasons had climbed to roughly 80 percent while the unknowns held. Meanwhile the saves teams kept 20 to 35 percent of customers when they knew the real reason: every unknown was money left on the table. The alternative did not officially exist. No sanctioned path shipped generative AI to production yet.</p>
             <div class="score" aria-label="The stall, in numbers">
-              <div class="score-row"><span>four months of tuning</span><span class="val-pass">+15 points</span></div>
+              <div class="score-row"><span>precision on known reasons</span><span class="val-pass">near 80%, flat</span></div>
               <div class="score-row"><span>reasons resolved</span><span class="val-pass">stalled near 60%</span></div>
               <div class="score-row"><span>the bottleneck</span><span class="val-pending">?</span><span class="val-fail">the tool, not the tuning</span></div>
             </div>
@@ -136,7 +136,7 @@
               </button>
               <button class="opt" type="button" data-verb="hand off" aria-pressed="false">
                 <span class="opt-line"><span class="idx" aria-hidden="true">f.</span><span class="verb">hand off</span><span class="tag">your call</span></span>
-                <span class="gloss">give the classifier to a modeling team and wait on their roadmap</span>
+                <span class="gloss">give the problem to a dedicated modeling team; classifiers are their craft</span>
               </button>
             </div>
             <div class="opt-foot">
@@ -216,7 +216,6 @@
   <section class="shell band" id="queue" aria-labelledby="queue-h" data-state="routing">
     <div>
       <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The queue this protects</span></p>
-      <!-- Quote: Simone's verbatim words from the story interview (2026-06-12, voice-to-text, lightly cleaned), carried from the v3 page. Keep verbatim; publication follows her v3 sign-off. -->
       <h2 id="queue-h" class="io" style="--d:1">&ldquo;If I send ten people to that queue, the ten should be truly savable. Not two.&rdquo;</h2>
       <p class="band-lede io" style="--d:2">My bar for the classifier, and the reason it exists at all.</p>
       <div class="case-prose io" style="--d:3">
