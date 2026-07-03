@@ -254,8 +254,25 @@
            "href": "resume.html", "link": "resume.html" }
        ]
      }
-     Every in-scope reply is labeled curated; everything else is
-     refused and handed off. Nothing leaves the tab. */
+     Two modes:
+     - CURATED (default, no backend): every in-scope reply is labeled
+       curated; everything else is refused and handed off. Nothing
+       leaves the tab.
+     - LIVE: if window.SM_AGENT_ENDPOINT is set (read from a
+       <meta name="agent-endpoint"> tag, see index.html), the widget
+       becomes a real chat: input → POST {messages} to the Cloudflare
+       Worker → render {reply, sources}. On any fetch failure it
+       degrades back to curated mode and says so honestly. */
+
+  /* live-mode endpoint: meta tag wins, then a pre-set global */
+  function agentEndpoint() {
+    var meta = document.querySelector('meta[name="agent-endpoint"]');
+    if (meta && meta.getAttribute("content")) {
+      window.SM_AGENT_ENDPOINT = meta.getAttribute("content");
+    }
+    return window.SM_AGENT_ENDPOINT || "";
+  }
+
   function initRefusal(w) {
     var kb = readConfig(w, "[data-refusal-kb]") || {};
     var form = w.querySelector("form");
@@ -265,6 +282,19 @@
     var email = kb.handoff || "";
     var refusals = kb.refusals || ["out of scope. that one belongs to a human: {email}"];
     var refusedCount = 0;
+
+    var endpoint = agentEndpoint();
+    var live = !!endpoint;      // live until the first failure
+    var history = [];           // {role, content} turns for the worker
+    var pending = false;
+
+    /* live mode announces itself in the widget header */
+    if (live) {
+      var hd = w.querySelector(".refusal-hd span:last-child");
+      if (hd) hd.textContent = "scope: Simone's work · live agent · grounded in her public pages";
+      var foot = w.querySelector(".refusal-foot");
+      if (foot) foot.textContent = "live mode: your question goes to her agent endpoint, is answered from her public pages, and is not logged";
+    }
 
     function match(q) {
       var text = q.toLowerCase();
@@ -278,13 +308,15 @@
       return null;
     }
 
-    function addTurn(q, tagText, refused, replyText, href, linkText) {
+    function addTurn(q, tagText, refused, replyText, href, linkText, sources) {
       var turn = document.createElement("div");
       turn.className = "rf-turn";
-      var you = document.createElement("p");
-      you.className = "rf-you";
-      you.textContent = q;
-      turn.appendChild(you);
+      if (q !== null) {
+        var you = document.createElement("p");
+        you.className = "rf-you";
+        you.textContent = q;
+        turn.appendChild(you);
+      }
       var page = document.createElement("p");
       page.className = "rf-page";
       var tag = document.createElement("span");
@@ -298,16 +330,26 @@
         a.textContent = linkText || href;
         page.appendChild(a);
       }
+      if (sources && sources.length) {
+        page.appendChild(document.createElement("br"));
+        page.appendChild(document.createTextNode("sources: "));
+        for (var i = 0; i < sources.length; i++) {
+          if (i > 0) page.appendChild(document.createTextNode(" · "));
+          var s = document.createElement("a");
+          s.href = sources[i].page;
+          s.textContent = sources[i].page;
+          s.title = sources[i].title || "";
+          page.appendChild(s);
+        }
+      }
       turn.appendChild(page);
       log.appendChild(turn);
-      while (log.children.length > 6) log.removeChild(log.firstChild);
+      while (log.children.length > 8) log.removeChild(log.firstChild);
+      return turn;
     }
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var q = input.value.trim();
-      if (!q) return;
-      input.value = "";
+    /* curated path: the designed no-backend behavior (and the fallback) */
+    function curatedAnswer(q) {
       var hit = match(q);
       if (hit) {
         addTurn(q, "curated, designed response · no live model", false, hit.reply, hit.href, hit.link);
@@ -317,6 +359,56 @@
         refusedCount += 1;
         addTurn(q, "refused: out of scope", true, line, email ? "mailto:" + email : "", email);
         V4.tick("refused: out of scope");
+      }
+    }
+
+    /* live path: POST to the worker; on any failure, honest notice +
+       permanent degradation to curated mode (K5). */
+    function liveAsk(q) {
+      pending = true;
+      history.push({ role: "user", content: q });
+      if (history.length > 12) history = history.slice(-12);
+      var thinking = addTurn(q, "live agent", false, "…", "", "");
+      fetch(endpoint.replace(/\/$/, "") + "/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: history }),
+      })
+        .then(function (r) {
+          if (!r.ok) throw new Error("status " + r.status);
+          return r.json();
+        })
+        .then(function (data) {
+          pending = false;
+          if (!data || typeof data.reply !== "string") throw new Error("bad payload");
+          log.removeChild(thinking);
+          history.push({ role: "assistant", content: data.reply });
+          addTurn(q, "live agent · answered from her public pages", false, data.reply, "", "", data.sources || []);
+          V4.tick("answered: live agent");
+        })
+        .catch(function () {
+          pending = false;
+          live = false;
+          history = [];
+          if (thinking.parentNode === log) log.removeChild(thinking);
+          addTurn(null, "notice", true,
+            "The live agent is unreachable right now, so this box just downgraded itself to curated replies. " +
+            "Same honesty, smaller brain. A human is always reachable:",
+            email ? "mailto:" + email : "", email);
+          V4.tick("live agent down: curated fallback");
+          curatedAnswer(q);
+        });
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var q = input.value.trim();
+      if (!q || pending) return;
+      input.value = "";
+      if (live) {
+        liveAsk(q);
+      } else {
+        curatedAnswer(q);
       }
       input.focus();
     });
