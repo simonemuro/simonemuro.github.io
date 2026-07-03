@@ -17,9 +17,6 @@
 <style>
 /* ---------- page-scoped: billing-skill · v4 tokens only ---------- */
 
-/* decision shown open: the resolved boundary value renders inline */
-.score-row .val-fail{display:inline;}
-
 /* free prose inside bands */
 .prose{max-width:62ch;margin-top:26px;}
 .prose p{margin-top:14px;}
@@ -75,7 +72,6 @@
 <header class="masthead" role="banner">
   <div class="shell masthead-inner">
     <a class="brand" href="index.html">Simone Muro</a>
-    <p class="mast-state mono" aria-hidden="true">site: <b data-ticker>reading</b></p>
     <nav class="mast-nav mono" aria-label="Primary">
       <a href="index.html#work">Work</a>
       <a href="resume.html">Resume</a>
@@ -88,7 +84,7 @@
 <main id="main">
 
   <!-- ================= CASE OPEN · skim layer ================= -->
-  <section class="shell hero with-note" aria-labelledby="case-h" data-state="answering">
+  <section class="shell hero" aria-labelledby="case-h" data-state="answering">
     <div>
       <p class="hero-kicker mono io" style="--d:0">
         <span>Case No. 01 · BillingSkill</span>
@@ -105,10 +101,6 @@
         <div class="fact"><dt>Status</dt><dd>Runs end to end on mock data · live connection scoped for engineering</dd></div>
       </dl>
     </div>
-    <aside class="bnote io" style="--d:5" aria-label="Behavior note 01">
-      <span class="bnote-id">Note 01</span>
-      <p>Answered first. The whole build is in the factbox before any story is told.</p>
-    </aside>
   </section>
 
   <!-- ================= 01 · THE DECISION ================= -->
@@ -119,7 +111,7 @@
       <p class="band-lede io" style="--d:2">The account is open, the intent is unmistakable, and the platform could let the skill finish the job in the chat. The hard question is not what the skill can do. It is what it may do. The skill could answer with the steps, execute the cancel on request, confirm and then cancel, refuse outright, or read the account and hand off. Her call: hand off.</p>
     </div>
 
-    <article class="decision with-note" id="decision-01" aria-labelledby="dec-h">
+    <article class="decision" id="decision-01" aria-labelledby="dec-h">
       <div>
         <p class="d-kicker mono io" style="--d:0">
           <span class="d-no">The decision</span>
@@ -174,10 +166,6 @@
           <p class="hitl-foot mono">the shipped design, reconstructed on invented account data · two buttons, neither of them cancel</p>
         </figure>
       </div>
-      <aside class="bnote io" style="--d:5" aria-label="Behavior note 02">
-        <span class="bnote-id">Note 02</span>
-        <p>Her call is stated plainly, receipt attached. And the widget under it offers two buttons: specialist and keep. Cancel is not one of them.</p>
-      </aside>
     </article>
   </section>
 

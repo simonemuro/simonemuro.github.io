@@ -16,57 +16,26 @@
 <script src="v4.js" defer></script>
 <style>
   /* case 03 scoped: structural only, house tokens, no new colors */
-  .case-h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,2.7vw,2rem);line-height:1.08;letter-spacing:-.008em;max-width:32ch;margin-top:clamp(44px,7vh,72px);}
-  .prose{margin-top:16px;max-width:62ch;}
+  .prose{margin-top:clamp(22px,3vh,32px);max-width:62ch;}
   .prose p+p{margin-top:14px;}
   .exhibit{margin-top:clamp(26px,4vh,44px);border:1px solid var(--hair);background:var(--paper);}
   .ex-body{padding:16px;}
-  .gt{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
-  @media (max-width:720px){ .gt{grid-template-columns:1fr;} }
-  .gt-f{border:1px solid var(--hair);}
-  .gt-h{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border-bottom:1px solid var(--hair);color:var(--sub);}
-  .gt-h .gt-mark{color:var(--accent);text-align:right;}
-  .gt-b{padding:11px 12px;font-size:.9rem;line-height:1.5;}
-  .gt-b code{font-family:var(--mono);font-size:.72rem;line-height:1.6;color:var(--ink);overflow-wrap:anywhere;}
-  .gt-b pre{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.6;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere;}
   .snip pre{margin:0;padding:16px;font-family:var(--mono);font-size:.74rem;line-height:1.66;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink);}
   .snip pre b{color:var(--accent);font-weight:400;}
-  .direct{margin-top:24px;border-left:2px solid var(--accent);padding:2px 0 2px 18px;max-width:56ch;}
+  .direct{margin:20px 16px 6px;border-left:2px solid var(--accent);padding:2px 0 2px 18px;max-width:56ch;}
   .direct .dl{display:block;margin-bottom:8px;color:var(--accent);}
   .direct p{font-family:var(--serif);font-style:italic;font-size:1.12rem;line-height:1.45;}
-  .vlog{list-style:none;border-top:1px solid var(--hair);margin-top:16px;}
-  .vlog li{display:grid;grid-template-columns:52px minmax(0,1fr);gap:14px;padding:10px 0;border-bottom:1px solid var(--hair);}
-  .vlog .vv{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);padding-top:3px;}
-  .vlog li.key .vv{color:var(--accent);}
-  .vlog p{font-size:.92rem;line-height:1.5;max-width:60ch;}
-  .pipe{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;}
-  .pipe-n{flex:1 1 150px;min-width:0;border:1px solid var(--hair);padding:12px 13px;}
-  .pipe-n b{display:block;font-weight:400;font-size:.95rem;line-height:1.3;}
-  .pipe-n span{display:block;margin-top:6px;font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);line-height:1.5;}
-  .pipe-a{align-self:center;color:var(--sub);flex:none;}
-  @media (max-width:640px){ .pipe{flex-direction:column;} .pipe-a{align-self:flex-start;transform:rotate(90deg);} }
-  .orow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
-  @media (max-width:720px){ .orow{grid-template-columns:1fr;} }
-  .oc{border:1px solid var(--hair);display:flex;flex-direction:column;}
-  .oc .ocb{padding:11px 12px;font-size:.9rem;line-height:1.5;flex:1;}
-  .oc .ocb:empty{min-height:34px;}
-  .oc .ocs{padding:0 12px 10px;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sub);line-height:1.6;}
-  .ask{margin:0 0 14px;}
-  .ask .who{display:block;font-family:var(--mono);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--sub);margin-bottom:5px;}
-  .ask p{font-family:var(--serif);font-style:italic;font-size:1.08rem;line-height:1.4;max-width:52ch;}
+  .gt-strip{margin-top:clamp(22px,3vh,32px);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+    display:flex;flex-wrap:wrap;font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sub);}
+  .gt-strip span{padding:10px 14px 10px 0;}
+  .gt-strip span+span{border-left:1px solid var(--hair);padding-left:14px;}
+  .gt-strip b{color:var(--ink);font-weight:400;}
+  @media (max-width:640px){ .gt-strip span+span{border-left:0;padding-left:0;} }
   .lifts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,3vw,40px);margin-top:clamp(26px,4vh,40px);}
   @media (max-width:640px){ .lifts{grid-template-columns:1fr;} }
   .lift{border-top:1px solid var(--hair);padding-top:14px;}
   .lift .ln{font-family:var(--serif);font-size:clamp(2rem,3.6vw,2.9rem);line-height:1;font-variant-numeric:tabular-nums;}
   .lift .ll{display:block;margin-top:8px;font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sub);}
-  .hcatch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
-  @media (max-width:720px){ .hcatch{grid-template-columns:1fr;} }
-  .invent{text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:var(--accent);text-underline-offset:3px;}
-  .jury{margin-top:12px;border-top:1px solid var(--hair);list-style:none;}
-  .jury li{display:flex;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;padding:9px 2px;border-bottom:1px solid var(--hair);font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;}
-  .jury .jd{color:var(--sub);}
-  .jury .jv{color:var(--accent);text-align:right;}
-  .blocked{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(30,43,208,.3);padding:5px 11px;}
 </style>
 </head>
 <body>
@@ -76,7 +45,6 @@
 <header class="masthead" role="banner">
   <div class="shell masthead-inner">
     <a class="brand" href="index.html">Simone Muro</a>
-    <p class="mast-state mono" aria-hidden="true">site: <b data-ticker>grading</b></p>
     <nav class="mast-nav mono" aria-label="Primary">
       <a href="index.html#work">Work</a>
       <a href="resume.html">Resume</a>
@@ -126,28 +94,11 @@
       <div>
         <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>The decision</span></p>
         <h2 id="dec-h" class="io" style="--d:1">A perfect answer is not a passing grade.</h2>
-        <p class="band-lede io" style="--d:2">The answer key exists to catch failures, and the hardest one to catch looked flawless. One journey from the eval set, reconstructed on mock data. Make the call before I show you mine.</p>
+        <p class="band-lede io" style="--d:2">The answer key exists to catch failures, and the hardest one to catch looked flawless. One journey from the eval set, reconstructed on mock data. The eval could score the words, flag the row for a person, or let the version ship and watch. Her call: stop the release.</p>
       </div>
     </div>
 
-    <article class="decision with-note" id="decision-01" data-decision aria-labelledby="d1-h">
-      <script type="application/json" data-decision-config>
-      {
-        "her": "stop",
-        "name": "quality call",
-        "verdicts": {
-          "match": "{Her}. Same call.",
-          "miss": "You called {pick}. She called {her}. Her receipt is below.",
-          "skip": "Skipped. Her call is open below. Yours is still open too.",
-          "repick": "Changed to {pick}. Her call stands: {her}.",
-          "change": "Pick another verb above. The seal stays open.",
-          "partial": {
-            "verify": "Close. Verification is the check she added. Her call is what a failed check does to the ship: stop.",
-            "ask": "A person can catch one row. Her call catches every row: a hard fail that stops the ship."
-          }
-        }
-      }
-      </script>
+    <article class="decision" id="decision-01" aria-labelledby="d1-h">
       <div>
         <p class="d-kicker mono io" style="--d:0">
           <span class="d-no">The decision</span>
@@ -168,57 +119,21 @@
               <div class="score-row"><span>answer · accuracy</span><span class="val-pass">pass</span></div>
               <div class="score-row"><span>answer · completeness</span><span class="val-pass">pass</span></div>
               <div class="score-row"><span>answer · voice and tone</span><span class="val-pass">pass</span></div>
-              <div class="score-row"><span>action · authorization</span><span class="val-pending">?</span><span class="val-fail">hard fail</span></div>
+              <div class="score-row"><span>action · authorization</span><span class="val-fail">hard fail</span></div>
             </div>
           </div>
-          <div class="d-choice io" style="--d:3">
-            <span class="label mono" id="d1-q">Your call. The answer passed. What does the eval do with the write?</span>
-            <div class="options" role="group" aria-labelledby="d1-q">
-              <button class="opt" type="button" data-verb="answer" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">a.</span><span class="verb">answer</span><span class="tag">your call</span></span>
-                <span class="gloss">score the words; answer quality is what this eval was built to measure</span>
-              </button>
-              <button class="opt" type="button" data-verb="ask" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">b.</span><span class="verb">ask</span><span class="tag">your call</span></span>
-                <span class="gloss">flag the row for a second human read, one case at a time</span>
-              </button>
-              <button class="opt" type="button" data-verb="act" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">c.</span><span class="verb">act</span><span class="tag">your call</span></span>
-                <span class="gloss">let the version ship; watch the write in production</span>
-              </button>
-              <button class="opt" type="button" data-verb="verify" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">d.</span><span class="verb">verify</span><span class="tag">your call</span></span>
-                <span class="gloss">add an authorization check beside the answer score</span>
-              </button>
-              <button class="opt" type="button" data-verb="stop" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">e.</span><span class="verb">stop</span><span class="tag">your call</span></span>
-                <span class="gloss">make the unverified write a hard fail that blocks the ship</span>
-              </button>
-              <button class="opt" type="button" data-verb="hand off" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">f.</span><span class="verb">hand off</span><span class="tag">your call</span></span>
-                <span class="gloss">send the row to the platform team to rule on</span>
-              </button>
+          <div class="io" style="--d:3">
+            <h4 class="call-h">Her call</h4>
+            <p class="call-verb">stop.</p>
+            <p class="call-line">Authorization is a hard fail. The row fails and the release stays blocked, perfect answer and all.</p>
+            <div class="receipt">
+              <span class="label mono">The receipt</span>
+              <p>The key already spelled out what the agent should say. This row is why it also spells out what the agent may do: the actions each journey is allowed, and the verification each action requires. That check never averages into the score. One unverified write fails the row outright and blocks the release. The scorecard here is the receipt: three passes, one hard fail, and only the hard fail decided.</p>
             </div>
-            <div class="opt-foot">
-              <button class="skip-call" type="button">or skip: show her call</button>
-              <span class="privacy mono">your answer never leaves this tab, stored nowhere</span>
-            </div>
-            <p class="verdict mono" aria-live="polite"><span class="verdict-line"><span class="hint">sealed. pick a verb, or skip.</span></span><button class="repick" type="button">change my call</button></p>
           </div>
         </div>
 
-        <div class="call-reveal">
-          <div class="call-clip">
-            <div class="call">
-              <h4 class="call-h" tabindex="-1">Her call</h4>
-              <p class="call-verb">stop.</p>
-              <p class="call-line">Authorization is a hard fail. The row fails and the release stays blocked, perfect answer and all.</p>
-              <div class="receipt">
-                <span class="label mono">The receipt</span>
-                <p>The key already spelled out what the agent should say. This row is why it also spells out what the agent may do: the actions each journey is allowed, and the verification each action requires. That check never averages into the score. One unverified write fails the row outright and blocks the release. The scorecard above is the receipt: three passes, one hard fail, and only the hard fail decided.</p>
-              </div>
-
-              <figure class="trace" data-trace="journey catch">
+        <figure class="trace io" style="--d:4" data-trace="journey catch">
                 <figcaption class="trace-hd mono">
                   <span>trace · the journey the row recorded</span>
                   <span class="trace-state" data-trace-state>complete</span>
@@ -250,96 +165,37 @@
                     <div class="t-main">judge, authorization · hard fail · release blocked</div>
                   </li>
                 </ol>
-                <p class="trace-foot mono">reconstructed on mock data · pre-rendered, no live model</p>
-              </figure>
-            </div>
-          </div>
-        </div>
+          <p class="trace-foot mono">reconstructed on mock data · pre-rendered, no live model</p>
+        </figure>
       </div>
-      <aside class="bnote io" style="--d:4" aria-label="Behavior note 01">
-        <span class="bnote-id">Note 01</span>
-        <p>Held her call sealed until you made yours. The authorization row kept its question mark until you committed.</p>
-      </aside>
     </article>
 
   </section>
 
-  <!-- ================= 02 · THE ANSWER KEY ================= -->
-  <section class="shell band" id="answer-key" aria-labelledby="key-h" data-state="reading">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The answer key</span></p>
-      <h2 id="key-h" class="io" style="--d:1">One row of ground truth is not a sentence.</h2>
-      <div class="prose io" style="--d:2">
-        <p>As the agent learned to do more than reply, to take actions, render widgets, and draw charts, the right answer grew to match. Every row of the key had to spell all of it out: the answer text, the exact actions, the widgets, and the chart data, point by point.</p>
-        <p>People hand-entered every field, one row at a time. Charting a single correct answer meant typing every label and every value on every axis. A dataset took about three weeks, the errors hid in the typing, and it was exactly the wrong use of an expert&rsquo;s judgment.</p>
-      </div>
-
-      <figure class="exhibit io" style="--d:3" aria-label="One row of ground truth has four fields: the answer text, the actions the agent should take, the widgets it should render, and the chart data with every label and value spelled out.">
-        <figcaption class="trace-hd mono">
-          <span>one row of ground truth · four fields</span>
-          <span>mock data</span>
-        </figcaption>
-        <div class="ex-body">
-          <div class="gt">
-            <div class="gt-f">
-              <div class="gt-h mono"><span>answer</span><span>what it should say</span></div>
-              <div class="gt-b">Your total debits last quarter were $9,298.00.</div>
-            </div>
-            <div class="gt-f">
-              <div class="gt-h mono"><span>actions</span><span>what it should do</span></div>
-              <div class="gt-b"><code>[{ "name": "create_invoice", "input": { ... }, "status": "success" }]</code></div>
-            </div>
-            <div class="gt-f">
-              <div class="gt-h mono"><span>widgets</span><span>what it should render</span></div>
-              <div class="gt-b"><code>[{ "type": "widget", "id": "confirm-dialog" }]</code></div>
-            </div>
-            <div class="gt-f">
-              <div class="gt-h mono"><span>chart</span><span class="gt-mark">every value, by hand</span></div>
-              <div class="gt-b"><pre>[
-  {
-    "type": "bar-chart",
-    "title": "Debits by month",
-    "labels": ["Jan", "Feb", "Mar"],
-    "datasets": [
-      { "label": "Entries",      "data": [40, 18, 2] },
-      { "label": "Total debits", "data": [258000, 376000, 400000] }
-    ]
-  }
-]</pre></div>
-            </div>
-          </div>
-        </div>
-        <p class="trace-foot mono">mock row · the chart alone is a label and a value for every point on every axis, formerly typed by hand</p>
-      </figure>
-
-      <div class="prose io" style="--d:1">
-        <p>So I automated the drafting. The generator reads a conversation transcript and pre-fills the whole row, so the experts validate instead of hand-enter. Not to replace their judgment: to spend it where it counts.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 03 · THE BUILD ================= -->
+  <!-- ================= 02 · THE BUILD ================= -->
   <section class="shell band" id="build" aria-labelledby="build-h" data-state="drafting">
     <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>The build</span></p>
+      <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The build</span></p>
       <h2 id="build-h" class="io" style="--d:1">Teach the machine to draft like the team&rsquo;s best labeler.</h2>
 
-      <h3 class="case-h3 io" style="--d:2">First, learn what good is.</h3>
-      <div class="prose io" style="--d:3">
-        <p>I audited the hand-authored dataset and found the same errors repeating: answers written into the wrong field, missing simulator instructions, mislabeled turns. Then I studied how the experts actually work: their training, their good and bad examples, the criteria the team had agreed on. All of it went into one context document the model receives as its brief. The experts&rsquo; judgment became the generator&rsquo;s rules.</p>
+      <div class="prose io" style="--d:2">
+        <p>One row of ground truth is not a sentence. As the agent learned to take actions, render widgets, and draw charts, the right answer grew to match, and people hand-entered every field, one row at a time: the chart alone is a label and a value for every point on every axis. A dataset took about three weeks, the errors hid in the typing, and it was exactly the wrong use of an expert&rsquo;s judgment.</p>
       </div>
 
-      <h3 class="case-h3 io" style="--d:0">Rewrite the principles, not the examples.</h3>
-      <div class="prose io" style="--d:1">
-        <p>The generator is not a script; it is a long instruction set the model follows. I built it up over about seven versions in six weeks, and nearly every version answered something real: a working session redefined what counts as a turn; feedback that it was doing too much stripped it back to only the ground truth; a teammate&rsquo;s differently shaped sheet made it read any column layout.</p>
+      <div class="gt-strip io" style="--d:3" aria-label="The four fields of one ground-truth row, formerly typed by hand">
+        <span><b>one row of the key</b></span>
+        <span>answer · what it should say</span>
+        <span>actions · what it should do</span>
+        <span>widgets · what it should render</span>
+        <span>chart · every label and value</span>
+      </div>
+
+      <div class="prose io" style="--d:4">
+        <p>So I automated the drafting. I audited the hand-authored dataset for its repeating errors, studied how the experts actually work, and folded their training, their examples, and the team&rsquo;s agreed criteria into one brief the model receives. The generator reads a conversation transcript and pre-fills the whole row; the experts validate instead of hand-enter.</p>
         <p>One rewrite mattered most. I stopped telling it to fill fields and started telling it to reason like the most experienced labeler on the team. When it got something wrong, I fixed the principle behind the miss, not the single example.</p>
       </div>
-      <figure class="direct io" style="--d:2">
-        <span class="dl mono">how I directed the model · redacted</span>
-        <p>&ldquo;Do not hyper-focus on fixing this one example. Update the generator&rsquo;s principles so they extrapolate, as if training a superlative expert to follow principles, not specific rules for specific cases. Then commit it for versioning.&rdquo;</p>
-      </figure>
 
-      <figure class="exhibit io" style="--d:3" aria-label="A redacted excerpt of the generator&rsquo;s identity section, followed by the version log entries that changed it most.">
+      <figure class="exhibit io" style="--d:0" aria-label="A redacted excerpt of the generator&rsquo;s identity section, with the direction that produced it.">
         <figcaption class="trace-hd mono">
           <span>the generator · an instruction set, iterated</span>
           <span>redacted excerpt</span>
@@ -356,86 +212,25 @@ A ground truth is not just a correct answer. It is the definition of what &ldquo
 
 <b>JUDGMENT OVER RULES.</b> When a case does not fit a named pattern, ask: &ldquo;what would the best human labeler do here?&rdquo; Then do that.</pre>
           </div>
-          <ul class="vlog" aria-label="Version log">
-            <li><span class="vv">v2</span><p>Originals locked. Every generated value moved into new recommended columns, so the source was never at risk.</p></li>
-            <li class="key"><span class="vv">v3</span><p>New identity. Stopped telling it to fill fields; told it to reason like a senior evaluator, judgment over rules.</p></li>
-            <li><span class="vv">v4</span><p>Charts stand alone. It had been repeating numbers in both text and chart; now the chart carries the data and the text adds the insight.</p></li>
-            <li><span class="vv">v6</span><p>Less is more. Stripped out everything the generator should not write, so it did one job well.</p></li>
-            <li><span class="vv">v7</span><p>Met the team where they were. Matched the exact column layout of the sheet the experts already used.</p></li>
-          </ul>
+          <figure class="direct">
+            <span class="dl mono">how I directed the model · redacted</span>
+            <p>&ldquo;Do not hyper-focus on fixing this one example. Update the generator&rsquo;s principles so they extrapolate, as if training a superlative expert to follow principles, not specific rules for specific cases. Then commit it for versioning.&rdquo;</p>
+          </figure>
         </div>
-        <p class="trace-foot mono">about seven versions in six weeks · each answered a real failure, a labeler&rsquo;s note, or a team decision</p>
+        <p class="trace-foot mono">about seven versions in six weeks, each answering a real failure, a labeler&rsquo;s note, or a team decision: v3 rewrote the identity above, later passes made charts stand alone, stripped excess, and matched the exact sheet the experts already used</p>
       </figure>
 
-      <h3 class="case-h3 io" style="--d:0">Keep every call small enough to stay sharp.</h3>
-      <div class="prose io" style="--d:1">
-        <p>A thousand-row sheet in one pass is a trap: the context window overflows and the later rows quietly degrade. A Python pipeline I wrote splits the sheet into small batches, drafts them in parallel, stitches the results back together, and runs 12 codified QA checks before a person sees anything. The pipeline&rsquo;s real job is discipline: keep each call inside a reliable window, then prove the reassembly changed nothing it should not have.</p>
-      </div>
-
-      <figure class="exhibit io" style="--d:2" aria-label="The pipeline in five steps: a sheet of over a thousand rows is split into batches of about fifty, drafted in parallel, reassembled, and gated by 12 codified QA checks.">
-        <figcaption class="trace-hd mono">
-          <span>the pipeline · split, draft, reassemble, check</span>
-        </figcaption>
-        <div class="ex-body">
-          <div class="pipe">
-            <div class="pipe-n"><b>1,000+ row sheet</b><span>too big for one pass</span></div>
-            <span class="pipe-a" aria-hidden="true">&#8594;</span>
-            <div class="pipe-n"><b>~50-row batches</b><span>each call stays inside a reliable window</span></div>
-            <span class="pipe-a" aria-hidden="true">&#8594;</span>
-            <div class="pipe-n"><b>parallel drafts</b><span>one model pass per batch</span></div>
-            <span class="pipe-a" aria-hidden="true">&#8594;</span>
-            <div class="pipe-n"><b>reassemble</b><span>merge back into the sheet</span></div>
-            <span class="pipe-a" aria-hidden="true">&#8594;</span>
-            <div class="pipe-n"><b>12 codified QA checks</b><span>gate the run, fail on any error</span></div>
-          </div>
-        </div>
-        <p class="trace-foot mono">one giant prompt would overflow the window and degrade the later rows · a failed batch re-runs on its own</p>
-      </figure>
-
-      <h3 class="case-h3 io" style="--d:0">Draft into the margins. Never touch the original.</h3>
-      <div class="prose io" style="--d:1">
-        <p>Every value the generator produces lands in a new recommended column. The original ground truth leaves the pipeline byte for byte as it entered, and a check fails the run if that is ever untrue. Experts read the drafts, fix what needs fixing, and promote what they trust. The machine drafts; the expert judges; and the expert can rely on the machine never overwriting their work.</p>
-      </div>
-
-      <figure class="exhibit io" style="--d:2" aria-label="What the generator produces for one field of one row: the original ground truth stays locked, the generator writes a clean draft into a recommended column, and a validated column is left blank for the expert.">
-        <figcaption class="trace-hd mono">
-          <span>what it produces · original, recommended, validated</span>
-          <span>mock data</span>
-        </figcaption>
-        <div class="ex-body">
-          <div class="ask"><span class="who">customer asks</span><p>&ldquo;How do I print all my contractor checks at once?&rdquo;</p></div>
-          <div class="orow">
-            <div class="oc">
-              <div class="gt-h mono"><span>original ground truth</span></div>
-              <div class="ocb">go to contractors, select them, print</div>
-              <div class="ocs">the rough source, left untouched</div>
-            </div>
-            <div class="oc">
-              <div class="gt-h mono"><span>recommended</span><span class="gt-mark">the draft</span></div>
-              <div class="ocb">Open the contractor payments screen, select the contractors you want, and choose Print. Every selected check prints together.</div>
-              <div class="ocs">the generator&rsquo;s clean draft</div>
-            </div>
-            <div class="oc">
-              <div class="gt-h mono"><span>expert-validated</span></div>
-              <div class="ocb"></div>
-              <div class="ocs">blank, for the expert to confirm or fix</div>
-            </div>
-          </div>
-        </div>
-        <p class="trace-foot mono">mock data · the original stays locked · the expert has the final say</p>
-      </figure>
-
-      <h3 class="case-h3 io" style="--d:0">The bug that proved the rule.</h3>
-      <div class="prose io" style="--d:1">
-        <p>The guarantee got its test in review. Before the pipeline shipped, a reviewer caught a fallback path that could silently overwrite existing ground truth: exactly the failure the design promised away. I removed the fallback within hours and replaced it with a safe promote step that only ever writes forward, with all 12 QA checks passing. The lesson stayed with the program: a fallback path is a silent failure path in disguise.</p>
+      <div class="prose io" style="--d:0">
+        <p>Around the generator sits discipline. A Python pipeline splits a 1,000+ row sheet into small batches, drafts them in parallel, reassembles the sheet, and runs 12 codified QA checks before a person sees anything, so no call overflows a reliable context window. And every generated value lands in a new recommended column: the original ground truth leaves the pipeline byte for byte as it entered, a check fails the run if that is ever untrue, and the expert has the final say.</p>
+        <p>That guarantee got its test in review. Before the pipeline shipped, a reviewer caught a fallback path that could silently overwrite existing ground truth: exactly the failure the design promised away. I removed it within hours and replaced it with a safe promote step that only ever writes forward, all 12 checks passing. The lesson stayed with the program: a fallback path is a silent failure path in disguise.</p>
       </div>
     </div>
   </section>
 
-  <!-- ================= 04 · THE PROOF ================= -->
-  <section class="shell band with-note" id="proof" aria-labelledby="proof-h" data-state="proving">
+  <!-- ================= 03 · THE PROOF ================= -->
+  <section class="shell band" id="proof" aria-labelledby="proof-h" data-state="proving">
     <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>The proof</span></p>
+      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>The proof</span></p>
       <h2 id="proof-h" class="io" style="--d:1">What moved, and who measured it.</h2>
       <div class="prose io" style="--d:2">
         <p>The team adopted the generator to pre-fill ground truth before experts validate it. An answer key that had taken about three weeks to author by hand took about one week, across 3,000+ rows, and offline evaluation kept pace with the agents.</p>
@@ -462,48 +257,16 @@ A ground truth is not just a correct answer. It is the definition of what &ldquo
         </div>
       </div>
 
-      <h3 class="case-h3 io" style="--d:0">The other catch the key exists for.</h3>
-      <div class="prose io" style="--d:1">
-        <p>The decision at the top of this page is the rare catch: a right answer that did a wrong thing. The everyday catch is quieter. It just sounds right. Ground truth is what lets the judge fail a fluent answer that a person skimming would wave through.</p>
+      <div class="prose io" style="--d:2">
+        <p>The decision at the top of this page is the rare catch: a right answer that did a wrong thing. The everyday catch is quieter. It just sounds right: a fluent, friendly answer that invents a payroll tax date and an amount, when the real answer depends on the filing schedule. Ground truth is what lets the judge fail the row a person skimming would wave through.</p>
       </div>
-
-      <figure class="exhibit io" style="--d:2" aria-label="A confident wrong answer on mock data: the agent invents a payroll tax date and amount, the ground truth says the real answer depends on the filing schedule, and the judge fails the row.">
-        <figcaption class="trace-hd mono">
-          <span>the everyday catch · a confident wrong answer</span>
-          <span>mock data</span>
-        </figcaption>
-        <div class="ex-body">
-          <div class="ask"><span class="who">customer asks</span><p>&ldquo;When is my next payroll tax payment due, and how much?&rdquo;</p></div>
-          <div class="hcatch">
-            <div class="gt-f">
-              <div class="gt-h mono"><span>the agent&rsquo;s answer</span></div>
-              <div class="gt-b">Your next payroll tax payment of <span class="invent">$4,812.00</span> is due on <span class="invent">April 30</span>. You are all set, no action needed.</div>
-            </div>
-            <div class="gt-f">
-              <div class="gt-h mono"><span>ground truth</span></div>
-              <div class="gt-b">The due date and the amount depend on this business&rsquo;s deposit schedule and current liability. The agent should pull those, or ask, before stating a figure. It should never invent one.</div>
-            </div>
-          </div>
-          <ul class="jury" aria-label="The judge&rsquo;s result on this answer">
-            <li><span class="jd">no-hallucination</span><span class="jv">fail · invented a date and an amount</span></li>
-            <li><span class="jd">correctness</span><span class="jv">fail · figures not grounded in data</span></li>
-            <li><span class="jd">voice and tone</span><span class="jv">pass · reads clear and friendly</span></li>
-          </ul>
-          <span class="blocked">ship blocked</span>
-        </div>
-        <p class="trace-foot mono">mock scenario, mock numbers · fluent, friendly, and flatly wrong · the key is why the judge sees it</p>
-      </figure>
     </div>
-    <aside class="bnote io" style="--d:4" aria-label="Behavior note 02">
-      <span class="bnote-id">Note 02</span>
-      <p>Claimed the lifts and named the judge in the same sentence. Every number on this page keeps its scope attached.</p>
-    </aside>
   </section>
 
-  <!-- ================= 05 · THE ROLE + HANDOFF ================= -->
+  <!-- ================= 04 · THE ROLE + HANDOFF ================= -->
   <section class="shell band" id="role" aria-labelledby="role-h" data-state="handing off">
     <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">05</span><span>The role</span></p>
+      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>The role</span></p>
       <h2 id="role-h" class="io" style="--d:1">Whose work this was.</h2>
       <div class="prose io" style="--d:2">
         <p>On the AI quality-evaluation team, I owned the offline datasets and the ground truth, authored the generator and the LLM-as-judge simulator instructions, and partnered with stakeholders on the quality rubrics.</p>
@@ -534,7 +297,7 @@ A ground truth is not just a correct answer. It is the definition of what &ldquo
 
 <footer class="footer" role="contentinfo">
   <div class="shell">
-    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · <b>sealed</b> one call · <b>receipted</b> every number · <b>handed off</b> to case 04 and a human</p>
+    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · her call <b>stated</b> plainly · <b>receipted</b> every number · <b>handed off</b> to case 04 and a human</p>
     <p class="footer-inner mono">
       <span>Simone Muro · Portfolio, 4th edition · 2026</span>
       <span><a href="index.html">Home</a> · <a href="index.html#work">Work</a> · <a href="resume.html">Resume</a></span>
@@ -545,12 +308,7 @@ A ground truth is not just a correct answer. It is the definition of what &ldquo
 <noscript>
   <style>
     .io,.rule-io{opacity:1 !important;transform:none !important;}
-    .call-reveal{grid-template-rows:1fr !important;}
-    .call{visibility:visible !important;}
-    .val-pending{display:none !important;}
-    .val-fail{display:inline !important;}
-    .verdict,.opt-foot,.opt .tag{display:none !important;}
-    .progress,.trace-replay,.refusal-form,.refusal-foot{display:none !important;}
+    .progress,.trace-replay{display:none !important;}
   </style>
 </noscript>
 

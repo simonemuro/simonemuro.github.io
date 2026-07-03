@@ -41,7 +41,6 @@
 <header class="masthead" role="banner">
   <div class="shell masthead-inner">
     <a class="brand" href="#main">Simone Muro</a>
-    <p class="mast-state mono" aria-hidden="true">site: <b data-ticker>answering</b></p>
     <nav class="mast-nav mono" aria-label="Primary">
       <a href="#work">Work</a>
       <a href="resume.html">Resume</a>
@@ -54,7 +53,7 @@
 <main id="main">
 
   <!-- ================= HERO ================= -->
-  <section class="shell hero with-note" aria-labelledby="hero-h" data-state="answering">
+  <section class="shell hero" aria-labelledby="hero-h" data-state="answering">
     <div>
       <p class="hero-kicker mono io" style="--d:0">
         <span>Agent behavior design</span>
@@ -82,10 +81,6 @@
         <li><span class="vn">07</span>hand off</li>
       </ul>
     </div>
-    <aside class="bnote io" style="--d:7" aria-label="Behavior note 01">
-      <span class="bnote-id">Note 01</span>
-      <p>Answered first. The one thing you came to find out is the first line on the page.</p>
-    </aside>
   </section>
 
   <!-- ================= ERA RULER ================= -->
@@ -115,30 +110,16 @@
   <!-- ================= THE TWO CALLS ================= -->
   <section class="shell band" id="spine" aria-labelledby="spine-h" data-state="deciding">
 
-    <div class="spine-head with-note">
+    <div class="spine-head">
       <div>
         <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>Two calls</span></p>
         <h2 id="spine-h" class="io" style="--d:1">Most of the work is one question: what should the agent do here?</h2>
-        <p class="band-lede io" style="--d:2">Answer, ask, act, verify, stop, repair, hand off. Seven verbs, and a judgment call about which one fits. Below are two calls. Make them before I show you mine.</p>
+        <p class="band-lede io" style="--d:2">Answer, ask, act, verify, stop, repair, hand off. Seven verbs, and a judgment call about which one fits. Two of those calls below, receipts attached.</p>
       </div>
     </div>
 
     <!-- Decision 01: Payroll -->
-    <article class="decision with-note" id="decision-01" data-decision aria-labelledby="d1-h">
-      <script type="application/json" data-decision-config>
-      {
-        "her": "verify",
-        "name": "payroll call",
-        "verdicts": {
-          "match": "{Her}. Same call.",
-          "miss": "You called {pick}. She called {her}. Her receipt is below.",
-          "skip": "Skipped. Her call is open below. Yours is still open too.",
-          "repick": "Changed to {pick}. Her call stands: {her}.",
-          "change": "Pick another verb above. The seal stays open.",
-          "partial": { "ask": "Half of it. The agent does ask, once. But only after it reads. Her call: verify first." }
-        }
-      }
-      </script>
+    <article class="decision" id="decision-01" aria-labelledby="d1-h">
       <div>
         <p class="d-kicker mono io" style="--d:0">
           <span class="d-no">Decision 01</span>
@@ -154,56 +135,20 @@
         <div class="d-grid">
           <div class="d-setup io" style="--d:2">
             <span class="label mono">The setup</span>
-            <p class="body">The agent can interrogate: which Maria, what pay schedule, when was she added. Three reasonable questions. Or it can read the account first and see for itself.</p>
+            <p class="body">The agent can explain the ways an employee can miss a run. It can interrogate: which Maria, what pay schedule, when was she added. It can add her to the run and resubmit now. Or it can read the account first and see for itself.</p>
           </div>
-          <div class="d-choice io" style="--d:3">
-            <span class="label mono" id="d1-q">Your call. What does the agent do first?</span>
-            <div class="options" role="group" aria-labelledby="d1-q">
-              <button class="opt" type="button" data-verb="answer" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">a.</span><span class="verb">answer</span><span class="tag">your call</span></span>
-                <span class="gloss">explain, in general, why an employee can miss a run</span>
-              </button>
-              <button class="opt" type="button" data-verb="ask" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">b.</span><span class="verb">ask</span><span class="tag">your call</span></span>
-                <span class="gloss">open with questions: which Maria, which schedule, which run</span>
-              </button>
-              <button class="opt" type="button" data-verb="act" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">c.</span><span class="verb">act</span><span class="tag">your call</span></span>
-                <span class="gloss">add her to the run and resubmit it now</span>
-              </button>
-              <button class="opt" type="button" data-verb="verify" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">d.</span><span class="verb">verify</span><span class="tag">your call</span></span>
-                <span class="gloss">read the account silently before saying anything</span>
-              </button>
-              <button class="opt" type="button" data-verb="stop" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">e.</span><span class="verb">stop</span><span class="tag">your call</span></span>
-                <span class="gloss">decline: a payroll run is too risky to touch</span>
-              </button>
-              <button class="opt" type="button" data-verb="hand off" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">f.</span><span class="verb">hand off</span><span class="tag">your call</span></span>
-                <span class="gloss">route to a human payroll specialist right away</span>
-              </button>
+          <div class="io" style="--d:3">
+            <h4 class="call-h">Her call</h4>
+            <p class="call-verb">verify.</p>
+            <p class="call-line">Read the account first, silently. Then ask only the one thing only the customer knows.</p>
+            <div class="receipt">
+              <span class="label mono">The receipt</span>
+              <p>The account already holds most of the answers: who Maria is, when she was added, which schedule she sits on. Wasted questions erode trust. So the agent reads everything it can, and spends exactly one question on what it cannot. The trace below is that behavior, step by step.</p>
             </div>
-            <div class="opt-foot">
-              <button class="skip-call" type="button">or skip: show her call</button>
-              <span class="privacy mono">your answer never leaves this tab, stored nowhere</span>
-            </div>
-            <p class="verdict mono" aria-live="polite"><span class="verdict-line"><span class="hint">sealed. pick a verb, or skip.</span></span><button class="repick" type="button">change my call</button></p>
           </div>
         </div>
 
-        <div class="call-reveal">
-          <div class="call-clip">
-            <div class="call">
-              <h4 class="call-h" tabindex="-1">Her call</h4>
-              <p class="call-verb">verify.</p>
-              <p class="call-line">Read the account first, silently. Then ask only the one thing only the customer knows.</p>
-              <div class="receipt">
-                <span class="label mono">The receipt</span>
-                <p>The account already holds most of the answers: who Maria is, when she was added, which schedule she sits on. Wasted questions erode trust. So the agent reads everything it can, and spends exactly one question on what it cannot.</p>
-              </div>
-
-              <figure class="trace" data-trace="payroll trace">
+        <figure class="trace io" style="--d:4" data-trace="payroll trace">
                 <figcaption class="trace-hd mono">
                   <span>trace · the behavior, compact</span>
                   <span class="trace-state" data-trace-state>complete</span>
@@ -239,30 +184,13 @@
                     <div class="t-main">asked once instead of interrogating</div>
                   </li>
                 </ol>
-                <p class="trace-foot mono">reconstructed from the shipped behavior spec · pre-rendered, no live model</p>
-              </figure>
-            </div>
-          </div>
-        </div>
+          <p class="trace-foot mono">reconstructed from the shipped behavior spec · pre-rendered, no live model</p>
+        </figure>
       </div>
     </article>
 
     <!-- Decision 02: Quality -->
-    <article class="decision with-note" id="decision-02" data-decision aria-labelledby="d2-h">
-      <script type="application/json" data-decision-config>
-      {
-        "her": "stop",
-        "name": "quality call",
-        "verdicts": {
-          "match": "{Her}. Same call.",
-          "miss": "You called {pick}. She called {her}. Her receipt is below.",
-          "skip": "Skipped. Her call is open below. Yours is still open too.",
-          "repick": "Changed to {pick}. Her call stands: {her}.",
-          "change": "Pick another verb above. The seal stays open.",
-          "partial": { "verify": "Close. Verification is the check. Her call is what the check does to the ship when it fails: stop." }
-        }
-      }
-      </script>
+    <article class="decision" id="decision-02" aria-labelledby="d2-h">
       <div>
         <p class="d-kicker mono io" style="--d:0">
           <span class="d-no">Decision 02</span>
@@ -281,63 +209,20 @@
             <p class="body">Every word of the answer is correct. An answer-quality eval scores it and it passes. The question is whether that is the score that matters.</p>
             <div class="score" aria-label="Eval scorecard">
               <div class="score-row"><span>answer quality</span><span class="val-pass">pass</span></div>
-              <div class="score-row"><span>action authorization</span><span class="val-pending">?</span><span class="val-fail">hard fail</span></div>
+              <div class="score-row"><span>action authorization</span><span class="val-fail">hard fail</span></div>
             </div>
           </div>
-          <div class="d-choice io" style="--d:3">
-            <span class="label mono" id="d2-q">Your call. The answer passed. What do you do?</span>
-            <div class="options" role="group" aria-labelledby="d2-q">
-              <button class="opt" type="button" data-verb="answer" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">a.</span><span class="verb">answer</span><span class="tag">your call</span></span>
-                <span class="gloss">score the words; the answer is the product</span>
-              </button>
-              <button class="opt" type="button" data-verb="ask" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">b.</span><span class="verb">ask</span><span class="tag">your call</span></span>
-                <span class="gloss">flag the row for a second human read</span>
-              </button>
-              <button class="opt" type="button" data-verb="act" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">c.</span><span class="verb">act</span><span class="tag">your call</span></span>
-                <span class="gloss">ship it, and watch the action in production</span>
-              </button>
-              <button class="opt" type="button" data-verb="verify" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">d.</span><span class="verb">verify</span><span class="tag">your call</span></span>
-                <span class="gloss">add a separate check on the action itself</span>
-              </button>
-              <button class="opt" type="button" data-verb="stop" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">e.</span><span class="verb">stop</span><span class="tag">your call</span></span>
-                <span class="gloss">block the ship: an unverified action is a hard fail</span>
-              </button>
-              <button class="opt" type="button" data-verb="hand off" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">f.</span><span class="verb">hand off</span><span class="tag">your call</span></span>
-                <span class="gloss">escalate to the platform team that owns the write path</span>
-              </button>
-            </div>
-            <div class="opt-foot">
-              <button class="skip-call" type="button">or skip: show her call</button>
-              <span class="privacy mono">your answer never leaves this tab, stored nowhere</span>
-            </div>
-            <p class="verdict mono" aria-live="polite"><span class="verdict-line"><span class="hint">sealed. pick a verb, or skip.</span></span><button class="repick" type="button">change my call</button></p>
-          </div>
-        </div>
-
-        <div class="call-reveal">
-          <div class="call-clip">
-            <div class="call">
-              <h4 class="call-h" tabindex="-1">Her call</h4>
-              <p class="call-verb">stop.</p>
-              <p class="call-line">Authorization is a hard fail. The ship is blocked, perfect answer and all.</p>
-              <div class="receipt">
-                <span class="label mono">The receipt</span>
-                <p>A right answer that does a wrong thing is exactly the failure that answer-checking misses. So the action gets its own gate: no verification, no ship. Quality is what the agent did, not just what it said. The same eval discipline moved measured conversation quality up 8, 9.8 and 13 points across Help, Payroll and Business Insights in a year.</p>
-              </div>
+          <div class="io" style="--d:3">
+            <h4 class="call-h">Her call</h4>
+            <p class="call-verb">stop.</p>
+            <p class="call-line">Authorization is a hard fail. The ship is blocked, perfect answer and all.</p>
+            <div class="receipt">
+              <span class="label mono">The receipt</span>
+              <p>A right answer that does a wrong thing is exactly the failure that answer-checking misses. So the action gets its own gate: no verification, no ship. Quality is what the agent did, not just what it said. The same eval discipline moved measured conversation quality up 8, 9.8 and 13 points across Help, Payroll and Business Insights in a year.</p>
             </div>
           </div>
         </div>
       </div>
-      <aside class="bnote io" style="--d:4" aria-label="Behavior note 02">
-        <span class="bnote-id">Note 02</span>
-        <p>Held both answers sealed until you acted. Then showed the receipt, not just the verdict.</p>
-      </aside>
     </article>
 
   </section>
@@ -432,7 +317,7 @@
           <span class="case-no" aria-hidden="true">07</span>
           <div class="case-body">
             <h3><a href="operate-with-ai.html">How I Built This Site</a></h3>
-            <p>The site behaves like the agents in its cases: sealed calls, a working refusal, a page that scores itself.</p>
+            <p>Agent crews did the typing, judges gated every page before it shipped, and the calls stayed hers.</p>
             <span class="case-role"><b>role</b> · solo build, AI-paired</span>
           </div>
           <div class="case-meta">
@@ -489,7 +374,7 @@
             { "match": ["hire", "hiring", "interview", "job"],
               "reply": "That conversation belongs to a human. Write to her:", "href": "mailto:simonermuro@gmail.com", "link": "simonermuro@gmail.com" },
             { "match": ["chatbot", "llm", "model", "gpt", "claude", "are you ai", "real ai"],
-              "reply": "No live model here. Every reply in this box was written ahead of time and matched by keyword. Scope is a design decision; the refusal row in the colophon below is earned this way." },
+              "reply": "No live model here. Every reply in this box was written ahead of time and matched by keyword. Scope is a design decision: out of scope gets a refusal and a human." },
             { "match": ["built", "build", "this site", "how was", "stack"],
               "reply": "By hand, on its own design system, with an AI pair. Case 07 tells the story:", "href": "operate-with-ai.html", "link": "operate-with-ai.html" },
             { "match": ["case", "work", "portfolio", "project"],
@@ -522,7 +407,7 @@
         <form class="refusal-form">
           <span class="prompt-ch" aria-hidden="true">&gt;</span>
           <label class="visually-hidden" for="rf-q">Ask this page a question</label>
-          <input class="refusal-input" id="rf-q" type="text" autocomplete="off" maxlength="120" placeholder="try: will she relocate?">
+          <input class="refusal-input" id="rf-q" type="text" autocomplete="off" maxlength="120" placeholder="Ask about her work">
           <button class="refusal-send" type="submit">send</button>
         </form>
         <p class="refusal-foot mono">your question never leaves this tab, stored nowhere</p>
@@ -547,59 +432,6 @@
     </div>
   </section>
 
-  <!-- ================= COLOPHON (homepage only) ================= -->
-  <section class="shell band" id="colophon" aria-labelledby="eval-h" data-state="self-scoring">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">05</span><span>Colophon</span></p>
-      <h2 id="eval-h" class="io" style="--d:1">This page, scored like an agent.</h2>
-
-      <table class="evaltable io" style="--d:2">
-        <caption class="visually-hidden">A self-evaluation of this page against six verbs of agent behavior</caption>
-        <thead>
-          <tr><th scope="col">Case</th><th scope="col">Verb</th><th scope="col">Criterion</th><th scope="col">Result</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="t-id">E.01</td>
-            <td class="t-verb">answer</td>
-            <td class="t-crit">Stated who she is in the first line. No throat clearing.</td>
-            <td class="t-res">pass</td>
-          </tr>
-          <tr>
-            <td class="t-id">E.02</td>
-            <td class="t-verb">ask</td>
-            <td class="t-crit">Asked you exactly once per decision, then answered.</td>
-            <td class="t-res">pass</td>
-          </tr>
-          <tr>
-            <td class="t-id">E.03</td>
-            <td class="t-verb">act</td>
-            <td class="t-crit">Kept both calls sealed until you acted: a pick, or the skip.</td>
-            <td class="t-res">pass</td>
-          </tr>
-          <tr>
-            <td class="t-id">E.04</td>
-            <td class="t-verb">verify</td>
-            <td class="t-crit">Every number on this page traces to a receipt.</td>
-            <td class="t-res">pass</td>
-          </tr>
-          <tr>
-            <td class="t-id">E.05</td>
-            <td class="t-verb">stop</td>
-            <td class="t-crit">Asked to chat, this site refuses: out of scope, then hands off. <a href="#contact">Try it.</a></td>
-            <td class="t-res">pass</td>
-          </tr>
-          <tr>
-            <td class="t-id">E.06</td>
-            <td class="t-verb">hand off</td>
-            <td class="t-crit">Gave you <a href="#contact">a human with an address</a>, not a form.</td>
-            <td class="t-res">pass</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
 </main>
 
 <footer class="footer" role="contentinfo">
@@ -612,11 +444,6 @@
 <noscript>
   <style>
     .io,.rule-io{opacity:1 !important;transform:none !important;}
-    .call-reveal{grid-template-rows:1fr !important;}
-    .call{visibility:visible !important;}
-    .val-pending{display:none !important;}
-    .val-fail{display:inline !important;}
-    .verdict,.opt-foot,.opt .tag{display:none !important;}
     .progress,.trace-replay,.refusal-form,.refusal-foot{display:none !important;}
   </style>
 </noscript>

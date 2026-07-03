@@ -1,7 +1,7 @@
 # Simone Muro · Portfolio (v4)
 
 Static portfolio site for `https://simonemuro.github.io/`. Version 4: an AI behavior design
-portfolio built around sealed decisions, replayable traces, and judgment-first case studies.
+portfolio built around decisions told directly, replayable traces, and judgment-first case studies.
 
 ## Structure
 

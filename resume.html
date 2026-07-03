@@ -134,7 +134,6 @@
 <header class="masthead" role="banner">
   <div class="shell masthead-inner">
     <a class="brand" href="index.html">Simone Muro</a>
-    <p class="mast-state mono" aria-hidden="true">site: <b data-ticker>presenting</b></p>
     <nav class="mast-nav mono" aria-label="Primary">
       <a href="index.html#work">Work</a>
       <a href="resume.html" aria-current="page">Resume</a>
@@ -169,7 +168,7 @@
   </section>
 
   <!-- ================= TITLES, LEVELS, DATES ================= -->
-  <section class="shell band with-note" id="titles" aria-labelledby="titles-h" data-state="listing">
+  <section class="shell band" id="titles" aria-labelledby="titles-h" data-state="listing">
     <div>
       <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>Titles</span></p>
       <h2 id="titles-h" class="io" style="--d:1">Titles, levels, dates.</h2>
@@ -214,10 +213,6 @@
         </li>
       </ol>
     </div>
-    <aside class="bnote io" style="--d:2" aria-label="Behavior note 01">
-      <span class="bnote-id">Note 01</span>
-      <p>The block you scan for first is the first block: titles, levels, dates, team scope. No email gate.</p>
-    </aside>
   </section>
 
   <!-- ================= EXPERIENCE ================= -->
@@ -283,8 +278,8 @@
         </div>
       </article>
     </div>
-    <aside class="bnote io" style="--d:3" aria-label="Behavior note 02">
-      <span class="bnote-id">Note 02</span>
+    <aside class="bnote io" style="--d:3" aria-label="Behavior note 01">
+      <span class="bnote-id">Note 01</span>
       <p>One claim in this section is a projection. It says projected where it appears; realized says realized.</p>
     </aside>
   </section>
@@ -359,7 +354,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var b = document.querySelector("[data-print]");
   if (!b) return;
   b.addEventListener("click", function () {
-    if (window.V4 && window.V4.tick) window.V4.tick("printing: the resume");
     window.print();
   });
 });

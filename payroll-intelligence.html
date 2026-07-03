@@ -18,6 +18,9 @@
   /* case 02 scoped: prompt excerpt block, mirrors case 04 · house tokens only */
   .prompt-pre{margin:0;padding:18px 20px;font-family:var(--mono);font-size:.74rem;line-height:1.8;color:var(--ink);overflow-x:auto;}
   .sprint-foot{margin-top:clamp(18px,3vh,28px);padding-left:0;padding-right:0;}
+  .prose{max-width:62ch;margin-top:clamp(26px,4vh,40px);}
+  .prose p{margin-top:14px;}
+  .prose p:first-child{margin-top:0;}
 </style>
 </head>
 <body>
@@ -27,7 +30,6 @@
 <header class="masthead" role="banner">
   <div class="shell masthead-inner">
     <a class="brand" href="index.html">Simone Muro</a>
-    <p class="mast-state mono" aria-hidden="true">site: <b data-ticker>answering</b></p>
     <nav class="mast-nav mono" aria-label="Primary">
       <a href="index.html#work">Work</a>
       <a href="resume.html">Resume</a>
@@ -65,28 +67,10 @@
     <div class="spine-head">
       <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>The decision</span></p>
       <h2 id="decision-h" class="io" style="--d:1">The behavior turns on one customer sentence.</h2>
-      <p class="band-lede io" style="--d:2">The agent could interview, fix, or read. The framework had to pick one first move and defend it. Make the call before you see hers.</p>
+      <p class="band-lede io" style="--d:2">The agent could answer with a list of maybes, open the expert interview, or fix the run on the spot. The framework had to pick one first move and defend it. Her call: verify first.</p>
     </div>
 
-    <article class="decision with-note" id="decision-01" data-decision aria-labelledby="d1-h">
-      <script type="application/json" data-decision-config>
-      {
-        "her": "verify",
-        "name": "diagnostic call",
-        "verdicts": {
-          "match": "{Her}. Same call.",
-          "miss": "You called {pick}. She called {her}. Her receipt is below.",
-          "skip": "Skipped. Her call is open below. Yours is still open too.",
-          "repick": "Changed to {pick}. Her call stands: {her}.",
-          "change": "Pick another verb above. The seal stays open.",
-          "partial": {
-            "answer": "A list of maybes. The account already says which one is true. Her call: verify first.",
-            "ask": "Half of it. The agent does ask, exactly once. But only after it reads. Her call: verify first.",
-            "act": "The end of the path, not the start. Touch a run before reading it and you can pay someone twice. Her call: verify first."
-          }
-        }
-      }
-      </script>
+    <article class="decision" id="decision-01" aria-labelledby="d1-h">
       <div>
         <p class="d-kicker mono io" style="--d:0">
           <span class="d-no">The decision</span>
@@ -108,56 +92,21 @@
               <div class="score-row"><span>employee list and status</span><span class="val-pass">on the account</span></div>
               <div class="score-row"><span>pay schedule assignments</span><span class="val-pass">on the account</span></div>
               <div class="score-row"><span>audit log of recent changes</span><span class="val-pass">on the account</span></div>
-              <div class="score-row"><span>what the customer expected</span><span class="val-pending">?</span><span class="val-fail">only the customer</span></div>
-              <div class="score-row"><span>what is on their screen</span><span class="val-pending">?</span><span class="val-fail">only the customer</span></div>
+              <div class="score-row"><span>what the customer expected</span><span class="val-fail">only the customer</span></div>
+              <div class="score-row"><span>what is on their screen</span><span class="val-fail">only the customer</span></div>
             </div>
           </div>
-          <div class="d-choice io" style="--d:3">
-            <span class="label mono" id="dq">Your call. What is the agent&rsquo;s first move?</span>
-            <div class="options" role="group" aria-labelledby="dq">
-              <button class="opt" type="button" data-verb="answer" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">a.</span><span class="verb">answer</span><span class="tag">your call</span></span>
-                <span class="gloss">explain, in general, the ways an employee can miss a run</span>
-              </button>
-              <button class="opt" type="button" data-verb="ask" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">b.</span><span class="verb">ask</span><span class="tag">your call</span></span>
-                <span class="gloss">open the expert interview: which employee, which schedule, which run</span>
-              </button>
-              <button class="opt" type="button" data-verb="act" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">c.</span><span class="verb">act</span><span class="tag">your call</span></span>
-                <span class="gloss">fix it now: add the employee to this run and resubmit</span>
-              </button>
-              <button class="opt" type="button" data-verb="verify" aria-pressed="false">
-                <span class="opt-line"><span class="idx" aria-hidden="true">d.</span><span class="verb">verify</span><span class="tag">your call</span></span>
-                <span class="gloss">read the account silently before saying anything</span>
-              </button>
-            </div>
-            <div class="opt-foot">
-              <button class="skip-call" type="button">or skip: show her call</button>
-              <span class="privacy mono">your answer never leaves this tab, stored nowhere</span>
-            </div>
-            <p class="verdict mono" aria-live="polite"><span class="verdict-line"><span class="hint">sealed. pick a verb, or skip.</span></span><button class="repick" type="button">change my call</button></p>
-          </div>
-        </div>
-
-        <div class="call-reveal">
-          <div class="call-clip">
-            <div class="call">
-              <h4 class="call-h" tabindex="-1">Her call</h4>
-              <p class="call-verb">verify.</p>
-              <p class="call-line">Read the account first, silently. Then spend exactly one question, on the one fact only the customer holds.</p>
-              <div class="receipt">
-                <span class="label mono">The receipt</span>
-                <p>The rule I wrote into the framework: do not mimic the expert&rsquo;s question sequence. The account already answers most of the interview, so the agent matches what it reads against the known root causes first, then asks only for what it cannot retrieve. In the shipped dataset, every must-ask question carries a written justification for why the system cannot look it up. Only two rows in the setup survive that test: what the customer expected, and what is on their screen.</p>
-              </div>
+          <div class="io" style="--d:3">
+            <h4 class="call-h">Her call</h4>
+            <p class="call-verb">verify.</p>
+            <p class="call-line">Read the account first, silently. Then spend exactly one question, on the one fact only the customer holds.</p>
+            <div class="receipt">
+              <span class="label mono">The receipt</span>
+              <p>The rule I wrote into the framework: do not mimic the expert&rsquo;s question sequence. The account already answers most of the interview, so the agent matches what it reads against the known root causes first, then asks only for what it cannot retrieve. In the shipped dataset, every must-ask question carries a written justification for why the system cannot look it up. Only two rows in the setup survive that test: what the customer expected, and what is on their screen.</p>
             </div>
           </div>
         </div>
       </div>
-      <aside class="bnote io" style="--d:4" aria-label="Behavior note 01">
-        <span class="bnote-id">Note 01</span>
-        <p>The last two rows of the setup held a ? until you called it. They are the only facts the account cannot answer.</p>
-      </aside>
     </article>
 
   </section>
@@ -227,69 +176,45 @@
           </ol>
           <p class="trace-foot mono">reconstructed from the shipped behavior spec · invented account data · pre-rendered, no live model</p>
         </figure>
+
+        <div class="prose io" style="--d:6">
+          <p>The framework also names, ahead of time, where read first and ask once is the wrong move. Payroll is regulated, and behind every question sits the same one: <em>will my people get paid?</em> Changes too sensitive for an agent to make alone stop, in branches the decision trees name themselves, and the case hands off with everything the agent read, ruled out, and was told. A person picks up a diagnosed case; the customer never starts over.</p>
+        </div>
       </div>
-      <aside class="bnote io" style="--d:6" aria-label="Behavior note 02">
-        <span class="bnote-id">Note 02</span>
+      <aside class="bnote io" style="--d:7" aria-label="Behavior note 01">
+        <span class="bnote-id">Note 01</span>
         <p>Three silent reads before the agent&rsquo;s first word. The customer answered one question, total.</p>
       </aside>
-    </div>
-  </section>
-
-  <!-- ================= THE HANDOFF ================= -->
-  <section class="shell band" id="stop" aria-labelledby="stop-h" data-state="handing off">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>The handoff</span></p>
-      <h2 id="stop-h" class="io" style="--d:1">It also knows when to stop.</h2>
-      <p class="band-lede io" style="--d:2">Payroll is a regulated domain. A wrong answer is a compliance problem, not just a bad session, and behind every question sits the same one: <em>will my people get paid?</em> Read first and ask once is the right move for most of the territory. The framework also says, ahead of time, where it is not.</p>
-
-      <div class="range-grid">
-        <div class="range-cell io" style="--d:3">
-          <span class="label mono">The triggers</span>
-          <p class="body">Changes too sensitive or too regulated for an agent to make alone. Questions where the safe answer is a person. Every decision tree in the framework names these branches in the tree itself, so stopping is designed, not discovered on a live account.</p>
-        </div>
-        <div class="range-cell io" style="--d:4">
-          <span class="label mono">The contract</span>
-          <p class="body">The agent stops and passes the case with everything it has: what it read, what it ruled out, the one answer the customer gave. A person picks up a diagnosed case, and the customer never starts over.</p>
-        </div>
-      </div>
     </div>
   </section>
 
   <!-- ================= THE FRAMEWORK ================= -->
   <section class="shell band" id="framework" aria-labelledby="framework-h" data-state="compounding">
     <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>The framework</span></p>
+      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>The framework</span></p>
       <h2 id="framework-h" class="io" style="--d:1">Instructions, not answers.</h2>
       <p class="band-lede io" style="--d:2">The target was payroll&rsquo;s top contact drivers: high traffic, high complexity, and the kind of question an agent could resolve end to end, not just answer. One person hand-writing golden answers for all of them was fantasy. So the framework is instructions, because instructions compound where answers do not.</p>
 
       <div class="range-grid">
         <div class="range-cell io" style="--d:3">
           <span class="label mono">What the instructions hold</span>
-          <p class="body">Templates for what a complete golden answer looks like. The tool and data dependencies behind each one. The exact format the agent team consumes. And the gate every answer has to clear before it ships. One artifact: design, engineering, and quality each pull their slice from the same source of truth.</p>
+          <p class="body">Templates for a complete golden answer, the tool and data dependencies behind each one, the exact format the agent team consumes, and a pass or fail gate on every case: can the agent infer this from the account, or must it be told? Clear the gate or do not ship.</p>
         </div>
         <div class="range-cell io" style="--d:4">
-          <span class="label mono">The generator</span>
-          <p class="body">How-to questions get golden answers: one verified procedure. Troubleshooting questions get golden decision trees, and every branch needs expert-grade coverage. Hand-writing nine territories of them would have taken weeks. So a system prompt drafts each tree in one validated structure, and an expert corrects a draft instead of authoring from a blank page.</p>
+          <span class="label mono">Built to distrust the model</span>
+          <p class="body">Troubleshooting territories get golden decision trees drafted by a system prompt, so an expert corrects a draft instead of authoring from a blank page. The prompt runs a six-step reasoning pass, bans payroll concepts the product does not have, and locks every draft to verified tools: the dangerous failure is not a wrong answer, it is a confident invented one.</p>
         </div>
         <div class="range-cell io" style="--d:5">
-          <span class="label mono">Built to distrust the model</span>
-          <p class="body">The prompt runs a six-step reasoning pass before it writes anything. It bans payroll concepts the product does not have and locks every draft to a fixed set of verified tools, because the dangerous failure here is not a wrong answer, it is a confident invented one. It also carries contrastive examples: &ldquo;check your settings&rdquo; fails; the exact settings path, screen by screen, passes.</p>
+          <span class="label mono">The people</span>
+          <p class="body">The diagnostic paths had to come from humans: about a week and a half of interviews with the people who resolve these calls. Support, engineering, the policy team. Nothing generated shipped as drafted; subject-matter experts validated every answer.</p>
         </div>
         <div class="range-cell io" style="--d:6">
-          <span class="label mono">The gate</span>
-          <p class="body">Every case carries its own pass or fail gate: a handful of binary checks, each forcing the same question. Can the agent infer this from the account, or must it be told? Clear the gate or do not ship.</p>
-        </div>
-        <div class="range-cell io" style="--d:7">
-          <span class="label mono">The people</span>
-          <p class="body">The diagnostic paths had to come from humans: about a week and a half of interviews with the people who resolve these calls. Support, engineering, the policy team. Nothing generated shipped as drafted; subject-matter experts validated every answer. I led the sprint that delivered the full set in about ten days, as a blueprint the team keeps regenerating as the product shifts.</p>
-        </div>
-        <div class="range-cell io" style="--d:8">
           <span class="label mono">What I did not build</span>
           <p class="body">The agent. The payroll agent, its product vision, and its roadmap belong to the team that ships it. What I owned sits underneath: the ground truth for its diagnostic behavior, the generator that drafts it, and the gates that decide when it is good enough.</p>
         </div>
       </div>
 
-      <figure class="trace io" style="--d:9" aria-label="Redacted excerpt of the working generator system prompt">
+      <figure class="trace io" style="--d:7" aria-label="Redacted excerpt of the working generator system prompt">
         <figcaption class="trace-hd mono">
           <span>artifact · the diagnostic golden dataset generator</span>
           <span>redacted excerpt · 2026</span>
@@ -317,42 +242,25 @@ Data Not Retrievable (Must Ask User)
   - Every path must terminate in either resolution or escalation</pre>
         <p class="trace-foot mono">four slices of the working prompt · lines omitted between slices, text otherwise verbatim, list formatting flattened · the full artifact adds output templates, branching rules, contrastive examples, and a validation checklist</p>
       </figure>
-    </div>
-  </section>
-
-  <!-- ================= THE SPRINT ================= -->
-  <section class="shell band" id="sprint" aria-labelledby="sprint-h" data-state="directing">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">05</span><span>Leading the sprint</span></p>
-      <h2 id="sprint-h" class="io" style="--d:1">Directed work, on the record.</h2>
-      <p class="band-lede io" style="--d:2">The framework had one author. The delivery was a team I directed, and the division of labor survives in the sprint&rsquo;s own artifacts.</p>
 
       <div class="range-grid">
-        <div class="range-cell io" style="--d:3">
-          <span class="label mono">What stayed with me</span>
-          <p class="body">The generator system prompt, the answer templates, the pass or fail gates, and the plan: which territories, in what order, against a deadline measured in days. I set the structure every draft had to land in, and the bar every draft had to clear.</p>
+        <div class="range-cell io" style="--d:0">
+          <span class="label mono">Leading the sprint · what stayed with me</span>
+          <p class="body">The framework had one author; the delivery was a team of three I directed, in a sprint of about ten days. I held the generator prompt, the answer templates, the gates, and the plan: which territories, in what order, against the deadline. The team drafted the territories with the generator, correcting drafts instead of authoring from scratch.</p>
         </div>
-        <div class="range-cell io" style="--d:4">
-          <span class="label mono">What the team ran</span>
-          <p class="body">The team of three I led drafted the territories with the generator, correcting drafts instead of authoring from a blank page. Same framework, same validated structure, whoever held the pen.</p>
-        </div>
-        <div class="range-cell io" style="--d:5">
+        <div class="range-cell io" style="--d:1">
           <span class="label mono">What the experts corrected</span>
-          <p class="body">Nothing shipped as drafted. The class of correction on the record: drafts that assumed the product could see everything. The expert pass caught steps that depend on data living outside the product, in systems the agent cannot read, where the honest instruction is manual.</p>
-        </div>
-        <div class="range-cell io" style="--d:6">
-          <span class="label mono">How many rounds it took</span>
-          <p class="body">The deepest territory, the diagnostic for an automated payroll run that silently fails, reached <span class="num">version ten</span> before it settled. One of the three then owned the closing accuracy pass: scope, root causes, decision points, and every decision tree, verified with the experts and signed off across the full set.</p>
+          <p class="body">Nothing shipped as drafted. The class of correction on the record: drafts that assumed the product could see everything, where the honest instruction is manual. The deepest territory reached <span class="num">version ten</span> before it settled, and one of the three signed off the closing accuracy pass across the full set.</p>
         </div>
       </div>
-      <p class="trace-foot sprint-foot mono io" style="--d:7">sourced from the sprint&rsquo;s own record: the generator prompt and versioned datasets in my files, and the validation log on the shared working document · names withheld</p>
+      <p class="trace-foot sprint-foot mono io" style="--d:2">sourced from the sprint&rsquo;s own record: the generator prompt and versioned datasets in my files, and the validation log on the shared working document · names withheld</p>
     </div>
   </section>
 
   <!-- ================= NEXT ================= -->
   <section class="shell band" aria-label="Next case and handoff" data-state="continuing">
     <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">06</span><span>Next case</span></p>
+      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>Next case</span></p>
       <ul class="contact-links io" style="--d:1">
         <li>
           <a href="quality-program.html">
@@ -376,7 +284,7 @@ Data Not Retrievable (Must Ask User)
 
 <footer class="footer" role="contentinfo">
   <div class="shell">
-    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · <b>sealed</b> one call · <b>read</b> before asking in the trace · <b>handed off</b> to a human, above</p>
+    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · her call <b>stated</b> plainly · <b>read</b> before asking in the trace · <b>handed off</b> to a human, above</p>
     <p class="footer-inner mono">
       <span>Simone Muro · Portfolio, 4th edition · 2026</span>
       <span><a href="index.html">Home</a> · <a href="index.html#work">Work</a> · <a href="resume.html">Resume</a></span>
@@ -387,12 +295,7 @@ Data Not Retrievable (Must Ask User)
 <noscript>
   <style>
     .io,.rule-io{opacity:1 !important;transform:none !important;}
-    .call-reveal{grid-template-rows:1fr !important;}
-    .call{visibility:visible !important;}
-    .val-pending{display:none !important;}
-    .val-fail{display:inline !important;}
-    .verdict,.opt-foot,.opt .tag{display:none !important;}
-    .progress,.trace-replay,.refusal-form,.refusal-foot{display:none !important;}
+    .progress,.trace-replay{display:none !important;}
   </style>
 </noscript>
 

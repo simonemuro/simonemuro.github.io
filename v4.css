@@ -3,10 +3,10 @@
    Pure white paper. Near-black ink. Hairlines. One ultramarine,
    spent only where judgment lives.
    Instrument Serif (display, italic "her call")
-   Instrument Sans (text) · Fragment Mono (marks, kickers, verdicts)
-   Components: masthead+ticker, era ruler, sealed decision spread,
-   runtime trace, margin notes, case index, factbox, refusal widget,
-   colophon table, footer (+ one-line colophon variant).
+   Instrument Sans (text) · Fragment Mono (marks, kickers)
+   Components: masthead, era ruler, decision spread (told directly),
+   runtime trace, margin note, case index, factbox, refusal widget,
+   footer (+ one-line foot-score variant).
    Budgets and usage: see V4-COMPONENTS.md
    ============================================================ */
 
@@ -45,7 +45,6 @@
 /* ---------- tokens ---------- */
 :root{
   --paper:#ffffff;
-  --wash:#eef1fb;            /* faint ultramarine wash: reveals only */
   --ink:#0e0f12;
   --sub:#5c5f66;
   --hair:#e3e4e8;
@@ -104,9 +103,7 @@ a{color:inherit;}
 .skip-link:focus{top:12px;}
 
 /* ---------- scroll-reveal machinery ----------
-   Reduced motion: everything renders complete, no animation.
-   Sealed decision reveals are a separate mechanism and stay
-   sealed until clicked in every mode. */
+   Reduced motion: everything renders complete, no animation. */
 .io{opacity:0;transform:translateY(16px);
   transition:opacity .7s var(--ease),transform .7s var(--ease);
   transition-delay:calc(var(--d,0)*80ms);}
@@ -120,7 +117,7 @@ a{color:inherit;}
   .io,.rule-io{opacity:1 !important;transform:none !important;transition:none !important;}
 }
 
-/* ---------- masthead + state ticker ---------- */
+/* ---------- masthead ---------- */
 .masthead{
   position:sticky;top:0;z-index:50;
   background:color-mix(in srgb,var(--paper) 92%,transparent);
@@ -133,8 +130,6 @@ a{color:inherit;}
 }
 .brand{font-family:var(--serif);font-weight:400;font-size:1.3rem;letter-spacing:.005em;text-decoration:none;white-space:nowrap;}
 .brand:hover{color:var(--accent);}
-.mast-state{color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
-.mast-state b{color:var(--accent);font-weight:400;}
 .mast-nav{display:flex;gap:26px;flex:none;}
 .mast-nav a{text-decoration:none;color:var(--sub);transition:color .25s;white-space:nowrap;}
 .mast-nav a:hover{color:var(--accent);}
@@ -143,9 +138,8 @@ a{color:inherit;}
   background:var(--accent);transform:scaleX(0);transform-origin:left;
 }
 @media (prefers-reduced-motion:reduce){ .progress{display:none;} }
-/* mobile: single row, never wraps at 375px; ticker yields */
+/* mobile: single row, never wraps at 375px */
 @media (max-width:719px){
-  .mast-state{display:none;}
   .brand{font-size:1.15rem;}
   .mast-nav{gap:16px;}
 }
@@ -164,8 +158,8 @@ a{color:inherit;}
   .bnote{position:sticky;top:110px;align-self:start;}
 }
 
-/* margin notes: editor's marks. Budget: at most 2 per page,
-   checkable observations only. */
+/* margin note: an editor's mark. Budget: at most 1 per page,
+   and only if it carries real information; else zero. */
 .bnote{
   font-family:var(--serif);font-style:italic;
   font-size:1.06rem;line-height:1.45;color:var(--sub);
@@ -242,9 +236,9 @@ h2{
   .era-meta .companies{order:3;flex-basis:100%;text-align:left;margin-top:6px;}
 }
 
-/* ---------- sealed decision spread ----------
-   One per case page. Sealed until the reader picks or skips,
-   in every mode including reduced motion (open is then instant). */
+/* ---------- decision spread ----------
+   One per case page, told directly and open by default:
+   situation, her call, why, receipt. No interaction required. */
 .spine-head{padding-bottom:clamp(40px,6vh,72px);}
 
 .decision{padding-block:clamp(56px,9vh,120px);border-top:1px solid var(--hair);}
@@ -280,75 +274,14 @@ h2{
   font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
 }
 .score-row .val-pass{color:var(--ink);}
-.score-row .val-pending{color:var(--sub);}
-.score-row .val-fail{display:none;color:var(--accent);font-weight:400;}
-.revealed .score-row .val-pending{display:none;}
-.revealed .score-row .val-fail{display:inline;}
+.score-row .val-fail{color:var(--accent);font-weight:400;}
 
-/* option grid, with consequence glosses */
-.options{display:grid;grid-template-columns:repeat(3,1fr);column-gap:32px;border-bottom:1px solid var(--hair);}
-@media (max-width:900px){ .options{grid-template-columns:repeat(2,1fr);} }
-@media (max-width:520px){ .options{grid-template-columns:1fr;} }
-.opt{
-  display:block;width:100%;padding:14px 4px 16px;
-  border:0;border-top:1px solid var(--hair);
-  background:none;font:inherit;color:var(--ink);
-  cursor:pointer;text-align:left;
-}
-.opt-line{display:flex;align-items:baseline;gap:12px;}
-.opt .idx{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--sub);transition:color .25s;}
-.opt .verb{font-size:1.12rem;transition:color .25s;}
-.opt .tag{
-  margin-left:auto;font-family:var(--mono);font-size:.58rem;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
-  opacity:0;transition:opacity .3s;
-}
-.opt .gloss{display:block;margin-top:5px;color:var(--sub);font-size:.85rem;line-height:1.45;max-width:32ch;}
-.opt:hover .verb,.opt:hover .idx{color:var(--accent);}
-.opt[aria-pressed="true"] .verb{
-  color:var(--accent);
-  text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;
-}
-.opt[aria-pressed="true"] .idx{color:var(--accent);}
-.opt[aria-pressed="true"] .tag{opacity:1;}
-
-/* escape hatch + privacy line under the grid */
-.opt-foot{
-  display:flex;justify-content:space-between;align-items:baseline;
-  gap:10px 24px;flex-wrap:wrap;margin-top:14px;
-}
-.skip-call,.repick{
-  background:none;border:0;cursor:pointer;padding:2px 0;
-  font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--sub);text-decoration:underline;text-underline-offset:4px;
-  text-decoration-color:var(--hair-strong);transition:color .25s;
-}
-.skip-call:hover,.repick:hover{color:var(--accent);}
-.privacy{color:var(--sub);font-size:.6rem;}
-
-.verdict{margin-top:18px;color:var(--sub);min-height:1.4em;}
-.verdict .match{color:var(--accent);font-weight:400;}
-.repick{display:none;margin-left:14px;}
-.revealed .repick{display:inline;}
-
-/* her call: the sealed reveal */
-.call-reveal{display:grid;grid-template-rows:0fr;transition:grid-template-rows .8s var(--ease);}
-.revealed .call-reveal{grid-template-rows:1fr;}
-.call-clip{overflow:hidden;min-height:0;}
-.call{
-  visibility:hidden;transition:visibility 0s .1s;
-  margin-top:clamp(30px,5vh,52px);
-  background:var(--wash);
-  padding:clamp(26px,4.5vw,56px);
-}
-.revealed .call{visibility:visible;}
+/* her call: stated plainly, open by default */
 .call-h{
   font-weight:400;font-family:var(--mono);font-size:.68rem;
   letter-spacing:.16em;text-transform:uppercase;
   color:var(--accent);margin-bottom:14px;
 }
-.call-h:focus{outline:none;}
-.call-h:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
 .call-verb{
   font-family:var(--serif);font-style:italic;color:var(--accent);
   font-size:clamp(3rem,7.5vw,5.8rem);line-height:.9;letter-spacing:-.01em;
@@ -361,12 +294,6 @@ h2{
 .receipt{margin-top:30px;border-top:1px solid rgba(30,43,208,.25);padding-top:18px;max-width:60ch;}
 .receipt .label{color:var(--accent);margin-bottom:10px;}
 .receipt p{color:var(--ink);}
-
-/* reduced motion: still sealed until click; open is instant */
-@media (prefers-reduced-motion:reduce){
-  .call-reveal{transition:none;}
-  .call{transition:none;}
-}
 
 /* ---------- runtime trace ----------
    Pre-rendered rows, hairline dividers, mono timestamps,
@@ -487,26 +414,6 @@ h2{
 .range-cell .body{margin-top:10px;max-width:44ch;}
 .range-cell .num{font-family:var(--serif);font-size:1.35rem;white-space:nowrap;}
 
-/* ---------- colophon (self-scoring table; homepage only) ---------- */
-.evaltable{width:100%;border-collapse:collapse;margin-top:clamp(34px,6vh,56px);}
-.evaltable caption{text-align:left;}
-.evaltable th{
-  text-align:left;font-family:var(--mono);font-size:.62rem;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--sub);font-weight:400;
-  padding:0 16px 12px 0;border-bottom:1px solid var(--hair-strong);
-}
-.evaltable td{padding:16px 16px 16px 0;border-bottom:1px solid var(--hair);vertical-align:baseline;}
-.evaltable .t-id{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--sub);white-space:nowrap;}
-.evaltable .t-verb{font-family:var(--serif);font-style:italic;font-size:1.25rem;white-space:nowrap;}
-.evaltable .t-crit{color:var(--sub);}
-.evaltable .t-res{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);text-align:right;white-space:nowrap;}
-.evaltable a{color:inherit;text-decoration-color:var(--hair-strong);text-underline-offset:4px;}
-.evaltable a:hover{color:var(--accent);}
-@media (max-width:640px){
-  .evaltable .t-crit{display:none;}
-  .evaltable th:nth-child(3){display:none;}
-}
-
 /* ---------- contact ---------- */
 .contact h2{max-width:18ch;font-size:clamp(2.6rem,6.2vw,5.2rem);}
 .contact-lede{margin-top:20px;color:var(--sub);max-width:48ch;}
@@ -573,7 +480,7 @@ h2{
 .refusal-send:hover{color:var(--accent);border-color:var(--accent);}
 .refusal-foot{padding:0 16px 12px;color:var(--sub);font-size:.6rem;}
 
-/* ---------- footer (+ one-line colophon variant) ---------- */
+/* ---------- footer (+ one-line foot-score variant) ---------- */
 .footer{border-top:1px solid var(--hair);padding-block:26px 44px;}
 .foot-score{
   display:block;color:var(--sub);margin-bottom:14px;
@@ -596,11 +503,9 @@ h2{
 /* ---------- print ---------- */
 @media print{
   .masthead{position:static;background:#fff;}
-  .skip-link,.progress,.mast-state,.trace-replay,.opt-foot,.repick,
-  .refusal-form,.refusal-foot,.verdict{display:none !important;}
+  .skip-link,.progress,.trace-replay,
+  .refusal-form,.refusal-foot{display:none !important;}
   .io,.rule-io{opacity:1 !important;transform:none !important;}
-  .call-reveal{grid-template-rows:1fr !important;}
-  .call{visibility:visible !important;background:#fff;border:1px solid #000;}
   .bnote{position:static;}
   a{text-decoration:none;}
   body{font-size:10.5pt;}
