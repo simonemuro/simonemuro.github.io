@@ -30,6 +30,20 @@
   }
 
   ready(function () {
+    /* ---------- keyboard access for scrollable strips (WCAG 2.1.1) ---------- */
+    function markScrollables() {
+      var strips = document.querySelectorAll("pre, .t-tool .t-main code");
+      strips.forEach(function (el) {
+        if (el.scrollWidth > el.clientWidth + 1 && !el.hasAttribute("tabindex")) {
+          el.setAttribute("tabindex", "0");
+          el.setAttribute("role", "region");
+          el.setAttribute("aria-label", "Scrollable excerpt");
+        }
+      });
+    }
+    markScrollables();
+    window.addEventListener("load", markScrollables);
+
     /* ---------- scroll reveals ---------- */
     var ioEls = document.querySelectorAll(".io,.rule-io");
     if (!PRM && "IntersectionObserver" in window) {

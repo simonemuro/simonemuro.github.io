@@ -12,7 +12,10 @@ portfolio built around decisions told directly, replayable traces, and judgment-
 - `resume.html` · printable resume (browser print → Save as PDF). `404.html` · not-found page.
 - `v4.css` / `v4.js` · shared visual system and interactions. `fonts/` · self-hosted webfonts.
 - `V4-COMPONENTS.md` · component reference. `.nojekyll` · serve static files as-is.
-- `agent-worker/` · Cloudflare Worker scaffold for the future live agent (not deployed).
+
+The live-agent backend (Cloudflare Worker, skills, golden datasets, eval gate) lives in a
+separate private repo (`portfolio-agent`); this site only carries the optional
+`agent-endpoint` meta tag that points at the deployed worker.
 
 ## Local preview
 

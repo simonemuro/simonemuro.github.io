@@ -90,7 +90,8 @@ NO suggestion chips or preset question buttons. Entries: `{ "match": [keywords],
 `refusals` lines + mailto handoff, tagged `refused: out of scope`. In-scope replies are tagged
 `curated, designed response · no live model`. Keep the privacy footer line. Live mode: a
 `<meta name="agent-endpoint">` tag switches the widget to a real chat against the Cloudflare
-Worker in `agent-worker/`; on any fetch failure it degrades back to curated mode and says so.
+Worker from the private `portfolio-agent` repo; on any fetch failure it degrades back to
+curated mode and says so.
 
 ### Footer + one-line foot-score variant (all non-home pages)
 ```html

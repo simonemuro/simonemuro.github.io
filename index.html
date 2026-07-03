@@ -13,9 +13,9 @@
 <title>Simone Muro. Agent behavior design.</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231e2bd0'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23ffffff' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="v4.css">
-<!-- LIVE AGENT (one step from on): after deploying the Cloudflare Worker in
-     agent-worker/ (see agent-worker/DEPLOY.md), paste your worker URL below
-     and uncomment the tag. That is the ONLY switch: with the tag commented
+<!-- LIVE AGENT (one step from on): after deploying the Cloudflare Worker from
+     the private portfolio-agent repo (see its DEPLOY.md), paste your worker URL
+     below and uncomment the tag. That is the ONLY switch: with the tag commented
      out, the contact-band box stays in curated mode (no backend, no cost).
 <meta name="agent-endpoint" content="https://simone-portfolio-agent.YOUR-SUBDOMAIN.workers.dev">
 -->
@@ -25,7 +25,7 @@
   .hero{padding-top:clamp(52px,8vh,110px);}
   .hero-sub.mono{max-width:none;font-size:.66rem;letter-spacing:.1em;}
   .receipts{display:flex;flex-wrap:wrap;margin-top:clamp(12px,1.5vh,22px);color:var(--sub);font-size:.64rem;letter-spacing:.08em;}
-  .receipts .rc{display:inline-flex;align-items:baseline;gap:7px;padding:3px 12px 3px 0;}
+  .receipts .rc{display:inline-flex;align-items:baseline;gap:7px;padding:5px 12px 5px 0;}
   .receipts .rc+.rc{border-left:1px solid var(--hair);padding-left:12px;}
   .receipts a{color:var(--sub);text-decoration:none;}
   .receipts a b{font-weight:400;color:var(--ink);font-variant-numeric:tabular-nums;}
