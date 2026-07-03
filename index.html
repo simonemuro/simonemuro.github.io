@@ -231,15 +231,28 @@
   <section class="shell band" id="work" aria-labelledby="work-h" data-state="indexing">
     <div>
       <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The index</span></p>
-      <h2 id="work-h" class="io" style="--d:1">Seven cases, three eras.</h2>
+      <h2 id="work-h" class="io" style="--d:1">Eight cases, three eras.</h2>
       <p class="band-lede io" style="--d:2">Each one is a behavior decided, built, and proved. Outcome first, one line here, the full argument inside.</p>
 
       <ol class="cases">
         <li class="case io" style="--d:0">
           <span class="case-no" aria-hidden="true">01</span>
           <div class="case-body">
+            <h3><a href="charge-lookup.html">Charge lookup</a></h3>
+            <p>The page showed how much, customers called to ask why. The redesigned conversation moved voice self-help acceptance from 25 to 39 percent, chat resolution up 12 points, containment about 61.</p>
+            <span class="case-role"><b>role</b> · drove the redesign; wrote the PRD</span>
+          </div>
+          <div class="case-meta">
+            <span class="case-stat">25&#8594;39%</span>
+            <span class="case-unit">voice acceptance</span>
+            <span class="case-era">LLM</span>
+          </div>
+        </li>
+        <li class="case io" style="--d:1">
+          <span class="case-no" aria-hidden="true">02</span>
+          <div class="case-body">
             <h3><a href="billing-skill.html">BillingSkill</a></h3>
-            <p>A billing skill built end to end: the spec, a local MCP tool server, and the 108-case judge-scored eval that proves it.</p>
+            <p>The charge-lookup target state built working as an agent skill: the spec, a local MCP tool server, and the 108-case judge-scored eval that gates it.</p>
             <span class="case-role"><b>role</b> · solo build, AI-paired</span>
           </div>
           <div class="case-meta">
@@ -248,8 +261,8 @@
             <span class="case-era">agentic</span>
           </div>
         </li>
-        <li class="case io" style="--d:1">
-          <span class="case-no" aria-hidden="true">02</span>
+        <li class="case io" style="--d:2">
+          <span class="case-no" aria-hidden="true">03</span>
           <div class="case-body">
             <h3><a href="payroll-intelligence.html">Payroll Intelligence</a></h3>
             <p>The diagnostic behavior: read the account, ask once, hand off with context. One question where the old flow interrogated.</p>
@@ -261,8 +274,8 @@
             <span class="case-era">agentic</span>
           </div>
         </li>
-        <li class="case io" style="--d:2">
-          <span class="case-no" aria-hidden="true">03</span>
+        <li class="case io" style="--d:3">
+          <span class="case-no" aria-hidden="true">04</span>
           <div class="case-body">
             <h3><a href="quality-program.html">The Quality Program</a></h3>
             <p>The generator that drafts the eval answer key. About three weeks of authoring became about one, across 3,000+ rows.</p>
@@ -274,8 +287,8 @@
             <span class="case-era">agentic</span>
           </div>
         </li>
-        <li class="case io" style="--d:3">
-          <span class="case-no" aria-hidden="true">04</span>
+        <li class="case io" style="--d:4">
+          <span class="case-no" aria-hidden="true">05</span>
           <div class="case-body">
             <h3><a href="cancellation-saves.html">Cancellation Saves</a></h3>
             <p>The first GenAI classifier in the cancel flow: 96.6 percent savability accuracy, classification up from 60 to 96 percent.</p>
@@ -287,8 +300,8 @@
             <span class="case-era">LLM</span>
           </div>
         </li>
-        <li class="case io" style="--d:4">
-          <span class="case-no" aria-hidden="true">05</span>
+        <li class="case io" style="--d:5">
+          <span class="case-no" aria-hidden="true">06</span>
           <div class="case-body">
             <h3><a href="voice.html">Voice</a></h3>
             <p>GenAI answers on the 1-800 line, and a login redesign that took acceptance from 32 to 56 percent and containment from 20 to 32. $135,160 realized.</p>
@@ -300,8 +313,8 @@
             <span class="case-era">LLM</span>
           </div>
         </li>
-        <li class="case io" style="--d:5">
-          <span class="case-no" aria-hidden="true">06</span>
+        <li class="case io" style="--d:6">
+          <span class="case-no" aria-hidden="true">07</span>
           <div class="case-body">
             <h3><a href="credit-karma.html">Credit Karma</a></h3>
             <p>Regulated-finance prompts: the model reasons over approval odds and never states them. The structured output is the page.</p>
@@ -313,15 +326,15 @@
             <span class="case-era">LLM</span>
           </div>
         </li>
-        <li class="case io" style="--d:6">
-          <span class="case-no" aria-hidden="true">07</span>
+        <li class="case io" style="--d:7">
+          <span class="case-no" aria-hidden="true">08</span>
           <div class="case-body">
             <h3><a href="operate-with-ai.html">How I Built This Site</a></h3>
             <p>Agent crews did the typing, judges gated every page before it shipped, and the calls stayed hers.</p>
             <span class="case-role"><b>role</b> · solo build, AI-paired</span>
           </div>
           <div class="case-meta">
-            <span class="case-stat">07</span>
+            <span class="case-stat">08</span>
             <span class="case-unit">you are here</span>
             <span class="case-era">agentic</span>
           </div>
@@ -376,13 +389,13 @@
             { "match": ["chatbot", "llm", "model", "gpt", "claude", "are you ai", "real ai"],
               "reply": "No live model here. Every reply in this box was written ahead of time and matched by keyword. Scope is a design decision: out of scope gets a refusal and a human." },
             { "match": ["built", "build", "this site", "how was", "stack"],
-              "reply": "By hand, on its own design system, with an AI pair. Case 07 tells the story:", "href": "operate-with-ai.html", "link": "operate-with-ai.html" },
+              "reply": "By hand, on its own design system, with an AI pair. Case 08 tells the story:", "href": "operate-with-ai.html", "link": "operate-with-ai.html" },
             { "match": ["case", "work", "portfolio", "project"],
-              "reply": "Seven cases in the index above. Start with 01, BillingSkill: a skill spec, a local MCP tool server, and a 108-case judge-scored eval:", "href": "billing-skill.html", "link": "billing-skill.html" },
+              "reply": "Eight cases in the index above. Start with 01, Charge lookup: the page showed how much, customers called to ask why:", "href": "charge-lookup.html", "link": "charge-lookup.html" },
             { "match": ["eval", "golden", "dataset"],
-              "reply": "She writes them, runs them, and built the generator that drafts the answer key: about three weeks of authoring became about one, across 3,000+ rows. Case 03:", "href": "quality-program.html", "link": "quality-program.html" },
+              "reply": "She writes them, runs them, and built the generator that drafts the answer key: about three weeks of authoring became about one, across 3,000+ rows. Case 04:", "href": "quality-program.html", "link": "quality-program.html" },
             { "match": ["voice", "phone", "1-800", "ivr"],
-              "reply": "GenAI answers on the 1-800 line, and a login redesign that moved acceptance from 32 to 56 percent. Case 05:", "href": "voice.html", "link": "voice.html" },
+              "reply": "GenAI answers on the 1-800 line, and a login redesign that moved acceptance from 32 to 56 percent. Case 06:", "href": "voice.html", "link": "voice.html" },
             { "match": ["linkedin"],
               "reply": "Right here:", "href": "https://linkedin.com/in/simonemuro", "link": "linkedin.com/in/simonemuro" },
             { "match": ["email", "contact", "reach"],
@@ -437,7 +450,7 @@
 <footer class="footer" role="contentinfo">
   <div class="shell footer-inner mono">
     <span>Simone Muro · Portfolio, 4th edition · 2026</span>
-    <span>Set in Instrument Serif, Instrument Sans, Fragment Mono, self-hosted · No trackers, no live model · <a href="operate-with-ai.html">Case 07 tells the story</a></span>
+    <span>Set in Instrument Serif, Instrument Sans, Fragment Mono, self-hosted · No trackers, no live model · <a href="operate-with-ai.html">Case 08 tells the story</a></span>
   </div>
 </footer>
 

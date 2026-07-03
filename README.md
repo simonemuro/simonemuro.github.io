@@ -6,11 +6,14 @@ portfolio built around decisions told directly, replayable traces, and judgment-
 ## Structure
 
 - `index.html` · homepage: thesis, work index, refusal widget, contact.
-- Case studies (numbered chain): `billing-skill.html`, `payroll-intelligence.html`,
-  `quality-program.html`, `cancellation-saves.html`, `voice.html`, `credit-karma.html`,
-  `operate-with-ai.html`.
+- Case studies (numbered chain): `charge-lookup.html` (01, the shipped redesign and its
+  numbers), `billing-skill.html` (02, the working skill build; build facts only, no shipped
+  metrics), `payroll-intelligence.html` (03), `quality-program.html` (04),
+  `cancellation-saves.html` (05), `voice.html` (06), `credit-karma.html` (07),
+  `operate-with-ai.html` (08).
 - `resume.html` · printable resume (browser print → Save as PDF). `404.html` · not-found page.
-- `v4.css` / `v4.js` · shared visual system and interactions. `fonts/` · self-hosted webfonts.
+- `v4.css` / `v4.js` · shared visual system and interactions. `v5.css` / `v5-proto.js` · the
+  v5 case layout and the target-state prototype player on the billing pair. `fonts/` · self-hosted webfonts.
 - `V4-COMPONENTS.md` · component reference. `.nojekyll` · serve static files as-is.
 
 The live-agent backend (Cloudflare Worker, skills, golden datasets, eval gate) lives in a

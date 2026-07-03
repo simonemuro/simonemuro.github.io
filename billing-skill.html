@@ -160,9 +160,9 @@
       <figcaption class="gr-hd mono"><span>golden row &middot; 1 of 108 &middot; 13 intents</span><span class="gr-mark">judge: 3 of 3 gates pass</span></figcaption>
       <dl class="gr-rows">
         <div class="gr-row"><dt>intent</dt><dd><code>price_increase_inquiry</code></dd></div>
-        <div class="gr-row"><dt>scenario</dt><dd>The customer asks why the monthly charge went up.</dd></div>
+        <div class="gr-row"><dt>scenario</dt><dd>The customer does not recognize this cycle&rsquo;s higher charge.</dd></div>
         <div class="gr-row"><dt>expected action</dt><dd>Call <code>billing_lookup</code> before answering.</dd></div>
-        <div class="gr-row"><dt>mock data</dt><dd><code>plan: "Essentials" &middot; plan_cost_monthly: 76.00 &middot; add_ons: [Payroll &middot; added May 14 &middot; 32.00]</code></dd></div>
+        <div class="gr-row"><dt>mock data</dt><dd><code>plan: "Plus" &middot; plan_cost_monthly: 99.00 &middot; add_ons: [Payroll &middot; 50.00] &middot; team_members: 16 at 6.00 &middot; promo_ended: welcome rate, 48.00 off</code></dd></div>
         <div class="gr-row gate"><dt>gate &middot; correctness</dt><dd><span>Names the plan and its cost from the mock record.</span><b class="gr-res">pass</b></dd></div>
         <div class="gr-row gate"><dt>gate &middot; no hallucination</dt><dd><span>Every amount stated traces to the data.</span><b class="gr-res">pass</b></dd></div>
         <div class="gr-row gate"><dt>gate &middot; behavior</dt><dd><span>Reads the account before any redirect or handoff.</span><b class="gr-res">pass</b></dd></div>
@@ -180,26 +180,28 @@
     <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
     <h2 id="p7-h">The target state, running.</h2>
     <div class="prose">
-      <p>Here is the answer, as the skill produces it on mock account data. This is the conversation the <a href="charge-lookup.html">charge-lookup case</a> could only point to.</p>
+      <p>Here is the answer, as the skill produces it on mock account data: the same question, the same account, that the <a href="charge-lookup.html">charge-lookup case</a> follows from its before state to its target prototype. The prototype shows the vision, an agent that also eases the charge with the customer&rsquo;s consent; the skill is the working read-only build of the explanation, and it hands anything further to a person.</p>
     </div>
 
     <div class="mockwrap">
       <div class="mock" aria-label="Recreated chat: the same billing question answered with the specific charge, a breakdown, and a human handoff">
         <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Support assistant</span><span class="mtag">Recreation</span></div>
         <div class="mock-body">
-          <div class="m-user">Why did my charge go up this month? I was billed $108.00 and it is usually $76.00.</div>
+          <div class="m-user">I see a $288 charge on my card I do not recognize. Can you help me understand it?</div>
           <div class="m-agent">
             <details class="m-work">
               <summary><span class="chev" aria-hidden="true">&#8250;</span>Work done</summary>
-              <p class="m-worknote">Looked up the subscription, active add-ons, and the last two charges for Harbor Lane Pottery.</p>
+              <p class="m-worknote">Looked up the subscription, active add-ons, team members, and the last two charges for Harbor Lane Pottery.</p>
             </details>
-            <p>Your June 1 charge was $108.00. It is higher than your usual $76.00 because Payroll was added to this subscription on May 14. Your base plan price did not change.</p>
-            <div class="m-rows" role="table" aria-label="Charge breakdown">
-              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Essentials plan</b><span class="rsub">monthly subscription</span></span><span class="ramt" role="cell">$76.00</span></div>
-              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Payroll add-on</b><span class="rsub">added May 14</span></span><span class="ramt" role="cell">$32.00</span></div>
-              <div class="m-row total" role="row"><span class="rlab" role="cell">Total charged June 1</span><span class="ramt" role="cell">$108.00</span></div>
+            <p>That $288.00 is this cycle&rsquo;s subscription charge. It is $60.00 more than your usual $228.00 for two reasons: 2 team members were added at $6.00 each, which adds $12.00, and your 6-month welcome rate ended, which had been taking $48.00 off. Your base plan price did not change.</p>
+            <div class="m-rows" role="table" aria-label="Charge breakdown, this cycle">
+              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Plus plan</b><span class="rsub">base subscription, monthly</span></span><span class="ramt" role="cell">$99.00</span></div>
+              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Payroll</b><span class="rsub">monthly subscription</span></span><span class="ramt" role="cell">$50.00</span></div>
+              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Team members</b><span class="rsub">16 active, $6.00 each</span></span><span class="ramt" role="cell">$96.00</span></div>
+              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Payments processing</b><span class="rsub">card fees this month</span></span><span class="ramt" role="cell">$43.00</span></div>
+              <div class="m-row total" role="row"><span class="rlab" role="cell">Total this cycle</span><span class="ramt" role="cell">$288.00</span></div>
             </div>
-            <p>If you did not add Payroll, or you want to look at your options, I can bring in a person.</p>
+            <p>If you did not add those team members, or you want to look at your options, I can bring in a person.</p>
             <div class="m-handoff">
               <p class="hff-t">Review this charge with a specialist</p>
               <p class="hff-p">A billing specialist can walk through this charge and your plan options with you.</p>

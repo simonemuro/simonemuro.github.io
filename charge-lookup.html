@@ -67,16 +67,16 @@
     <h2 id="p2-h">I walked the journey myself.</h2>
     <div class="prose">
       <p>I typed the questions into the chat experience, the voice experience, the in-product search, and Google, to see what help customers actually got.</p>
-      <p>The self-help path went search bar, then articles, then instructions to open the Billing and Subscription page under Settings. You had to be the account administrator to see it at all. There you saw a breakdown of what you were subscribed to and how much each part cost. How much, but not why. A subscription that was forty nine dollars for the last three months is seventy this month, and the page shows the current amount with no explanation for the increase.</p>
+      <p>The self-help path went search bar, then articles, then instructions to open the Billing and Subscription page under Settings. You had to be the account administrator to see it at all. There you saw a breakdown of what you were subscribed to and how much each part cost. How much, but not why. A subscription that had been $228.00 for months shows $288.00 this month, and the page shows the amount with no explanation for the change.</p>
       <p>The articles also linked to an account lookup tool that lived outside the product and outside the help experience: enter the amount charged to your card and the date, get a breakdown of the charges. Still no why.</p>
       <p>So customers who wanted an explanation eventually had to call support. Here is what the assistant itself gave them, recreated.</p>
     </div>
 
     <div class="mockwrap">
-      <div class="mock" role="img" aria-label="Recreated chat: the customer asks why the charge went up and the assistant replies with a list of help articles">
+      <div class="mock" role="img" aria-label="Recreated chat: the customer asks about a charge they do not recognize and the assistant replies with a list of help articles">
         <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Support assistant</span><span class="mtag">Recreation</span></div>
         <div class="mock-body">
-          <div class="m-user">Why was I charged $70.00 this month? My subscription has been $49.00 for the last three months.</div>
+          <div class="m-user">I see a $288 charge on my card I do not recognize. Can you help me understand it?</div>
           <div class="m-agent">
             <p>Here are some helpful articles about subscription billing:</p>
             <ul class="m-links">
@@ -111,7 +111,7 @@
     <h2 id="p4-h">Transcripts, and how the experts actually did it.</h2>
     <div class="prose">
       <p>I interviewed the supportability teams and pulled real transcripts: phone conversations with experts, and the live support chat channels, not the AI chat. Partly to validate why customers called. Mostly to learn how the experts actually handled it: what solutions they found, what questions they asked, what the outcomes were.</p>
-      <p>Two patterns came straight out of the transcripts. Customers were often caught off guard by a promotional period or discount ending, the subscription snapping back to regular price. And payroll charges confused people: a base subscription plus six dollars for each employee added, so adding employees made the amount go up.</p>
+      <p>Two patterns came straight out of the transcripts. Customers were often caught off guard by a promotional period or discount ending, the subscription snapping back to regular price. And payroll charges confused people: a base subscription plus six dollars for each employee added, so adding employees made the amount go up. They are also the two causes inside the $288.00 example this page follows: a welcome rate that ended, and two team members added.</p>
       <p>The insight, stated plainly: the digital experiences were not personalized, and articles and instructions were not solving the question. To help, the conversational experience had to go beyond self-help articles, toward personalized information and explainability about charges.</p>
     </div>
   </section>
@@ -181,7 +181,7 @@
       <div class="mock" role="img" aria-label="Recreated chat: the same question, now disambiguated, with the charge lookup tool offered inside the conversation">
         <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Support assistant</span><span class="mtag">Recreation</span></div>
         <div class="mock-body">
-          <div class="m-user">Why was I charged $70.00 this month? My subscription has been $49.00 for the last three months.</div>
+          <div class="m-user">I see a $288 charge on my card I do not recognize. Can you help me understand it?</div>
           <div class="m-agent">
             <p>Happy to help. The charge lookup tool shows you the details behind the charge you received.</p>
             <div class="m-handoff">
@@ -292,7 +292,7 @@
     <div class="prose">
       <p class="opens">But we knew that to provide a real charge explanation and a personalized experience, we needed to onboard APIs and bring in the specific subscription charges for that account. That is when I hit a roadblock. At that time, teams at Intuit were building Intuit Intelligence, a unified central conversational experience that would live outside the help panel, center stage in the product, as the new chat experience customers would interact with. I did not get buy-in from teams to connect and build APIs into the platform I was building in, because that experience was moving to Intuit Intelligence.</p>
       <p>We banked on the gains we already produced, and moved on to collaborating with the Intuit Intelligence teams, building agents to onboard the billing experience there.</p>
-      <p>The heart of the target state above, the personalized charge explanation, later became a working build, as an agent skill for Intuit Intelligence. That is the next case: <a href="billing-skill.html">BillingSkill</a>.</p>
+      <p>The heart of the target state above, the personalized charge explanation, later became a working build, as an agent skill for Intuit Intelligence: the skill reads the account itself and answers this same question, read-only. That is the next case: <a href="billing-skill.html">BillingSkill</a>.</p>
     </div>
   </section>
 
@@ -311,7 +311,7 @@
   <!-- ================= next case ================= -->
   <section class="wrap nextcase" aria-label="Next case">
     <p class="kicker mono part-head"><span class="knum">Next</span><span>Case No. 02</span></p>
-    <p><a href="billing-skill.html">BillingSkill</a>: the target state above, built working as an agent skill for Intuit Intelligence. The skill, a local MCP tool server, and the 108-case eval that gates it.</p>
+    <p><a href="billing-skill.html">BillingSkill</a>: the target state above, built working as an agent skill for Intuit Intelligence. The same question, answered read-only from account data: the skill, a local MCP tool server, and the 108-case eval that gates it.</p>
   </section>
 
 </main>
