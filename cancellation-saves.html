@@ -155,16 +155,41 @@
 
   </section>
 
-  <!-- ================= THE QUEUE IT PROTECTS ================= -->
+  <!-- ================= THE QUEUE, AND THE ECONOMICS ================= -->
   <section class="shell band" id="queue" aria-labelledby="queue-h" data-state="routing">
     <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The queue this protects</span></p>
+      <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The queue, and the economics</span></p>
       <h2 id="queue-h" class="io" style="--d:1">&ldquo;If I send ten people to that queue, the ten should be truly savable. Not two.&rdquo;</h2>
       <p class="band-lede io" style="--d:2">My bar for the classifier, and the reason it exists at all.</p>
       <div class="case-prose io" style="--d:3">
-        <p>The first version of the flow was mine too: ask why before offering the cancel steps, then route price, bad experience, and not using the product, the reasons the saves team had validated as winnable, to dedicated specialists with the context attached. It worked, and it exposed the real quality problem. The queue was filling with false positives: specialists trained to rescue a price objection were fielding calls that should never have reached them, and every wasted call cost a real save somewhere else.</p>
-        <p>The classifier tightened the whole chain: reason, sentiment, savability, route. Strict JSON that no customer ever reads raw; a low-code tool parsed it and applied the rules. The savability rules came from the people who knew the economics, the saves data and the analytics behind it. What I did not build: a pitch for final reasons. A customer retiring or closing the business gets a clean, respectful goodbye, not an offer.</p>
-        <p>The motion this protects had already earned its keep. Across 8,814 cancellation calls over four months, the flow directionally saved 12 percent of customers against a 5 percent target, on expert-reported saves. Price calls saved at roughly 43 percent, about eight times the rate of calls where the business was simply closing. That gap is the whole argument: the reason decides how rescuable the call is.</p>
+        <p>The first version of the flow was mine too: ask why before offering the cancel steps, then route the reasons the saves team had validated as winnable, price, bad experience, not using the product, to specialists with the context attached. It worked, and exposed the real quality problem: a queue filling with calls that should never have reached the price-rescue specialists, every wasted call costing a real save somewhere else.</p>
+        <p>The classifier tightened the whole chain: reason, sentiment, savability, route. Strict JSON that no customer ever reads raw; a low-code tool parsed it and applied savability rules from the people who knew the saves economics.</p>
+      </div>
+
+      <div class="score io" style="--d:4" aria-label="Economics readout">
+        <div class="score-row"><span>run cost</span><span>$63 a month · $756 a year</span></div>
+        <div class="score-row"><span>expert savings</span><span>about $500K</span></div>
+        <div class="score-row"><span>development time</span><span>6+ months to days</span></div>
+        <div class="score-row"><span>retention revenue</span><span>$2.9M · projected</span></div>
+      </div>
+
+      <div class="range-grid">
+        <div class="range-cell io" style="--d:5">
+          <span class="label mono">The saves math</span>
+          <p class="body">Across 8,814 cancellation calls over four months, the flow directionally saved 12 percent of customers against a 5 percent target, on expert-reported saves. Price calls saved at roughly 43 percent, about eight times the rate of calls where the business was simply closing. That gap is the whole argument: the reason decides how rescuable the call is.</p>
+        </div>
+        <div class="range-cell io" style="--d:6">
+          <span class="label mono">The projection, kept honest</span>
+          <p class="body">The last row above stays a projection. The retention case, built on the earlier saves experiment, projected $2.9M in retention revenue over the following three months. No receipt upgrades that word, so this page keeps it: projected. The measured numbers are the ones the case leads with.</p>
+        </div>
+        <div class="range-cell io" style="--d:7">
+          <span class="label mono">What I did not build</span>
+          <p class="body">A pitch for final reasons. A customer retiring or closing the business gets a clean, respectful goodbye, not an offer.</p>
+        </div>
+        <div class="range-cell io" style="--d:8">
+          <span class="label mono">The constraint · gated at deployment</span>
+          <p class="body">I drove the classifier through the Responsible AI review, the gate that mattered for JSON read by machines and never shown raw. It cleared: zero hallucination findings, zero toxicity findings across the evaluation set. What it did not have, in early 2023, was a sanctioned path to ship generative AI: so the experience ran end to end in an internal low-code tool, designed, validated, and blocked from full deployment until the platform caught up. The pattern was ready first.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -174,7 +199,7 @@
     <div>
       <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>The artifact</span></p>
       <h2 id="artifact-h" class="io" style="--d:1">How the classifier was instructed.</h2>
-      <p class="band-lede io" style="--d:2">The build was a hybrid. The intent model still recognized that a cancellation was happening; this prompt read why, and a low-code tool parsed its JSON to route the call. Redacted, otherwise as shipped.</p>
+      <p class="band-lede io" style="--d:2">The build was a hybrid: the intent model recognized that a cancellation was happening; this prompt read why; a low-code tool parsed its JSON to route the call. Redacted, otherwise as shipped.</p>
 
       <figure class="trace io" style="--d:3" aria-label="Redacted excerpt of the production classifier prompt">
         <figcaption class="trace-hd mono">
@@ -209,7 +234,7 @@ Customer feedback: ```${customer_feedback}```</pre>
       </figure>
 
       <div class="case-prose io" style="--d:4">
-        <p>Three decisions are visible even in the excerpt. The category set is open: nine anchored labels plus room for another concise, accurate label, so the model is never forced into a wrong bucket. Savability is a default, not a list: false only for terminal reasons, true for everything else, which biases the routing toward giving a specialist the chance. And the two message fields are separated on purpose: the acknowledgment is forbidden from offering help, the offer lives in its own field, so the voice layer composes the turn deterministically. The output contract is hard: valid JSON only.</p>
+        <p>Three decisions are visible in the excerpt. The category set is open: nine anchored labels plus room for another accurate label, so the model is never forced into a wrong bucket. Savability is a default, not a list: false only for terminal reasons, true for everything else, biasing the routing toward giving a specialist the chance. And the two message fields are separated on purpose, the acknowledgment forbidden from offering help, the offer in its own field, so the voice layer composes the turn deterministically.</p>
       </div>
     </div>
     <aside class="bnote io" style="--d:5" aria-label="Behavior note 01">
@@ -218,46 +243,12 @@ Customer feedback: ```${customer_feedback}```</pre>
     </aside>
   </section>
 
-  <!-- ================= THE ECONOMICS ================= -->
-  <section class="shell band" id="economics" aria-labelledby="econ-h" data-state="counting">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>The economics</span></p>
-      <h2 id="econ-h" class="io" style="--d:1">The build-versus-buy case fit on one line.</h2>
-      <p class="band-lede io" style="--d:2">About $500K in expert savings, from a classifier that cost $63 a month to run.</p>
-
-      <div class="score io" style="--d:3" aria-label="Economics readout">
-        <div class="score-row"><span>run cost</span><span>$63 a month · $756 a year</span></div>
-        <div class="score-row"><span>expert savings</span><span>about $500K</span></div>
-        <div class="score-row"><span>development time</span><span>6+ months to days</span></div>
-        <div class="score-row"><span>retention revenue</span><span>$2.9M · projected</span></div>
-      </div>
-
-      <div class="case-prose io" style="--d:4">
-        <p>The last row stays a projection. The retention case, built on the earlier saves experiment, projected $2.9M in retention revenue over the following three months. No receipt upgrades that word, so this page keeps it: projected. The measured numbers are the ones the case leads with.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= THE CONSTRAINT ================= -->
-  <section class="shell band" id="constraint" aria-labelledby="gate-h" data-state="gated">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">05</span><span>The constraint</span></p>
-      <h2 id="gate-h" class="io" style="--d:1">Designed, validated, gated at deployment.</h2>
-      <p class="band-lede io" style="--d:2">The honest status line for this case: the classifier was proven before it could fully ship.</p>
-      <div class="case-prose io" style="--d:3">
-        <p>Proving the classifier was half the work. I drove it through the Responsible AI review: the safety checks, guardrails, and strict testing required of anything LLM-powered. Because the output is JSON read by machines, never shown raw to a customer, that review was the gate that mattered. It cleared: zero hallucination findings, zero toxicity findings across the evaluation set.</p>
-        <p>What it did not have was a paved path to production. This was early 2023, before the company had a sanctioned way to ship generative AI. So I built the experience end to end in an internal low-code tool and proved it there: designed, validated, and blocked from full deployment until the platform caught up. The platform that could carry it came later; the pattern was ready first.</p>
-        <p>The pattern is the part that outlived the wait: hear the reason, judge savability, route with context, and keep the cancel path one step away. Once a system can hear the difference between a dozen problems wearing one sentence, you stop designing flows and start designing judgment.</p>
-      </div>
-    </div>
-  </section>
-
   <!-- ================= HANDOFF ================= -->
   <section class="shell band" id="next" aria-labelledby="next-h" data-state="handing off">
     <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">06</span><span>Handoff</span></p>
+      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>Handoff</span></p>
       <h2 id="next-h" class="io" style="--d:1">Next: the same discipline, out loud.</h2>
-      <p class="band-lede io" style="--d:2">Case 05 puts it on the phone line: GenAI answers on the 1-800 number, and the login redesign that moved acceptance from 32 to 56 percent.</p>
+      <p class="band-lede io" style="--d:2">The pattern is the part that outlived the wait: hear the reason, judge savability, route with context, and keep the cancel path one step away. Once a system can hear the difference between a dozen problems wearing one sentence, you stop designing flows and start designing judgment. Case 05 puts it on the phone line: GenAI answers on the 1-800 number, and the login redesign that moved acceptance from 32 to 56 percent.</p>
       <ul class="contact-links io" style="--d:3">
         <li>
           <a href="voice.html">

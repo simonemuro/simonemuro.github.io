@@ -15,11 +15,12 @@
 <link rel="stylesheet" href="v4.css">
 <script src="v4.js" defer></script>
 <style>
-  /* page-scoped: prompt artifact panel. Trace-adjacent styling,
-     existing tokens only; no new colors, shadows, or radii. */
-  .artifact{margin-top:clamp(28px,4vh,44px);border:1px solid var(--hair);background:var(--paper);}
-  .artifact-hd{display:flex;justify-content:space-between;gap:10px 18px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--hair);color:var(--sub);}
-  .artifact-hd .a-title{color:var(--ink);}
+  /* page-scoped: the snippet prompt, folded into a details block inside the
+     flow band. Trace-adjacent styling, existing tokens only. */
+  .ex-details{margin-top:clamp(22px,3vh,32px);border:1px solid var(--hair);background:var(--paper);}
+  .ex-details summary{cursor:pointer;padding:10px 16px;color:var(--sub);}
+  .ex-details summary:hover{color:var(--accent);}
+  .ex-details[open] summary{color:var(--ink);border-bottom:1px solid var(--hair);}
   .artifact-pre{margin:0;padding:18px 16px;overflow-x:auto;}
   .artifact-pre code{font-family:var(--mono);font-size:.74rem;line-height:1.8;color:var(--ink);}
   .artifact-foot{padding:10px 16px 12px;border-top:1px solid var(--hair);color:var(--sub);font-size:.6rem;}
@@ -166,107 +167,28 @@
       <div class="range-grid">
         <div class="range-cell io" style="--d:3">
           <span class="label mono">The behavior</span>
-          <p class="body">Answer the real question first, in a short snippet shaped for voice: a teaser of the full fix, so accepting help no longer means trusting a link sight unseen. Ask one clarifying question when the intent is only half there. Hand off cleanly the moment the call needs a person: an agent request or a pressed digit transfers on the spot.</p>
+          <p class="body">Answer the real question first, in a short snippet shaped for voice: a teaser of the full fix, so accepting help no longer means trusting a link sight unseen. &ldquo;How do I add a logo to my invoices?&rdquo; gets the core in one breath, upload it once from the invoice settings and it lands on every invoice after that, then the offer of the full steps by text or email. Hand off cleanly the moment the call needs a person: an agent request or a pressed digit transfers on the spot.</p>
         </div>
         <div class="range-cell io" style="--d:4">
           <span class="label mono">The boundary</span>
-          <p class="body">The full answer is never read aloud. Steps that work on a screen are noise in the ear, so the phone carries the core and the rest travels by text or email. And it launched small on purpose: one low-risk intent, a throttled rollout, containment as the success metric.</p>
-        </div>
-      </div>
-
-      <figure class="trace io" style="--d:5" data-trace="snippet trace">
-        <figcaption class="trace-hd mono">
-          <span>trace · the snippet, compact</span>
-          <span class="trace-state" data-trace-state>complete</span>
-          <button class="trace-replay" type="button" data-trace-replay>replay</button>
-        </figcaption>
-        <ol class="trace-rows">
-          <li class="t-row t-speech" data-d="480">
-            <span class="t-time" aria-hidden="true">00.0</span>
-            <div class="t-main"><span class="t-role">caller</span><p>&ldquo;How do I add a logo to my invoices?&rdquo;</p></div>
-          </li>
-          <li class="t-row t-note" data-d="440">
-            <span class="t-time" aria-hidden="true">00.4</span>
-            <div class="t-main">action clear: object plus action · no clarifying turn needed</div>
-          </li>
-          <li class="t-row t-note" data-d="440">
-            <span class="t-time" aria-hidden="true">00.8</span>
-            <div class="t-main">shape for the ear: teaser, no list, no url, no numbered steps</div>
-          </li>
-          <li class="t-row t-speech t-agent" data-d="640">
-            <span class="t-time" aria-hidden="true">01.2</span>
-            <div class="t-main"><span class="t-role">assistant</span><p>&ldquo;You can add your logo from the invoice settings: upload it once, and it appears on every invoice you send after that. Want the full steps by text or email?&rdquo;</p></div>
-          </li>
-          <li class="t-row t-speech" data-d="480">
-            <span class="t-time" aria-hidden="true">02.0</span>
-            <div class="t-main"><span class="t-role">caller</span><p>&ldquo;Yes, text it to me.&rdquo;</p></div>
-          </li>
-          <li class="t-row t-note" data-d="400">
-            <span class="t-time" aria-hidden="true">02.4</span>
-            <div class="t-main">full fix sent to a screen · the call stays short</div>
-          </li>
-        </ol>
-        <p class="trace-foot mono">reconstructed from the shipped prompt and flow spec · pre-rendered, no live model</p>
-      </figure>
-    </div>
-  </section>
-
-  <!-- ================= 03 · THE ARTIFACT ================= -->
-  <section class="shell band with-note" id="artifact" aria-labelledby="artifact-h" data-state="shaping">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>The artifact</span></p>
-      <h2 id="artifact-h" class="io" style="--d:1">The rules that shape a spoken answer.</h2>
-      <p class="band-lede io" style="--d:2">A voice answer cannot be scrolled or skimmed. This is the part of the shipped prompt that shapes an answer for the ear instead of the eye.</p>
-
-      <figure class="artifact io" style="--d:3">
-        <figcaption class="artifact-hd mono">
-          <span class="a-title">artifact · the snippet prompt</span>
-          <span>redacted excerpt</span>
-        </figcaption>
-        <pre class="artifact-pre"><code>Your role is to provide a short, accurate response using a friendly and
-conversational tone.
-
-If the question is a standalone product name or object with no clear action
-("billing", "invoices", "help with my account"), tell the customer you are
-happy to help but need more details. Do not apologize. Do not answer until
-you clearly understand the action to be taken.
-
-Once the action is clear:
-1. Be brief and conversational. Provide an answer that is a teaser snippet
-   of the full answer: very concise, only the most important information.
-2. Do not use bulleted or numbered lists in your response.
-3. Do not provide any URLs in the response.
-4. Do not list step-by-step instructions. Use first, then, next, finally...
-   instead of numbers.
-5. After providing a teaser snippet, offer to send the more detailed
-   solution through text or email.
-
-Keep words simple and specific. Use active verbs, and avoid jargon,
-gerunds, and passive sentence constructions.</code></pre>
-        <p class="artifact-foot mono">redacted excerpt of the shipped prompt · 5 of its 24 rules shown · employer and product names and safety rules removed · lightly normalized, meaning unchanged</p>
-      </figure>
-
-      <div class="range-grid">
-        <div class="range-cell io" style="--d:4">
-          <span class="label mono">The triage</span>
-          <p class="body">Bare nouns never get an answer. A caller who says only &ldquo;billing&rdquo; or &ldquo;invoices&rdquo; gets one clarifying question, and no apology padding the turn.</p>
+          <p class="body">The full answer is never read aloud. Steps that work on a screen are noise in the ear: no lists, no URLs, no numbered steps, sequence riding on spoken connectives, first, then, next. Bare nouns never get an answer either: a caller who says only &ldquo;billing&rdquo; gets one clarifying question, no apology padding the turn. And it launched small on purpose: one low-risk intent, a throttled rollout, containment as the success metric.</p>
         </div>
         <div class="range-cell io" style="--d:5">
-          <span class="label mono">The shape</span>
-          <p class="body">No lists, no URLs, no numbered steps: sequence rides on spoken connectives, first, then, next. The core fits in one breath; the detail goes where a screen can hold it.</p>
+          <span class="label mono">What it was</span>
+          <p class="body">Scripted dialog, with one generative step on rails. The login and password redesign has every branch written by hand, no model in the loop; the snippet wrote its words inside a call flow where fixed rules made every routing decision. Nothing on this page planned, chose a tool, or touched an account.</p>
+        </div>
+        <div class="range-cell io" style="--d:6">
+          <span class="label mono">Why it is here</span>
+          <p class="body">Because the questions were already the questions. Answer in one breath. Ask when the intent is half there. Repair before you route. Hand off cleanly. The same judgment, before the model could reason.</p>
         </div>
       </div>
     </div>
-    <aside class="bnote io" style="--d:6" aria-label="Behavior note 01">
-      <span class="bnote-id">Note 01</span>
-      <p>The excerpt lists its own redactions: names out, 5 of 24 rules shown, meaning unchanged.</p>
-    </aside>
   </section>
 
-  <!-- ================= 04 · HEAR THE PATTERNS ================= -->
+  <!-- ================= 03 · HEAR THE PATTERNS ================= -->
   <section class="shell band" id="hear" aria-labelledby="hear-h" data-state="speaking">
     <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>Hear the patterns</span></p>
+      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>Hear the patterns</span></p>
       <h2 id="hear-h" class="io" style="--d:1">Three patterns you can press play on.</h2>
       <p class="band-lede io" style="--d:2">Reading a dialog is not hearing one. The three behaviors this page argues for, repair, recovery, and a handoff that keeps its context, reconstructed as short calls. Every voice is synthetic and every name and value is mock; the label under each player says exactly what you are hearing.</p>
 
@@ -340,10 +262,10 @@ gerunds, and passive sentence constructions.</code></pre>
     </div>
   </section>
 
-  <!-- ================= 05 · THE FLOW ================= -->
+  <!-- ================= 04 · THE FLOW ================= -->
   <section class="shell band" id="flow" aria-labelledby="flow-h" data-state="routing">
     <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">05</span><span>The flow</span></p>
+      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>The flow</span></p>
       <h2 id="flow-h" class="io" style="--d:1">The whole flow, one screen.</h2>
       <p class="band-lede io" style="--d:2">The login and password reset flow that produced the numbers up top, drawn as its states. Every fallback lands somewhere; nothing lands at a dead end.</p>
 
@@ -416,46 +338,46 @@ gerunds, and passive sentence constructions.</code></pre>
         <p class="flow-foot mono">generic vocabulary on purpose · the shipped flow named real intents and thresholds · structure unchanged</p>
       </figure>
 
+      <details class="ex-details io" style="--d:4">
+        <summary class="mono">artifact · the snippet prompt, the rules that shape a spoken answer · redacted excerpt</summary>
+        <pre class="artifact-pre"><code>Your role is to provide a short, accurate response using a friendly and
+conversational tone.
+
+If the question is a standalone product name or object with no clear action
+("billing", "invoices", "help with my account"), tell the customer you are
+happy to help but need more details. Do not apologize. Do not answer until
+you clearly understand the action to be taken.
+
+Once the action is clear:
+1. Be brief and conversational. Provide an answer that is a teaser snippet
+   of the full answer: very concise, only the most important information.
+2. Do not use bulleted or numbered lists in your response.
+3. Do not provide any URLs in the response.
+4. Do not list step-by-step instructions. Use first, then, next, finally...
+   instead of numbers.
+5. After providing a teaser snippet, offer to send the more detailed
+   solution through text or email.
+
+Keep words simple and specific. Use active verbs, and avoid jargon,
+gerunds, and passive sentence constructions.</code></pre>
+        <p class="artifact-foot mono">redacted excerpt of the shipped prompt · 5 of its 24 rules shown · employer and product names and safety rules removed · lightly normalized, meaning unchanged</p>
+      </details>
+
       <div class="range-grid">
-        <div class="range-cell io" style="--d:4">
+        <div class="range-cell io" style="--d:5">
           <span class="label mono">The stack</span>
           <p class="body">Telephony in, an ASR transcript, an NLU intent with a confidence score, a scripted dialog policy making every routing decision, and TTS reading the answer back. The 2023 snippet added one generative step inside this same loop, on rails. Designing the behavior meant writing for every stage: what the recognizer can miss, what the gate can trust, what the voice can carry.</p>
         </div>
-        <div class="range-cell io" style="--d:5">
+        <div class="range-cell io" style="--d:6">
           <span class="label mono">The dials</span>
           <p class="body">Acceptance: the share of offered help that callers take. Containment: the share of calls that end with no expert. Handle time is the third dial; this work was scored on the first two, and the factbox numbers are those two moving.</p>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ================= 06 · THE ERA ================= -->
-  <section class="shell band" id="era" aria-labelledby="era-h" data-state="rewinding">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">06</span><span>The era</span></p>
-      <h2 id="era-h" class="io" style="--d:1">None of this was an agent.</h2>
-
-      <div class="range-grid">
-        <div class="range-cell io" style="--d:2">
-          <span class="label mono">What it was</span>
-          <p class="body">The login and password redesign is scripted dialog: every branch written by hand, no model in the loop. The snippet is a model on rails: it wrote the words inside a call flow where fixed rules made every routing decision. Nothing on this page planned, chose a tool, or touched an account.</p>
-        </div>
-        <div class="range-cell io" style="--d:3">
-          <span class="label mono">Why it is here</span>
-          <p class="body">Because the questions were already the questions. Answer in one breath. Ask when the intent is half there. Repair before you route. Hand off cleanly. The same judgment, before the model could reason.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 07 · HANDOFF ================= -->
-  <section class="shell band" id="next" aria-label="Next case" data-state="handing off">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">07</span><span>Handoff</span></p>
-      <ul class="contact-links io" style="--d:1">
+      <ul class="contact-links io" style="--d:7" aria-label="Next case and handoff">
         <li>
           <a href="credit-karma.html">
-            <span class="cl-label mono">No. 06</span>
+            <span class="cl-label mono">Next · No. 06</span>
             <span class="cl-value">Credit Karma: reason over the odds, never state them</span>
             <span class="cl-arrow" aria-hidden="true">&#8599;</span>
           </a>

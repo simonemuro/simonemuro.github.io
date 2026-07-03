@@ -24,23 +24,6 @@
 .prose a{color:inherit;text-decoration-color:var(--hair-strong);text-underline-offset:4px;}
 .prose a:hover{color:var(--accent);}
 
-/* human-in-the-loop cancel widget: static exhibit of the shipped design */
-.hitl{margin-top:clamp(28px,4vh,44px);border:1px solid var(--hair);background:var(--paper);}
-.hitl-hd{display:flex;justify-content:space-between;gap:10px 18px;flex-wrap:wrap;
-  padding:10px 16px;border-bottom:1px solid var(--hair);color:var(--sub);}
-.hitl-body{padding:18px 16px 20px;display:grid;gap:18px;}
-.hitl-turn{max-width:56ch;}
-.hitl-quote{font-family:var(--serif);font-style:italic;font-size:1.08rem;line-height:1.4;}
-.hitl-quote::before{content:"\201C";color:var(--accent);}
-.hitl-quote::after{content:"\201D";color:var(--accent);}
-.hitl-agent .t-role{color:var(--accent);}
-.hitl-agent p{font-size:.95rem;line-height:1.55;max-width:52ch;}
-.hitl-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
-.hitl-btn{display:inline-block;padding:8px 18px;border:1px solid var(--hair-strong);
-  font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);}
-.hitl-btn.primary{border-color:var(--accent);color:var(--accent);}
-.hitl-foot{padding:10px 16px 12px;border-top:1px solid var(--hair);color:var(--sub);font-size:.6rem;}
-
 /* golden row: one eval case, hairline rows, pre-rendered judge scores */
 .goldrow{margin-top:clamp(28px,4vh,44px);border:1px solid var(--hair);background:var(--paper);}
 .gr-hd{display:flex;justify-content:space-between;gap:10px 18px;flex-wrap:wrap;
@@ -139,41 +122,20 @@
             <p class="call-line">Detect the exit, read the account, put a person in the loop. The skill never cancels for you.</p>
             <div class="receipt">
               <span class="label mono">The receipt</span>
-              <p>A large share of billing complaints are cancellations and downgrades wearing a billing question. The skill catches them, reads the account, gives the real steps, and offers a person. Execution stays out by design: the tools are read-only, and payment capture never enters the channel. An answer that is wrong costs a retry; a cancel that is wrong costs the account. Scoped against the billing skills already shipping, this one detects and routes. It never owns the cancel.</p>
+              <p>A large share of billing complaints are cancellations and downgrades wearing a billing question. The skill catches them, reads the account, gives the real steps, and offers a person. The shipped design holds that line in pixels: an agent turn that names the plan, the next charge, and the smaller plan worth checking before anyone goes, then two buttons, Connect with a specialist and Keep my plan. Neither button is cancel. Execution stays out by design: the tools are read-only, and payment capture never enters the channel. An answer that is wrong costs a retry; a cancel that is wrong costs the account. Scoped against the billing skills already shipping, this one detects and routes. It never owns the cancel.</p>
             </div>
           </div>
         </div>
 
-        <figure class="hitl io" style="--d:4" aria-label="The cancel moment as designed: a static exhibit of the confirmation widget, on invented account data">
-          <figcaption class="hitl-hd mono">
-            <span>the widget · cancel intent, human in the loop</span>
-            <span>mock data</span>
-          </figcaption>
-          <div class="hitl-body">
-            <div class="hitl-turn">
-              <span class="t-role">customer</span>
-              <p class="hitl-quote">I want to cancel my subscription.</p>
-            </div>
-            <div class="hitl-turn hitl-agent">
-              <span class="t-role">agent</span>
-              <p>I can help you start that. You are on the Plus plan, and your next charge is May 15. Canceling takes a few steps, and a specialist can walk you through it and check whether a smaller plan would fit before you go.</p>
-              <div class="hitl-actions" aria-label="The two actions the design offers">
-                <span class="hitl-btn primary">Connect with a specialist</span>
-                <span class="hitl-btn">Keep my plan</span>
-              </div>
-            </div>
-          </div>
-          <p class="hitl-foot mono">the shipped design, reconstructed on invented account data · two buttons, neither of them cancel</p>
-        </figure>
       </div>
     </article>
   </section>
 
-  <!-- ================= 02 · THE BUILD ================= -->
+  <!-- ================= 02 · THE BUILD, AND THE WALL ================= -->
   <section class="shell band" id="build" aria-labelledby="build-h" data-state="building">
     <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The build</span></p>
-      <h2 id="build-h" class="io" style="--d:1">Spec, tool, server.</h2>
+      <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The build, and the wall</span></p>
+      <h2 id="build-h" class="io" style="--d:1">Spec, tool, server. Then the wall.</h2>
       <p class="band-lede io" style="--d:2">Scope came from evidence: 500+ labeled customer utterances, grouped and ranked, and one target chosen for volume and data dependency: subscription charges. The question the assistant kept deflecting was the one the account could already answer.</p>
 
       <div class="range-grid">
@@ -185,38 +147,21 @@
           <span class="label mono">The move to MCP</span>
           <p class="body">The first version ran as tools inside the agent repo. That proved the behavior, not the path: in production the platform reaches its tools over MCP. So I learned the protocol from scratch, stood up a local MCP server, registered it, and watched the agent discover the tools and call them end to end.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 03 · THE CONSTRAINT ================= -->
-  <section class="shell band" id="constraint" aria-labelledby="constraint-h" data-state="decoupling">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>The constraint</span></p>
-      <h2 id="constraint-h" class="io" style="--d:1">Mid-build, the live API said no.</h2>
-      <p class="band-lede io" style="--d:2">The live billing API answered with a permissions block, and access sat weeks deep in someone else&rsquo;s queue. The build could stall on that, or stop depending on it.</p>
-
-      <div class="range-grid">
-        <div class="range-cell io" style="--d:3">
-          <span class="label mono">The call · decouple</span>
-          <p class="body">Evaluation stopped depending on access. The eval ran on scenario injection and mock data, the live mode stayed stubbed behind a precisely documented blocker, and the first golden set, 33 rows, went in the same day. Nothing waited.</p>
+        <div class="range-cell io" style="--d:5">
+          <span class="label mono">The wall · the live API said no</span>
+          <p class="body">Mid-build, the live billing API answered with a permissions block, and access sat weeks deep in someone else&rsquo;s queue. So evaluation stopped depending on access: the eval ran on scenario injection and mock data, the live mode stayed stubbed behind a precisely documented blocker, and the first golden set, 33 rows, went in the same day. Nothing waited.</p>
         </div>
-        <div class="range-cell io" style="--d:4">
+        <div class="range-cell io" style="--d:6">
           <span class="label mono">What I did not build</span>
           <p class="body">The live data connection. The skill, the server, and the eval are proven end to end on mock data; wiring the real systems is engineering work, and it is scoped, named, and waiting on access. That is the honest line.</p>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ================= 04 · THE REPAIR ================= -->
-  <section class="shell band" id="repair" aria-labelledby="repair-h" data-state="repairing">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>The repair</span></p>
-      <h2 id="repair-h" class="io" style="--d:1">Where I caught the machine.</h2>
-      <p class="band-lede io" style="--d:2">Building with an AI pair is a discipline of its own: knowing what to verify yourself, and when to stop generating and read the code. The bug that proved it was invisible from inside the pair. The skill loaded clean. The server ran. And not one tool call arrived.</p>
+      <div class="prose io" style="--d:7">
+        <p>Building with an AI pair is a discipline of its own: knowing what to verify yourself, and when to stop generating and read the code. The bug that proved it was invisible from inside the pair. The skill loaded clean. The server ran. And not one tool call arrived.</p>
+      </div>
 
-      <figure class="trace io" style="--d:3" data-trace="the config bug">
+      <figure class="trace io" style="--d:8" data-trace="the config bug">
         <figcaption class="trace-hd mono">
           <span>trace · the config bug, found and fixed</span>
           <span class="trace-state" data-trace-state>complete</span>
@@ -248,19 +193,15 @@
             <div class="t-main">verified: calls land end to end on the local server</div>
           </li>
         </ol>
-        <p class="trace-foot mono">reconstructed from the build log · pre-rendered, no live model</p>
+        <p class="trace-foot mono">reconstructed from the build log · pre-rendered, no live model · the same testing pass caught two more: the instruction to call the tool first read as call it after the customer confirms, and a &ldquo;no thanks&rdquo; that sent customers back into the cancel path because the decline still contained the word cancel · found by testing, named, fixed · the thinking was mine; the typing was shared</p>
       </figure>
-
-      <div class="prose io" style="--d:4">
-        <p>The same testing pass caught two more. The instruction to call the tool first was being read as call it after the customer confirms. And in the cancel flow, &ldquo;no thanks&rdquo; sent customers back into the cancel path, because the decline still contained the word cancel. Found by testing, named, fixed. The thinking was mine; the typing was shared.</p>
-      </div>
     </div>
   </section>
 
-  <!-- ================= 05 · THE EVAL ================= -->
+  <!-- ================= 03 · THE EVAL ================= -->
   <section class="shell band" id="eval" aria-labelledby="eval-h" data-state="scoring">
     <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">05</span><span>The eval</span></p>
+      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>The eval</span></p>
       <h2 id="eval-h" class="io" style="--d:1">It came with its own eval.</h2>
       <p class="band-lede io" style="--d:2">Every row in the golden dataset carries three things: a scenario, the mock account data the tool returns, and gating criteria written as a rubric an LLM judge scores. The set started at 33 rows, scoped to subscription charges. Then production conversations reset the map: cancel intent, price-increase complaints, downgrades. The set grew to 108 cases across 13 intent categories, and the skill grew from an answer engine into an intent router.</p>
 
@@ -287,15 +228,15 @@
     </div>
   </section>
 
-  <!-- ================= 06 · THE HANDOFF ================= -->
+  <!-- ================= 04 · THE HANDOFF ================= -->
   <section class="shell band" id="handoff" aria-labelledby="handoff-h" data-state="handing off">
     <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">06</span><span>The handoff</span></p>
+      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>The handoff</span></p>
       <h2 id="handoff-h" class="io" style="--d:1">What it proves, and what is left.</h2>
 
       <div class="prose io" style="--d:2">
-        <p>The skill, the tools, the MCP server, and the 108-case eval run end to end on mock data today. What is left is production: wire the live data connection, harden the admin check from a prompt rule into the tool itself, and read the results on real traffic. I scoped that work; it needs engineering.</p>
-        <p>Shipped, I would measure it on the outcome, not the answer: first-turn resolution on billing questions instead of a redirect to an article, the share of cancellations caught while they still look like billing complaints, and a confidently-wrong rate held at zero. It goes out behind the eval as a gate, small and watched, before it runs wide.</p>
+        <p>The skill, the tools, the MCP server, and the 108-case eval run end to end on mock data. What is left is production: wire the live data connection, harden the admin check into the tool itself, and read the results on real traffic.</p>
+        <p>Shipped, I would measure the outcome, not the answer: first-turn resolution instead of a redirect, cancellations caught while they still look like billing complaints, and a confidently-wrong rate held at zero. It ships behind the eval as a gate, small and watched.</p>
         <p>The argument the build settles: the people who define what good looks like can build it. I designed the behavior, wrote the eval, made the boundary call, stood up the server, and fixed it when it broke.</p>
       </div>
 
