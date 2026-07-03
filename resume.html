@@ -1,184 +1,376 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Simone Muro · Resume</title>
-<meta name="description" content="Request Simone Muro's full resume by email. Conversational and agentic AI: behavior design, working builds, and the evaluation that proves them. The case studies show the work in detail." />
-<meta property="og:title" content="Simone Muro · Resume" />
-<meta property="og:description" content="Conversation and agentic AI: behavior design, working builds, and the evaluation that proves them." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="./v3.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="The resume, in full on the page: titles, levels, dates, team scope, and outcomes across Intuit, Sam&rsquo;s Club, Apple Siri, and Meta. Prints to one or two pages.">
+<meta property="og:title" content="Resume · Simone Muro">
+<meta property="og:description" content="Titles, levels, dates, team scope, and outcomes, in full on the page. No email gate.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simonemuro.github.io/resume.html">
+<meta name="twitter:card" content="summary">
+<title>Resume · Simone Muro</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231e2bd0'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23ffffff' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="v4.css">
+<script src="v4.js" defer></script>
 <style>
-  /* ---------- resume layout: hairline tables, mono labels ---------- */
-  .rwrap { width: min(calc(100% - 48px), 880px); margin: 0 auto; }
-  .r-head { padding: 56px 0 36px; border-bottom: 1px solid var(--hairline); }
-  .r-head h1 { font-size: clamp(2.4rem, 5vw, 3.4rem); margin: 0 0 12px; }
-  .r-role { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--persimmon); margin: 0 0 16px; }
-  .r-meta { font-size: 0.92rem; color: var(--muted); margin: 0; }
-  .r-meta a { color: var(--muted); text-underline-offset: 3px; }
-  .r-meta a:hover { color: var(--persimmon); }
-  .r-tip { color: var(--faint); }
+/* ============================================================
+   resume-only layout, on the shared v4 system.
+   Denser rhythm than the homepage: this page is a document.
+   ============================================================ */
+.band{padding-block:clamp(44px,7vh,92px);}
 
-  .r-sec { display: grid; grid-template-columns: 168px 1fr; gap: 36px; padding: 44px 0; border-bottom: 1px solid var(--hairline); }
-  .r-sec:last-of-type { border-bottom: 0; }
-  .r-sec > h2 { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin: 5px 0 0; }
-  @media (max-width: 700px) { .r-sec { grid-template-columns: 1fr; gap: 16px; padding: 34px 0; } }
+/* ---------- header ---------- */
+.r-head{padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(40px,6vh,76px);}
+.r-kicker{display:flex;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;color:var(--sub);margin-bottom:clamp(26px,4.5vh,48px);}
+.r-name{font-family:var(--serif);font-weight:400;font-size:clamp(2.5rem,6.2vw,4.8rem);line-height:.99;letter-spacing:-.014em;}
+.r-title{margin-top:14px;color:var(--sub);}
+.r-id{font-family:var(--serif);font-style:italic;font-size:clamp(1.25rem,2.5vw,1.8rem);line-height:1.22;max-width:36ch;margin-top:18px;}
+.r-contact{margin-top:16px;color:var(--sub);display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.98rem;}
+.r-contact a{text-decoration-color:var(--hair-strong);text-underline-offset:4px;}
+.r-contact a:hover{color:var(--accent);}
+.r-sum{margin-top:22px;max-width:66ch;color:var(--ink);}
+.r-actions{margin-top:28px;display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;}
+.r-print{border:1px solid var(--hair-strong);background:none;cursor:pointer;padding:8px 16px;color:var(--ink);transition:color .25s,border-color .25s;}
+.r-print:hover{color:var(--accent);border-color:var(--accent);}
+.r-docnote{color:var(--sub);font-size:.88rem;max-width:56ch;}
+.r-docnote a{text-underline-offset:3px;text-decoration-color:var(--hair-strong);}
+.r-docnote a:hover{color:var(--accent);}
 
-  .r-summary { font-size: 1.04rem; line-height: 1.7; margin: 0; color: #3d3a35; max-width: 62ch; }
+/* ---------- titles block ---------- */
+.roles{list-style:none;margin-top:clamp(28px,5vh,44px);border-bottom:1px solid var(--hair);}
+.ro{border-top:1px solid var(--hair);padding-block:20px 22px;}
+.ro-head{display:flex;justify-content:space-between;align-items:baseline;gap:6px 24px;flex-wrap:wrap;}
+.ro-head h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.35rem,2.4vw,1.8rem);line-height:1.1;letter-spacing:-.006em;}
+.ro-dates{color:var(--sub);white-space:nowrap;}
+.titles{list-style:none;margin-top:12px;}
+.titles li{display:flex;justify-content:space-between;align-items:baseline;gap:4px 24px;flex-wrap:wrap;padding:9px 0;border-top:1px solid var(--hair);}
+.t-name{font-weight:600;font-size:1rem;letter-spacing:-.005em;}
+.t-dates{color:var(--sub);white-space:nowrap;}
+.ro-role{margin-top:8px;font-weight:600;font-size:1rem;}
+.ro-scope,.ro-desc{margin-top:8px;color:var(--sub);font-size:.95rem;max-width:66ch;}
 
-  .r-note { font-size: 0.78rem; color: var(--faint); font-style: italic; margin: 4px 0 14px; max-width: 62ch; }
-  .r-record { list-style: none; margin: 0; padding: 0; }
-  .r-record li { padding: 15px 0; border-bottom: 1px solid var(--hairline); font-size: 0.94rem; line-height: 1.65; color: var(--muted); }
-  .r-record li:first-child { padding-top: 0; }
-  .r-record li:last-child { border-bottom: 0; padding-bottom: 0; }
-  .r-record b { color: var(--ink); font-weight: 600; }
+/* ---------- experience ---------- */
+.xp{margin-top:clamp(28px,5vh,44px);}
+.xp-head{display:flex;justify-content:space-between;align-items:baseline;gap:6px 24px;flex-wrap:wrap;border-top:1px solid var(--hair-strong);padding-top:18px;}
+.xp-head h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.6rem,2.8vw,2.2rem);line-height:1.08;letter-spacing:-.008em;}
+.xp-dates{color:var(--sub);white-space:nowrap;}
+.xp-intro{margin-top:12px;color:var(--sub);max-width:70ch;}
+.xp-groups{margin-top:22px;border-bottom:1px solid var(--hair);}
+.xp-group{border-top:1px solid var(--hair);padding-block:20px 24px;}
+.xp-group-h{display:flex;justify-content:space-between;align-items:baseline;gap:4px 24px;flex-wrap:wrap;}
+.xp-group-h h4{font-family:var(--serif);font-weight:400;font-size:clamp(1.25rem,2.2vw,1.6rem);line-height:1.12;letter-spacing:-.005em;}
+.g-dates{color:var(--sub);white-space:nowrap;}
+.xp-group ul{list-style:none;margin-top:12px;}
+.xp-group li{position:relative;padding-left:22px;margin-top:9px;line-height:1.52;font-size:.98rem;max-width:76ch;}
+.xp-group li::before{content:"";position:absolute;left:0;top:.7em;width:10px;height:1px;background:var(--hair-strong);}
 
-  .job { padding: 28px 0 0; }
-  .job:first-child { padding-top: 0; }
-  .job + .job { border-top: 1px solid var(--hairline); margin-top: 28px; }
-  .job-head { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: baseline; }
-  .job .org { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.01em; }
-  .job .yrs { font-family: var(--mono); font-size: 0.72rem; color: var(--faint); white-space: nowrap; }
-  .job .role-line { font-size: 0.9rem; font-weight: 500; color: var(--ink); margin: 6px 0 12px; }
+/* ---------- skills ---------- */
+.skills{margin-top:clamp(28px,5vh,44px);border-bottom:1px solid var(--hair);}
+.sk{display:grid;grid-template-columns:160px minmax(0,1fr);gap:8px 28px;padding:15px 0;border-top:1px solid var(--hair);}
+.sk dt{color:var(--sub);padding-top:4px;}
+.sk dd{line-height:1.6;font-size:.98rem;}
+@media (max-width:640px){.sk{grid-template-columns:1fr;gap:6px;}}
 
-  .roles-table { width: 100%; border-collapse: collapse; margin: 12px 0 18px; }
-  .roles-table td { padding: 8px 0; border-bottom: 1px solid var(--hairline); font-size: 0.88rem; color: var(--ink); font-weight: 500; }
-  .roles-table td.yr { font-family: var(--mono); font-weight: 400; font-size: 0.7rem; color: var(--faint); text-align: right; white-space: nowrap; padding-left: 16px; }
+/* ---------- education + certifications ---------- */
+.edu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,4vw,56px);margin-top:clamp(28px,5vh,44px);}
+@media (max-width:760px){.edu-grid{grid-template-columns:1fr;}}
+.edu-cell{border-top:1px solid var(--hair);padding-top:14px;}
+.edu-cell ul{list-style:none;margin-top:10px;}
+.edu-cell li{padding:7px 0;border-bottom:1px solid var(--hair);font-size:.98rem;}
+.edu-cell li:last-child{border-bottom:0;}
 
-  .job ul { list-style: none; margin: 0; padding: 0; }
-  .job ul li { position: relative; padding-left: 20px; margin-bottom: 9px; font-size: 0.92rem; line-height: 1.6; color: var(--muted); }
-  .job ul li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 8px; height: 1px; background: var(--faint); }
-  .job ul li b { color: var(--ink); font-weight: 600; }
-
-  .r-skills { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 36px; }
-  @media (max-width: 700px) { .r-skills { grid-template-columns: 1fr; } }
-  .r-skill { margin: 0; font-size: 0.9rem; line-height: 1.65; color: var(--muted); }
-  .r-skill b { display: block; font-family: var(--mono); font-weight: 500; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); margin-bottom: 6px; }
-
-  .r-edu { margin: 0; font-size: 0.92rem; line-height: 1.8; color: var(--muted); }
-
-  .r-actions { display: flex; gap: 14px; flex-wrap: wrap; padding: 44px 0 80px; }
-
-  /* ---------- resume-by-request block ---------- */
-  .req { max-width: 60ch; }
-  .req-lead { font-size: 1.16rem; line-height: 1.55; color: var(--ink); font-weight: 500; letter-spacing: -0.01em; margin: 0 0 16px; }
-  .req-why { font-size: 0.98rem; line-height: 1.7; color: var(--muted); margin: 0 0 26px; }
-  .req-cta { margin: 0 0 16px; }
-  .req-fallback { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 0.9rem; color: var(--muted); margin: 0; }
-  .req-fallback a { color: var(--ink); text-underline-offset: 3px; }
-  .req-fallback a:hover { color: var(--persimmon); }
-  .req-copy { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); background: transparent; border: 1px solid var(--hairline2); border-radius: 6px; padding: 4px 10px; cursor: pointer; transition: border-color .15s, color .15s; }
-  .req-copy:hover { border-color: var(--persimmon); color: var(--persimmon); }
-  .req-copy:focus-visible { outline: 2px solid var(--persimmon); outline-offset: 2px; }
-  .req-reply { font-size: 0.85rem; color: var(--faint); margin: 14px 0 0; }
-  .req-links { display: flex; gap: 24px; flex-wrap: wrap; margin: 0; }
-  .req-links a { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.02em; color: var(--ink); text-underline-offset: 4px; }
-  .req-links a:hover { color: var(--persimmon); }
-  .req-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-
-  /* ---------- print: clean black on white ---------- */
-  @media print {
-    :root { --paper: #fff; --card: #fff; --ink: #000; --muted: #333; --faint: #555; --hairline: #ccc; --persimmon: #000; --signal: #000; }
-    body { background: #fff; color: #000; font-size: 11.5px; }
-    .nav, .colophon, .agent-door, .skip-link, .r-actions, .r-tip { display: none !important; }
-    a { color: #000 !important; text-decoration: none; }
-    .r-summary { color: #000; }
-    .r-head { padding: 0 0 16px; }
-    .r-head h1 { font-size: 22pt; }
-    .r-sec { padding: 14px 0; grid-template-columns: 120px 1fr; gap: 18px; }
-    .job { break-inside: avoid; padding-top: 14px; }
-    .job + .job { margin-top: 14px; }
-    .r-record li { padding: 7px 0; }
-    .roles-table td { padding: 4px 0; }
-    .job ul li { margin-bottom: 4px; }
-    .r-skills { gap: 10px 24px; }
-  }
+/* ---------- print: the whole point of this page ----------
+   One or two clean pages. Chrome off, hairlines kept,
+   groups never split across a page break. */
+@media print{
+  @page{margin:13mm 14mm;}
+  .masthead,.footer,.skip-link,.r-actions,.bnote{display:none !important;}
+  body{font-size:9.5pt;line-height:1.38;color:#000;}
+  .mono{font-size:7pt;letter-spacing:.08em;}
+  .shell{max-width:none;padding-inline:0;}
+  .band{padding-block:12px 14px;}
+  .band + .band{border-top:1px solid #ccc;}
+  .r-head{padding:0 0 8px;}
+  .r-name{font-size:24pt;}
+  .r-title{margin-top:4px;}
+  .r-id{font-size:11.5pt;margin-top:6px;max-width:none;}
+  .r-contact{margin-top:5px;font-size:9pt;gap:2px 10px;}
+  .r-sum{margin-top:8px;max-width:none;}
+  .r-kicker,.kicker{margin-bottom:8px;}
+  h2{font-size:13pt;}
+  .with-note{grid-template-columns:1fr !important;}
+  .roles,.xp,.skills,.edu-grid{margin-top:8px;}
+  .ro{padding-block:6px 8px;break-inside:avoid;}
+  .ro-head h3{font-size:11pt;}
+  .titles{margin-top:4px;}
+  .titles li{padding:3px 0;}
+  .t-name,.ro-role{font-size:9.5pt;}
+  .ro-role{margin-top:3px;}
+  .ro-scope,.ro-desc{margin-top:2px;font-size:9pt;max-width:none;}
+  .xp-head{padding-top:8px;}
+  .xp-head h3{font-size:13pt;}
+  .xp-intro{margin-top:4px;max-width:none;}
+  .xp-groups{margin-top:8px;}
+  .xp-group{padding-block:7px 9px;break-inside:avoid;}
+  .xp-group-h h4{font-size:11pt;}
+  .xp-group ul{margin-top:4px;}
+  .xp-group li{margin-top:3px;max-width:none;padding-left:14px;}
+  .sk{padding:4px 0;grid-template-columns:110px minmax(0,1fr);gap:4px 14px;}
+  .sk dt{padding-top:2px;}
+  .edu-grid{gap:16px;}
+  .edu-cell{padding-top:6px;}
+  .edu-cell ul{margin-top:2px;}
+  .edu-cell li{padding:2px 0;}
+  a{text-decoration:none;color:#000;}
+}
 </style>
 </head>
 <body>
+
 <a class="skip-link" href="#main">Skip to content</a>
 
-<nav class="nav"><div class="shell">
-  <a class="wordmark" href="index.html">SIMONE MURO</a>
-  <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="index.html#about">About</a>
-    <a href="resume.html" class="optional">Resume</a>
-    <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
+<header class="masthead" role="banner">
+  <div class="shell masthead-inner">
+    <a class="brand" href="index.html">Simone Muro</a>
+    <p class="mast-state mono" aria-hidden="true">site: <b data-ticker>presenting</b></p>
+    <nav class="mast-nav mono" aria-label="Primary">
+      <a href="index.html#work">Work</a>
+      <a href="resume.html" aria-current="page">Resume</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
   </div>
-</div></nav>
+</header>
 
 <main id="main">
 
-<header class="r-head"><div class="rwrap">
-  <h1>Simone Muro</h1>
-  <p class="r-role">Agentic AI Design &amp; Development</p>
-  <p class="r-meta">Bay Area, CA · <a href="https://www.linkedin.com/in/simonemuro" rel="me">LinkedIn</a> · <a href="index.html">portfolio</a></p>
-</div></header>
-
-<div class="rwrap">
-
-<section class="r-sec">
-  <h2>Resume</h2>
-  <div class="req">
-    <p class="req-lead">I'm a conversational and agentic AI designer and builder. I design how AI agents behave (what they say, when they act, when a person takes over), write the prompts behind those decisions, and build the golden-dataset and LLM-as-judge evaluations that prove they work. I prototype with AI tools and ship alongside engineers. Nine years across voice, NLU, LLM, and agentic systems.</p>
-    <p class="req-cta">
-      <a class="btn solid" href="mailto:simonermuro@gmail.com?subject=Resume%20request&amp;body=Hi%20Simone%2C%0D%0A%0D%0AI%27d%20like%20to%20request%20your%20full%20resume.%0D%0A%0D%0AName%3A%20%0D%0ACompany%2Frole%3A%20%0D%0AWhat%20you%27re%20hiring%20for%3A%20%0D%0A%0D%0AThanks%21" aria-label="Email Simone Muro at simonermuro at gmail dot com to request her full resume">Request the full resume</a>
+  <!-- ================= HEADER ================= -->
+  <section class="shell band r-head" aria-labelledby="r-name" data-state="presenting">
+    <p class="r-kicker mono io" style="--d:0">
+      <span>Resume</span>
+      <span>Portfolio, 4th edition · updated July 2026</span>
     </p>
-    <p class="req-fallback">Or email me directly: <a href="mailto:simonermuro@gmail.com">simonermuro@gmail.com</a><button type="button" id="copyEmail" class="req-copy" aria-label="Copy email address to clipboard">Copy</button></p>
-    <p class="req-reply">I read every message and usually reply within a day.</p>
-    <span id="copyStatus" class="req-sr" aria-live="polite"></span>
-  </div>
-</section>
-
-<section class="r-sec">
-  <h2>Elsewhere</h2>
-  <div class="req">
-    <p class="req-why">The case studies are the proof the resume points to: the artifacts and the decisions behind each system, not just the claims.</p>
-    <p class="req-links">
-      <a href="index.html#work">See the work</a>
-      <a href="https://www.linkedin.com/in/simonemuro" rel="me">LinkedIn</a>
-      <a href="index.html#contact">Contact</a>
+    <h1 class="r-name io" id="r-name" style="--d:1">Simone Muro</h1>
+    <p class="r-title mono io" style="--d:2">AI Product Manager · Conversational and agentic AI</p>
+    <p class="r-id io" style="--d:3">I connect the technical with the human: translating complex AI systems into experiences that actually help people.</p>
+    <p class="r-contact io" style="--d:4">
+      <a href="mailto:simonermuro@gmail.com">simonermuro@gmail.com</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://linkedin.com/in/simonemuro">linkedin.com/in/simonemuro</a>
+      <span aria-hidden="true">·</span>
+      <span>Bay Area, CA</span>
     </p>
-  </div>
-</section>
+    <p class="r-sum io" style="--d:5">I am a conversational and agentic AI design-and-build leader pivoting to AI Product Management: 6+ years at Intuit, about 9 years total across Meta, Apple Siri, Sam&rsquo;s Club, and Intuit, shaping QuickBooks support, voice, and payroll agents. I decide what an agent should own, where a human stays in control, and how trust is measured, then build the golden-dataset and LLM-as-judge evals that prove it.</p>
+    <div class="r-actions io" style="--d:6">
+      <button class="r-print mono" type="button" data-print>print this page</button>
+      <p class="r-docnote">Prints to one or two pages. A formatted document is available on request: <a href="mailto:simonermuro@gmail.com">simonermuro@gmail.com</a>.</p>
+    </div>
+  </section>
 
-</div>
+  <!-- ================= TITLES, LEVELS, DATES ================= -->
+  <section class="shell band with-note" id="titles" aria-labelledby="titles-h" data-state="listing">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>Titles</span></p>
+      <h2 id="titles-h" class="io" style="--d:1">Titles, levels, dates.</h2>
+
+      <ol class="roles">
+        <li class="ro io" style="--d:2">
+          <div class="ro-head">
+            <h3>Intuit · QuickBooks &amp; Credit Karma</h3>
+            <span class="ro-dates mono">Oct 2020 to May 2026</span>
+          </div>
+          <ol class="titles">
+            <li><span class="t-name">Interim Product Manager, QuickBooks Voice Assistant</span><span class="t-dates mono">2025 to 2026</span></li>
+            <li><span class="t-name">Conversational AI Manager, Manager II</span><span class="t-dates mono">2025 to 2026</span></li>
+            <li><span class="t-name">Staff / Senior Design Technologist</span><span class="t-dates mono">2022 to 2025</span></li>
+            <li><span class="t-name">Design Technologist</span><span class="t-dates mono">2020 to 2022</span></li>
+          </ol>
+          <p class="ro-scope">Team scope: managed 3 design technologists; led calibration and hiring for senior conversational AI roles.</p>
+        </li>
+        <li class="ro io" style="--d:3">
+          <div class="ro-head">
+            <h3>Sam&rsquo;s Club (Walmart)</h3>
+            <span class="ro-dates mono">2019 to 2020</span>
+          </div>
+          <p class="ro-role">Lead Conversation Designer</p>
+          <p class="ro-desc">Sole design owner of a retail support voice assistant and chatbot in production: dialogue, escalation, and the production quality standards behind them.</p>
+        </li>
+        <li class="ro io" style="--d:4">
+          <div class="ro-head">
+            <h3>Apple</h3>
+            <span class="ro-dates mono">2018 to 2019</span>
+          </div>
+          <p class="ro-role">Language Engineer, Siri</p>
+          <p class="ro-desc">NLU and language quality for a flagship voice assistant: training data, grammar, pronunciation, and lexicon.</p>
+        </li>
+        <li class="ro io" style="--d:5">
+          <div class="ro-head">
+            <h3>Meta</h3>
+            <span class="ro-dates mono">2016 to 2018</span>
+          </div>
+          <p class="ro-role">Content &amp; Language Analyst</p>
+          <p class="ro-desc">Partnered with ML teams on language-model training, taxonomy, and content classification.</p>
+        </li>
+      </ol>
+    </div>
+    <aside class="bnote io" style="--d:2" aria-label="Behavior note 01">
+      <span class="bnote-id">Note 01</span>
+      <p>The block you scan for first is the first block: titles, levels, dates, team scope. No email gate.</p>
+    </aside>
+  </section>
+
+  <!-- ================= EXPERIENCE ================= -->
+  <section class="shell band with-note" id="experience" aria-labelledby="xp-h" data-state="detailing">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>Experience</span></p>
+      <h2 id="xp-h" class="io" style="--d:1">The work behind the titles.</h2>
+
+      <article class="xp io" style="--d:2">
+        <div class="xp-head">
+          <h3>Intuit · QuickBooks &amp; Credit Karma</h3>
+          <span class="xp-dates mono">Oct 2020 to May 2026 · Mountain View, CA</span>
+        </div>
+        <p class="xp-intro">Worked within Intuit&rsquo;s multi-year Digital Assistant program, which delivered $91M in cumulative impact across the organization; led conversational AI strategy and the quality bar across support, payroll, and billing.</p>
+
+        <div class="xp-groups">
+          <section class="xp-group" aria-labelledby="g1-h">
+            <div class="xp-group-h">
+              <h4 id="g1-h">Interim Product Manager, QuickBooks Voice Assistant</h4>
+              <span class="g-dates mono">Sep 2025 to May 2026</span>
+            </div>
+            <ul>
+              <li>Ran the product function for the voice assistant with no dedicated PM: business-partner intake, prioritization, backlog, sprint planning, and release cadence across a 3-person team, covering gated support, NLU audit tooling, routing, fraud and account-takeover response, and a transfer-rate-reduction initiative.</li>
+              <li>Primary author and driver of the approved entitlement-gating business case: gated expert support by subscription entitlement across a funnel of about 3.3M sessions a year; took it from opportunity sizing to an approved spec and release, solo after the co-driver left.</li>
+              <li>Designed the gated-support system, an LLM intent classifier plus a real-time entitlement check and routing logic, and set its success bar; authored the seed classifier prompt and roadmap, handed it to designers to build, and it shipped past its quality bar as a reusable, RAI-approved pattern. Kept payment capture out of the voice channel; upsell conversion stayed a partner team&rsquo;s metric.</li>
+              <li>Picked up the fraud-detection program mid-stream with security partners and kept it moving, flagging high-risk calls at transfer; ran day-to-day operations including campaign phone lines and transfer-experience improvements.</li>
+            </ul>
+          </section>
+
+          <section class="xp-group" aria-labelledby="g2-h">
+            <div class="xp-group-h">
+              <h4 id="g2-h">Product strategy and agent behavior</h4>
+            </div>
+            <ul>
+              <li>De-facto product owner for the team&rsquo;s conversation flows before any PM existed: set strategy, authored the PRDs designers built from, and owned the outcome metrics (Payroll self-help resolution and the end-of-flow helpfulness survey).</li>
+              <li>Author and driver of an MVP PRD for a top contact driver: high traffic, high complexity.</li>
+              <li>Set the strategy, PRD, and metrics for do-for-you self-help flows the team shipped: a Payroll tax-setup flow spanning 6 API integrations lifted completion from 29% to 42% (about $100K in revenue), plus an agentic welcome experience and a tax-forms simplification.</li>
+              <li>Owned agent behavior and the quality bar for migrating the Payroll Agent off the legacy assistant onto the new platform: behavior, golden conversations, tool and data needs, and evals; shipped to production.</li>
+            </ul>
+          </section>
+
+          <section class="xp-group" aria-labelledby="g3-h">
+            <div class="xp-group-h">
+              <h4 id="g3-h">Service outcomes: billing, retention and voice</h4>
+            </div>
+            <ul>
+              <li>Redesigned subscription-billing help, about 800K contacts a year: self-help resolution rose 12 points and containment reached about 61%.</li>
+              <li>Redesigned the login and password-reset voice experience: self-help acceptance rose from 32% to 56%, containment from 20% to 32%, with $135,160 in realized savings.</li>
+              <li>Co-designed one of Intuit&rsquo;s first GenAI voice experiences for the phone channel, about 30% of contact volume: voice-ready answer summaries, clarification, escalation, and response evaluation. Separately prototyped a cancellation-saves classifier at 96.6% accuracy (a projected retention opportunity, deployment-gated).</li>
+            </ul>
+          </section>
+
+          <section class="xp-group" aria-labelledby="g4-h">
+            <div class="xp-group-h">
+              <h4 id="g4-h">AI quality and team leadership</h4>
+            </div>
+            <ul>
+              <li>Owned the team&rsquo;s eval discipline and safe-to-ship standards (golden datasets, multi-turn simulators, LLM-as-judge, regression gates), with frameworks hands-on architected by a designer on the team; measured conversation quality rose 8, 9.8, and 13 points across Help, Payroll, and Business Insights.</li>
+              <li>Built a golden-dataset prefill pipeline that took eval turnaround from about 3 weeks to about 1, across 3,000+ rows without proportional headcount.</li>
+              <li>Managed 3 design technologists; led calibration and hiring for senior conversational AI roles.</li>
+            </ul>
+          </section>
+        </div>
+      </article>
+    </div>
+    <aside class="bnote io" style="--d:3" aria-label="Behavior note 02">
+      <span class="bnote-id">Note 02</span>
+      <p>One figure in this section is a projection. It says projected where it appears; realized says realized.</p>
+    </aside>
+  </section>
+
+  <!-- ================= SKILLS ================= -->
+  <section class="shell band" id="skills" aria-labelledby="skills-h" data-state="sorting">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>Skills</span></p>
+      <h2 id="skills-h" class="io" style="--d:1">Skills, tiered.</h2>
+
+      <dl class="skills io" style="--d:2">
+        <div class="sk">
+          <dt class="mono">Product</dt>
+          <dd>PRD and BRD authoring · prioritization and backlog · requirements intake · launch criteria · A/B experimentation · stakeholder management · roadmap</dd>
+        </div>
+        <div class="sk">
+          <dt class="mono">AI craft</dt>
+          <dd>agent behavior design · golden datasets · LLM-as-judge evals · regression gates · prompt and system-instruction engineering · RAG · structured output · Responsible AI</dd>
+        </div>
+        <div class="sk">
+          <dt class="mono">Domains</dt>
+          <dd>QuickBooks SMB support · billing and subscriptions · payroll · payments · retention · expert handoff · voice and IVR</dd>
+        </div>
+        <div class="sk">
+          <dt class="mono">Tools</dt>
+          <dd>Claude Code CLI · Cursor · Python · Voiceflow · Dialogflow · AWS Lex · Jira · Confluence · Figma · Miro · Tableau</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ================= EDUCATION + CERTIFICATIONS ================= -->
+  <section class="shell band" id="education" aria-labelledby="edu-h" data-state="certifying">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>Education</span></p>
+      <h2 id="edu-h" class="io" style="--d:1">Education and certifications.</h2>
+
+      <div class="edu-grid">
+        <div class="edu-cell io" style="--d:2">
+          <span class="label mono">Education</span>
+          <ul>
+            <li>Bachelor of Laws (LL.B.) · Univale, Brazil</li>
+          </ul>
+        </div>
+        <div class="edu-cell io" style="--d:3">
+          <span class="label mono">Certifications</span>
+          <ul>
+            <li>Prompt Engineering for Developers · DeepLearning.AI</li>
+            <li>Conversational AI · Coursera</li>
+            <li>Python for Data Science · Udemy</li>
+            <li>Front-End Development · Udacity</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
 </main>
 
-<footer class="colophon"><div class="shell">
-  <p>Designed and built AI-natively: directed by Simone, executed with AI agents, the way she works.</p>
-  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. Roles, process, design decisions, and measured outcomes are preserved. © 2026 Simone Muro · Bay Area, CA</p>
-</div></footer>
+<footer class="footer" role="contentinfo">
+  <div class="shell">
+    <p class="foot-score mono">colophon, one line: the resume <b>answered</b> on the page, no email gate · titles and dates <b>first</b> · projected <b>labeled</b> projected · <b>handoff</b>: a formatted document on request</p>
+    <p class="footer-inner mono">
+      <span>Simone Muro · Portfolio, 4th edition · 2026</span>
+      <span><a href="index.html">Home</a> · <a href="index.html#work">Work</a> · <a href="index.html#contact">Contact</a></span>
+    </p>
+  </div>
+</footer>
 
-<button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
 <script>
-  // Copy-to-clipboard for the visible email fallback, with a screen-reader announcement.
-  (function () {
-    var btn = document.getElementById('copyEmail');
-    if (!btn) return;
-    var status = document.getElementById('copyStatus');
-    var addr = 'simonermuro@gmail.com';
-    var reset;
-    btn.addEventListener('click', function () {
-      function done() {
-        btn.textContent = 'Copied';
-        if (status) status.textContent = 'Email address copied to clipboard';
-        clearTimeout(reset);
-        reset = setTimeout(function () { btn.textContent = 'Copy'; if (status) status.textContent = ''; }, 2000);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(addr).then(done, done);
-      } else {
-        done();
-      }
-    });
-  })();
+document.addEventListener("DOMContentLoaded", function () {
+  var b = document.querySelector("[data-print]");
+  if (!b) return;
+  b.addEventListener("click", function () {
+    if (window.V4 && window.V4.tick) window.V4.tick("printing: the resume");
+    window.print();
+  });
+});
 </script>
-<script src="./v3.js" defer></script>
+
+<noscript>
+  <style>
+    .io,.rule-io{opacity:1 !important;transform:none !important;}
+    .r-print{display:none !important;}
+  </style>
+</noscript>
+
 </body>
 </html>

@@ -1,127 +1,349 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="How this site was built: a cold-read panel of eight judges, a claims census with receipts, a judged design competition, and a fleet of agents gated before shipping. Case 07 of seven.">
+<meta property="og:title" content="How I Built This Site · Simone Muro">
+<meta property="og:description" content="Crews of AI agents did the typing. Judges gated every page. The direction, the judgment, and the evidence are hers. Case 07: the site itself.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simonemuro.github.io/operate-with-ai.html">
+<meta name="twitter:card" content="summary">
 <title>How I Built This Site · Simone Muro</title>
-<meta name="description" content="I built my portfolio by directing AI, end to end: starting on Fable 5, moving to Opus 4.8 three hours in, a minor-versus-major feedback method that makes the model re-plan, and a crew of specialist agents, until the site sounded like me." />
-<meta property="og:title" content="How I Built This Site · Simone Muro" />
-<meta property="og:description" content="I built this portfolio with AI: Fable 5 to Opus 4.8, a real feedback method, and a crew of agents. This site is the artifact." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="./v3.css" />
-<style>
-  /* the agent crew diagram (consistent with the case instruments) */
-  .crew-top { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.05em; color: var(--muted); text-align: center; padding-bottom: 12px; }
-  .crew { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  @media (max-width: 600px) { .crew { grid-template-columns: 1fr 1fr; } }
-  .crew-card { border: 1px solid var(--hairline2); border-radius: 10px; background: var(--paper); padding: 12px 13px; }
-  .crew-card .cl { display: block; font-size: 0.82rem; font-weight: 500; color: var(--ink); }
-  .crew-card .cs { display: block; font-family: var(--mono); font-size: 0.6rem; color: var(--faint); margin-top: 4px; line-height: 1.4; }
-  .crew-card.check { border-color: var(--persimmon); }
-  .crew-foot { margin-top: 14px; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.04em; color: var(--faint); text-align: center; }
-</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231e2bd0'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23ffffff' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="v4.css">
+<script src="v4.js" defer></script>
 </head>
 <body>
+
 <a class="skip-link" href="#main">Skip to content</a>
 
-<nav class="nav"><div class="shell">
-  <a class="wordmark" href="index.html">SIMONE MURO</a>
-  <div class="nav-links">
-    <a href="index.html#work" aria-current="true">Work</a>
-    <a href="index.html#about">About</a>
-    <a href="resume.html" class="optional">Resume</a>
-    <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
+<header class="masthead" role="banner">
+  <div class="shell masthead-inner">
+    <a class="brand" href="index.html">Simone Muro</a>
+    <p class="mast-state mono" aria-hidden="true">site: <b data-ticker>reporting</b></p>
+    <nav class="mast-nav mono" aria-label="Primary">
+      <a href="index.html#work">Work</a>
+      <a href="resume.html">Resume</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="progress" id="progress" aria-hidden="true"></div>
   </div>
-</div></nav>
+</header>
 
 <main id="main">
 
-<section class="case-open"><div class="shell">
-  <span class="no-big">No. 06 · How I built this site</span>
-  <h1>I built this site the way I build agentic systems.</h1>
-  <p class="lede">I've spent nine years designing and building AI. I built my own portfolio the same way I build agentic systems at work, and it asked the same things of me. This site is the result, and the closest look at how I actually work, so it earns the last slot. Here's how it came together.</p>
-  <div class="factbox">
-    <div><b>Role</b>Direction, end to end</div>
-    <div><b>Built with</b>Fable 5, then Opus 4.8 · Cursor · agent crews</div>
-    <div><b>When</b>June 2026</div>
-    <div><b>The result</b>The site you're reading</div>
-  </div>
-</div></section>
+  <!-- ================= CASE HERO ================= -->
+  <section class="shell hero" aria-labelledby="hero-h" data-state="reporting">
+    <div>
+      <p class="hero-kicker mono io" style="--d:0">
+        <span>Case 07 · the capstone</span>
+        <span>How this site was made · 2026</span>
+      </p>
+      <h1 id="hero-h" class="io" style="--d:1">I built <em>this site</em> the way I build agentic systems.</h1>
+      <p class="hero-led io" style="--d:2">Crews of agents did the typing. Judges gated every page. The calls were mine.</p>
+      <p class="hero-sub io" style="--d:3">The capstone case: the working method from the six cases above, pointed at a portfolio instead of a product.</p>
 
-<article class="case-body">
+      <dl class="factbox io" style="--d:4">
+        <div class="fact fact-outcome"><dt>The result</dt><dd>The site you are reading</dd></div>
+        <div class="fact"><dt>Role</dt><dd>Direction, end to end</dd></div>
+        <div class="fact"><dt>Built with</dt><dd>AI agent crews, judged before shipping</dd></div>
+      </dl>
+    </div>
+  </section>
 
-  <div class="narrow">
-
-    <h2 class="beat">I started on the newest model in the room.</h2>
-    <div class="prose">
-      <p>Anthropic had just put Fable 5 in front of the public, the most capable model available, and the timing was too good to pass up. I opened with the vision, not a task list: the shape of the site, the sections, the case studies, and the working prototypes I wanted embedded in the page rather than described in it. I handed over the spec and let the model reason toward the build.</p>
-      <p>Fable 5 got a surprising amount right from very little direction. On a long, open-ended job like this, it held the whole picture and filled gaps the way I would have.</p>
+  <!-- ================= THE CALL ================= -->
+  <section class="shell band" id="onecall" aria-labelledby="onecall-h" data-state="deciding">
+    <div class="spine-head">
+      <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>One call</span></p>
+      <h2 id="onecall-h" class="io" style="--d:1">The call that set the rule.</h2>
+      <p class="band-lede io" style="--d:2">This build made hundreds of calls. One of them decided what every number on this site is allowed to say. Make it before I show you mine.</p>
     </div>
 
-    <h2 class="beat">Three hours in, I lost Fable 5.</h2>
-    <div class="prose">
-      <p>My access to Fable 5 dropped about three hours into the project, and I moved to Opus 4.8 to keep going. The two models work differently, and the switch is what taught me where each one fits. Fable is the stronger model on long, autonomous stretches; it needed less hand-holding to take a big, ambiguous build in the right direction. Opus 4.8 wanted sharper specs from me, but once it had them it was fast, steady, and relentless, the better default for iterative work. So I tightened how I directed, and the build never stalled.</p>
-      <p>Knowing which model to reach for, and how to brief each one, is its own skill now. I'd rather make that call deliberately than run everything on one setting.</p>
-    </div>
+    <article class="decision with-note" id="decision-07" data-decision aria-labelledby="d7-h">
+      <script type="application/json" data-decision-config>
+      {
+        "her": "repair",
+        "name": "census call",
+        "verdicts": {
+          "match": "{Her}. Same call.",
+          "miss": "You called {pick}. She called {her}. Her receipt is below.",
+          "skip": "Skipped. Her call is open below. Yours is still open too.",
+          "repick": "Changed to {pick}. Her call stands: {her}.",
+          "change": "Pick another verb above. The seal stays open.",
+          "partial": {
+            "verify": "Already run. The census was the verify step: it is how this claim got caught. The open question is what happens after a claim fails. Her call: repair.",
+            "stop": "Close. Removal is the floor, not the call. Where a receipt supports a weaker claim, the words change and the claim survives. Her call: repair."
+          }
+        }
+      }
+      </script>
+      <div>
+        <p class="d-kicker mono io" style="--d:0">
+          <span class="d-no">Decision 07</span>
+          <span>The claims census</span>
+          <span>evidence discipline</span>
+        </p>
+        <h3 id="d7-h" class="visually-hidden">Decision 07: the claim with no receipt</h3>
+        <blockquote class="situation io" style="--d:1">
+          <p>A number on the old site had no receipt. Memory said it was right. Four archives said nothing.</p>
+          <cite>A row in the claims census</cite>
+        </blockquote>
 
-    <h2 class="beat">Most of the work was feedback.</h2>
-    <div class="prose">
-      <p>I set the bar up front, then sorted everything I said back into two kinds. Minor was a tweak: change this line, tighten that section, keep going. Major was a signal to stop and re-plan, and when I pushed on something big, the model stepped back, re-evaluated its own approach, and proposed a new one before writing another word. I had it grade its own output against my direction too, so it caught its own misses before I did.</p>
-      <p>A tweak and a rethink are different instructions. Knowing which one you're giving is most of the craft.</p>
-    </div>
-
-    <h2 class="beat">Then I gave it a team.</h2>
-    <div class="prose">
-      <p>A portfolio isn't one job; it's a dozen crafts at once. So I had the model stand up a crew of specialist agents and run them in parallel, each with a brief of its own: content strategy, design and layout, motion and media, the interactive prototypes embedded in each case. Over several rounds I added a panel of judges to read the work cold from a skeptic's seat, and a guardian whose only job was to keep anything confidential off a public page. I set the direction; they produced and checked each other; I kept what held.</p>
-    </div>
-  </div>
-
-  <div class="shell">
-    <figure class="inst wide" aria-label="The crew of specialist agents directed in parallel to build the site, plus the judges and guardian that verify the work">
-      <div class="inst-head"><span>the crew · directed in parallel</span><span>several iterations</span></div>
-      <div class="inst-body">
-        <div class="crew-top">I set the direction &middot; the crew fans out</div>
-        <div class="crew">
-          <div class="crew-card"><span class="cl">Content strategy</span><span class="cs">what each page argues, in what order</span></div>
-          <div class="crew-card"><span class="cl">Design &amp; layout</span><span class="cs">the system, type, the page itself</span></div>
-          <div class="crew-card"><span class="cl">Motion &amp; media</span><span class="cs">the reveals and the interactions</span></div>
-          <div class="crew-card"><span class="cl">Prototypes</span><span class="cs">the working demos embedded in each case</span></div>
-          <div class="crew-card check"><span class="cl">Judges</span><span class="cs">read it cold, from a skeptic's seat</span></div>
-          <div class="crew-card check"><span class="cl">Redaction guardian</span><span class="cs">keeps anything confidential off the page</span></div>
+        <div class="d-grid">
+          <div class="d-setup io" style="--d:2">
+            <span class="label mono">The setup</span>
+            <p class="body">Before this build wrote a page, every number on the old site and the resumes behind it went into a census of her own archives, four sources: local files, screenshots, email, decks. Most claims came back holding a receipt. This one came back holding nothing, and memory still said it was true.</p>
+            <div class="score" aria-label="Census result for this claim">
+              <div class="score-row"><span>memory says</span><span class="val-pass">true</span></div>
+              <div class="score-row"><span>the ledger says</span><span class="val-pending">?</span><span class="val-fail">no receipt</span></div>
+            </div>
+          </div>
+          <div class="d-choice io" style="--d:3">
+            <span class="label mono" id="d7-q">Your call. The claim has no receipt. What happens to it?</span>
+            <div class="options" role="group" aria-labelledby="d7-q">
+              <button class="opt" type="button" data-verb="answer" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">a.</span><span class="verb">answer</span><span class="tag">your call</span></span>
+                <span class="gloss">keep it: she was in the room, and memory counts</span>
+              </button>
+              <button class="opt" type="button" data-verb="ask" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">b.</span><span class="verb">ask</span><span class="tag">your call</span></span>
+                <span class="gloss">have her confirm it from memory, then keep it</span>
+              </button>
+              <button class="opt" type="button" data-verb="act" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">c.</span><span class="verb">act</span><span class="tag">your call</span></span>
+                <span class="gloss">publish now, correct it later if a reader objects</span>
+              </button>
+              <button class="opt" type="button" data-verb="verify" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">d.</span><span class="verb">verify</span><span class="tag">your call</span></span>
+                <span class="gloss">run the census again, wider, until a receipt appears</span>
+              </button>
+              <button class="opt" type="button" data-verb="stop" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">e.</span><span class="verb">stop</span><span class="tag">your call</span></span>
+                <span class="gloss">delete the claim everywhere it appears</span>
+              </button>
+              <button class="opt" type="button" data-verb="repair" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">f.</span><span class="verb">repair</span><span class="tag">your call</span></span>
+                <span class="gloss">rewrite the claim down to what the receipts support</span>
+              </button>
+            </div>
+            <div class="opt-foot">
+              <button class="skip-call" type="button">or skip: show her call</button>
+              <span class="privacy mono">your answer never leaves this tab, stored nowhere</span>
+            </div>
+            <p class="verdict mono" aria-live="polite"><span class="verdict-line"><span class="hint">sealed. pick a verb, or skip.</span></span><button class="repick" type="button">change my call</button></p>
+          </div>
         </div>
-        <div class="crew-foot">&#8635;&nbsp; they report back, I keep what holds, we go again</div>
+
+        <div class="call-reveal">
+          <div class="call-clip">
+            <div class="call">
+              <h4 class="call-h" tabindex="-1">Her call</h4>
+              <p class="call-verb">repair.</p>
+              <p class="call-line">Rewrite it down to what the receipts support. Where nothing supports it, it comes off the page.</p>
+              <div class="receipt">
+                <span class="label mono">The receipt</span>
+                <p>The fix became a rule, and the rule became a ledger: every number on this site traces to an artifact she owns, found in the four-source census. Claims that failed were corrected or removed, here and on the resumes they came from. A portfolio that argues for eval discipline does not get to grade itself on a curve.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <figcaption class="inst-caption"><b>One brief, many specialists.</b> Each agent owns an area and works in parallel; the judges and the guardian attack the output before I approve it. The same shape I use to build agentic systems at work.</figcaption>
-    </figure>
-  </div>
+      <aside class="bnote io" style="--d:4" aria-label="Behavior note 01">
+        <span class="bnote-id">Note 01</span>
+        <p>Held this call sealed until you committed. The ledger it describes is the one every number on this site answers to.</p>
+      </aside>
+    </article>
+  </section>
 
-  <div class="narrow">
-    <h2 class="beat">Until it sounded like me.</h2>
-    <div class="prose">
-      <p>We went round after round, on the voice most of all. A portfolio can be accurate and still sound like no one. So I cut anything that read as performance, kept pushing until the sentences were ones I'd actually say out loud, and only stopped when the site felt like me to read, not just correct.</p>
-      <p>That last part took the longest, and it's the part that matters. You're reading the result.</p>
+  <!-- ================= THE COLD READ ================= -->
+  <section class="shell band" id="coldread" aria-labelledby="coldread-h" data-state="auditing">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The cold read</span></p>
+      <h2 id="coldread-h" class="io" style="--d:1">Eight strangers read the old site first.</h2>
+      <p class="band-lede io" style="--d:2">No context, no charity. A persona panel scored what a stranger could establish in one pass, and where the judges agreed, the gap became a requirement.</p>
+
+      <div class="range-grid">
+        <div class="range-cell io" style="--d:3">
+          <span class="label mono">The panel</span>
+          <p class="body">Two hiring managers, a recruiter, a skeptical engineer, an eval practitioner, a design critic, a story editor, a completeness critic. Eight cold reads of the previous site, none of them told what to like.</p>
+        </div>
+        <div class="range-cell io" style="--d:4">
+          <span class="label mono">What they scored</span>
+          <p class="body">Identity: who she is, in one pass. Story: what happened, and what she decided. Cleanliness: whether the pages hold together. Their consensus gaps, not taste, set the brief for this build.</p>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
-</article>
+  <!-- ================= THE COMPETITION ================= -->
+  <section class="shell band" id="competition" aria-labelledby="competition-h" data-state="judging">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>The competition</span></p>
+      <h2 id="competition-h" class="io" style="--d:1">Three homepages went in. One came out.</h2>
+      <p class="band-lede io" style="--d:2">Design direction was settled by competition, not debate. Three agents each built a full homepage, and a three-lens judge panel read them cold.</p>
 
-<nav class="case-next" aria-label="Back to the work"><div class="shell">
-  <a href="index.html#work">
-    <span class="nxt">No. 06 · the last of six</span>
-    <span class="t">Back to the work</span>
-  </a>
-</div></nav>
+      <ol class="cases" aria-label="The three competing directions">
+        <li class="case io" style="--d:0">
+          <span class="case-no" aria-hidden="true">A</span>
+          <div class="case-body">
+            <h3>The runtime console</h3>
+            <p>Dark, dense, an agent cockpit. Strong on craft; it read as a demo before it read as her.</p>
+          </div>
+          <div class="case-meta">
+            <span class="case-unit">the trace survived</span>
+            <span class="case-era">lost</span>
+          </div>
+        </li>
+        <li class="case io" style="--d:1">
+          <span class="case-no" aria-hidden="true">B</span>
+          <div class="case-body">
+            <h3>The editorial system</h3>
+            <p>Light, typographic, hairline rules, one accent spent only where judgment lives. It read like her argument.</p>
+          </div>
+          <div class="case-meta">
+            <span class="case-unit">the base of this site</span>
+            <span class="case-era">won</span>
+          </div>
+        </li>
+        <li class="case io" style="--d:2">
+          <span class="case-no" aria-hidden="true">C</span>
+          <div class="case-body">
+            <h3>The adaptive surface</h3>
+            <p>A page that rearranged itself around the reader. Clever, and the cleverness upstaged the work.</p>
+          </div>
+          <div class="case-meta">
+            <span class="case-unit">the escape hatches survived</span>
+            <span class="case-era">lost</span>
+          </div>
+        </li>
+      </ol>
+
+      <p class="band-lede io" style="--d:3">The verdict kept the losing work in the building: the runtime trace, the working refusal, and the escape hatches all came over from the losing directions into the winner.</p>
+    </div>
+  </section>
+
+  <!-- ================= THE BUILD ================= -->
+  <section class="shell band" id="build" aria-labelledby="build-h" data-state="building">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>The build</span></p>
+      <h2 id="build-h" class="io" style="--d:1">A foundation agent, then a fleet.</h2>
+      <p class="band-lede io" style="--d:2">One agent built the shared system: the type, the tokens, the components, and the budgets every page must obey. Then a fleet built the pages in parallel, one agent per page, this page included.</p>
+
+      <div class="range-grid">
+        <div class="range-cell io" style="--d:3">
+          <span class="label mono">The crews</span>
+          <p class="body">Briefs came from the cold read and the census. The crews ran on Claude Code; the direction, the budgets, and the final verdicts stayed with her.</p>
+        </div>
+        <div class="range-cell io" style="--d:4">
+          <span class="label mono">The gates</span>
+          <p class="body">Every page faced three judges before merge: redaction, honesty, voice. A page that failed a gate went back with notes. No pass, no ship.</p>
+        </div>
+      </div>
+
+      <figure class="trace io" style="--d:5" data-trace="build trace">
+        <figcaption class="trace-hd mono">
+          <span>trace · this build, compact</span>
+          <span class="trace-state" data-trace-state>complete</span>
+          <button class="trace-replay" type="button" data-trace-replay>replay</button>
+        </figcaption>
+        <ol class="trace-rows">
+          <li class="t-row t-note" data-d="480">
+            <span class="t-time" aria-hidden="true">01</span>
+            <div class="t-main">cold read: eight judges score the old site · gaps become the brief</div>
+          </li>
+          <li class="t-row t-tool" data-d="440">
+            <span class="t-time" aria-hidden="true">02</span>
+            <div class="t-main"><code>read <b>archives(files, screenshots, email, decks)</b> &#8594; <span class="ok">ok</span> · every claim to a receipt</code></div>
+          </li>
+          <li class="t-row t-note" data-d="440">
+            <span class="t-time" aria-hidden="true">03</span>
+            <div class="t-main">no receipt, no claim · corrections reach back into the resumes</div>
+          </li>
+          <li class="t-row t-tool" data-d="460">
+            <span class="t-time" aria-hidden="true">04</span>
+            <div class="t-main"><code>run <b>competition(three homepages)</b> &#8594; <span class="ok">ok</span> · editorial wins · grafts kept</code></div>
+          </li>
+          <li class="t-row t-tool" data-d="420">
+            <span class="t-time" aria-hidden="true">05</span>
+            <div class="t-main"><code>build <b>foundation(type, tokens, budgets)</b> &#8594; <span class="ok">ok</span> · one agent, one system</code></div>
+          </li>
+          <li class="t-row t-tool" data-d="420">
+            <span class="t-time" aria-hidden="true">06</span>
+            <div class="t-main"><code>build <b>pages(fleet, parallel)</b> &#8594; <span class="ok">ok</span> · one agent per page</code></div>
+          </li>
+          <li class="t-row t-note" data-d="440">
+            <span class="t-time" aria-hidden="true">07</span>
+            <div class="t-main">gates: redaction · honesty · voice · no pass, no ship</div>
+          </li>
+          <li class="t-row t-note" data-d="520">
+            <span class="t-time" aria-hidden="true">08</span>
+            <div class="t-main">case 07 ships last · the output is the page you are reading</div>
+          </li>
+        </ol>
+        <p class="trace-foot mono">a compressed record of the actual build · pre-rendered, no live model</p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= THE METHOD ================= -->
+  <section class="shell band with-note" id="method" aria-labelledby="method-h" data-state="closing">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">05</span><span>The method</span></p>
+      <h2 id="method-h" class="io" style="--d:1">Direction, judgment, evidence. The typing is delegated.</h2>
+      <p class="band-lede io" style="--d:2">Every claim is gated before it ships. It is the same shape as the day job: define what good looks like, build it, prove it.</p>
+
+      <div class="range-grid">
+        <div class="range-cell io" style="--d:3">
+          <span class="label mono">Feedback, two sizes</span>
+          <p class="body">Minor meant tighten this and keep going. Major meant stop, re-plan, and show the new plan before the next line. Naming which one you are giving is most of the craft of directing agents.</p>
+        </div>
+        <div class="range-cell io" style="--d:4">
+          <span class="label mono">What I did not build</span>
+          <p class="body">A live model on this site. A site agent that bluffs would falsify every case it hosts, so the box on the home page answers from curated replies, refuses the rest, and says so in its own header.</p>
+        </div>
+      </div>
+
+      <ul class="contact-links io" style="--d:5">
+        <li>
+          <a href="index.html#work">
+            <span class="cl-label mono">Next</span>
+            <span class="cl-value">The last of seven. Back to the work.</span>
+            <span class="cl-arrow" aria-hidden="true">&#8599;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <aside class="bnote io" style="--d:6" aria-label="Behavior note 02">
+      <span class="bnote-id">Note 02</span>
+      <p>The ticker in the masthead, the sealed call above, the refusal on the home page: this site runs the behaviors its cases describe.</p>
+    </aside>
+  </section>
 
 </main>
 
-<footer class="colophon"><div class="shell">
-  <p>Designed and built AI-natively: directed by Simone, executed with AI agents, the way she works.</p>
-  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. Roles, process, design decisions, and measured outcomes are preserved. © 2026 Simone Muro · Bay Area, CA</p>
-</div></footer>
+<footer class="footer" role="contentinfo">
+  <div class="shell">
+    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · <b>sealed</b> one call · the build <b>traced</b> above · <b>handed off</b> to the index</p>
+    <p class="footer-inner mono">
+      <span>Simone Muro · Portfolio, 4th edition · 2026</span>
+      <span><a href="index.html">Home</a> · <a href="index.html#work">Work</a> · <a href="resume.html">Resume</a></span>
+    </p>
+  </div>
+</footer>
 
-<button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
-<script src="./v3.js" defer></script>
+<noscript>
+  <style>
+    .io,.rule-io{opacity:1 !important;transform:none !important;}
+    .call-reveal{grid-template-rows:1fr !important;}
+    .call{visibility:visible !important;}
+    .val-pending{display:none !important;}
+    .val-fail{display:inline !important;}
+    .verdict,.opt-foot,.opt .tag{display:none !important;}
+    .progress,.trace-replay{display:none !important;}
+  </style>
+</noscript>
+
 </body>
 </html>

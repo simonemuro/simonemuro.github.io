@@ -1,198 +1,301 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The generator that drafts an AI agent's answer key · Simone Muro</title>
-<meta name="description" content="To ship an AI support agent you grade it against an answer key, the golden dataset, across thousands of conversations. People authored it by hand; I automated the drafting so experts validate a strong first draft instead of filling a blank sheet, cutting turnaround from about three weeks to one across 3,000+ rows." />
-<meta property="og:title" content="The generator that drafts an AI agent's answer key · Simone Muro" />
-<meta property="og:description" content="A generator that pre-fills the ground truth an AI agent is graded against, so evaluation keeps pace with the agents. Owned the offline eval datasets; authored the generator; partnered on the rubrics." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="./v3.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Case 03. The answer key an AI support agent is graded against: the generator that drafts it, the pipeline that guards it, and the call that blocks a perfect answer that did an unverified thing. Measured conversation quality rose 8, 9.8 and 13 points across three agent skills in a year.">
+<meta property="og:title" content="The Quality Program · Simone Muro">
+<meta property="og:description" content="The generator that drafts the eval answer key, and the hard fail that blocks a perfect answer that acted without verification.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simonemuro.github.io/quality-program.html">
+<meta name="twitter:card" content="summary">
+<title>The Quality Program · Simone Muro</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231e2bd0'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23ffffff' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="v4.css">
+<script src="v4.js" defer></script>
 <style>
-  /* ============================================================
-     Scoped instruments for the Quality case (tight rebuild).
-     Kept: the two catches. Added: the author->validate shift.
-     ============================================================ */
-
-  /* ---------- the shift: author -> validate (the outcome) ---------- */
-  .shift { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: stretch; }
-  @media (max-width: 640px) { .shift { grid-template-columns: 1fr; } }
-  .shift .sc { border: 1px solid var(--hairline); border-radius: 12px; padding: 16px 18px; }
-  .shift .sc.after { border-color: var(--persimmon); background: rgba(232,85,47,0.04); }
-  .shift .sct { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--faint); }
-  .shift .sc.after .sct { color: var(--persimmon); }
-  .shift .scn { font-size: 1.9rem; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; margin: 7px 0 6px; }
-  .shift .scd { font-size: 0.85rem; line-height: 1.5; color: var(--muted); }
-  .shift .sar { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
-  .shift .sarl { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--persimmon); text-align: center; max-width: 92px; line-height: 1.4; }
-  .shift .sarrow { color: var(--faint); font-size: 1.1rem; }
-  @media (max-width: 640px) { .shift .sar { flex-direction: row-reverse; justify-content: flex-start; } .shift .sarrow { transform: rotate(90deg); } }
-
-  /* ---------- the hallucination catch ---------- */
-  .catch { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  @media (max-width: 720px) { .catch { grid-template-columns: 1fr; } }
-  .catch .cc { border: 1px solid var(--hairline); border-radius: 12px; overflow: hidden; }
-  .catch .cc h4 { margin: 0; padding: 9px 14px; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; border-bottom: 1px solid var(--hairline); background: var(--paper); display: flex; justify-content: space-between; align-items: center; }
-  .catch .cc.truth h4 { color: var(--signal); }
-  .catch .cc.agent h4 { color: var(--persimmon); }
-  .catch .cc .ccb { padding: 13px 14px; font-size: 0.88rem; line-height: 1.5; color: var(--ink); }
-  .catch .cc .ccb .invent { background: rgba(232,85,47,0.14); color: var(--ink); border-radius: 3px; padding: 0 3px; font-weight: 500; }
-  .catch-ask { margin: 0 0 16px; padding: 9px 14px; background: var(--ink); color: var(--paper); border-radius: 14px 14px 14px 4px; font-size: 0.88rem; width: fit-content; max-width: 86%; }
-  .catch-ask .who { display: block; font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(250,249,246,0.55); margin-bottom: 5px; }
-  .catch-verdict { margin-top: 16px; border: 1px solid var(--hairline); border-radius: 12px; overflow: hidden; }
-  .catch-verdict .cvr { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 16px; border-top: 1px solid var(--hairline); font-family: var(--mono); font-size: 0.72rem; }
-  .catch-verdict .cvr:first-child { border-top: 0; }
-  .catch-verdict .cvr .dim { color: var(--muted); }
-  .catch-verdict .cvr .mark { display: inline-flex; align-items: center; gap: 7px; }
-  .catch-verdict .cvr.fail .mark { color: var(--persimmon); }
-  .catch-verdict .cvr.pass .mark { color: var(--signal); }
-  .catch-score { display: flex; align-items: center; gap: 14px; margin-top: 16px; flex-wrap: wrap; }
-  .catch-score .meter { flex: 1; min-width: 180px; height: 12px; border-radius: 999px; background: var(--hairline); position: relative; overflow: hidden; }
-  .catch-score .meter .fill { position: absolute; inset: 0 64% 0 0; background: var(--persimmon); }
-  .catch-score .meter .fill.ok { inset: 0 22% 0 0; background: var(--signal); }
-  .catch-score .meter .bar { position: absolute; top: -5px; bottom: -5px; left: 70%; width: 2px; background: var(--ink); }
-  .catch-score .meter .bar::after { content: "bar to ship"; position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-  .catch-score .blocked { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em; color: var(--persimmon); display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid var(--persimmon); border-radius: 999px; }
-
-  /* ---------- the agentic-journey catch ---------- */
-  .jrn { display: grid; gap: 0; margin-bottom: 6px; }
-  .jstep { display: grid; grid-template-columns: 118px 1fr; gap: 14px; align-items: start; padding: 10px 0 10px 20px; margin-left: 6px; border-left: 2px solid var(--hairline); position: relative; }
-  .jstep::before { content: ""; position: absolute; left: -5px; top: 15px; width: 8px; height: 8px; border-radius: 50%; background: var(--hairline); box-shadow: 0 0 0 3px var(--paper); }
-  .jstep.act::before { background: var(--persimmon); }
-  .jstep .jk { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); padding-top: 3px; }
-  .jstep.act .jk { color: var(--persimmon); }
-  .jstep .jb { font-size: 0.88rem; line-height: 1.5; color: var(--ink); }
-  .jstep .jb .mono { font-family: var(--mono); font-size: 0.8rem; }
-  .jstep .acttag { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--persimmon); border: 1px solid var(--persimmon); border-radius: 4px; padding: 1px 6px; margin-right: 8px; white-space: nowrap; }
-  @media (max-width: 560px) { .jstep { grid-template-columns: 1fr; gap: 4px; } }
-
-  /* ---------- the prompt snippet (the generator's identity section) ---------- */
-  .psnip { border: 1px solid var(--hairline); border-radius: 12px; overflow: hidden; background: var(--card); }
-  .psnip .psh { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 14px; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--hairline); background: var(--paper); }
-  .psnip pre { margin: 0; padding: 14px 16px; font-family: var(--mono); font-size: 0.76rem; line-height: 1.62; color: var(--ink); white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere; }
-  .psnip pre b { color: var(--persimmon); font-weight: 500; letter-spacing: 0.02em; }
-
-  /* ---------- how she directed the model (a redacted direction quote) ---------- */
-  .direct { border: 1px solid var(--hairline); border-left: 3px solid var(--persimmon); border-radius: 0 12px 12px 0; background: var(--card); padding: 15px 20px; margin: 18px 0 0; }
-  .direct .dl { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--persimmon); display: block; margin-bottom: 9px; }
-  .direct p { margin: 0; font-size: 0.98rem; line-height: 1.6; color: var(--ink); }
-
-  /* ---------- one row of ground truth (the complexity) ---------- */
-  .gtrow { display: grid; gap: 10px; }
-  .gtrow .gf { border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden; background: var(--paper); }
-  .gtrow .gf .gfh { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 8px 14px; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--hairline); }
-  .gtrow .gf .gfb { padding: 11px 14px; font-size: 0.86rem; line-height: 1.5; color: var(--ink); }
-  .gtrow .gf .gfb code { font-family: var(--mono); font-size: 0.73rem; color: var(--ink); word-break: break-word; }
-  .gtrow .gf.chart { border-color: var(--persimmon); }
-  .gtrow .gf.chart .gfh { color: var(--persimmon); }
-  .gtrow .gf pre { margin: 0; padding: 12px 14px; font-family: var(--mono); font-size: 0.7rem; line-height: 1.55; color: var(--ink); white-space: pre-wrap; word-break: break-word; }
-
-  /* ---------- the version log ---------- */
-  .vlog { display: grid; gap: 0; }
-  .vrow { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: start; padding: 11px 0; border-top: 1px solid var(--hairline); }
-  .vrow:first-child { border-top: 0; }
-  .vrow .vv { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; color: var(--persimmon); padding-top: 1px; }
-  .vrow .vc { font-size: 0.86rem; line-height: 1.5; color: var(--ink); }
-  @media (max-width: 560px) { .vrow { grid-template-columns: 1fr; gap: 3px; } }
-
-  /* ---------- the chunker flow (split -> draft -> reassemble -> check) ---------- */
-  .cflow { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; }
-  .cflow .cn { flex: 1 1 130px; min-width: 0; border: 1px solid var(--hairline); border-radius: 12px; padding: 13px 14px; }
-  .cflow .cn.hot { border-color: var(--persimmon); background: rgba(232,85,47,0.04); }
-  .cflow .cnt { font-size: 0.9rem; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; line-height: 1.35; }
-  .cflow .cn.hot .cnt { color: var(--persimmon); }
-  .cflow .cns { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.03em; color: var(--muted); margin-top: 6px; line-height: 1.45; }
-  .cflow .carrow { display: flex; align-items: center; color: var(--faint); font-size: 1.05rem; padding: 0 1px; }
-  @media (max-width: 640px) {
-    .cflow { flex-direction: column; }
-    .cflow .cn { flex: 1 1 auto; }
-    .cflow .carrow { justify-content: center; transform: rotate(90deg); }
-  }
-
-  /* ---------- the output row (original -> recommended -> validated) ---------- */
-  .orow { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-  @media (max-width: 720px) { .orow { grid-template-columns: 1fr; } }
-  .orow .oc { border: 1px solid var(--hairline); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
-  .orow .oc.locked { opacity: 0.72; }
-  .orow .oc.rec { border-color: var(--persimmon); background: rgba(232,85,47,0.04); }
-  .orow .oc.val { border-style: dashed; }
-  .orow .oc h4 { margin: 0; padding: 9px 14px; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); font-weight: 500; border-bottom: 1px solid var(--hairline); background: var(--paper); }
-  .orow .oc.rec h4 { color: var(--persimmon); }
-  .orow .oc .ocb { padding: 13px 14px; font-size: 0.86rem; line-height: 1.5; color: var(--ink); flex: 1; }
-  .orow .oc.val .ocb { min-height: 34px; }
-  .orow .oc .ocs { padding: 0 14px 12px; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.02em; color: var(--faint); line-height: 1.45; }
-  .orow-ask { margin: 0 0 14px; padding: 9px 14px; background: var(--ink); color: var(--paper); border-radius: 14px 14px 14px 4px; font-size: 0.88rem; width: fit-content; max-width: 86%; }
-  .orow-ask .who { display: block; font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(250,249,246,0.55); margin-bottom: 5px; }
-
-  /* ---------- role line ---------- */
-  .rolel { font-size: 0.98rem; line-height: 1.62; color: var(--muted); max-width: 64ch; margin: 0 0 18px; }
-  .rolel b { color: var(--ink); font-weight: 500; }
+  /* case 03 scoped: structural only, house tokens, no new colors */
+  .case-h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,2.7vw,2rem);line-height:1.08;letter-spacing:-.008em;max-width:32ch;margin-top:clamp(44px,7vh,72px);}
+  .prose{margin-top:16px;max-width:62ch;}
+  .prose p+p{margin-top:14px;}
+  .exhibit{margin-top:clamp(26px,4vh,44px);border:1px solid var(--hair);background:var(--paper);}
+  .ex-body{padding:16px;}
+  .gt{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+  @media (max-width:720px){ .gt{grid-template-columns:1fr;} }
+  .gt-f{border:1px solid var(--hair);}
+  .gt-h{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border-bottom:1px solid var(--hair);color:var(--sub);}
+  .gt-h .gt-mark{color:var(--accent);text-align:right;}
+  .gt-b{padding:11px 12px;font-size:.9rem;line-height:1.5;}
+  .gt-b code{font-family:var(--mono);font-size:.72rem;line-height:1.6;color:var(--ink);overflow-wrap:anywhere;}
+  .gt-b pre{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.6;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere;}
+  .snip pre{margin:0;padding:16px;font-family:var(--mono);font-size:.74rem;line-height:1.66;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink);}
+  .snip pre b{color:var(--accent);font-weight:400;}
+  .direct{margin-top:24px;border-left:2px solid var(--accent);padding:2px 0 2px 18px;max-width:56ch;}
+  .direct .dl{display:block;margin-bottom:8px;color:var(--accent);}
+  .direct p{font-family:var(--serif);font-style:italic;font-size:1.12rem;line-height:1.45;}
+  .vlog{list-style:none;border-top:1px solid var(--hair);margin-top:16px;}
+  .vlog li{display:grid;grid-template-columns:52px minmax(0,1fr);gap:14px;padding:10px 0;border-bottom:1px solid var(--hair);}
+  .vlog .vv{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);padding-top:3px;}
+  .vlog li.key .vv{color:var(--accent);}
+  .vlog p{font-size:.92rem;line-height:1.5;max-width:60ch;}
+  .pipe{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;}
+  .pipe-n{flex:1 1 150px;min-width:0;border:1px solid var(--hair);padding:12px 13px;}
+  .pipe-n b{display:block;font-weight:400;font-size:.95rem;line-height:1.3;}
+  .pipe-n span{display:block;margin-top:6px;font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);line-height:1.5;}
+  .pipe-a{align-self:center;color:var(--sub);flex:none;}
+  @media (max-width:640px){ .pipe{flex-direction:column;} .pipe-a{align-self:flex-start;transform:rotate(90deg);} }
+  .orow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+  @media (max-width:720px){ .orow{grid-template-columns:1fr;} }
+  .oc{border:1px solid var(--hair);display:flex;flex-direction:column;}
+  .oc .ocb{padding:11px 12px;font-size:.9rem;line-height:1.5;flex:1;}
+  .oc .ocb:empty{min-height:34px;}
+  .oc .ocs{padding:0 12px 10px;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sub);line-height:1.6;}
+  .ask{margin:0 0 14px;}
+  .ask .who{display:block;font-family:var(--mono);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--sub);margin-bottom:5px;}
+  .ask p{font-family:var(--serif);font-style:italic;font-size:1.08rem;line-height:1.4;max-width:52ch;}
+  .lifts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,3vw,40px);margin-top:clamp(26px,4vh,40px);}
+  @media (max-width:640px){ .lifts{grid-template-columns:1fr;} }
+  .lift{border-top:1px solid var(--hair);padding-top:14px;}
+  .lift .ln{font-family:var(--serif);font-size:clamp(2rem,3.6vw,2.9rem);line-height:1;font-variant-numeric:tabular-nums;}
+  .lift .ll{display:block;margin-top:8px;font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sub);}
+  .hcatch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+  @media (max-width:720px){ .hcatch{grid-template-columns:1fr;} }
+  .invent{text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:var(--accent);text-underline-offset:3px;}
+  .jury{margin-top:12px;border-top:1px solid var(--hair);list-style:none;}
+  .jury li{display:flex;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;padding:9px 2px;border-bottom:1px solid var(--hair);font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;}
+  .jury .jd{color:var(--sub);}
+  .jury .jv{color:var(--accent);text-align:right;}
+  .blocked{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(30,43,208,.3);padding:5px 11px;}
 </style>
 </head>
 <body>
+
 <a class="skip-link" href="#main">Skip to content</a>
 
-<nav class="nav"><div class="shell">
-  <a class="wordmark" href="index.html">SIMONE MURO</a>
-  <div class="nav-links">
-    <a href="index.html#work" aria-current="true">Work</a>
-    <a href="index.html#about">About</a>
-    <a href="resume.html" class="optional">Resume</a>
-    <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
+<header class="masthead" role="banner">
+  <div class="shell masthead-inner">
+    <a class="brand" href="index.html">Simone Muro</a>
+    <p class="mast-state mono" aria-hidden="true">site: <b data-ticker>grading</b></p>
+    <nav class="mast-nav mono" aria-label="Primary">
+      <a href="index.html#work">Work</a>
+      <a href="resume.html">Resume</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="progress" id="progress" aria-hidden="true"></div>
   </div>
-</div></nav>
+</header>
 
 <main id="main">
 
-<!-- ===== hero / open ===== -->
-<section class="case-open"><div class="shell">
-  <span class="no-big">No. 03 · Scaling the answer key behind AI evaluation</span>
-  <h1>To grade thousands of conversations, you need an answer key.</h1>
-  <p class="lede" style="max-width:60ch">An AI support agent talks to small-business owners about their books, and it can act on their accounts. To ship a new version safely, you grade it against an answer key, the golden dataset, across thousands of conversations. People were authoring that key by hand, and it didn't scale. So I automated the drafting, and handed the experts a strong first draft to validate instead of a blank sheet to fill.</p>
-  <div class="factbox">
-    <div><b>Role</b>AI quality-eval team: owned offline datasets + ground truth; authored the pre-fill generator</div>
-    <div><b>Built with</b>Golden datasets · pre-fill generation · LLM-as-judge</div>
-    <div><b>When</b>2025&ndash;2026</div>
-    <div><b>Outcome</b>Golden-dataset turnaround ~3 weeks → ~1 week, across 3,000+ rows</div>
-  </div>
-</div></section>
+  <!-- ================= CASE OPEN: outcome-first skim layer ================= -->
+  <section class="shell hero" aria-labelledby="case-h" data-state="grading">
+    <div>
+      <p class="hero-kicker mono io" style="--d:0">
+        <span>Case 03 · The Quality Program</span>
+        <span>agentic era · 2025 to 2026</span>
+      </p>
+      <h1 id="case-h" class="io" style="--d:1">To grade thousands of conversations, you need an <em>answer key</em>.</h1>
+      <p class="hero-sub io" style="--d:2">An AI support agent talks to small-business owners about their books, and it can act on their accounts. Before a new version ships, it is graded against the golden dataset: thousands of conversations with the right answer spelled out in full. People authored that key by hand. I automated the drafting.</p>
 
-<article class="case-body">
-
-  <!-- ============================================================
-       PROBLEM
-       ============================================================ -->
-  <div class="narrow">
-    <h2 class="beat">The bottleneck: authoring the answer key by hand.</h2>
-    <div class="prose">
-      <p>To grade an AI agent you need a golden dataset: the right answer for thousands of conversations. But the right answer was not a sentence. As the agent learned to do more than reply, to take actions, render interactive widgets, and draw charts, every row had to spell out all of it: the answer text, the exact actions, the widgets, and the chart data, point by point.</p>
-      <p>People hand-entered all of it, one row at a time. Charting a single correct answer meant typing every label and every value on every axis. It took about three weeks per dataset, it was error-prone, and it was exactly the wrong use of an expert's judgment.</p>
+      <dl class="factbox io" style="--d:3">
+        <div class="fact fact-outcome">
+          <dt>Outcome</dt>
+          <dd>Measured quality up 8, 9.8 and 13 points across three agent skills</dd>
+        </div>
+        <div class="fact">
+          <dt>Throughput</dt>
+          <dd>Answer keys in about one week, down from about three, across 3,000+ rows</dd>
+        </div>
+        <div class="fact">
+          <dt>Role</dt>
+          <dd>Quality-eval team · owned the datasets and ground truth · authored the generator</dd>
+        </div>
+        <div class="fact">
+          <dt>When</dt>
+          <dd>2025 to 2026 · agentic era</dd>
+        </div>
+      </dl>
     </div>
-  </div>
+  </section>
 
-  <div class="shell">
-    <figure class="inst wide" aria-label="One row of ground truth is a structured object with four parts: the answer text, the actions the agent should take, the widgets it should render, and the chart data. The chart is nested data with a label and a numeric value for every point on every axis, all hand-entered.">
-      <div class="inst-head"><span>one row of ground truth &middot; not a sentence</span><span>mock data</span></div>
-      <div class="inst-body">
-        <div class="gtrow">
-          <div class="gf">
-            <div class="gfh"><span>ground truth &middot; answer</span><span>text</span></div>
-            <div class="gfb">Your total debits last quarter were $9,298.00.</div>
+  <!-- ================= 01 · THE DECISION ================= -->
+  <section class="shell band" id="decision" aria-labelledby="dec-h" data-state="deciding">
+
+    <div class="spine-head">
+      <div>
+        <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>The decision</span></p>
+        <h2 id="dec-h" class="io" style="--d:1">A perfect answer is not a passing grade.</h2>
+        <p class="band-lede io" style="--d:2">The answer key exists to catch failures, and the hardest one to catch looked flawless. One journey from the eval set, reconstructed on mock data. Make the call before I show you mine.</p>
+      </div>
+    </div>
+
+    <article class="decision with-note" id="decision-01" data-decision aria-labelledby="d1-h">
+      <script type="application/json" data-decision-config>
+      {
+        "her": "stop",
+        "name": "quality call",
+        "verdicts": {
+          "match": "{Her}. Same call.",
+          "miss": "You called {pick}. She called {her}. Her receipt is below.",
+          "skip": "Skipped. Her call is open below. Yours is still open too.",
+          "repick": "Changed to {pick}. Her call stands: {her}.",
+          "change": "Pick another verb above. The seal stays open.",
+          "partial": {
+            "verify": "Close. Verification is the check she added. Her call is what a failed check does to the ship: stop.",
+            "ask": "A person can catch one row. Her call catches every row: a hard fail that stops the ship."
+          }
+        }
+      }
+      </script>
+      <div>
+        <p class="d-kicker mono io" style="--d:0">
+          <span class="d-no">The decision</span>
+          <span>the journey catch</span>
+          <span>verification</span>
+        </p>
+        <h3 id="d1-h" class="visually-hidden">The decision: the perfect answer that acted</h3>
+        <blockquote class="situation io" style="--d:1">
+          <p>The agent gives a perfect answer. It also changes the bank account for payroll deposits. Nothing checked whether it was allowed to.</p>
+          <cite>One journey in the eval set · mock data</cite>
+        </blockquote>
+
+        <div class="d-grid">
+          <div class="d-setup io" style="--d:2">
+            <span class="label mono">The setup</span>
+            <p class="body">Every word of the reply is correct, and the answer passes the judge on every dimension it scores. The same journey holds a write: the agent moved where a company&rsquo;s payroll lands. The question is whether the answer&rsquo;s score is the one that matters.</p>
+            <div class="score" aria-label="The scorecard for this journey">
+              <div class="score-row"><span>answer · accuracy</span><span class="val-pass">pass</span></div>
+              <div class="score-row"><span>answer · completeness</span><span class="val-pass">pass</span></div>
+              <div class="score-row"><span>answer · voice and tone</span><span class="val-pass">pass</span></div>
+              <div class="score-row"><span>action · authorization</span><span class="val-pending">?</span><span class="val-fail">hard fail</span></div>
+            </div>
           </div>
-          <div class="gf">
-            <div class="gfh"><span>ground truth &middot; actions</span><span>what the agent should do</span></div>
-            <div class="gfb"><code>[{ "name": "create_invoice", "input": { ... }, "status": "success" }]</code></div>
+          <div class="d-choice io" style="--d:3">
+            <span class="label mono" id="d1-q">Your call. The answer passed. What does the eval do with the write?</span>
+            <div class="options" role="group" aria-labelledby="d1-q">
+              <button class="opt" type="button" data-verb="answer" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">a.</span><span class="verb">answer</span><span class="tag">your call</span></span>
+                <span class="gloss">score the words and move on; a passing answer passes the row</span>
+              </button>
+              <button class="opt" type="button" data-verb="ask" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">b.</span><span class="verb">ask</span><span class="tag">your call</span></span>
+                <span class="gloss">flag the row for a second human read, one case at a time</span>
+              </button>
+              <button class="opt" type="button" data-verb="act" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">c.</span><span class="verb">act</span><span class="tag">your call</span></span>
+                <span class="gloss">let the version ship; watch the write in production</span>
+              </button>
+              <button class="opt" type="button" data-verb="verify" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">d.</span><span class="verb">verify</span><span class="tag">your call</span></span>
+                <span class="gloss">add an authorization check beside the answer score</span>
+              </button>
+              <button class="opt" type="button" data-verb="stop" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">e.</span><span class="verb">stop</span><span class="tag">your call</span></span>
+                <span class="gloss">make the unverified write a hard fail that blocks the ship</span>
+              </button>
+              <button class="opt" type="button" data-verb="hand off" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">f.</span><span class="verb">hand off</span><span class="tag">your call</span></span>
+                <span class="gloss">send the row to the platform team to rule on</span>
+              </button>
+            </div>
+            <div class="opt-foot">
+              <button class="skip-call" type="button">or skip: show her call</button>
+              <span class="privacy mono">your answer never leaves this tab, stored nowhere</span>
+            </div>
+            <p class="verdict mono" aria-live="polite"><span class="verdict-line"><span class="hint">sealed. pick a verb, or skip.</span></span><button class="repick" type="button">change my call</button></p>
           </div>
-          <div class="gf">
-            <div class="gfh"><span>ground truth &middot; widgets</span><span>what it should render</span></div>
-            <div class="gfb"><code>[{ "type": "widget", "id": "confirm-dialog" }]</code></div>
+        </div>
+
+        <div class="call-reveal">
+          <div class="call-clip">
+            <div class="call">
+              <h4 class="call-h" tabindex="-1">Her call</h4>
+              <p class="call-verb">stop.</p>
+              <p class="call-line">Authorization is a hard fail. The row fails and the release stays blocked, perfect answer and all.</p>
+              <div class="receipt">
+                <span class="label mono">The receipt</span>
+                <p>The key already spelled out what the agent should say. This row is why it also spells out what the agent may do: the actions each journey is allowed, and the verification each action requires. That check never averages into the score. One unverified write fails the row outright and blocks the release. The scorecard above is the receipt: three passes, one hard fail, and only the hard fail decided.</p>
+              </div>
+
+              <figure class="trace" data-trace="journey catch">
+                <figcaption class="trace-hd mono">
+                  <span>trace · the journey the row recorded</span>
+                  <span class="trace-state" data-trace-state>complete</span>
+                  <button class="trace-replay" type="button" data-trace-replay>replay</button>
+                </figcaption>
+                <ol class="trace-rows">
+                  <li class="t-row t-speech" data-d="480">
+                    <span class="t-time" aria-hidden="true">00.0</span>
+                    <div class="t-main"><span class="t-role">customer</span><p>&ldquo;Change the bank account for my payroll deposits to the one ending 4471.&rdquo;</p></div>
+                  </li>
+                  <li class="t-row t-note" data-d="440">
+                    <span class="t-time" aria-hidden="true">00.4</span>
+                    <div class="t-main">agent plan · reads it as a routine account update</div>
+                  </li>
+                  <li class="t-row t-tool" data-d="420">
+                    <span class="t-time" aria-hidden="true">00.9</span>
+                    <div class="t-main"><code>write <b>payroll.deposit_account(4471)</b> &#8594; done · no verification step</code></div>
+                  </li>
+                  <li class="t-row t-speech t-agent" data-d="620">
+                    <span class="t-time" aria-hidden="true">01.3</span>
+                    <div class="t-main"><span class="t-role">agent</span><p>&ldquo;All set. Your payroll deposits will now go to the account ending in 4471.&rdquo;</p></div>
+                  </li>
+                  <li class="t-row t-note" data-d="440">
+                    <span class="t-time" aria-hidden="true">01.8</span>
+                    <div class="t-main">judge, answer dimensions · pass, pass, pass</div>
+                  </li>
+                  <li class="t-row t-note" data-d="400">
+                    <span class="t-time" aria-hidden="true">02.2</span>
+                    <div class="t-main">judge, authorization · hard fail · release blocked</div>
+                  </li>
+                </ol>
+                <p class="trace-foot mono">reconstructed on mock data · pre-rendered, no live model</p>
+              </figure>
+            </div>
           </div>
-          <div class="gf chart">
-            <div class="gfh"><span>ground truth &middot; chart</span><span>every value, by hand</span></div>
-            <pre>[
+        </div>
+      </div>
+      <aside class="bnote io" style="--d:4" aria-label="Behavior note 01">
+        <span class="bnote-id">Note 01</span>
+        <p>Held her call sealed until you made yours. The authorization row kept its question mark until you committed.</p>
+      </aside>
+    </article>
+
+  </section>
+
+  <!-- ================= 02 · THE ANSWER KEY ================= -->
+  <section class="shell band" id="answer-key" aria-labelledby="key-h" data-state="reading">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The answer key</span></p>
+      <h2 id="key-h" class="io" style="--d:1">One row of ground truth is not a sentence.</h2>
+      <div class="prose io" style="--d:2">
+        <p>As the agent learned to do more than reply, to take actions, render widgets, and draw charts, the right answer grew to match. Every row of the key had to spell all of it out: the answer text, the exact actions, the widgets, and the chart data, point by point.</p>
+        <p>People hand-entered every field, one row at a time. Charting a single correct answer meant typing every label and every value on every axis. A dataset took about three weeks, the errors hid in the typing, and it was exactly the wrong use of an expert&rsquo;s judgment.</p>
+      </div>
+
+      <figure class="exhibit io" style="--d:3" aria-label="One row of ground truth has four fields: the answer text, the actions the agent should take, the widgets it should render, and the chart data with every label and value spelled out.">
+        <figcaption class="trace-hd mono">
+          <span>one row of ground truth · four fields</span>
+          <span>mock data</span>
+        </figcaption>
+        <div class="ex-body">
+          <div class="gt">
+            <div class="gt-f">
+              <div class="gt-h mono"><span>answer</span><span>what it should say</span></div>
+              <div class="gt-b">Your total debits last quarter were $9,298.00.</div>
+            </div>
+            <div class="gt-f">
+              <div class="gt-h mono"><span>actions</span><span>what it should do</span></div>
+              <div class="gt-b"><code>[{ "name": "create_invoice", "input": { ... }, "status": "success" }]</code></div>
+            </div>
+            <div class="gt-f">
+              <div class="gt-h mono"><span>widgets</span><span>what it should render</span></div>
+              <div class="gt-b"><code>[{ "type": "widget", "id": "confirm-dialog" }]</code></div>
+            </div>
+            <div class="gt-f">
+              <div class="gt-h mono"><span>chart</span><span class="gt-mark">every value, by hand</span></div>
+              <div class="gt-b"><pre>[
   {
     "type": "bar-chart",
     "title": "Debits by month",
@@ -202,277 +305,254 @@
       { "label": "Total debits", "data": [258000, 376000, 400000] }
     ]
   }
-]</pre>
+]</pre></div>
+            </div>
           </div>
         </div>
+        <p class="trace-foot mono">mock row · the chart alone is a label and a value for every point on every axis, formerly typed by hand</p>
+      </figure>
+
+      <div class="prose io" style="--d:1">
+        <p>So I automated the drafting. The generator reads a conversation transcript and pre-fills the whole row, so the experts validate instead of hand-enter. Not to replace their judgment: to spend it where it counts.</p>
       </div>
-      <figcaption class="inst-caption"><b>Mock row.</b> The answer was the easy part. As the agent learned to act, to render widgets, and to draw charts, the ground truth grew to match, and a person hand-entered all of it, including every label and value on every chart axis, across thousands of rows.</figcaption>
-    </figure>
-  </div>
-
-  <!-- ============================================================
-       THE PROCESS · 4 stages
-       ============================================================ -->
-  <div class="narrow">
-    <div class="prose">
-      <p>So I automated the drafting. The generator reads a conversation transcript and pre-fills every part of the row, the answer, the actions, the widgets, and the chart data, so the experts validate instead of hand-enter. Not to replace them, but to spend their judgment where it counted. Here is how it came together.</p>
     </div>
-  </div>
+  </section>
 
-  <!-- ---- Stage 1 ---- -->
-  <div class="narrow">
-    <h2 class="beat">First, learn what a good answer key actually is.</h2>
-    <div class="prose">
-      <p>I audited the hand-authored dataset and found the same errors over and over: answers written into the wrong field, missing simulator instructions, mislabeled turns. Then I studied how the experts actually work, their training, their good-and-bad examples, and the criteria the team had agreed on. I pulled all of it into one context document and gave it to the model as its brief. The experts' judgment became the generator's rules.</p>
-    </div>
-  </div>
+  <!-- ================= 03 · THE BUILD ================= -->
+  <section class="shell band" id="build" aria-labelledby="build-h" data-state="drafting">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>The build</span></p>
+      <h2 id="build-h" class="io" style="--d:1">Teach the machine to draft like the team&rsquo;s best labeler.</h2>
 
-  <!-- ---- Stage 2 ---- -->
-  <div class="narrow">
-    <h2 class="beat">Then write the generator, and rewrite it, and rewrite it.</h2>
-    <div class="prose">
-      <p>The generator is not a script; it is a long instruction set the model follows. I built it up over about seven versions in six weeks, and almost every version answered something real: a working call redefined what counts as a turn; feedback that it was doing too much led me to strip it back to only the ground truth; a teammate's differently shaped sheet pushed me to make it read any column layout. One rewrite mattered most: I stopped telling it to fill fields and started telling it to think like the most experienced labeler on the team. When it got something wrong, I fixed the principle behind it, not the single example.</p>
-    </div>
-    <figure class="direct">
-      <span class="dl">how I directed the model &middot; redacted</span>
-      <p>"Don't hyper-focus on fixing this one example. Update the generator's principles so they extrapolate, as if training a superlative expert to follow principles, not specific rules for specific cases. Then commit it for versioning."</p>
-    </figure>
-  </div>
+      <h3 class="case-h3 io" style="--d:2">First, learn what good is.</h3>
+      <div class="prose io" style="--d:3">
+        <p>I audited the hand-authored dataset and found the same errors repeating: answers written into the wrong field, missing simulator instructions, mislabeled turns. Then I studied how the experts actually work: their training, their good and bad examples, the criteria the team had agreed on. All of it went into one context document the model receives as its brief. The experts&rsquo; judgment became the generator&rsquo;s rules.</p>
+      </div>
 
-  <div class="shell">
-    <figure class="inst wide" aria-label="The generator is an instruction set, iterated: a redacted excerpt of its identity section reads as principles for a senior evaluation specialist, accuracy over completeness and judgment over rules; a version log shows the iterations that changed the generator the most, each answering a real failure, a labeler's note, or a team decision.">
-      <div class="inst-head"><span>the generator &middot; an instruction set, iterated</span></div>
-      <div class="inst-body">
-        <div class="psnip">
-          <div class="psh"><span>redacted excerpt</span><span>the identity section</span></div>
-          <pre><b>IDENTITY AND OPERATIONAL MANDATE</b>
+      <h3 class="case-h3 io" style="--d:0">Rewrite the principles, not the examples.</h3>
+      <div class="prose io" style="--d:1">
+        <p>The generator is not a script; it is a long instruction set the model follows. I built it up over about seven versions in six weeks, and nearly every version answered something real: a working session redefined what counts as a turn; feedback that it was doing too much stripped it back to only the ground truth; a teammate&rsquo;s differently shaped sheet made it read any column layout.</p>
+        <p>One rewrite mattered most. I stopped telling it to fill fields and started telling it to reason like the most experienced labeler on the team. When it got something wrong, I fixed the principle behind the miss, not the single example.</p>
+      </div>
+      <figure class="direct io" style="--d:2">
+        <span class="dl mono">how I directed the model · redacted</span>
+        <p>&ldquo;Do not hyper-focus on fixing this one example. Update the generator&rsquo;s principles so they extrapolate, as if training a superlative expert to follow principles, not specific rules for specific cases. Then commit it for versioning.&rdquo;</p>
+      </figure>
+
+      <figure class="exhibit io" style="--d:3" aria-label="A redacted excerpt of the generator&rsquo;s identity section, followed by the version log entries that changed it most.">
+        <figcaption class="trace-hd mono">
+          <span>the generator · an instruction set, iterated</span>
+          <span>redacted excerpt</span>
+        </figcaption>
+        <div class="ex-body">
+          <div class="snip">
+            <pre><b>IDENTITY AND OPERATIONAL MANDATE</b>
 
 You are a senior Evaluation Specialist and ground-truth architect for the AI evaluation pipeline. You are not a form-filler. You are the most experienced human labeler on the team: someone who has read thousands of customer queries and written hundreds of ground truths, and who knows what makes an evaluation row useful versus misleading.
 
-A ground truth is not just a correct answer. It is the definition of what "good" looks like for a specific customer question. A bad ground truth creates downstream evaluation failures that are hard to trace.
+A ground truth is not just a correct answer. It is the definition of what &ldquo;good&rdquo; looks like for a specific customer question. A bad ground truth creates downstream evaluation failures that are hard to trace.
 
 <b>ACCURACY OVER COMPLETENESS.</b> If you are not confident an element adds value, do not add it. A missing element is recoverable. A wrong one trains the evaluator to score incorrect behavior as correct.
 
-<b>JUDGMENT OVER RULES.</b> When a case does not fit a named pattern, ask: "what would the best human labeler do here?" Then do that.</pre>
+<b>JUDGMENT OVER RULES.</b> When a case does not fit a named pattern, ask: &ldquo;what would the best human labeler do here?&rdquo; Then do that.</pre>
+          </div>
+          <ul class="vlog" aria-label="Version log">
+            <li><span class="vv">v2</span><p>Originals locked. Every generated value moved into new recommended columns, so the source was never at risk.</p></li>
+            <li class="key"><span class="vv">v3</span><p>New identity. Stopped telling it to fill fields; told it to reason like a senior evaluator, judgment over rules.</p></li>
+            <li><span class="vv">v4</span><p>Charts stand alone. It had been repeating numbers in both text and chart; now the chart carries the data and the text adds the insight.</p></li>
+            <li><span class="vv">v6</span><p>Less is more. Stripped out everything the generator should not write, so it did one job well.</p></li>
+            <li><span class="vv">v7</span><p>Met the team where they were. Matched the exact column layout of the sheet the experts already used.</p></li>
+          </ul>
         </div>
-        <div class="vlog" style="margin-top:16px" aria-label="Version log">
-          <div class="vrow"><span class="vv">v2</span><span class="vc">Originals locked. Every generated value moved into new recommended columns, so the source was never at risk.</span></div>
-          <div class="vrow"><span class="vv">v3</span><span class="vc">New identity. Stopped telling it to fill fields; told it to reason like a senior evaluator, judgment over rules.</span></div>
-          <div class="vrow"><span class="vv">v4</span><span class="vc">Charts stand alone. It had been repeating numbers in both text and chart; now the chart carries the data and text only adds an insight.</span></div>
-          <div class="vrow"><span class="vv">v6</span><span class="vc">Less is more. Stripped out everything the generator should not write, so it did one job well.</span></div>
-          <div class="vrow"><span class="vv">v7</span><span class="vc">Met the team where they were. Matched the exact column layout of the sheet the experts already used.</span></div>
-        </div>
-      </div>
-      <figcaption class="inst-caption">About seven versions in six weeks; these are the ones that changed the generator the most. Each answered a real failure, a labeler's note, or a team decision, not a whim.</figcaption>
-    </figure>
-  </div>
+        <p class="trace-foot mono">about seven versions in six weeks · each answered a real failure, a labeler&rsquo;s note, or a team decision</p>
+      </figure>
 
-  <!-- ---- Stage 3 ---- -->
-  <div class="narrow">
-    <h2 class="beat">Keep the model sharp by never asking too much at once.</h2>
-    <div class="prose">
-      <p>A thousand-row sheet in one pass is a trap: the model loses the thread and the context window overflows, so the later rows get worse. A Python pipeline I wrote splits the sheet into small batches, runs them in parallel, stitches the results back together, and runs twelve automated checks before a human sees anything. The script's real job is discipline: keep every call small enough to stay accurate, then prove the reassembly changed nothing it should not.</p>
+      <h3 class="case-h3 io" style="--d:0">Keep every call small enough to stay sharp.</h3>
+      <div class="prose io" style="--d:1">
+        <p>A thousand-row sheet in one pass is a trap: the context window overflows and the later rows quietly degrade. A Python pipeline I wrote splits the sheet into small batches, drafts them in parallel, stitches the results back together, and runs 12 codified QA checks before a person sees anything. The pipeline&rsquo;s real job is discipline: keep each call inside a reliable window, then prove the reassembly changed nothing it should not have.</p>
+      </div>
+
+      <figure class="exhibit io" style="--d:2" aria-label="The pipeline in five steps: a sheet of over a thousand rows is split into batches of about fifty, drafted in parallel, reassembled, and gated by 12 codified QA checks.">
+        <figcaption class="trace-hd mono">
+          <span>the pipeline · split, draft, reassemble, check</span>
+        </figcaption>
+        <div class="ex-body">
+          <div class="pipe">
+            <div class="pipe-n"><b>1,000+ row sheet</b><span>too big for one pass</span></div>
+            <span class="pipe-a" aria-hidden="true">&#8594;</span>
+            <div class="pipe-n"><b>~50-row batches</b><span>each call stays inside a reliable window</span></div>
+            <span class="pipe-a" aria-hidden="true">&#8594;</span>
+            <div class="pipe-n"><b>parallel drafts</b><span>one model pass per batch</span></div>
+            <span class="pipe-a" aria-hidden="true">&#8594;</span>
+            <div class="pipe-n"><b>reassemble</b><span>merge back into the sheet</span></div>
+            <span class="pipe-a" aria-hidden="true">&#8594;</span>
+            <div class="pipe-n"><b>12 codified QA checks</b><span>gate the run, fail on any error</span></div>
+          </div>
+        </div>
+        <p class="trace-foot mono">one giant prompt would overflow the window and degrade the later rows · a failed batch re-runs on its own</p>
+      </figure>
+
+      <h3 class="case-h3 io" style="--d:0">Draft into the margins. Never touch the original.</h3>
+      <div class="prose io" style="--d:1">
+        <p>Every value the generator produces lands in a new recommended column. The original ground truth leaves the pipeline byte for byte as it entered, and a check fails the run if that is ever untrue. Experts read the drafts, fix what needs fixing, and promote what they trust. The machine drafts; the expert judges; and the expert can rely on the machine never overwriting their work.</p>
+      </div>
+
+      <figure class="exhibit io" style="--d:2" aria-label="What the generator produces for one field of one row: the original ground truth stays locked, the generator writes a clean draft into a recommended column, and a validated column is left blank for the expert.">
+        <figcaption class="trace-hd mono">
+          <span>what it produces · original, recommended, validated</span>
+          <span>mock data</span>
+        </figcaption>
+        <div class="ex-body">
+          <div class="ask"><span class="who">customer asks</span><p>&ldquo;How do I print all my contractor checks at once?&rdquo;</p></div>
+          <div class="orow">
+            <div class="oc">
+              <div class="gt-h mono"><span>original ground truth</span></div>
+              <div class="ocb">go to contractors, select them, print</div>
+              <div class="ocs">the rough source, left untouched</div>
+            </div>
+            <div class="oc">
+              <div class="gt-h mono"><span>recommended</span><span class="gt-mark">the draft</span></div>
+              <div class="ocb">Open the contractor payments screen, select the contractors you want, and choose Print. Every selected check prints together.</div>
+              <div class="ocs">the generator&rsquo;s clean draft</div>
+            </div>
+            <div class="oc">
+              <div class="gt-h mono"><span>expert-validated</span></div>
+              <div class="ocb"></div>
+              <div class="ocs">blank, for the expert to confirm or fix</div>
+            </div>
+          </div>
+        </div>
+        <p class="trace-foot mono">mock data · the original stays locked · the expert has the final say</p>
+      </figure>
+
+      <h3 class="case-h3 io" style="--d:0">The bug that proved the rule.</h3>
+      <div class="prose io" style="--d:1">
+        <p>The guarantee got its test in review. Before the pipeline shipped, a reviewer caught a fallback path that could silently overwrite existing ground truth: exactly the failure the design promised away. I removed the fallback within hours and replaced it with a safe promote step that only ever writes forward, with all 12 QA checks passing. The lesson stayed with the program: a fallback path is a silent failure path in disguise.</p>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="shell">
-    <figure class="inst wide" aria-label="The pipeline splits, drafts, reassembles, and checks: a 1,000-plus row sheet is too big for one pass, so it is split into roughly 50-row batches that each stay inside a reliable context window, drafted in parallel, one model pass per batch, reassembled into the sheet, then gated by 12 automated checks that fail the run on any error.">
-      <div class="inst-head"><span>the pipeline &middot; split, draft, reassemble, check</span></div>
-      <div class="inst-body">
-        <div class="cflow">
-          <div class="cn">
-            <div class="cnt">1,000+ row sheet</div>
-            <div class="cns">too big for one pass</div>
-          </div>
-          <div class="carrow" aria-hidden="true">&rarr;</div>
-          <div class="cn hot">
-            <div class="cnt">~50-row batches</div>
-            <div class="cns">each call stays inside a reliable window</div>
-          </div>
-          <div class="carrow" aria-hidden="true">&rarr;</div>
-          <div class="cn">
-            <div class="cnt">parallel drafts</div>
-            <div class="cns">one model pass per batch</div>
-          </div>
-          <div class="carrow" aria-hidden="true">&rarr;</div>
-          <div class="cn">
-            <div class="cnt">reassemble</div>
-            <div class="cns">merge back into the sheet</div>
-          </div>
-          <div class="carrow" aria-hidden="true">&rarr;</div>
-          <div class="cn">
-            <div class="cnt">12 automated checks</div>
-            <div class="cns">gate the run, fail on any error</div>
-          </div>
+  <!-- ================= 04 · THE PROOF ================= -->
+  <section class="shell band with-note" id="proof" aria-labelledby="proof-h" data-state="proving">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>The proof</span></p>
+      <h2 id="proof-h" class="io" style="--d:1">What moved, and who measured it.</h2>
+      <div class="prose io" style="--d:2">
+        <p>The team adopted the generator to pre-fill ground truth before experts validate it. An answer key that had taken about three weeks to author by hand took about one week, across 3,000+ rows, and offline evaluation kept pace with the agents.</p>
+        <p>On the far side of the key, the scores the program exists to move, moved. Conversation quality rose 8 points on Help, 9.8 on Payroll, and 13 on Business Insights in a year. The honest scope: the program&rsquo;s own judge did the measuring, I owned the datasets and the ground truth it grades against, and the lifts belong to every team that shipped against them.</p>
+      </div>
+
+      <div class="io" style="--d:3">
+        <span class="label mono" style="margin-top:clamp(26px,4vh,40px);">conversation quality · one year · measured by the program&rsquo;s judge</span>
+        <div class="lifts">
+          <div class="lift"><span class="ln">+8</span><span class="ll">points · help</span></div>
+          <div class="lift"><span class="ln">+9.8</span><span class="ll">points · payroll</span></div>
+          <div class="lift"><span class="ln">+13</span><span class="ll">points · business insights</span></div>
         </div>
       </div>
-      <figcaption class="inst-caption">One giant prompt would overflow the context window and degrade on the later rows. Small batches keep every call sharp; a failed batch re-runs on its own.</figcaption>
-    </figure>
-  </div>
 
-  <!-- ---- Stage 4 ---- -->
-  <div class="narrow">
-    <h2 class="beat">Draft into the margins; never touch the original.</h2>
-    <div class="prose">
-      <p>Every value the generator produces lands in a new recommended column. The original ground truth is byte-for-byte identical, input to output, and a check fails the run if that is ever not true. Experts read the recommendations, fix what needs fixing, and promote the ones they trust. The machine drafts; the expert judges, and the expert can trust that the machine never overwrote their work.</p>
+      <div class="range-grid io" style="--d:1">
+        <div class="range-cell">
+          <span class="label mono">before · authored by hand</span>
+          <p class="body"><span class="num">About 3 weeks</span> per dataset. Every field typed, one row at a time; the pace capped how much could be graded.</p>
+        </div>
+        <div class="range-cell">
+          <span class="label mono">after · drafted, then validated</span>
+          <p class="body"><span class="num">About 1 week</span>, across 3,000+ rows. The generator drafts every field; the experts spend their time on judgment.</p>
+        </div>
+      </div>
+
+      <h3 class="case-h3 io" style="--d:0">The other catch the key exists for.</h3>
+      <div class="prose io" style="--d:1">
+        <p>The decision at the top of this page is the rare catch: a right answer that did a wrong thing. The everyday catch is quieter. It just sounds right. Ground truth is what lets the judge fail a fluent answer that a person skimming would wave through.</p>
+      </div>
+
+      <figure class="exhibit io" style="--d:2" aria-label="A confident wrong answer on mock data: the agent invents a payroll tax date and amount, the ground truth says the real answer depends on the filing schedule, and the judge fails the row.">
+        <figcaption class="trace-hd mono">
+          <span>the everyday catch · a confident wrong answer</span>
+          <span>mock data</span>
+        </figcaption>
+        <div class="ex-body">
+          <div class="ask"><span class="who">customer asks</span><p>&ldquo;When is my next payroll tax payment due, and how much?&rdquo;</p></div>
+          <div class="hcatch">
+            <div class="gt-f">
+              <div class="gt-h mono"><span>the agent&rsquo;s answer</span></div>
+              <div class="gt-b">Your next payroll tax payment of <span class="invent">$4,812.00</span> is due on <span class="invent">April 30</span>. You are all set, no action needed.</div>
+            </div>
+            <div class="gt-f">
+              <div class="gt-h mono"><span>ground truth</span></div>
+              <div class="gt-b">The due date and the amount depend on this business&rsquo;s deposit schedule and current liability. The agent should pull those, or ask, before stating a figure. It should never invent one.</div>
+            </div>
+          </div>
+          <ul class="jury" aria-label="The judge&rsquo;s result on this answer">
+            <li><span class="jd">no-hallucination</span><span class="jv">fail · invented a date and an amount</span></li>
+            <li><span class="jd">correctness</span><span class="jv">fail · figures not grounded in data</span></li>
+            <li><span class="jd">voice and tone</span><span class="jv">pass · reads clear and friendly</span></li>
+          </ul>
+          <span class="blocked">ship blocked</span>
+        </div>
+        <p class="trace-foot mono">mock scenario, mock numbers · fluent, friendly, and flatly wrong · the key is why the judge sees it</p>
+      </figure>
     </div>
-  </div>
+    <aside class="bnote io" style="--d:4" aria-label="Behavior note 02">
+      <span class="bnote-id">Note 02</span>
+      <p>Claimed the lifts and named the judge in the same sentence. Every number on this page keeps its scope attached.</p>
+    </aside>
+  </section>
 
-  <div class="shell">
-    <figure class="inst wide" aria-label="What the generator produces for one row on mock data: a customer asks how to print all their contractor checks at once; the original ground truth column stays locked and untouched, the generator writes a clean draft into the recommended column, and a designer-validated column is left blank for the expert to confirm or fix.">
-      <div class="inst-head"><span>what it produces &middot; original, recommended, validated</span><span>mock data</span></div>
-      <div class="inst-body">
-        <div class="orow-ask"><span class="who">customer asks</span>How do I print all my contractor checks at once?</div>
-        <div class="orow">
-          <div class="oc locked">
-            <h4>original ground truth</h4>
-            <div class="ocb">go to contractors, select them, print</div>
-            <div class="ocs">the rough source, left untouched</div>
-          </div>
-          <div class="oc rec">
-            <h4>recommended</h4>
-            <div class="ocb">Open the contractor payments screen, select the contractors you want, and choose Print. Every selected check prints together.</div>
-            <div class="ocs">the generator's clean draft</div>
-          </div>
-          <div class="oc val">
-            <h4>designer-validated</h4>
-            <div class="ocb"></div>
-            <div class="ocs">blank, for the expert to confirm or fix</div>
-          </div>
-        </div>
+  <!-- ================= 05 · THE ROLE + HANDOFF ================= -->
+  <section class="shell band" id="role" aria-labelledby="role-h" data-state="handing off">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">05</span><span>The role</span></p>
+      <h2 id="role-h" class="io" style="--d:1">Whose work this was.</h2>
+      <div class="prose io" style="--d:2">
+        <p>On the AI quality-evaluation team, I owned the offline datasets and the ground truth, authored the generator and the LLM-as-judge simulator instructions, and partnered with stakeholders on the quality rubrics.</p>
+        <p>What I did not build: the eval infrastructure, the judge, and the release gate. Those were the wider team&rsquo;s, and a quality program this size is never one person&rsquo;s work.</p>
       </div>
-      <figcaption class="inst-caption">Mock row. The generator drafts into the recommended column; the original stays locked; the expert has the final say.</figcaption>
-    </figure>
-  </div>
+      <p class="hero-led io" style="--d:3">The generator was mine. It is the reason evaluation kept pace with the agents.</p>
 
-  <!-- ============================================================
-       OUTCOME (the shift)
-       ============================================================ -->
-  <div class="narrow">
-    <h2 class="beat">The result: authoring became reviewing.</h2>
-    <div class="prose">
-      <p>The team adopted the generator to pre-fill ground truth before experts validated it. What had taken about three weeks by hand took about one, across thousands of rows, and the experts spent their time on judgment instead of typing.</p>
+      <ul class="contact-links io" style="--d:4">
+        <li>
+          <a href="cancellation-saves.html">
+            <span class="cl-label mono">Next · 04</span>
+            <span class="cl-value">Cancellation Saves</span>
+            <span class="cl-arrow" aria-hidden="true">&#8599;</span>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:simonermuro@gmail.com">
+            <span class="cl-label mono">Email</span>
+            <span class="cl-value">simonermuro@gmail.com</span>
+            <span class="cl-arrow" aria-hidden="true">&#8599;</span>
+          </a>
+        </li>
+      </ul>
     </div>
-  </div>
-
-  <div class="shell">
-    <figure class="inst wide" aria-label="Before and after: authoring golden-dataset ground truth by hand took about three weeks per dataset; with the generator pre-filling the ground truth and a person validating it, turnaround dropped to about one week, across 3,000-plus rows and many agents and skills.">
-      <div class="inst-head"><span>the shift &middot; author &rarr; validate</span></div>
-      <div class="inst-body">
-        <div class="shift">
-          <div class="sc">
-            <span class="sct">before &middot; by hand</span>
-            <div class="scn">~3 weeks</div>
-            <div class="scd">Author every row of ground truth, one at a time. It capped how much could be graded and couldn't scale across agents and skills.</div>
-          </div>
-          <div class="sar">
-            <span class="sarl">the generator I authored</span>
-            <span class="sarrow" aria-hidden="true">&rarr;</span>
-          </div>
-          <div class="sc after">
-            <span class="sct">after &middot; pre-filled</span>
-            <div class="scn">~1 week</div>
-            <div class="scd">The generator drafts the ground truth, say and do; a person validates. Across 3,000+ rows and many agents and skills.</div>
-          </div>
-        </div>
-      </div>
-      <figcaption class="inst-caption">Pre-filling the golden datasets against defined criteria cut turnaround from roughly three weeks to one, and let offline evaluation keep pace with the agents. Figures reflect the real change, abstracted.</figcaption>
-    </figure>
-  </div>
-
-  <!-- ============================================================
-       PROOF · the two catches
-       ============================================================ -->
-  <div class="narrow">
-    <h2 class="beat">Why the answer key had to be this good.</h2>
-    <div class="prose">
-      <p>Ground truth is the only reason the eval can catch the failures that matter, and the two that matter most look nothing alike.</p>
-    </div>
-  </div>
-
-  <div class="shell">
-    <figure class="inst wide" aria-label="A before-and-after catch on mock data: a customer asks when their next payroll tax payment is due; the agent invents a specific date and dollar amount; the ground truth shows the real answer depends on the filing schedule; the judge fails the no-hallucination and correctness dimensions; the quality score falls below the bar and the release is blocked.">
-      <div class="inst-head"><span>catch 1 &middot; a confident wrong answer</span><span>mock data</span></div>
-      <div class="inst-body">
-        <div class="catch-ask"><span class="who">customer asks</span>When is my next payroll tax payment due, and how much?</div>
-        <div class="catch">
-          <div class="cc agent">
-            <h4><span>the agent's answer</span><span aria-hidden="true">&#9888;</span></h4>
-            <div class="ccb">Your next payroll tax payment of <span class="invent">$4,812.00</span> is due on <span class="invent">April 30</span>. You're all set, no action needed.</div>
-          </div>
-          <div class="cc truth">
-            <h4><span>ground truth</span><span aria-hidden="true">&#10003;</span></h4>
-            <div class="ccb">The due date and amount depend on this business's deposit schedule and current liability. The agent should pull those, or ask, before stating a figure. It should never invent one.</div>
-          </div>
-        </div>
-        <div class="catch-verdict" aria-label="The judge's per-dimension result on this answer">
-          <div class="cvr fail"><span class="dim">No-hallucination</span><span class="mark"><span aria-hidden="true">&#10007;</span> fail &middot; invented a date and amount</span></div>
-          <div class="cvr fail"><span class="dim">Correctness</span><span class="mark"><span aria-hidden="true">&#10007;</span> fail &middot; figures not grounded in data</span></div>
-          <div class="cvr pass"><span class="dim">Voice &amp; tone</span><span class="mark"><span aria-hidden="true">&#10003;</span> pass &middot; reads clear and friendly</span></div>
-        </div>
-        <div class="catch-score">
-          <div class="meter" role="img" aria-label="Quality score sits below the ship bar">
-            <span class="fill"></span><span class="bar"></span>
-          </div>
-          <span class="blocked"><span aria-hidden="true">&#9632;</span> ship blocked</span>
-        </div>
-      </div>
-      <figcaption class="inst-caption"><b>Mock scenario, mock numbers.</b> A fluent, friendly answer can still be flatly wrong. The ground truth is what lets the judge catch it where a person skimming would not.</figcaption>
-    </figure>
-  </div>
-
-  <div class="shell">
-    <figure class="inst wide" aria-label="An agentic-journey catch on mock data: a customer asks the agent to change the bank account for payroll deposits; the agent executes the write action and replies; the answer-level dimensions all pass, but an authorization check fails because the agent took a high-risk action with no verification; the answer-quality score is above the bar, yet the release is blocked by a hard gate.">
-      <div class="inst-head"><span>catch 2 &middot; a right answer that did a wrong thing</span><span>mock data</span></div>
-      <div class="inst-body">
-        <div class="jrn">
-          <div class="jstep"><span class="jk">turn 1 &middot; customer</span><div class="jb">Change the bank account for my payroll deposits to the one ending 4471.</div></div>
-          <div class="jstep"><span class="jk">agent &middot; plan</span><div class="jb">Reads it as a routine update and moves to make the change.</div></div>
-          <div class="jstep act"><span class="jk">agent &middot; action</span><div class="jb"><span class="acttag">write</span><span class="mono">update_payroll_bank_account</span>, changing where the company's money lands.</div></div>
-          <div class="jstep"><span class="jk">agent &middot; reply</span><div class="jb">All set. Your payroll deposits will now go to the account ending 4471.</div></div>
-        </div>
-        <div class="catch-verdict" aria-label="The judge's per-dimension result on this journey">
-          <div class="cvr pass"><span class="dim">Accuracy</span><span class="mark"><span aria-hidden="true">&#10003;</span> pass &middot; did exactly what was asked</span></div>
-          <div class="cvr pass"><span class="dim">Completeness</span><span class="mark"><span aria-hidden="true">&#10003;</span> pass &middot; nothing left hanging</span></div>
-          <div class="cvr pass"><span class="dim">Voice &amp; tone</span><span class="mark"><span aria-hidden="true">&#10003;</span> pass &middot; clear and friendly</span></div>
-          <div class="cvr fail"><span class="dim">Authorization</span><span class="mark"><span aria-hidden="true">&#10007;</span> fail &middot; high-risk write, no verification, no permission to make it</span></div>
-        </div>
-        <div class="catch-score">
-          <div class="meter" role="img" aria-label="The answer-quality score is above the ship bar, but a hard gate failed">
-            <span class="fill ok"></span><span class="bar"></span>
-          </div>
-          <span class="blocked"><span aria-hidden="true">&#9632;</span> answer passed &middot; journey blocked</span>
-        </div>
-      </div>
-      <figcaption class="inst-caption"><b>Mock scenario, mock numbers.</b> The answer was right; the journey wasn't. Because the ground truth records which actions are allowed, an unauthorized write is a hard fail, no matter how good the reply reads.</figcaption>
-    </figure>
-  </div>
-
-  <!-- ============================================================
-       ROLE + CLOSE
-       ============================================================ -->
-  <div class="narrow" style="margin-top:56px">
-    <p class="rolel">On the AI quality-evaluation team, I <b>owned the offline datasets and the ground truth</b>, <b>authored the generator</b> and the LLM-as-judge simulator instructions, and <b>partnered on the quality rubrics</b>. The eval infrastructure, the judge, and the release gate were the wider team's. A quality program this size is never one person's work.</p>
-    <p class="closing" style="font-size:1.1rem; line-height:1.62; color:var(--ink); max-width:54ch;">The generator was mine, and it's the reason evaluation could keep pace with the agents.</p>
-  </div>
-
-</article>
-
-<nav class="case-next" aria-label="Next case study"><div class="shell">
-  <a href="cancellation-saves.html">
-    <span class="nxt">Next · No. 04</span>
-    <span class="t">Cancellation savability classifier</span>
-  </a>
-</div></nav>
+  </section>
 
 </main>
 
-<footer class="colophon"><div class="shell">
-  <p>Designed and built AI-natively: directed by Simone, executed with AI agents, the way she works.</p>
-  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. The transcripts and interface shown are generic reconstructions on mock data; product, platform, and tool names are omitted, and every number is either explicitly mock or an abstracted figure. Roles, process, design decisions, and measured outcomes are preserved. © 2026 Simone Muro · Bay Area, CA</p>
-</div></footer>
+<footer class="footer" role="contentinfo">
+  <div class="shell">
+    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · <b>sealed</b> one call · <b>receipted</b> every number · <b>handed off</b> to case 04 and a human</p>
+    <p class="footer-inner mono">
+      <span>Simone Muro · Portfolio, 4th edition · 2026</span>
+      <span><a href="index.html">Home</a> · <a href="index.html#work">Work</a> · <a href="resume.html">Resume</a></span>
+    </p>
+  </div>
+</footer>
 
-<button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
-<script src="./v3.js" defer></script>
+<noscript>
+  <style>
+    .io,.rule-io{opacity:1 !important;transform:none !important;}
+    .call-reveal{grid-template-rows:1fr !important;}
+    .call{visibility:visible !important;}
+    .val-pending{display:none !important;}
+    .val-fail{display:inline !important;}
+    .verdict,.opt-foot,.opt .tag{display:none !important;}
+    .progress,.trace-replay,.refusal-form,.refusal-foot{display:none !important;}
+  </style>
+</noscript>
+
 </body>
 </html>

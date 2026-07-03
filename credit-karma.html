@@ -1,270 +1,395 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Credit Karma: the prompt that rendered the page · Simone Muro</title>
-<meta name="description" content="A prompt-engineering rotation at Credit Karma. I owned the prompt behind a GenAI wallet-analysis surface where the model's structured output didn't feed the page, it was the page. The output-to-layout contract, a legal guardrail that lets the model reason over data it can never state, and a ten-profile evaluation grid." />
-<meta property="og:title" content="Credit Karma · Simone Muro" />
-<meta property="og:description" content="The prompt whose structured output rendered the screen. Production-track GenAI in regulated finance." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="./v3.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Case 06. A prompt engineering rotation at Credit Karma: production-track GenAI card recommendations in regulated finance. The model reasons over approval odds and never states them, and its structured output is the page.">
+<meta property="og:title" content="Credit Karma · Simone Muro">
+<meta property="og:description" content="Regulated-finance prompts: reason over the approval odds, never state them. The structured output is the page.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simonemuro.github.io/credit-karma.html">
+<meta name="twitter:card" content="summary">
+<title>Credit Karma · Simone Muro</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231e2bd0'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23ffffff' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="v4.css">
+<script src="v4.js" defer></script>
 <style>
-  /* ---------- phone mock: the rendered surface ---------- */
-  .stage { display: flex; justify-content: center; padding: 8px 0; }
-  .phone { width: 320px; max-width: 100%; border: 1px solid var(--hairline2); border-radius: 30px;
-    background: #fff; box-shadow: 0 18px 50px rgba(20,30,40,.10); overflow: hidden;
-    font-family: var(--sans, "Geist", system-ui, sans-serif); color: #18324a; }
-  .ph-status { display: flex; justify-content: space-between; align-items: center; padding: 12px 22px 8px; font-size: 12px; font-weight: 600; color: #111; }
-  .ph-status .dots { letter-spacing: 2px; }
-  .ph-hd { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 4px 18px 12px; border-bottom: 1px solid #eef0f2; font-weight: 600; font-size: 15px; color: #1a1f24; }
-  .ph-hd .spark { color: var(--persimmon); font-size: 15px; }
-  .ph-bd { padding: 14px 18px 18px; font-size: 13.5px; line-height: 1.45; }
-  .ph-disc { font-size: 11px; color: #9aa3ab; margin: 0 0 12px; display: flex; align-items: center; gap: 5px; }
-  .ph-sum { border: 1px solid #e7eaed; border-radius: 14px; padding: 12px 14px; margin-bottom: 16px; }
-  .ph-sum h5 { margin: 0 0 10px; font-size: 15px; font-weight: 700; color: #15202b; }
-  .ph-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; border-top: 1px solid #eef0f2; padding-top: 10px; }
-  .ph-grid3 span { font-size: 10.5px; color: #8b949c; line-height: 1.25; }
-  .ph-grid3 b { display: block; font-size: 15px; color: #15202b; margin-top: 4px; }
-  .ph-h { font-size: 19px; font-weight: 800; color: #15202b; margin: 6px 0 12px; }
-  .ph-grp { font-size: 14.5px; font-weight: 700; color: #15202b; margin: 16px 0 9px; }
-  .ph-li { display: flex; gap: 9px; margin-bottom: 11px; }
-  .ph-li .mk { flex: 0 0 auto; font-weight: 800; line-height: 1.3; }
-  .ph-li .mk.up { color: var(--persimmon); }
-  .ph-li .mk.ok { color: #2a9d5c; }
-  .ph-li p { margin: 0; }
-  .ph-li b { color: #15202b; }
-  .ph-chip { display: inline-flex; align-items: center; gap: 7px; border: 1px solid #d9dee2; border-radius: 22px; padding: 8px 16px; font-weight: 600; font-size: 13.5px; margin-top: 4px; color: #1a1f24; }
-  .ph-chip .spark { color: var(--persimmon); }
+  /* page-scoped, tokens only (see v4.css) */
+  .case-open{padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(8px,2vh,24px);}
+  .case-h{font-family:var(--serif);font-weight:400;font-size:clamp(2.5rem,6.6vw,5.6rem);line-height:1;letter-spacing:-.012em;max-width:18ch;}
 
-  /* ---------- render-contract map: output -> page ---------- */
-  .rmap { display: grid; grid-template-columns: 1fr 54px 1fr; align-items: center; gap: 0; }
-  @media (max-width: 720px) { .rmap { grid-template-columns: 1fr; } .rmap .rmap-arrow { transform: rotate(90deg); margin: 6px auto; } }
-  .rmap pre { margin: 0; font-family: var(--mono, "Geist Mono", monospace); font-size: 12px; line-height: 1.55;
-    background: #11161c; color: #cdd6df; border-radius: 12px; padding: 16px 18px; overflow-x: auto; }
-  .rmap pre .key { color: #7fd1c4; } .rmap pre .str { color: #d7a87a; } .rmap pre .cm { color: #6b7785; }
-  .rmap-arrow { display: flex; align-items: center; justify-content: center; color: var(--persimmon); font-size: 24px; }
-  .rmap-out { display: flex; flex-direction: column; gap: 10px; }
-  .rb { border: 1px solid var(--hairline2); border-radius: 12px; padding: 12px 14px; background: var(--card, #fff); }
-  .rb .tag { font-family: var(--mono, monospace); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--persimmon); display: block; margin-bottom: 7px; }
-  .rb p { margin: 0; font-size: 13px; line-height: 1.5; color: var(--muted); }
-  .rb b { color: var(--ink); }
-  .rb-tiles { display: flex; flex-direction: column; gap: 8px; }
-  .rb-tile { display: flex; align-items: center; gap: 10px; border: 1px solid var(--hairline); border-radius: 9px; padding: 8px 10px; }
-  .rb-tile .art { flex: 0 0 auto; width: 40px; height: 26px; border-radius: 4px; background: linear-gradient(135deg, #c6d2df, #93a6ba); }
-  .rb-tile span { font-size: 11.5px; color: var(--muted); line-height: 1.3; }
-  .rb-tile b { color: var(--ink); display: block; font-size: 12px; }
+  /* constraint rules */
+  .rules{margin-top:clamp(30px,5vh,52px);border-top:1px solid var(--hair);max-width:860px;}
+  .rulerow{display:grid;grid-template-columns:150px minmax(0,1fr);gap:20px;padding:18px 2px;border-bottom:1px solid var(--hair);}
+  .rulerow .rk{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);padding-top:4px;}
+  .rulerow .rv{color:var(--ink);max-width:56ch;}
+  @media (max-width:560px){ .rulerow{grid-template-columns:1fr;gap:6px;} }
 
-  /* ---------- eval grid ---------- */
-  .eg { display: grid; grid-template-columns: 96px 1fr; gap: 8px 12px; align-items: center; }
-  .eg-label { font-family: var(--mono, monospace); font-size: 11px; color: var(--muted); text-align: right; }
-  .eg-row { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; }
-  .eg-cell { aspect-ratio: 1 / 1; border-radius: 4px; }
-  .c-r { background: #d64a4f; } .c-o { background: #e07b20; } .c-y { background: #e6c12e; } .c-g { background: #2f9d5b; }
-  .eg-legend { display: flex; flex-wrap: wrap; gap: 14px 20px; margin-top: 20px; }
-  .eg-legend div { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); }
-  .eg-legend i { width: 13px; height: 13px; border-radius: 3px; display: inline-block; }
+  /* exhibit frame: hairline panel with mono header + honesty caption */
+  .exhibit{margin-top:clamp(30px,5vh,52px);border:1px solid var(--hair);background:var(--paper);}
+  .exhibit-hd{display:flex;justify-content:space-between;gap:10px 18px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--hair);color:var(--sub);}
+  .exhibit-bd{padding:clamp(18px,3vw,32px);}
+  .exhibit-cap{padding:12px 16px;border-top:1px solid var(--hair);color:var(--sub);font-size:.85rem;line-height:1.5;}
+  .exhibit-cap b{color:var(--ink);font-weight:600;}
+
+  /* render-contract map: output -> screen */
+  .rmap{display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);gap:18px;align-items:start;}
+  .rmap pre{margin:0;font-family:var(--mono);font-size:.72rem;line-height:1.75;color:var(--sub);border:1px solid var(--hair);padding:16px 18px;overflow-x:auto;}
+  .rmap pre b{color:var(--ink);font-weight:400;}
+  .rmap pre .an{color:var(--accent);}
+  .rmap-arrow{display:flex;align-items:center;justify-content:center;color:var(--accent);font-family:var(--mono);font-size:1.1rem;padding-top:26px;}
+  @media (max-width:840px){
+    .rmap{grid-template-columns:1fr;}
+    .rmap-arrow{transform:rotate(90deg);padding:0;margin:2px auto;}
+  }
+  .rb{border:1px solid var(--hair);padding:14px 16px;}
+  .rb+.rb{margin-top:12px;}
+  .rb .rb-tag{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sub);margin-bottom:9px;}
+  .rb .rb-tag b{color:var(--accent);font-weight:400;}
+  .rb>p{margin:0;font-size:.95rem;line-height:1.5;color:var(--ink);max-width:52ch;}
+  .rb-tile{display:flex;gap:12px;align-items:center;border-top:1px solid var(--hair);padding:10px 0 8px;}
+  .rb-tile .art{flex:none;width:44px;height:28px;background:var(--hair);border:1px solid var(--hair-strong);}
+  .rb-tile p{margin:0;font-size:.88rem;line-height:1.4;color:var(--sub);}
+  .rb-tile b{display:block;color:var(--ink);font-weight:600;}
+
+  /* evaluation grid: four grades, no percentages */
+  .eg{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 16px;align-items:center;}
+  .eg-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);text-align:right;white-space:nowrap;}
+  .eg-row{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;}
+  .eg-cell{aspect-ratio:1/1;border:1px solid var(--hair);}
+  .g-strike{background:var(--accent);border-color:var(--accent);}
+  .g-low{background:var(--hair-strong);border-color:var(--hair-strong);}
+  .g-ok{background:var(--hair);border-color:var(--hair);}
+  .g-pass{background:var(--paper);}
+  .eg-legend{display:flex;flex-wrap:wrap;gap:12px 24px;margin-top:18px;}
+  .eg-legend div{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);}
+  .eg-legend i{flex:none;width:12px;height:12px;border:1px solid var(--hair);display:inline-block;}
 </style>
 </head>
 <body>
+
 <a class="skip-link" href="#main">Skip to content</a>
 
-<nav class="nav"><div class="shell">
-  <a class="wordmark" href="index.html">SIMONE MURO</a>
-  <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="index.html#about">About</a>
-    <a href="resume.html" class="optional">Resume</a>
-    <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
+<header class="masthead" role="banner">
+  <div class="shell masthead-inner">
+    <a class="brand" href="index.html">Simone Muro</a>
+    <p class="mast-state mono" aria-hidden="true">site: <b data-ticker>reading</b></p>
+    <nav class="mast-nav mono" aria-label="Primary">
+      <a href="index.html#work">Work</a>
+      <a href="resume.html">Resume</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="progress" id="progress" aria-hidden="true"></div>
   </div>
-</div></nav>
+</header>
 
 <main id="main">
 
-<section class="case-open"><div class="shell">
-  <span class="no-big">No. 05 · Credit Karma · 2024</span>
-  <h1>The prompt that rendered the page.</h1>
-  <p class="lede">On a prompt-engineering rotation at Credit Karma, I owned the prompt behind a GenAI feature that reads a member's credit-card wallet and recommends what to add. The twist that made it a design problem: the model's structured output didn't feed the screen, it <em>was</em> the screen. I designed that contract, under the hardest legal constraints I've worked in.</p>
-  <div class="factbox">
-    <div><b>Role</b>Prompt engineer (rotation)</div>
-    <div><b>When</b>2024</div>
-    <div><b>Surface</b>GenAI wallet analysis &amp; card recommendations</div>
-    <div><b>Owned</b>The prompt · the output-to-layout contract · the evaluation</div>
-  </div>
-</div></section>
+  <!-- ================= CASE OPENER + FACTBOX (skim layer) ================= -->
+  <section class="shell case-open" aria-labelledby="case-h" data-state="reading">
+    <p class="kicker mono io" style="--d:0">
+      <span class="knum">Case 06</span>
+      <span>Credit Karma · prompt engineering rotation</span>
+      <span>2024 · LLM era</span>
+    </p>
+    <h1 id="case-h" class="case-h io" style="--d:1">The law wrote half the prompt.</h1>
+    <p class="band-lede io" style="--d:2">A rotation at Credit Karma. The feature reads a member&rsquo;s credit card wallet and recommends what to add, in plain language, one surface per member. The model&rsquo;s structured output is the screen. And the hardest material in the build was not the model: it was the law.</p>
 
-<article class="case-body">
+    <dl class="factbox io" style="--d:3">
+      <div class="fact fact-outcome">
+        <dt>Outcome</dt>
+        <dd>Production-track GenAI recommendations in regulated finance · approval odds stated: zero</dd>
+      </div>
+      <div class="fact">
+        <dt>Role</dt>
+        <dd>Prompt engineer (rotation)</dd>
+      </div>
+      <div class="fact">
+        <dt>Owned</dt>
+        <dd>The prompt · the render contract · the evaluation</dd>
+      </div>
+      <div class="fact">
+        <dt>Process</dt>
+        <dd>Prompts in git · reviewed pull requests · product, legal, and safety review</dd>
+      </div>
+    </dl>
+  </section>
 
-  <div class="narrow">
-    <h2 class="beat">The feature, in one screen.</h2>
-    <div class="prose">
-      <p>A member opens it and gets their money explained back to them. The model reads their actual wallet, the cards they carry and their credit profile, and writes a plain-language analysis: what's working, what's missing. Then it recommends cards that fill the gaps and says why, comparing each one to what the member already holds. One scrollable surface, generated per member.</p>
-      <p>The summary at the top is fixed data. Everything below the line is the model talking, and it has to read like it was written for one specific person.</p>
+  <!-- ================= THE CALL (sealed decision) ================= -->
+  <section class="shell band" id="call" aria-labelledby="call-h2" data-state="deciding">
+    <div class="spine-head">
+      <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>The call</span></p>
+      <h2 id="call-h2" class="io" style="--d:1">One question decided the whole surface.</h2>
+      <p class="band-lede io" style="--d:2">The member&rsquo;s question is the reasonable one. The model holds the answer in its context. Make the call before I show you mine.</p>
     </div>
-  </div>
 
-  <div class="shell">
-    <figure class="inst" aria-label="A reconstructed mockup of the wallet-analysis surface: a fixed wallet-summary card, then a model-written analysis split into Strengths and Areas to improve, then a Tell me more control.">
-      <div class="inst-head"><span>surface · the wallet-analysis screen</span></div>
-      <div class="inst-body">
-        <div class="stage">
-          <div class="phone" role="img" aria-label="Mobile screen: wallet summary, strengths, areas to improve">
-            <div class="ph-status"><span>9:41</span><span class="dots">&#9679;&#9679;&#9679;</span></div>
-            <div class="ph-hd"><span class="spark">&#10022;</span> AI assistant</div>
-            <div class="ph-bd">
-              <p class="ph-disc">Advertiser disclosure &#9432;</p>
-              <div class="ph-sum">
-                <h5>Wallet summary</h5>
-                <div class="ph-grid3">
-                  <span>Open cards<b>3</b></span>
-                  <span>Total limit<b>$18,500</b></span>
-                  <span>Age of credit<b>6 yrs</b></span>
-                </div>
+    <article class="decision with-note" id="decision-odds" data-decision aria-labelledby="d1-h">
+      <script type="application/json" data-decision-config>
+      {
+        "her": "act",
+        "name": "odds call",
+        "verdicts": {
+          "match": "{Her}. Same call.",
+          "miss": "You called {pick}. She called {her}. Her receipt is below.",
+          "skip": "Skipped. Her call is open below. Yours is still open too.",
+          "repick": "Changed to {pick}. Her call stands: {her}.",
+          "change": "Pick another verb above. The seal stays open.",
+          "partial": {
+            "stop": "Half of it. The number stops. The recommendation does not. Her call: act, with the odds sealed inside.",
+            "verify": "A fresher number is still a number, and no number may ship. Her call: act."
+          }
+        }
+      }
+      </script>
+      <div>
+        <p class="d-kicker mono io" style="--d:0">
+          <span class="d-no">The decision</span>
+          <span>the recommendation surface</span>
+          <span>boundary design</span>
+        </p>
+        <h3 id="d1-h" class="visually-hidden">The decision: the member asks for the approval odds</h3>
+        <blockquote class="situation quoted io" style="--d:1">
+          <p>Am I actually going to get approved for this?</p>
+          <cite>A member, in effect · the recommendation surface</cite>
+        </blockquote>
+
+        <div class="d-grid">
+          <div class="d-setup io" style="--d:2">
+            <span class="label mono">The setup</span>
+            <p class="body">The model reads the member&rsquo;s wallet and credit profile, and it holds one more signal: approval-likelihood data. It is the most useful fact in the room, it shapes which cards make sense, and the member just asked for it.</p>
+            <div class="score" aria-label="Rubric scorecard">
+              <div class="score-row"><span>plain-language recommendation</span><span class="val-pass">pass</span></div>
+              <div class="score-row"><span>approval odds in the copy</span><span class="val-pending">?</span><span class="val-fail">hard fail</span></div>
+            </div>
+          </div>
+          <div class="d-choice io" style="--d:3">
+            <span class="label mono" id="d1-q">Your call. The member asked for the number. What does the model do?</span>
+            <div class="options" role="group" aria-labelledby="d1-q">
+              <button class="opt" type="button" data-verb="answer" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">a.</span><span class="verb">answer</span><span class="tag">your call</span></span>
+                <span class="gloss">state the odds: the model holds them, and the member asked</span>
+              </button>
+              <button class="opt" type="button" data-verb="ask" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">b.</span><span class="verb">ask</span><span class="tag">your call</span></span>
+                <span class="gloss">clarify the goal first: rewards, credit building, a big purchase</span>
+              </button>
+              <button class="opt" type="button" data-verb="act" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">c.</span><span class="verb">act</span><span class="tag">your call</span></span>
+                <span class="gloss">let the odds choose the cards it shows, and keep the number out of every sentence</span>
+              </button>
+              <button class="opt" type="button" data-verb="verify" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">d.</span><span class="verb">verify</span><span class="tag">your call</span></span>
+                <span class="gloss">re-score the member&rsquo;s profile so the number it quotes is current</span>
+              </button>
+              <button class="opt" type="button" data-verb="stop" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">e.</span><span class="verb">stop</span><span class="tag">your call</span></span>
+                <span class="gloss">refuse the topic: no odds, and no recommendation near them</span>
+              </button>
+              <button class="opt" type="button" data-verb="hand off" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">f.</span><span class="verb">hand off</span><span class="tag">your call</span></span>
+                <span class="gloss">send the member to the card issuer, who makes the approval decision anyway</span>
+              </button>
+            </div>
+            <div class="opt-foot">
+              <button class="skip-call" type="button">or skip: show her call</button>
+              <span class="privacy mono">your answer never leaves this tab, stored nowhere</span>
+            </div>
+            <p class="verdict mono" aria-live="polite"><span class="verdict-line"><span class="hint">sealed. pick a verb, or skip.</span></span><button class="repick" type="button">change my call</button></p>
+          </div>
+        </div>
+
+        <div class="call-reveal">
+          <div class="call-clip">
+            <div class="call">
+              <h4 class="call-h" tabindex="-1">Her call</h4>
+              <p class="call-verb">act.</p>
+              <p class="call-line">Let the signal steer the recommendation. The number itself never ships.</p>
+              <div class="receipt">
+                <span class="label mono">The receipt</span>
+                <p>The legal line was exact: the model reasons over approval-likelihood data and may never state it, in any form. Not a percentage, not a range, not great chances. A flat ban would have been the easy prompt to write. The harder one lets the signal do its work in silence, across every member profile, every time. Compliance here was a design material, not a limiter.</p>
               </div>
-              <p class="ph-h">Wallet analysis</p>
-              <p class="ph-grp">Strengths</p>
-              <div class="ph-li"><span class="mk ok">&#10003;</span><p><b>Aligned rewards.</b> Your cards already earn well on groceries and gas, your top spend categories.</p></div>
-              <div class="ph-li"><span class="mk ok">&#10003;</span><p><b>Strong protections.</b> One of your cards adds travel and purchase protection.</p></div>
-              <p class="ph-grp">Areas to improve</p>
-              <div class="ph-li"><span class="mk up">&#8593;</span><p><b>Flat-rate gap.</b> Nothing you carry earns on spending outside your bonus categories.</p></div>
-              <div class="ph-li"><span class="mk up">&#8593;</span><p><b>Travel rewards.</b> Your travel spend isn't earning travel perks yet.</p></div>
-              <span class="ph-chip"><span class="spark">&#10022;</span> Tell me more</span>
             </div>
           </div>
         </div>
       </div>
-      <figcaption class="inst-caption"><b>Reconstructed with synthetic data.</b> Real member data, card names, and the product's branding stay confidential. The structure, a fixed summary, then a model-written analysis split into strengths and gaps, then a control to go deeper, is the real one.</figcaption>
-    </figure>
-  </div>
+      <aside class="bnote io" style="--d:4" aria-label="Behavior note 01">
+        <span class="bnote-id">Note 01</span>
+        <p>Held her call sealed until you acted. The model holds the odds the same way: in use, never on screen.</p>
+      </aside>
+    </article>
+  </section>
 
-  <div class="narrow">
-    <h2 class="beat">The model didn't fill the page. It returned it.</h2>
-    <div class="prose">
-      <p>Most LLM features return text, and engineers parse it and place it on a screen. This one returned <b>structure</b>. The model emitted a list of <b>render blocks</b>, and each block named a UI component the app would build, in the order they appeared. A text block became the analysis copy. A card-tiles block became the row of real offer tiles. The model's output schema <em>was</em> the page's layout.</p>
-      <p>So the prompt wasn't writing prose, it was emitting an interface. I designed that contract: which blocks existed, the sections they formed and their order, and one rule that mattered more than any other, <b>the model selects which cards to surface, by reference, but never writes their rates, fees, or terms.</b> Those come from real card data. A model improvising an APR is a lawsuit, not a hallucination.</p>
+  <!-- ================= THE CONSTRAINT ================= -->
+  <section class="shell band with-note" id="constraint" aria-labelledby="constraint-h" data-state="withholding">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The constraint</span></p>
+      <h2 id="constraint-h" class="io" style="--d:1">What could not be built.</h2>
+      <p class="band-lede io" style="--d:2">The binding constraints were legal, and they decided the shape of the feature, not its edges.</p>
+
+      <div class="rules io" style="--d:3">
+        <div class="rulerow">
+          <span class="rk">reason over</span>
+          <p class="rv">Approval-likelihood data. It decides which cards make sense for this member and which explanation fits.</p>
+        </div>
+        <div class="rulerow">
+          <span class="rk">never state</span>
+          <p class="rv">The same data, in any form. No percentage, no range, no great chances, no hedge that implies a number.</p>
+        </div>
+        <div class="rulerow">
+          <span class="rk">always pair</span>
+          <p class="rv">Rates. An introductory rate never appears without the regular rate in the same sentence, or the sentence does not ship.</p>
+        </div>
+      </div>
+
+      <p class="band-lede io" style="--d:4">The version that answers the member&rsquo;s actual question could not be built. That was never a model limitation: the capability sat right there in context. It was the law, so the design absorbed it. The odds shape every recommendation and surface in none of them, and the rate disclosure rides along wherever an introductory rate appears.</p>
     </div>
+    <aside class="bnote io" style="--d:5" aria-label="Behavior note 02">
+      <span class="bnote-id">Note 02</span>
+      <p>The rule holds on this page too: no approval odds appear anywhere here, including inside the mock.</p>
+    </aside>
+  </section>
 
-    <figure class="inst wide" aria-label="The render contract: a structured JSON output of render blocks on the left maps to the rendered components on the right. A text block becomes the analysis and recommendation copy; a card-tiles block becomes real offer tiles.">
-      <div class="inst-head"><span>contract · the output is the layout</span></div>
-      <div class="inst-body">
-        <div class="rmap">
-          <pre><span class="cm">// the model's output</span>
-{
-  <span class="key">"blocks"</span>: [
+  <!-- ================= THE RENDER CONTRACT ================= -->
+  <section class="shell band" id="contract" aria-labelledby="contract-h" data-state="rendering">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>The contract</span></p>
+      <h2 id="contract-h" class="io" style="--d:1">The output did not feed the page. It was the page.</h2>
+      <p class="band-lede io" style="--d:2">Most LLM features return prose that engineers parse and place. This one returned structure: a list of render blocks, each naming a UI component the app would build, in order. A text block became the analysis copy. A card-tiles block became the row of real offer tiles. The output schema was the layout.</p>
+      <p class="band-lede io" style="--d:3">I designed that contract: which blocks existed, the sections they formed, and the rule that mattered most. The model selects cards by reference and never writes their rates, fees, or terms. Those hydrate from real card data downstream, then pass a guardrail layer before anything renders. A model improvising an APR is a lawsuit, not a hallucination.</p>
+
+      <figure class="exhibit io" style="--d:4" aria-label="The render contract: the model's structured output on the left maps to the rendered screen on the right. A text block becomes analysis copy; a card-tiles block becomes real offer tiles with rates and fees filled in downstream, never by the model.">
+        <figcaption class="exhibit-hd mono">
+          <span>contract · the output is the layout</span>
+          <span>reconstructed</span>
+        </figcaption>
+        <div class="exhibit-bd">
+          <div class="rmap">
+            <pre aria-hidden="true">{
+  "blocks": [
     {
-      <span class="key">"type"</span>: <span class="str">"text"</span>,
-      <span class="key">"body"</span>: <span class="str">"**Wallet analysis** &hellip;</span>
-              <span class="str">**Recommendations** &hellip;"</span>
+      "type": <b>"text"</b>,
+      "body": "Wallet analysis.
+        Your cards already earn
+        well on groceries ..."
     },
     {
-      <span class="key">"type"</span>: <span class="str">"card_tiles"</span>,
-      <span class="key">"cards"</span>: [<span class="str">"&#9679;&#9679;"</span>, <span class="str">"&#9679;&#9679;"</span>],
-      <span class="key">"order"</span>: 1
+      "type": <b>"card_tiles"</b>,
+      "cards": [ <b>two card ids</b> ]
+      <span class="an">* by reference only:</span>
+      <span class="an">  no rates, no fees, no terms</span>
     }
   ]
 }</pre>
-          <div class="rmap-arrow" aria-hidden="true">&#8594;</div>
-          <div class="rmap-out">
-            <div class="rb">
-              <span class="tag">type: text &rarr; rendered copy</span>
-              <p><b>Wallet analysis.</b> You earn well on groceries and gas, but nothing covers your other spending&hellip;</p>
-            </div>
-            <div class="rb">
-              <span class="tag">type: card_tiles &rarr; real offer tiles</span>
-              <div class="rb-tiles">
-                <div class="rb-tile"><span class="art"></span><span><b>A flat-rate cash-back card</b>Earns a steady rate on everything you buy.</span></div>
-                <div class="rb-tile"><span class="art"></span><span><b>A travel rewards card</b>Turns your travel spend into points and perks.</span></div>
+            <div class="rmap-arrow" aria-hidden="true">&#8594;</div>
+            <div class="rmap-out">
+              <div class="rb">
+                <span class="rb-tag"><b>type: text</b> &#8594; rendered as analysis copy</span>
+                <p>Your cards already earn well on groceries and gas, your top spend categories. Nothing you carry earns a flat rate on everything else, and your travel spend is not earning travel perks yet.</p>
+              </div>
+              <div class="rb">
+                <span class="rb-tag"><b>type: card_tiles</b> &#8594; rendered as real offer tiles</span>
+                <div class="rb-tile">
+                  <span class="art" aria-hidden="true"></span>
+                  <p><b>A flat-rate cash-back card</b>Earns a steady rate on everything you buy.</p>
+                </div>
+                <div class="rb-tile">
+                  <span class="art" aria-hidden="true"></span>
+                  <p><b>A travel rewards card</b>Turns travel spend into points and perks.</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <figcaption class="inst-caption"><b>Reconstructed; the real schema and card data stay confidential.</b> The model authored only the text and chose which cards to reference. The tiles' rates and fees were hydrated from real card data downstream, never from the model, then validated by a guardrail layer before anything rendered.</figcaption>
-    </figure>
-  </div>
-
-  <div class="narrow">
-    <h2 class="beat">Reason over it. Never say it.</h2>
-    <div class="prose">
-      <p>The sharpest constraint was legal. The model <b>reasons over approval-likelihood data</b>, because it shapes which cards make sense to surface, and it is <b>legally forbidden from stating it</b> in any form: not a percentage, not a hint, not "great chances." A separate rule: any introductory rate has to be followed immediately by the regular rate, or the sentence can't ship.</p>
-      <p>That's harder to write than a flat ban. The prompt has to let a signal steer the output while keeping it out of the words, every time, across every member profile.</p>
+        <figcaption class="exhibit-cap"><b>Reconstructed with synthetic copy.</b> The real schema, card names, member data, and branding stay confidential. The model wrote the text and chose which cards to reference. Rates and fees came from card data downstream, never from the model, and a guardrail layer validated the output before anything rendered.</figcaption>
+      </figure>
     </div>
+  </section>
 
-    <figure class="inst wide" aria-label="The approval-odds guardrail: what the model may reason over, and what it may never state.">
-      <div class="inst-head"><span>guardrail · one signal, two halves</span></div>
-      <div class="inst-body">
-        <div class="spec">
-          <div class="row2"><span class="k">reason over</span><span class="v">Approval-likelihood data, to decide which cards to surface and which explanation fits this member.</span></div>
-          <div class="row2"><span class="k">never state</span><span class="v">Approval likelihood, in any form. No odds, no percentages, no <code>"great chances,"</code> no hedge.</span></div>
-          <div class="row2"><span class="k">always pair</span><span class="v">An introductory rate is never named without the regular rate in the same breath.</span></div>
-        </div>
-      </div>
-      <figcaption class="inst-caption"><b>Regulated-domain prompting in miniature.</b> A signal the model uses but never speaks, and a disclosure it can never skip. In a financial product these aren't footnotes; they're the line between shippable and not.</figcaption>
-    </figure>
-  </div>
+  <!-- ================= THE EVALUATION ================= -->
+  <section class="shell band" id="evaluation" aria-labelledby="eval-h" data-state="grading">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>The evaluation</span></p>
+      <h2 id="eval-h" class="io" style="--d:1">Ten profiles, three revisions, one strike.</h2>
+      <p class="band-lede io" style="--d:2">Tuning was not on vibes. Ten member profiles spanning real credit situations: a thin file with no cards, a high-utilization revolver, a premium member with a long history. Three prompt revisions. Every cell graded on a four-step rubric, and the rubric was one-strike: a single invented benefit, a stray number, or an approval-odds slip made the cell a strike, no matter how well the rest read.</p>
+      <p class="band-lede io" style="--d:3">From the first draft to the second revision the strikes drain out. The prompts lived in git, moved through reviewed pull requests, and were readied for release through product, legal, and safety review, not a merge button.</p>
 
-  <div class="narrow">
-    <h2 class="beat">Graded across ten members, revision by revision.</h2>
-    <div class="prose">
-      <p>I didn't tune on vibes. I built a grid: ten member profiles spanning real credit situations, a thin file with no cards, a high-utilization revolver, a premium user with perfect credit, and on, by three prompt revisions. Every cell got graded on a four-color rubric, and it was one-strike: a single hallucinated benefit, a stray number, or an approval-odds slip turned a cell <b>red</b>, no matter how good the rest read.</p>
-      <p>From the first draft to the second revision, you can watch the red and orange drain out. The prompts lived in <b>git</b>, moved through pull requests, and were readied for release through product, legal, and safety review, not a merge button.</p>
-    </div>
-
-    <figure class="inst wide" aria-label="An evaluation grid: ten member profiles across, three prompt revisions down. Cells move from red and orange in the first revision toward green by the last.">
-      <div class="inst-head"><span>evaluation · 10 profiles &times; 3 revisions</span></div>
-      <div class="inst-body">
-        <div class="eg">
-          <div class="eg-label">initial</div>
-          <div class="eg-row">
-            <div class="eg-cell c-r"></div><div class="eg-cell c-o"></div><div class="eg-cell c-r"></div><div class="eg-cell c-y"></div><div class="eg-cell c-o"></div><div class="eg-cell c-r"></div><div class="eg-cell c-y"></div><div class="eg-cell c-o"></div><div class="eg-cell c-r"></div><div class="eg-cell c-o"></div>
+      <figure class="exhibit io" style="--d:4" aria-label="The evaluation grid: ten member profiles across, three prompt revisions down. Strikes and below-standard cells in the first draft drain out to mostly ideal by the second revision.">
+        <figcaption class="exhibit-hd mono">
+          <span>evaluation · ten profiles · three revisions</span>
+          <span>reconstructed</span>
+        </figcaption>
+        <div class="exhibit-bd">
+          <div class="eg" aria-hidden="true">
+            <div class="eg-label">initial</div>
+            <div class="eg-row">
+              <div class="eg-cell g-strike"></div><div class="eg-cell g-low"></div><div class="eg-cell g-strike"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-low"></div><div class="eg-cell g-strike"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-low"></div><div class="eg-cell g-strike"></div><div class="eg-cell g-low"></div>
+            </div>
+            <div class="eg-label">revision 1</div>
+            <div class="eg-row">
+              <div class="eg-cell g-low"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-low"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-low"></div><div class="eg-cell g-ok"></div>
+            </div>
+            <div class="eg-label">revision 2</div>
+            <div class="eg-row">
+              <div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-pass"></div><div class="eg-cell g-ok"></div><div class="eg-cell g-pass"></div>
+            </div>
           </div>
-          <div class="eg-label">revision 1</div>
-          <div class="eg-row">
-            <div class="eg-cell c-o"></div><div class="eg-cell c-y"></div><div class="eg-cell c-y"></div><div class="eg-cell c-g"></div><div class="eg-cell c-y"></div><div class="eg-cell c-o"></div><div class="eg-cell c-g"></div><div class="eg-cell c-y"></div><div class="eg-cell c-o"></div><div class="eg-cell c-y"></div>
-          </div>
-          <div class="eg-label">revision 2</div>
-          <div class="eg-row">
-            <div class="eg-cell c-g"></div><div class="eg-cell c-g"></div><div class="eg-cell c-g"></div><div class="eg-cell c-g"></div><div class="eg-cell c-y"></div><div class="eg-cell c-g"></div><div class="eg-cell c-g"></div><div class="eg-cell c-g"></div><div class="eg-cell c-y"></div><div class="eg-cell c-g"></div>
+          <p class="visually-hidden">Initial draft: four of ten profiles break a legal or safety rule, four are below standard, two are acceptable. Revision one: no rule breaks, three below standard, five acceptable, two ideal. Revision two: eight ideal, two acceptable, no strikes.</p>
+          <div class="eg-legend" aria-hidden="true">
+            <div><i class="g-strike"></i> strike: breaks a legal or safety rule</div>
+            <div><i class="g-low"></i> below standard</div>
+            <div><i class="g-ok"></i> acceptable, not ideal</div>
+            <div><i class="g-pass"></i> ideal</div>
           </div>
         </div>
-        <div class="eg-legend">
-          <div><i class="c-r"></i> breaks a legal or safety rule</div>
-          <div><i class="c-o"></i> below standard</div>
-          <div><i class="c-y"></i> acceptable, not ideal</div>
-          <div><i class="c-g"></i> ideal</div>
-        </div>
-      </div>
-      <figcaption class="inst-caption"><b>Reconstructed; the improvement is real.</b> The grid is how I knew a prompt was ready, not because it read well once, but because it held across ten different members three times in a row.</figcaption>
-    </figure>
-  </div>
-
-  <div class="narrow">
-    <h2 class="beat">What I owned, and what was next.</h2>
-    <div class="prose">
-      <p>To be precise about a cross-functional build: I authored the prompt and the output-to-layout contract, and I ran the evaluation. A research team studied the members. Designers owned the UI components my output rendered into. Engineers built the system that resolved the model's structure into screens and validated it on the way out. <b>My piece was making a model's structured output behave like a designed, lawful surface, reliably, every time.</b></p>
-      <p>These were one-shot explainers. I scoped where they'd go next: a follow-up-capable conversational version, and a sibling surface that explains a single recommendation rather than the whole wallet. The constraint, a model that has to reason over what it can't say and render what it does, became a system I wanted to keep building.</p>
+        <figcaption class="exhibit-cap"><b>Reconstructed; the improvement is real.</b> The grid is how a prompt earned release: not because it read well once, but because it held across ten different members, three revisions in a row. No percentages in the rubric: four grades, one strike.</figcaption>
+      </figure>
     </div>
-  </div>
+  </section>
 
-</article>
+  <!-- ================= THE HANDOFF ================= -->
+  <section class="shell band" id="handoff" aria-labelledby="handoff-h" data-state="handing off">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">05</span><span>The handoff</span></p>
+      <h2 id="handoff-h" class="io" style="--d:1">What was mine, and what came next.</h2>
+      <p class="band-lede io" style="--d:2">A cross-functional build, credited precisely: a research team studied the members, designers owned the UI components the output rendered into, and engineers built the system that resolved the structure into screens and validated it on the way out. Mine: the prompt, the render contract, and the evaluation that decided when it was ready.</p>
+      <p class="band-lede io" style="--d:3">These were one-shot explainers. I scoped what came next: a conversational version that could take follow-up questions, and a sibling surface that explains a single recommendation instead of the whole wallet. A model that reasons over what it cannot say, and renders what it does: that constraint became a system I wanted to keep building.</p>
 
-<section class="case-next"><div class="shell">
-  <a href="operate-with-ai.html">
-    <span class="nxt">Next · No. 06</span>
-    <span class="t">How I built this site</span>
-  </a>
-</div></section>
+      <ul class="contact-links io" style="--d:4">
+        <li>
+          <a href="operate-with-ai.html">
+            <span class="cl-label mono">Next</span>
+            <span class="cl-value">Case 07 · How I Built This Site</span>
+            <span class="cl-arrow" aria-hidden="true">&#8599;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
 
 </main>
 
-<footer class="colophon"><div class="shell">
-  <p>Designed and built AI-natively: directed by Simone, executed with AI agents, the way she works.</p>
-  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. Roles, process, design decisions, and measured outcomes are preserved. &copy; 2026 Simone Muro &middot; Bay Area, CA</p>
-</div></footer>
+<footer class="footer" role="contentinfo">
+  <div class="shell">
+    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · <b>sealed</b> one call · every mock <b>labeled</b> reconstructed · <b>handoff</b> to Case 07</p>
+    <p class="footer-inner mono">
+      <span>Simone Muro · Portfolio, 4th edition · 2026</span>
+      <span><a href="index.html">Home</a> · <a href="index.html#work">Work</a> · <a href="resume.html">Resume</a></span>
+    </p>
+  </div>
+</footer>
 
-<button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
-<script src="./v3.js" defer></script>
+<noscript>
+  <style>
+    .io,.rule-io{opacity:1 !important;transform:none !important;}
+    .call-reveal{grid-template-rows:1fr !important;}
+    .call{visibility:visible !important;}
+    .val-pending{display:none !important;}
+    .val-fail{display:inline !important;}
+    .verdict,.opt-foot,.opt .tag{display:none !important;}
+    .progress,.trace-replay,.refusal-form,.refusal-foot{display:none !important;}
+  </style>
+</noscript>
+
 </body>
 </html>

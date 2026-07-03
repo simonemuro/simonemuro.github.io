@@ -1,191 +1,356 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Case 04. Intent training stalled near 60 percent of cancellation reasons. One LLM classifier took coverage to 96 and savability accuracy to 96.6, at $63 a month. The shipped prompt is on the page, redacted.">
+<meta property="og:title" content="Cancellation Saves · Simone Muro">
+<meta property="og:description" content="Four months of tuning bought fifteen points, then stalled. The bet: classify the reason with an LLM. Coverage 60 to 96 percent, savability accuracy 96.6, run cost $63 a month.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simonemuro.github.io/cancellation-saves.html">
+<meta name="twitter:card" content="summary">
 <title>Cancellation Saves · Simone Muro</title>
-<meta name="description" content="From an NLU retention flow that beat its saves target to an LLM savability classifier at 96.6% accuracy: hearing the reason, cleaning the queue, and routing cancellations with one prompt. A conversational AI case study." />
-<meta property="og:title" content="Cancellation Saves · Simone Muro" />
-<meta property="og:description" content="Four months of NLU tuning bought fifteen points. One LLM prompt cleared thirty-six, at 96.6% accuracy, proven before the platform had a way to ship it." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="./v3.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231e2bd0'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23ffffff' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="v4.css">
+<style>
+  /* page-local, structural only: shared tokens, no new colors or radii */
+  .case-prose{margin-top:26px;max-width:60ch;}
+  .case-prose p+p{margin-top:14px;}
+  .prompt-pre{margin:0;padding:18px 20px;font-family:var(--mono);font-size:.74rem;line-height:1.8;color:var(--ink);overflow-x:auto;}
+</style>
+<script src="v4.js" defer></script>
 </head>
 <body>
+
 <a class="skip-link" href="#main">Skip to content</a>
 
-<nav class="nav"><div class="shell">
-  <a class="wordmark" href="index.html">SIMONE MURO</a>
-  <div class="nav-links">
-    <a href="index.html#work" aria-current="true">Work</a>
-    <a href="index.html#about">About</a>
-    <a href="resume.html" class="optional">Resume</a>
-    <a href="index.html#contact" style="color:var(--persimmon)">Contact</a>
+<header class="masthead" role="banner">
+  <div class="shell masthead-inner">
+    <a class="brand" href="index.html">Simone Muro</a>
+    <p class="mast-state mono" aria-hidden="true">site: <b data-ticker>answering</b></p>
+    <nav class="mast-nav mono" aria-label="Primary">
+      <a href="index.html#work">Work</a>
+      <a href="resume.html">Resume</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="progress" id="progress" aria-hidden="true"></div>
   </div>
-</div></nav>
+</header>
 
 <main id="main">
 
-<section class="case-open"><div class="shell">
-  <span class="no-big">No. 04 · Cancellation Saves</span>
-  <h1>“I want to cancel” isn’t one problem.</h1>
-  <p class="lede">It’s a dozen problems wearing the same sentence, and only some of them are losses you have to accept. I spent two generations of technology teaching a support system to hear the difference, because the reason a customer is leaving is the one thing that decides whether you can keep them.</p>
-  <div class="factbox">
-    <div><b>Role</b>Designed the NLU saves flow · built the LLM classifier</div>
-    <div><b>When</b>2022 – 2023, two generations of the tech</div>
-    <div><b>Stack</b>NLU intents · hybrid LLM classifier · strict JSON · low-code build</div>
-    <div><b>Outcome</b>96.6% classifier accuracy (pre-launch) · saves flow 12% vs 5% target (directional)</div>
-  </div>
-</div></section>
+  <!-- ================= CASE OPEN: skim layer ================= -->
+  <section class="shell hero with-note" aria-labelledby="case-h" data-state="answering">
+    <div>
+      <p class="hero-kicker mono io" style="--d:0">
+        <span>Case 04 · Cancellation Saves</span>
+        <span>LLM era · 2022 to 2023</span>
+      </p>
+      <h1 id="case-h" class="io" style="--d:1">Four months of tuning, then <span class="acc">a bet</span>.</h1>
+      <p class="hero-sub io" style="--d:2">&ldquo;I want to cancel&rdquo; is a dozen problems wearing one sentence, and only some of them are losses you have to accept. The reason a customer gives is the thing that decides whether you can keep them. By early 2023 I had spent four months teaching an intent model to hear it, and the teaching had stopped working.</p>
 
-<article class="case-body">
-
-  <div class="narrow">
-
-    <h2 class="beat">First, hear the reason.</h2>
-    <div class="prose">
-      <p>Cancellation was one of the highest-volume reasons customers called, and the voice assistant treated every request identically: hand over the cancel steps, let them go. The reason, the one piece of signal that decides whether a customer is savable, was spoken out loud on every call and acted on in none of them.</p>
-      <p>The growth and retention team asked for the obvious first step: before the flow offers the steps, ask why. I analyzed what customers actually said, bucketed the answers into topics, and partnered with an NLP team on a classification model so the retention strategists could finally see the full spread of reasons they were working with.</p>
-      <p>Then came the routing experiment. Customers leaving over <b>price, a bad experience, or because they weren’t using the product</b>, the reasons the saves team had validated as genuinely winnable, went straight to dedicated retention specialists with the context attached, so nobody repeated themselves. Everyone else got a clean, respectful cancel path.</p>
+      <dl class="factbox io" style="--d:3">
+        <div class="fact fact-outcome"><dt>Outcome</dt><dd>96.6% savability accuracy, where model training had stalled near 60</dd></div>
+        <div class="fact"><dt>Role</dt><dd>Designed the NLU saves flow · built the LLM classifier</dd></div>
+        <div class="fact"><dt>When</dt><dd>2022 to 2023 · NLU into LLM</dd></div>
+        <div class="fact"><dt>Run cost</dt><dd>$63 a month · $756 a year</dd></div>
+      </dl>
     </div>
+    <aside class="bnote io" style="--d:4" aria-label="Behavior note 01">
+      <span class="bnote-id">Note 01</span>
+      <p>The outcome is above. The call that produced it stays sealed below until you make yours.</p>
+    </aside>
+  </section>
 
-    <h2 class="beat">The queue had a pollution problem.</h2>
-    <div class="prose">
-      <p>It worked, and it surfaced the real quality problem. The saves queue was filling with false positives: customers who weren’t actually canceling, or whose reasons were final. Specialists trained to rescue a price objection were fielding calls that should never have reached them, and every wasted call cost a real save somewhere else.</p>
-    </div>
+  <!-- ================= THE BET: the one sealed decision ================= -->
+  <section class="shell band" id="bet" aria-labelledby="bet-band-h" data-state="deciding">
 
-    <!-- PENDING SIGN-OFF: Simone's verbatim words from the story interview (2026-06-12, voice-to-text, lightly cleaned). Publish only with her explicit sign-off. -->
-    <blockquote class="pull">
-      “If I send ten people to that queue, the ten should be truly savable. Not two.”
-      <span class="attr">my bar for the classifier</span>
-    </blockquote>
-
-    <h2 class="beat">Four months of tuning, fifteen points.</h2>
-    <div class="prose">
-      <p>I took on the NLU quality project first, because that was the only tool we had. The intent model returned <b>unknown on roughly 40% of cancellation reasons</b>: no trained intent matched the real, messy ways people explain why they’re leaving.</p>
-      <p>Four months of tuning bought me about fifteen points of precision on the reasons the model could identify, up to roughly <b>80%</b>. The unknowns barely moved. Meanwhile the saves teams kept <b>20 to 35% of customers when they knew the real reason</b>, so every unknown was money left on the table, and every tuning cycle took months. I knew the ceiling, and I knew I’d hit it.</p>
-    </div>
-
-    <h2 class="beat">One prompt, thirty-six points.</h2>
-    <div class="prose">
-      <p>So when LLMs arrived in early 2023, I made the call: stop training intents and classify with a model that already understands natural language, because the bottleneck was never my tuning, it was the tool. The idea was mine to champion, and making it real meant partnering with the platform team to onboard the API that let the flow call an LLM at all.</p>
-      <p>The build was a hybrid system, and the judgment was where each piece belonged. NLU still mapped the intent. The LLM read the customer’s words and returned <b>strict JSON</b>, reason, sentiment, savability, that no human ever sees. A low-code tool parsed that JSON and applied the routing rules. The savability rules came from the people who knew the economics: the saves data and the analytics behind it. A customer closing the business or retiring counts as final; they get a respectful, efficient goodbye, not a pitch.</p>
-      <p>The few-shot examples came from real customer language in all its mess, and the iteration loop is the one that actually moves accuracy: find the failure, add the example that kills that class of error, re-test the whole set.<button class="note-ref" data-note="note-loop" aria-label="Margin note about the iteration loop">1</button> Months of NLU training per cycle collapsed into hours of prompt work. I costed the running model too: roughly <b>$756 a year</b> at the volume it handled, the build-versus-buy case made in a single line.</p>
-      <div class="note-body" id="note-loop">The same loop later ran at platform scale: find the failure, add the example, re-run everything. It became the backbone of the golden-dataset discipline in No. 03, The Quality Program.</div>
-      <p>Here’s the routing, reconstructed.</p>
-    </div>
-  </div>
-
-  <div class="shell">
-    <figure class="inst wide" data-instrument="choices" data-config="cfg-savability-classifier" aria-label="The savability classifier: pick a cancellation reason and watch how it gets classified and routed">
-      <div class="inst-head">
-        <span>classifier · savability routing</span>
-        <span>strict json · parsed downstream</span>
+    <div class="spine-head with-note">
+      <div>
+        <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>The bet</span></p>
+        <h2 id="bet-band-h" class="io" style="--d:1">Keep tuning, or bet the queue on an unproven model?</h2>
+        <p class="band-lede io" style="--d:2">Four months of intent tuning had bought about fifteen points of precision on the reasons the model knew, and then the curve went flat. The unknowns barely moved. Make the call before I show you mine.</p>
       </div>
-      <div class="inst-body" style="min-height:260px"></div>
-      <figcaption class="inst-caption"><b>Reconstructed from the shipped flow.</b> Production prompt and copy are confidential; the JSON schema and the exclusions are the real design. Final reasons get a goodbye, not a pitch.</figcaption>
-    </figure>
-    <script type="application/json" id="cfg-savability-classifier">
-    {
-      "prompt": "Say it the way a customer would:",
-      "preselect": 0,
-      "choices": [
-        {
-          "label": "It's gotten too expensive",
-          "outcome": [
-            {"k":"tool","t":"classifier · reading the reason, returning strict JSON"},
-            {"k":"sys","t":"{ \"reason\": \"price\", \"sentiment\": \"negative\", \"savability\": true }"},
-            {"k":"bot","t":"I hear you. I don't want cost to be the reason you go. Before anything changes, I can connect you with a specialist who can review your plan and pricing. Want me to do that?"},
-            {"k":"sys","t":"→ routed to a retention specialist · reason and context attached"}
-          ]
-        },
-        {
-          "label": "I'm closing the business, I'm retiring",
-          "outcome": [
-            {"k":"tool","t":"classifier · reading the reason, returning strict JSON"},
-            {"k":"sys","t":"{ \"reason\": \"no_longer_needed\", \"sentiment\": \"neutral\", \"savability\": false }"},
-            {"k":"bot","t":"Congratulations on the retirement. Let's get your account closed out properly; it only takes a minute."},
-            {"k":"sys","t":"→ respectful, efficient cancel path · no pitch"}
-          ]
-        },
-        {
-          "label": "It doesn't work with my bank",
-          "outcome": [
-            {"k":"tool","t":"classifier · reading the reason, returning strict JSON"},
-            {"k":"sys","t":"{ \"reason\": \"product_issue\", \"sentiment\": \"frustrated\", \"savability\": true }"},
-            {"k":"bot","t":"That sounds fixable. Before you go, can I connect you with a specialist who can look at the bank connection itself?"},
-            {"k":"sys","t":"→ routed to a specialist · a product problem isn't a cancellation yet"}
-          ]
-        },
-        {
-          "label": "Just tell me how to cancel",
-          "outcome": [
-            {"k":"tool","t":"classifier · reading the reason, returning strict JSON"},
-            {"k":"sys","t":"{ \"reason\": \"unknown\", \"sentiment\": \"neutral\", \"savability\": \"unknown\" }"},
-            {"k":"bot","t":"I can help with that. Mind telling me what's prompting the change? If it's something we can fix, I'd like to try."},
-            {"k":"sys","t":"→ the flow asks why before offering the steps · the reason decides the route"}
-          ]
+    </div>
+
+    <article class="decision with-note" id="decision-01" data-decision aria-labelledby="bet-h">
+      <script type="application/json" data-decision-config>
+      {
+        "her": "act",
+        "name": "the cancel bet",
+        "verdicts": {
+          "match": "{Her}. Same call.",
+          "miss": "You called {pick}. She called {her}. Her receipt is below.",
+          "skip": "Skipped. Her call is open below. Yours is still open too.",
+          "repick": "Changed to {pick}. Her call stands: {her}.",
+          "change": "Pick another verb above. The seal stays open.",
+          "partial": { "verify": "Half of it. She did verify: about 300 real utterances before one live call. But the eval proved the bet, it did not replace it. Her call: act." }
         }
-      ]
-    }
-    </script>
-  </div>
+      }
+      </script>
+      <div>
+        <p class="d-kicker mono io" style="--d:0">
+          <span class="d-no">The decision</span>
+          <span>cancel flow · early 2023</span>
+          <span>a methodology bet</span>
+        </p>
+        <h3 id="bet-h" class="visually-hidden">The decision: keep tuning the intent model, or swap in an LLM classifier</h3>
+        <blockquote class="situation io" style="--d:1">
+          <p>Two in five cancellation reasons still came back unknown. The next tuning cycle would take months and move almost none of them.</p>
+          <cite>the intent model, early 2023</cite>
+        </blockquote>
 
-  <div class="narrow">
+        <div class="d-grid">
+          <div class="d-setup io" style="--d:2">
+            <span class="label mono">The setup</span>
+            <p class="body">Tuning meant labeling utterances against trained intents, months per cycle, and precision on known reasons had climbed to roughly 80 percent while the unknowns held. Meanwhile the saves teams kept 20 to 35 percent of customers when they knew the real reason: every unknown was money left on the table. The alternative did not officially exist. No sanctioned path shipped generative AI to production yet.</p>
+            <div class="score" aria-label="The stall, in numbers">
+              <div class="score-row"><span>four months of tuning</span><span class="val-pass">+15 points</span></div>
+              <div class="score-row"><span>reasons resolved</span><span class="val-pass">stalled near 60%</span></div>
+              <div class="score-row"><span>the bottleneck</span><span class="val-pending">?</span><span class="val-fail">the tool, not the tuning</span></div>
+            </div>
+          </div>
+          <div class="d-choice io" style="--d:3">
+            <span class="label mono" id="bet-q">Your call. The tuning has stalled. What do you do?</span>
+            <div class="options" role="group" aria-labelledby="bet-q">
+              <button class="opt" type="button" data-verb="answer" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">a.</span><span class="verb">answer</span><span class="tag">your call</span></span>
+                <span class="gloss">settle: 80 percent on the reasons it knows is defensible</span>
+              </button>
+              <button class="opt" type="button" data-verb="ask" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">b.</span><span class="verb">ask</span><span class="tag">your call</span></span>
+                <span class="gloss">commission another tuning cycle: more labels, more months</span>
+              </button>
+              <button class="opt" type="button" data-verb="act" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">c.</span><span class="verb">act</span><span class="tag">your call</span></span>
+                <span class="gloss">swap the engine: classify the reason with an LLM, unproven here</span>
+              </button>
+              <button class="opt" type="button" data-verb="verify" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">d.</span><span class="verb">verify</span><span class="tag">your call</span></span>
+                <span class="gloss">build a bigger eval of the stalled model before moving</span>
+              </button>
+              <button class="opt" type="button" data-verb="stop" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">e.</span><span class="verb">stop</span><span class="tag">your call</span></span>
+                <span class="gloss">retire reason routing: one clean cancel path for everyone</span>
+              </button>
+              <button class="opt" type="button" data-verb="hand off" aria-pressed="false">
+                <span class="opt-line"><span class="idx" aria-hidden="true">f.</span><span class="verb">hand off</span><span class="tag">your call</span></span>
+                <span class="gloss">give the classifier to a modeling team and wait on their roadmap</span>
+              </button>
+            </div>
+            <div class="opt-foot">
+              <button class="skip-call" type="button">or skip: show her call</button>
+              <span class="privacy mono">your answer never leaves this tab, stored nowhere</span>
+            </div>
+            <p class="verdict mono" aria-live="polite"><span class="verdict-line"><span class="hint">sealed. pick a verb, or skip.</span></span><button class="repick" type="button">change my call</button></p>
+          </div>
+        </div>
 
-    <h2 class="beat">The evaluation came back clean.</h2>
-    <div class="prose">
-      <p>I tested the classifier on a set of real customer utterances sized for <b>90% confidence</b>, before it touched a live call. Savability accuracy: <b>96.6%</b>. In evaluation, the share of cancellations it could resolve to a known reason went from <b>60% to 96%</b>, the thirty-six points the NLU ceiling never allowed. Accuracy, coverage, hallucination, and toxicity were each scored as separate checks.</p>
-    </div>
+        <div class="call-reveal">
+          <div class="call-clip">
+            <div class="call">
+              <h4 class="call-h" tabindex="-1">Her call</h4>
+              <p class="call-verb">act.</p>
+              <p class="call-line">Stop training intents. Let a model that already reads natural language classify the reason.</p>
+              <div class="receipt">
+                <span class="label mono">The receipt</span>
+                <p>The bottleneck was never the tuning, it was the tool. Championing the swap meant partnering with the platform team to onboard the API that let a flow call an LLM at all. In evaluation, classification coverage rose from 60 to 96 percent, and savability accuracy came in at 96.6 percent, measured on about 300 real customer utterances, a sample sized for 90 percent confidence. Months of training per cycle became hours of prompt work.</p>
+              </div>
 
-    <figure class="inst wide" aria-label="Pre-launch evaluation readout: accuracy, classification coverage, safety findings, and run cost">
-      <div class="inst-head">
-        <span>readout · pre-launch evaluation</span>
-        <span>real customer utterances</span>
-      </div>
-      <div class="inst-body">
-        <div class="spec">
-          <div class="row2"><span class="k">savability</span><span class="v"><b>96.6%</b> accurate</span></div>
-          <div class="row2"><span class="k">classified</span><span class="v"><b>60% → 96%</b> of cancellations resolved to a known reason</span></div>
-          <div class="row2"><span class="k">hallucination</span><span class="v">zero findings</span></div>
-          <div class="row2"><span class="k">toxicity</span><span class="v">zero findings</span></div>
-          <div class="row2"><span class="k">run cost</span><span class="v">about <b>$756 a year</b></span></div>
+              <figure class="trace" data-trace="the routing">
+                <figcaption class="trace-hd mono">
+                  <span>trace · the routing, both ways</span>
+                  <span class="trace-state" data-trace-state>complete</span>
+                  <button class="trace-replay" type="button" data-trace-replay>replay</button>
+                </figcaption>
+                <ol class="trace-rows">
+                  <li class="t-row t-speech" data-d="480">
+                    <span class="t-time" aria-hidden="true">00.0</span>
+                    <div class="t-main"><span class="t-role">customer</span><p>&ldquo;It has gotten too expensive.&rdquo;</p></div>
+                  </li>
+                  <li class="t-row t-note" data-d="440">
+                    <span class="t-time" aria-hidden="true">00.4</span>
+                    <div class="t-main">reason read from free text · no trained intent required</div>
+                  </li>
+                  <li class="t-row t-tool" data-d="420">
+                    <span class="t-time" aria-hidden="true">00.9</span>
+                    <div class="t-main"><code>classify <b>reason(utterance)</b> &#8594; <span class="ok">ok</span> · { "cancellation_reason": "too expensive", "is_savable": true, ... }</code></div>
+                  </li>
+                  <li class="t-row t-speech t-agent" data-d="620">
+                    <span class="t-time" aria-hidden="true">01.3</span>
+                    <div class="t-main"><span class="t-role">agent</span><p>&ldquo;I hear you. I do not want cost to be the reason you go. Before anything changes, I can connect you with a specialist who can review your plan and pricing. Want me to do that?&rdquo;</p></div>
+                  </li>
+                  <li class="t-row t-note" data-d="460">
+                    <span class="t-time" aria-hidden="true">01.9</span>
+                    <div class="t-main">savable · routed to a saves specialist, context attached</div>
+                  </li>
+                  <li class="t-row t-speech" data-d="480">
+                    <span class="t-time" aria-hidden="true">02.6</span>
+                    <div class="t-main"><span class="t-role">customer</span><p>&ldquo;I am closing the business. I am retiring.&rdquo;</p></div>
+                  </li>
+                  <li class="t-row t-tool" data-d="420">
+                    <span class="t-time" aria-hidden="true">03.0</span>
+                    <div class="t-main"><code>classify <b>reason(utterance)</b> &#8594; <span class="ok">ok</span> · { "cancellation_reason": "business closure", "is_savable": false, ... }</code></div>
+                  </li>
+                  <li class="t-row t-speech t-agent" data-d="560">
+                    <span class="t-time" aria-hidden="true">03.4</span>
+                    <div class="t-main"><span class="t-role">agent</span><p>&ldquo;Congratulations on the retirement. Let me get your account closed out properly. It only takes a minute.&rdquo;</p></div>
+                  </li>
+                  <li class="t-row t-note" data-d="400">
+                    <span class="t-time" aria-hidden="true">03.9</span>
+                    <div class="t-main">final reason · clean goodbye, no pitch, no queue</div>
+                  </li>
+                </ol>
+                <p class="trace-foot mono">dialogue reconstructed from the shipped flow · pre-rendered, no live model</p>
+              </figure>
+            </div>
+          </div>
         </div>
       </div>
-      <figcaption class="inst-caption"><b>Measured before launch.</b> Accuracy, coverage, safety, and cost, evaluated on real customer language before any live routing.</figcaption>
-    </figure>
+    </article>
 
-    <div class="prose">
-      <p>The saves motion this fed had already been validated in the earlier routing experiment that started this whole thread. Across <b>8,814 cancellation calls</b> from December 2022 through March 2023, the flow directionally saved <b>12% of customers against a 5% target</b>, on expert-reported saves. Price calls, the reason a specialist has the most room to fix, saved at roughly 43%, about eight times the rate of calls where the business was simply closing. That gap is the whole argument for savability routing: the reason decides how rescuable the call is.</p>
-      <p>Built on that experiment, the retention case projected <b>$2.9M in recovered revenue</b> in the quarter that followed, the upside that justified getting savability right.</p>
+  </section>
+
+  <!-- ================= THE QUEUE IT PROTECTS ================= -->
+  <section class="shell band" id="queue" aria-labelledby="queue-h" data-state="routing">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The queue this protects</span></p>
+      <!-- Quote: Simone's verbatim words from the story interview (2026-06-12, voice-to-text, lightly cleaned), carried from the v3 page. Keep verbatim; publication follows her v3 sign-off. -->
+      <h2 id="queue-h" class="io" style="--d:1">&ldquo;If I send ten people to that queue, the ten should be truly savable. Not two.&rdquo;</h2>
+      <p class="band-lede io" style="--d:2">My bar for the classifier, and the reason it exists at all.</p>
+      <div class="case-prose io" style="--d:3">
+        <p>The first version of the flow was mine too: ask why before offering the cancel steps, then route price, bad experience, and not using the product, the reasons the saves team had validated as winnable, to dedicated specialists with the context attached. It worked, and it exposed the real quality problem. The queue was filling with false positives: specialists trained to rescue a price objection were fielding calls that should never have reached them, and every wasted call cost a real save somewhere else.</p>
+        <p>The classifier tightened the whole chain: reason, sentiment, savability, route. Strict JSON that no customer ever reads raw; a low-code tool parsed it and applied the rules. The savability rules came from the people who knew the economics, the saves data and the analytics behind it. What I did not build: a pitch for final reasons. A customer retiring or closing the business gets a clean, respectful goodbye, not an offer.</p>
+        <p>The motion this protects had already earned its keep. Across 8,814 cancellation calls over four months, the flow directionally saved 12 percent of customers against a 5 percent target, on expert-reported saves. Price calls saved at roughly 43 percent, about eight times the rate of calls where the business was simply closing. That gap is the whole argument: the reason decides how rescuable the call is.</p>
+      </div>
     </div>
+  </section>
 
-    <h2 class="beat">I proved it before the platform could ship it.</h2>
-    <div class="prose">
-      <p>Proving the classifier was half the work. I drove it through the Responsible AI review: the safety checks, guardrails, and strict testing required of anything LLM-powered. Its output was JSON read by machines, never by customers, so that review was the gate that mattered, and it cleared.</p>
-      <p>What it didn’t have yet was a paved path to production. This was early 2023, before the company had a sanctioned way to ship generative AI, so I built the whole experience end to end in an internal low-code tool and proved it worked, ahead of the platform that would later carry it. The routing pattern is the part that outlived the wait: hear the reason, judge savability, route with context, keep the cancel path one step away. That pattern is the one I keep building on, because once you’ve taught a system to hear the difference, you stop designing flows and start designing judgment.</p>
+  <!-- ================= THE ARTIFACT: the shipped prompt ================= -->
+  <section class="shell band with-note" id="artifact" aria-labelledby="artifact-h" data-state="reading">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>The artifact</span></p>
+      <h2 id="artifact-h" class="io" style="--d:1">How the classifier was instructed.</h2>
+      <p class="band-lede io" style="--d:2">The build was a hybrid. The intent model still recognized that a cancellation was happening; this prompt read why, and a low-code tool parsed its JSON to route the call. Redacted, otherwise as shipped.</p>
+
+      <figure class="trace io" style="--d:3" aria-label="Redacted excerpt of the production classifier prompt">
+        <figcaption class="trace-hd mono">
+          <span>artifact · the classifier prompt</span>
+          <span>redacted excerpt · shipped 2023</span>
+        </figcaption>
+<pre class="prompt-pre">You are a classification assistant. Your only task is to evaluate a customer's
+provided reason for canceling a subscription and return a structured JSON object.
+
+- "cancellation_reason": a short label summarizing the reason, such as:
+  "too expensive" · "switching products" · "not using it" · "duplicate accounts"
+  · "business closure" · "retiring" · "bad customer experience"
+  · "missing features" · "support issues" · or another concise, accurate label.
+
+- "is_savable":
+  false if the reason is final and unlikely to be saved
+        (e.g., retirement, business closure, duplicate accounts).
+  true  for all other reasons.
+
+- "reason_acknowledgment": a short, neutral message that acknowledges the
+  customer's reason. Be respectful and professional. Do not show emotion or
+  make assumptions. Do not offer help or take action in this field.
+
+- "connect_to_expert_message": if "is_savable" is true, a brief, contextual
+  message offering to connect the customer with an expert who may be able to
+  help with the issue they mentioned. Do not make promises or assess the
+  situation. If the reason is not savable, set this field to an empty string.
+
+Return valid JSON output only.
+Customer feedback: ```${customer_feedback}```</pre>
+        <p class="trace-foot mono">excerpt of the production prompt · one runtime variable renamed, branded terms generalized, one field and a worked example omitted · categories, defaults, and the output contract unchanged</p>
+      </figure>
+
+      <div class="case-prose io" style="--d:4">
+        <p>Three decisions are visible even in the excerpt. The category set is open: nine anchored labels plus room for another concise, accurate label, so the model is never forced into a wrong bucket. Savability is a default, not a list: false only for terminal reasons, true for everything else, which biases the routing toward giving a specialist the chance. And the two message fields are separated on purpose: the acknowledgment is forbidden from offering help, the offer lives in its own field, so the voice layer composes the turn deterministically. The output contract is hard: valid JSON only.</p>
+      </div>
     </div>
+    <aside class="bnote io" style="--d:5" aria-label="Behavior note 02">
+      <span class="bnote-id">Note 02</span>
+      <p>The prompt above is the shipped one, redacted. Not a reconstruction, not a rewrite for this page.</p>
+    </aside>
+  </section>
 
-  </div>
+  <!-- ================= THE ECONOMICS ================= -->
+  <section class="shell band" id="economics" aria-labelledby="econ-h" data-state="counting">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>The economics</span></p>
+      <h2 id="econ-h" class="io" style="--d:1">The build-versus-buy case fit on one line.</h2>
+      <p class="band-lede io" style="--d:2">About $500K in expert savings, from a classifier that cost $63 a month to run.</p>
 
-</article>
+      <div class="score io" style="--d:3" aria-label="Economics readout">
+        <div class="score-row"><span>run cost</span><span>$63 a month · $756 a year</span></div>
+        <div class="score-row"><span>expert savings</span><span>about $500K</span></div>
+        <div class="score-row"><span>development time</span><span>6+ months to days</span></div>
+        <div class="score-row"><span>retention revenue</span><span>$2.9M · projected</span></div>
+      </div>
 
-<nav class="case-next" aria-label="Next case study"><div class="shell">
-  <a href="credit-karma.html">
-    <span class="nxt">Next · No. 05</span>
-    <span class="t">Credit Karma</span>
-  </a>
-</div></nav>
+      <div class="case-prose io" style="--d:4">
+        <p>The last row stays a projection. The retention case, built on the earlier saves experiment, projected $2.9M in retention revenue over the following three months. No receipt upgrades that word, so this page keeps it: projected. The measured numbers are the ones the case leads with.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= THE CONSTRAINT ================= -->
+  <section class="shell band" id="constraint" aria-labelledby="gate-h" data-state="gated">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">05</span><span>The constraint</span></p>
+      <h2 id="gate-h" class="io" style="--d:1">Designed, validated, gated at deployment.</h2>
+      <p class="band-lede io" style="--d:2">The honest status line for this case: the classifier was proven before it could fully ship.</p>
+      <div class="case-prose io" style="--d:3">
+        <p>Proving the classifier was half the work. I drove it through the Responsible AI review: the safety checks, guardrails, and strict testing required of anything LLM-powered. Because the output is JSON read by machines, never shown raw to a customer, that review was the gate that mattered. It cleared: zero hallucination findings, zero toxicity findings across the evaluation set.</p>
+        <p>What it did not have was a paved path to production. This was early 2023, before the company had a sanctioned way to ship generative AI. So I built the experience end to end in an internal low-code tool and proved it there: designed, validated, and blocked from full deployment until the platform caught up. The platform that could carry it came later; the pattern was ready first.</p>
+        <p>The pattern is the part that outlived the wait: hear the reason, judge savability, route with context, and keep the cancel path one step away. Once a system can hear the difference between a dozen problems wearing one sentence, you stop designing flows and start designing judgment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HANDOFF ================= -->
+  <section class="shell band" id="next" aria-labelledby="next-h" data-state="handing off">
+    <div>
+      <p class="kicker mono io" style="--d:0"><span class="knum">06</span><span>Handoff</span></p>
+      <h2 id="next-h" class="io" style="--d:1">Next: the same discipline, out loud.</h2>
+      <p class="band-lede io" style="--d:2">Case 05 puts it on the phone line: GenAI answers on the 1-800 number, and the login redesign that moved acceptance from 32 to 56 percent.</p>
+      <ul class="contact-links io" style="--d:3">
+        <li>
+          <a href="voice.html">
+            <span class="cl-label mono">Next</span>
+            <span class="cl-value">No. 05 · Voice</span>
+            <span class="cl-arrow" aria-hidden="true">&#8599;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
 
 </main>
 
-<footer class="colophon"><div class="shell">
-  <p>Designed and built AI-natively: directed by Simone, executed with AI agents, the way she works.</p>
-  <p>Some artifacts are reconstructed or redacted to protect confidential company, customer, and platform information. Roles, process, design decisions, and measured outcomes are preserved. © 2026 Simone Muro · Bay Area, CA</p>
-</div></footer>
+<footer class="footer" role="contentinfo">
+  <div class="shell">
+    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · <b>sealed</b> one call · numbers <b>receipted</b> · $2.9M kept <b>projected</b> · <b>handoff</b> to No. 05</p>
+    <p class="footer-inner mono">
+      <span>Simone Muro · Portfolio, 4th edition · 2026</span>
+      <span><a href="index.html">Home</a> · <a href="index.html#work">Work</a> · <a href="resume.html">Resume</a></span>
+    </p>
+  </div>
+</footer>
 
-<button class="agent-door" aria-label="Open Simone's portfolio agent"></button>
-<script src="./v3.js" defer></script>
+<noscript>
+  <style>
+    .io,.rule-io{opacity:1 !important;transform:none !important;}
+    .call-reveal{grid-template-rows:1fr !important;}
+    .call{visibility:visible !important;}
+    .val-pending{display:none !important;}
+    .val-fail{display:inline !important;}
+    .verdict,.opt-foot,.opt .tag{display:none !important;}
+    .progress,.trace-replay,.refusal-form,.refusal-foot{display:none !important;}
+  </style>
+</noscript>
+
 </body>
 </html>
