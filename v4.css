@@ -1,7 +1,7 @@
 /* ============================================================
    PORTFOLIO V4 · EDITORIAL PRECISION · shared design system
-   Pure white paper. Near-black ink. Hairlines. One ultramarine,
-   spent only where judgment lives.
+   Retoned to the v5 presentation palette: warm paper, soft ink,
+   hairlines, one russet accent, spent only where judgment lives.
    Instrument Serif (display, italic "her call")
    Instrument Sans (text) · Fragment Mono (marks, kickers)
    Components: masthead, era ruler, decision spread (told directly),
@@ -44,13 +44,13 @@
 
 /* ---------- tokens ---------- */
 :root{
-  --paper:#ffffff;
-  --ink:#0e0f12;
-  --sub:#5c5f66;
-  --hair:#e3e4e8;
-  --hair-strong:#c9cbd2;
-  --accent:#1e2bd0;          /* ultramarine: judgment only */
-  --accent-deep:#141fa2;
+  --paper:#f8f4ec;           /* warm paper, matches v5.css */
+  --ink:#322e26;             /* soft warm ink, never #000 */
+  --sub:#6d6455;
+  --hair:#e6ddca;
+  --hair-strong:#d2c6ab;
+  --accent:#8a3c1c;          /* russet: judgment only */
+  --accent-deep:#6e2f15;
   --serif:"Instrument Serif",Georgia,serif;
   --sans:"Instrument Sans",system-ui,-apple-system,sans-serif;
   --mono:"Fragment Mono",ui-monospace,SFMono-Regular,monospace;
@@ -291,7 +291,7 @@ h2{
   font-size:clamp(1.35rem,2.7vw,2.05rem);line-height:1.15;
   max-width:32ch;margin-top:18px;
 }
-.receipt{margin-top:30px;border-top:1px solid rgba(30,43,208,.25);padding-top:18px;max-width:60ch;}
+.receipt{margin-top:30px;border-top:1px solid rgba(138,60,28,.25);padding-top:18px;max-width:60ch;}
 .receipt .label{color:var(--accent);margin-bottom:10px;}
 .receipt p{color:var(--ink);}
 
@@ -375,7 +375,7 @@ h2{
 .case-unit{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sub);}
 .case-era{
   font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--accent);border:1px solid rgba(30,43,208,.3);padding:3px 8px;margin-top:4px;
+  color:var(--accent);border:1px solid rgba(138,60,28,.3);padding:3px 8px;margin-top:4px;
 }
 .case:hover .case-no,.case:hover h3,.case:hover .case-stat{color:var(--accent);}
 .case:focus-within .case-no,.case:focus-within h3,.case:focus-within .case-stat{color:var(--accent);}

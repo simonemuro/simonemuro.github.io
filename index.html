@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://simonemuro.github.io/">
 <meta name="twitter:card" content="summary">
 <title>Simone Muro. Agent behavior design.</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231e2bd0'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23ffffff' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="v4.css">
 <!-- LIVE AGENT (one step from on): after deploying the Cloudflare Worker from
      the private portfolio-agent repo (see its DEPLOY.md), paste your worker URL
@@ -57,7 +57,7 @@
     <div>
       <p class="hero-kicker mono io" style="--d:0">
         <span>Agent behavior design</span>
-        <span>Portfolio, 4th edition · 2016 to 2026</span>
+        <span>Portfolio · 2016 to 2026</span>
       </p>
       <h1 id="hero-h" class="io" style="--d:1">I design how agents <span class="acc">behave</span>, build them, and run the <em>evals</em> that prove them.</h1>
       <p class="hero-led io" style="--d:2">I have led teams doing the same.</p>
@@ -165,26 +165,26 @@
                   </li>
                   <li class="t-row t-tool" data-d="420">
                     <span class="t-time" aria-hidden="true">00.9</span>
-                    <div class="t-main"><code>read <b>payroll.runs(latest)</b> &#8594; <span class="ok">ok</span> · run complete · 12 of 13 paid</code></div>
+                    <div class="t-main"><code>read <b>employee("Maria")</b> &#8594; <span class="ok">ok</span> · active · added today, 2:04 pm</code></div>
                   </li>
                   <li class="t-row t-tool" data-d="420">
                     <span class="t-time" aria-hidden="true">01.2</span>
-                    <div class="t-main"><code>read <b>employee("Maria")</b> &#8594; <span class="ok">ok</span> · active · no pay schedule</code></div>
+                    <div class="t-main"><code>read <b>payroll.runs(current, next)</b> &#8594; <span class="ok">ok</span> · this run built 9:12 am · next run: Maria on it</code></div>
                   </li>
                   <li class="t-row t-note" data-d="440">
                     <span class="t-time" aria-hidden="true">01.5</span>
-                    <div class="t-main">cause found · one fact left that only the customer knows</div>
+                    <div class="t-main">cause found · added after the run was built · one fact left: intent</div>
                   </li>
                   <li class="t-row t-speech t-agent" data-d="620">
                     <span class="t-time" aria-hidden="true">01.8</span>
-                    <div class="t-main"><span class="t-role">agent</span><p>&ldquo;Maria is active but not on a pay schedule yet, which is why this run skipped her. Do you want her on your regular schedule, or paid off-cycle for this period?&rdquo;</p></div>
+                    <div class="t-main"><span class="t-role">agent</span><p>&ldquo;Maria was added after this run was built, so it skipped her. She is already on next week&rsquo;s run. Do you want her paid in this one instead, or is next week fine?&rdquo;</p></div>
                   </li>
                   <li class="t-row t-note" data-d="400">
                     <span class="t-time" aria-hidden="true">02.3</span>
                     <div class="t-main">asked once instead of interrogating</div>
                   </li>
                 </ol>
-          <p class="trace-foot mono">reconstructed from the shipped behavior spec · pre-rendered, no live model</p>
+          <p class="trace-foot mono">reconstructed from the shipped behavior spec · invented account data · pre-rendered, no live model</p>
         </figure>
       </div>
     </article>
@@ -240,7 +240,7 @@
           <div class="case-body">
             <h3><a href="charge-lookup.html">Charge lookup</a></h3>
             <p>The page showed how much, customers called to ask why. The redesigned conversation moved voice self-help acceptance from 25 to 39 percent, chat resolution up 12 points, containment about 61.</p>
-            <span class="case-role"><b>role</b> · drove the redesign; wrote the PRD</span>
+            <span class="case-role"><b>role</b> · drove the discovery, flows, and PRD · 2025 to 2026</span>
           </div>
           <div class="case-meta">
             <span class="case-stat">25&#8594;39%</span>
@@ -253,7 +253,7 @@
           <div class="case-body">
             <h3><a href="billing-skill.html">BillingSkill</a></h3>
             <p>The charge-lookup target state built working as an agent skill: the spec, a local MCP tool server, and the 108-case judge-scored eval that gates it.</p>
-            <span class="case-role"><b>role</b> · solo build, AI-paired</span>
+            <span class="case-role"><b>role</b> · solo build, AI-paired · 2026</span>
           </div>
           <div class="case-meta">
             <span class="case-stat">108</span>
@@ -266,7 +266,7 @@
           <div class="case-body">
             <h3><a href="payroll-intelligence.html">Payroll Intelligence</a></h3>
             <p>The diagnostic behavior: read the account, ask once, hand off with context. One question where the old flow interrogated.</p>
-            <span class="case-role"><b>role</b> · authored the ground-truth framework</span>
+            <span class="case-role"><b>role</b> · authored the framework; directed the team of three · 2026</span>
           </div>
           <div class="case-meta">
             <span class="case-stat">1</span>
@@ -279,7 +279,7 @@
           <div class="case-body">
             <h3><a href="quality-program.html">The Quality Program</a></h3>
             <p>The generator that drafts the eval answer key. About three weeks of authoring became about one, across 3,000+ rows.</p>
-            <span class="case-role"><b>role</b> · built the generator</span>
+            <span class="case-role"><b>role</b> · owned the datasets; authored the generator · 2025 to 2026</span>
           </div>
           <div class="case-meta">
             <span class="case-stat">3,000+</span>
@@ -291,8 +291,8 @@
           <span class="case-no" aria-hidden="true">05</span>
           <div class="case-body">
             <h3><a href="cancellation-saves.html">Cancellation Saves</a></h3>
-            <p>The first GenAI classifier in the cancel flow: 96.6 percent savability accuracy, classification up from 60 to 96 percent.</p>
-            <span class="case-role"><b>role</b> · strategy, prompt + intent architecture</span>
+            <p>The saves flow asks why a customer cancels; an LLM classifier reads the answer. Savability accuracy 96.6 percent, reasons classified 60 to 96 percent, in evaluation.</p>
+            <span class="case-role"><b>role</b> · designed the saves flow; wrote the classifier prompt · 2022 to 2023</span>
           </div>
           <div class="case-meta">
             <span class="case-stat">96.6%</span>
@@ -305,7 +305,7 @@
           <div class="case-body">
             <h3><a href="voice.html">Voice</a></h3>
             <p>GenAI answers on the 1-800 line, and a login redesign that took acceptance from 32 to 56 percent and containment from 20 to 32. $135,160 realized.</p>
-            <span class="case-role"><b>role</b> · driver + designer</span>
+            <span class="case-role"><b>role</b> · designed the calls; drove the voice snippet · 2022 to 2024</span>
           </div>
           <div class="case-meta">
             <span class="case-stat">32&#8594;56%</span>
@@ -318,7 +318,7 @@
           <div class="case-body">
             <h3><a href="credit-karma.html">Credit Karma</a></h3>
             <p>Regulated-finance prompts: the model reasons over approval odds and never states them. The structured output is the page.</p>
-            <span class="case-role"><b>role</b> · prompt design, regulated finance</span>
+            <span class="case-role"><b>role</b> · prompt design, regulated finance · 2024</span>
           </div>
           <div class="case-meta">
             <span class="case-stat">0</span>
@@ -331,7 +331,7 @@
           <div class="case-body">
             <h3><a href="operate-with-ai.html">How I Built This Site</a></h3>
             <p>Agent crews did the typing, judges gated every page before it shipped, and the calls stayed hers.</p>
-            <span class="case-role"><b>role</b> · solo build, AI-paired</span>
+            <span class="case-role"><b>role</b> · directed the build, AI-paired · 2026</span>
           </div>
           <div class="case-meta">
             <span class="case-stat">08</span>
@@ -449,7 +449,7 @@
 
 <footer class="footer" role="contentinfo">
   <div class="shell footer-inner mono">
-    <span>Simone Muro · Portfolio, 4th edition · 2026</span>
+    <span>Simone Muro · Portfolio · 2026</span>
     <span>Set in Instrument Serif, Instrument Sans, Fragment Mono, self-hosted · No trackers, no live model · <a href="operate-with-ai.html">Case 08 tells the story</a></span>
   </div>
 </footer>

@@ -4,221 +4,201 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="Payroll Intelligence, case 03. The ground-truth framework Simone Muro authored so a payroll agent reads the account before it asks, spends one question on what only the customer knows, and hands off before it guesses.">
-<meta property="og:title" content="Payroll Intelligence · Simone Muro">
+<meta name="description" content="A payroll agent that reads the account before it speaks, asks exactly one question, and hands off before it guesses. The diagnostic ground truth behind it, and the ten-day sprint that delivered it. Case 03.">
+<meta property="og:title" content="Payroll Intelligence &middot; Simone Muro">
 <meta property="og:description" content="Read the account first. Ask exactly once. Hand off before guessing. The diagnostic ground truth behind a payroll agent, and the behavior it produced.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/payroll-intelligence.html">
 <meta name="twitter:card" content="summary">
-<title>Payroll Intelligence · Simone Muro</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231e2bd0'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23ffffff' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="v4.css">
-<script src="v4.js" defer></script>
+<title>Payroll Intelligence &middot; Simone Muro</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="v5.css">
 <style>
-  /* case 03 scoped: prompt excerpt block, mirrors case 05 · house tokens only */
-  .prompt-pre{margin:0;padding:18px 20px;font-family:var(--mono);font-size:.74rem;line-height:1.8;color:var(--ink);overflow-x:auto;}
-  .sprint-foot{margin-top:clamp(18px,3vh,28px);padding-left:0;padding-right:0;}
-  .prose{max-width:62ch;margin-top:clamp(26px,4vh,40px);}
-  .prose p{margin-top:14px;}
-  .prose p:first-child{margin-top:0;}
+  /* case 03 scoped: verbatim prompt excerpt · house tokens only */
+  body.v5 .prompt-pre{margin:0;padding:18px 20px;font-family:var(--mono);font-size:.72rem;line-height:1.8;color:var(--ink);overflow-x:auto;}
 </style>
 </head>
-<body>
+<body class="v5">
 
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="masthead" role="banner">
-  <div class="shell masthead-inner">
+  <div class="wrap masthead-inner">
     <a class="brand" href="index.html">Simone Muro</a>
     <nav class="mast-nav mono" aria-label="Primary">
       <a href="index.html#work">Work</a>
       <a href="resume.html">Resume</a>
       <a href="index.html#contact">Contact</a>
     </nav>
-    <div class="progress" id="progress" aria-hidden="true"></div>
   </div>
 </header>
 
 <main id="main">
 
-  <!-- ================= CASE OPENER (skim layer) ================= -->
-  <section class="shell hero" aria-labelledby="case-h" data-state="answering">
-    <div>
-      <p class="hero-kicker mono io" style="--d:0">
-        <span>Case 03 · Payroll Intelligence</span>
-        <span>agentic era · 2026</span>
-      </p>
-      <h1 id="case-h" class="io" style="--d:1">Teaching a payroll agent what the <em>experts</em> know.</h1>
-      <p class="hero-led io" style="--d:2">Read first. Ask once. Hand off before guessing.</p>
-      <p class="hero-sub io" style="--d:3">January 2026. A payroll agent was being built, and the hard part was not what it should say: it was what it should do, and when. A model asked for payroll knowledge it cannot look up will invent it, confidently. So the diagnostic ground truth had to be written down, tested, and validated by the people who already knew it. This page is that framework, and the behavior it produced.</p>
+  <!-- ================= title block ================= -->
+  <section class="wrap titleblock" aria-labelledby="case-h">
+    <p class="kicker mono">
+      <span class="knum">Case No. 03</span>
+      <span>Payroll Intelligence</span>
+      <span>Intuit Intelligence</span>
+    </p>
+    <h1 id="case-h">Designing the diagnostic behavior of the QuickBooks payroll agent.</h1>
+    <p class="lede">QuickBooks Payroll runs payroll for small businesses. When something looks wrong, an employee missing from a pay run, a filing that did not go through, the question underneath is always the same: will my people get paid? In 2026 a payroll agent was being built on Intuit Intelligence to handle those moments, and the hard part was not what it should say. It was what it should do, and when. I designed the agent&rsquo;s diagnostic behavior and authored the ground truth that teaches it: read the account first, ask exactly once, hand off before guessing.</p>
 
-      <dl class="factbox io" style="--d:4">
-        <div class="fact fact-outcome"><dt>Outcome</dt><dd>Payroll conversation quality up 9.8 points in a year, measured by the program&rsquo;s judge · one question asked where the old flow interrogated</dd></div>
-        <div class="fact"><dt>Role</dt><dd>Designed the agent&rsquo;s diagnostic behavior; authored the ground-truth framework</dd></div>
-        <div class="fact"><dt>Scope</dt><dd>The top contact drivers: high traffic, high complexity, do-it-for-me potential · nine troubleshooting territories</dd></div>
-        <div class="fact"><dt>When</dt><dd>2026 · agentic era</dd></div>
+    <dl class="factrow">
+      <div><dt>Surface</dt><dd>The QuickBooks payroll agent on Intuit Intelligence, troubleshooting conversations</dd></div>
+      <div><dt>Role</dt><dd>Conversational AI Manager; I authored the framework myself and directed the team of three that delivered with it &middot; 2026</dd></div>
+      <div><dt>Context</dt><dd>Payroll&rsquo;s top contact drivers: high traffic, high complexity; nine troubleshooting territories</dd></div>
+      <div><dt>Results</dt><dd>Payroll conversation quality up 9.8 points in a year, measured by the program&rsquo;s judge</dd></div>
+    </dl>
+  </section>
+
+  <!-- ================= 01 · background ================= -->
+  <section class="wrap part" id="background" aria-labelledby="p1-h">
+    <p class="kicker mono part-head"><span class="knum">01</span><span>Background</span></p>
+    <h2 id="p1-h">An agent was being built. Its judgment was not.</h2>
+    <div class="prose">
+      <p>The payroll team was building an agent for the questions customers bring to payroll support: the missing employee, the filing that looks wrong, the amount that does not match. The topics were chosen deliberately, by call volume, customer pain, and how long an expert spends resolving each one. High traffic, high complexity, and the kind of question an agent could resolve end to end, not just answer.</p>
+      <p>My part sat underneath the agent. A language model asked for payroll knowledge it cannot look up will invent it, confidently, and payroll is exactly the domain where a confident invention hurts someone. So the agent&rsquo;s diagnostic behavior had to be written down as ground truth: what to read, what to ask, when to stop. I designed that behavior and authored the framework that produces it.</p>
+      <p>Manager was my title; the framework had one author. I wrote the generator system prompt, the answer templates, and the pass or fail gates myself, and I held the plan: which territories, in what order, against the deadline. The team of three I directed drafted the nine troubleshooting territories with the generator and took every draft to the experts. The agent itself, its product vision and its roadmap, belongs to the team that ships it. What I owned is the ground truth for how it diagnoses.</p>
+    </div>
+  </section>
+
+  <!-- ================= 02 · the problem ================= -->
+  <section class="wrap part" id="problem" aria-labelledby="p2-h">
+    <p class="kicker mono part-head"><span class="knum">02</span><span>The problem</span></p>
+    <h2 id="p2-h">One sentence, six possible causes, and an interrogation.</h2>
+    <div class="prose">
+      <p>Take the sentence this page follows: my employee is missing from this pay run. Half a dozen root causes wear that one sentence. A subscription lapsed. The employee was made inactive. She is on a different pay schedule. She was added after the run was built. The run is the wrong one. The employee is fine and the customer is looking at the wrong screen.</p>
+      <p>A human expert opens with a long interview, because a human starts blind. The support flows before the agent inherited that interview. Here is the shape of it, recreated.</p>
+    </div>
+
+    <div class="mockwrap">
+      <div class="mock" role="img" aria-label="Recreated chat: the customer reports a missing employee and the assistant responds with a series of questions">
+        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Support assistant</span><span class="mtag">Recreation</span></div>
+        <div class="mock-body">
+          <div class="m-user">I just ran payroll and my employee Maria is not on it. What happened?</div>
+          <div class="m-agent"><p>I can help with that. First, a few questions. What is the employee&rsquo;s full name?</p></div>
+          <div class="m-user">Maria Delgado.</div>
+          <div class="m-agent"><p>Thank you. When did you add Maria, and which pay schedule is she assigned to?</p></div>
+          <div class="m-user">I added her today. Weekly, the same as everyone else.</div>
+          <div class="m-agent"><p>Got it. And did you already submit payroll for this pay period?</p></div>
+        </div>
+        <div class="m-composer" aria-hidden="true">Ask anything</div>
+        <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
+      </div>
+      <p class="mock-cap">The before experience. Recreated; the question sequence is the real pattern the framework replaced. Interface simplified; names and details invented.</p>
+    </div>
+
+    <div class="prose">
+      <p class="opens">Four questions asked of the customer, and every answer already sits on the account: the employee list, the audit log, the schedule table, the run history. That is the problem in one line. The system interviewed the customer for facts it was already holding.</p>
+    </div>
+  </section>
+
+  <!-- ================= 03 · why it mattered ================= -->
+  <section class="wrap part" id="why" aria-labelledby="p3-h">
+    <p class="kicker mono part-head"><span class="knum">03</span><span>Why it mattered</span></p>
+    <h2 id="p3-h">Payroll is where a confident wrong answer hurts someone.</h2>
+    <div class="prose">
+      <p>Behind every payroll question sits the same one: will my people get paid? A customer asking about a missing employee is often hours from a pay date. An interrogation spends that customer&rsquo;s calm at the worst possible moment, and it is the same interview that makes these calls long for the experts who take them.</p>
+      <p>The deeper risk was the model itself. Payroll is regulated, full of rules a model can imitate without knowing. Asked about a filing schedule or a tax rule it cannot look up, a model will produce a fluent, confident invention. The dangerous failure in this domain is not a wrong answer that looks wrong. It is a wrong answer that looks right.</p>
+      <p>So the diagnostic knowledge could not be left to the model, and it could not be left implicit in the heads of experts. It had to be written down, tested, and validated by the people who already carry it.</p>
+    </div>
+  </section>
+
+  <!-- ================= 04 · exploring solutions ================= -->
+  <section class="wrap part" id="solutions" aria-labelledby="p4-h">
+    <p class="kicker mono part-head"><span class="knum">04</span><span>Exploring solutions</span></p>
+    <h2 id="p4-h">The experts, and the fact map that changed the design.</h2>
+    <div class="prose">
+      <p>The diagnostic paths had to come from humans. We spent about a week and a half interviewing the people who resolve these calls: support, engineering, the policy team. What questions they ask, in what order, what they rule out, where they stop and send the case up.</p>
+      <p>The insight that shaped everything came out of those interviews. The expert opens with a long interview because a human starts blind. The agent does not. Before its first reply it can read the account. So I mapped, for the missing-employee territory, the six facts that decide the diagnosis, and asked of each one: where does it live?</p>
+    </div>
+
+    <figure class="goldrow" aria-label="Six facts that decide the diagnosis, and where each one lives">
+      <figcaption class="gr-hd mono"><span>the diagnosis &middot; six facts</span><span class="gr-mark">four readable &middot; two must ask</span></figcaption>
+      <dl class="gr-rows">
+        <div class="gr-row"><dt>subscription status</dt><dd>on the account</dd></div>
+        <div class="gr-row"><dt>employee list and status</dt><dd>on the account</dd></div>
+        <div class="gr-row"><dt>pay schedule assignments</dt><dd>on the account</dd></div>
+        <div class="gr-row"><dt>audit log of recent changes</dt><dd>on the account</dd></div>
+        <div class="gr-row gate"><dt>what the customer expected</dt><dd><span>only the customer holds it</span><b class="gr-res">must ask</b></dd></div>
+        <div class="gr-row gate"><dt>what is on their screen</dt><dd><span>only the customer holds it</span><b class="gr-res">must ask</b></dd></div>
       </dl>
+      <p class="gr-foot">from the shipped framework &middot; each must-ask row carries a written justification in the dataset for why the system cannot look it up</p>
+    </figure>
+
+    <div class="prose">
+      <p class="opens">Four of the six facts the old flow asked for were already readable. Only two truly belong to the customer. The design conclusion followed directly: do not mimic the expert&rsquo;s question sequence. Read first, then spend questions only on what cannot be retrieved.</p>
+      <p>Engineering pushed back on one thing, and it was fair: hand-written root causes for every territory would be a maintenance burden as the agent grew. The answer was to make the framework itself reusable, instructions rather than answers, so each new territory starts from the same machinery instead of a blank page. Part six shows that machinery.</p>
     </div>
   </section>
 
-  <!-- ================= THE DECISION ================= -->
-  <section class="shell band" id="decision" aria-labelledby="decision-h" data-state="deciding">
-
-    <div class="spine-head">
-      <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>The decision</span></p>
-      <h2 id="decision-h" class="io" style="--d:1">The behavior turns on one customer sentence.</h2>
-      <p class="band-lede io" style="--d:2">The agent could answer with a list of maybes, open the expert interview, or fix the run on the spot. The framework had to pick one first move and defend it. Her call: verify first.</p>
+  <!-- ================= 05 · design decisions ================= -->
+  <section class="wrap part" id="design" aria-labelledby="p5-h">
+    <p class="kicker mono part-head"><span class="knum">05</span><span>Design decisions</span></p>
+    <h2 id="p5-h">Read first. Ask once. Stop before guessing.</h2>
+    <div class="prose">
+      <p>Four decisions define the behavior. Each one is visible in the recreated conversation in part seven.</p>
     </div>
-
-    <article class="decision" id="decision-01" aria-labelledby="d1-h">
-      <div>
-        <p class="d-kicker mono io" style="--d:0">
-          <span class="d-no">The decision</span>
-          <span>ask vs act</span>
-          <span>diagnostic behavior</span>
-        </p>
-        <h3 id="d1-h" class="visually-hidden">The decision: the missing employee</h3>
-        <blockquote class="situation quoted io" style="--d:1">
-          <p>My employee is missing from this run.</p>
-          <cite>A customer, inside the payroll agent</cite>
-        </blockquote>
-
-        <div class="d-grid">
-          <div class="d-setup io" style="--d:2">
-            <span class="label mono">The setup</span>
-            <p class="body">Half a dozen root causes wear this one sentence. A human expert opens with a long interview, because a human starts blind. The agent does not: before its first reply it can read the account. Six facts decide the diagnosis. Where does each one live?</p>
-            <div class="score" aria-label="Six facts and where they live">
-              <div class="score-row"><span>subscription status</span><span class="val-pass">on the account</span></div>
-              <div class="score-row"><span>employee list and status</span><span class="val-pass">on the account</span></div>
-              <div class="score-row"><span>pay schedule assignments</span><span class="val-pass">on the account</span></div>
-              <div class="score-row"><span>audit log of recent changes</span><span class="val-pass">on the account</span></div>
-              <div class="score-row"><span>what the customer expected</span><span class="val-fail">only the customer</span></div>
-              <div class="score-row"><span>what is on their screen</span><span class="val-fail">only the customer</span></div>
-            </div>
-          </div>
-          <div class="io" style="--d:3">
-            <h4 class="call-h">Her call</h4>
-            <p class="call-verb">verify.</p>
-            <p class="call-line">Read the account first, silently. Then spend exactly one question, on the one fact only the customer holds.</p>
-            <div class="receipt">
-              <span class="label mono">The receipt</span>
-              <p>The rule I wrote into the framework: do not mimic the expert&rsquo;s question sequence. The account already answers most of the interview, so the agent matches what it reads against the known root causes first, then asks only for what it cannot retrieve. In the shipped dataset, every must-ask question carries a written justification for why the system cannot look it up. Only two rows in the setup survive that test: what the customer expected, and what is on their screen.</p>
-            </div>
-          </div>
+    <ol class="decisions">
+      <li>
+        <span class="dnum" aria-hidden="true">5.1</span>
+        <div>
+          <h3>Read the account before the first word.</h3>
+          <p>The agent silently reads the subscription, the employee record, the schedules, and the recent runs, and matches what it finds against the known root causes. Most of the expert&rsquo;s interview is answered before the agent speaks.</p>
         </div>
-      </div>
-    </article>
+      </li>
+      <li>
+        <span class="dnum" aria-hidden="true">5.2</span>
+        <div>
+          <h3>Every question carries a written why.</h3>
+          <p>A question may be asked only when the system truly cannot retrieve the answer, and each one ships with a written justification saying so. In the missing-employee territory, only two facts survive that test: what the customer expected, and what is on their screen.</p>
+        </div>
+      </li>
+      <li>
+        <span class="dnum" aria-hidden="true">5.3</span>
+        <div>
+          <h3>Instructions, not answers.</h3>
+          <p>One person hand-writing golden answers for every territory was fantasy. The framework is templates, data dependencies, and gates that generate and check the answers, so it compounds across territories instead of being spent on one.</p>
+        </div>
+      </li>
+      <li>
+        <span class="dnum" aria-hidden="true">5.4</span>
+        <div>
+          <h3>Name where this is the wrong move.</h3>
+          <p>Changes too sensitive for an agent to make alone stop, in branches the decision trees name themselves. The case hands off with everything the agent read, ruled out, and was told. A person picks up a diagnosed case; the customer never starts over.</p>
+        </div>
+      </li>
+    </ol>
 
+    <figure class="trace" aria-label="Reconstructed trace: the read-before-ask session, three silent reads then one question">
+      <figcaption class="trace-hd mono"><span>trace &middot; the read-before-ask session</span><span>reconstructed</span></figcaption>
+      <ol class="trace-rows">
+        <li><span class="t-time" aria-hidden="true">00.0</span><div>customer: &ldquo;I ran payroll, but my employee Maria is not on it.&rdquo;</div></li>
+        <li><span class="t-time" aria-hidden="true">00.4</span><div>known territory &middot; half a dozen root causes fit this sentence &middot; read before asking</div></li>
+        <li><span class="t-time" aria-hidden="true">00.9</span><div><code>read <b>payroll.subscription</b> &#8594; <span class="ok">ok</span> &middot; active &middot; no billing hold</code></div></li>
+        <li><span class="t-time" aria-hidden="true">01.3</span><div><code>read <b>employee("Maria")</b> &#8594; <span class="ok">ok</span> &middot; active &middot; added today, 2:04 pm</code></div></li>
+        <li><span class="t-time" aria-hidden="true">01.7</span><div><code>read <b>payroll.runs(current, next)</b> &#8594; <span class="ok">ok</span> &middot; this run built 9:12 am &middot; next run: Maria on it</code></div></li>
+        <li><span class="t-time" aria-hidden="true">02.1</span><div>cause found &middot; added after the run was built &middot; one fact left: intent</div></li>
+        <li><span class="t-time" aria-hidden="true">02.4</span><div>agent: &ldquo;Maria was added after this run was built, so it skipped her. She is already on next week&rsquo;s run. Do you want her paid in this one instead, or is next week fine?&rdquo;</div></li>
+        <li><span class="t-time" aria-hidden="true">03.0</span><div>customer: &ldquo;This one, please.&rdquo;</div></li>
+        <li><span class="t-time" aria-hidden="true">03.3</span><div>resolved &middot; questions asked of the customer: one</div></li>
+      </ol>
+      <p class="trace-foot">reconstructed from the shipped behavior spec &middot; invented account data &middot; pre-rendered, no live model</p>
+    </figure>
   </section>
 
-  <!-- ================= THE TRACE ================= -->
-  <section class="shell band" id="trace" aria-labelledby="trace-h" data-state="reading">
-    <div class="with-note">
-      <div>
-        <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The trace</span></p>
-        <h2 id="trace-h" class="io" style="--d:1">Read first. Ask once.</h2>
-        <p class="band-lede io" style="--d:2">The same sentence, handled two ways. The interrogation asks the customer for what the system already holds; the shipped behavior reads first and spends one question.</p>
-
-        <div class="range-grid">
-          <div class="range-cell io" style="--d:3">
-            <span class="label mono">before · the interrogation</span>
-            <p class="body">What is the employee&rsquo;s full name? When did you add them? Which pay schedule are they on? Did you already run payroll this period? Four questions asked of the customer, and every answer already sits on the account: the employee list, the audit log, the schedule table, the run history.</p>
-          </div>
-          <div class="range-cell io" style="--d:4">
-            <span class="label mono">after · read first, then ask once</span>
-            <p class="body">The agent reads before it speaks: subscription, employee record, this run against the next one. It diagnoses, then spends its one question on intent, the only fact it cannot retrieve. The session below is that behavior, step by step.</p>
-          </div>
-        </div>
-
-        <figure class="trace io" style="--d:5" data-trace="read-before-ask session">
-          <figcaption class="trace-hd mono">
-            <span>trace · the read-before-ask session</span>
-            <span class="trace-state" data-trace-state>complete</span>
-            <button class="trace-replay" type="button" data-trace-replay>replay</button>
-          </figcaption>
-          <ol class="trace-rows">
-            <li class="t-row t-speech" data-d="480">
-              <span class="t-time" aria-hidden="true">00.0</span>
-              <div class="t-main"><span class="t-role">customer</span><p>&ldquo;I ran payroll, but my employee Maria is not on it.&rdquo;</p></div>
-            </li>
-            <li class="t-row t-note" data-d="440">
-              <span class="t-time" aria-hidden="true">00.4</span>
-              <div class="t-main">known territory · half a dozen root causes fit this sentence · read before asking</div>
-            </li>
-            <li class="t-row t-tool" data-d="420">
-              <span class="t-time" aria-hidden="true">00.9</span>
-              <div class="t-main"><code>read <b>payroll.subscription</b> &#8594; <span class="ok">ok</span> · active · no billing hold</code></div>
-            </li>
-            <li class="t-row t-tool" data-d="420">
-              <span class="t-time" aria-hidden="true">01.3</span>
-              <div class="t-main"><code>read <b>employee("Maria")</b> &#8594; <span class="ok">ok</span> · active · added today, 2:04 pm</code></div>
-            </li>
-            <li class="t-row t-tool" data-d="440">
-              <span class="t-time" aria-hidden="true">01.7</span>
-              <div class="t-main"><code>read <b>payroll.runs(current, next)</b> &#8594; <span class="ok">ok</span> · this run built 9:12 am · next run: Maria on it</code></div>
-            </li>
-            <li class="t-row t-note" data-d="440">
-              <span class="t-time" aria-hidden="true">02.1</span>
-              <div class="t-main">cause found · added after the run was built · one fact left: intent</div>
-            </li>
-            <li class="t-row t-speech t-agent" data-d="620">
-              <span class="t-time" aria-hidden="true">02.4</span>
-              <div class="t-main"><span class="t-role">agent</span><p>&ldquo;Maria was added after this run was built, so it skipped her. She is already on next week&rsquo;s run. Do you want her in this one instead, or is next week fine?&rdquo;</p></div>
-            </li>
-            <li class="t-row t-speech" data-d="480">
-              <span class="t-time" aria-hidden="true">03.0</span>
-              <div class="t-main"><span class="t-role">customer</span><p>&ldquo;This one, please.&rdquo;</p></div>
-            </li>
-            <li class="t-row t-note" data-d="400">
-              <span class="t-time" aria-hidden="true">03.3</span>
-              <div class="t-main">resolved · questions asked of the customer: one</div>
-            </li>
-          </ol>
-          <p class="trace-foot mono">reconstructed from the shipped behavior spec · invented account data · pre-rendered, no live model</p>
-        </figure>
-
-        <div class="prose io" style="--d:6">
-          <p>The framework also names, ahead of time, where read first and ask once is the wrong move. Payroll is regulated, and behind every question sits the same one: <em>will my people get paid?</em> Changes too sensitive for an agent to make alone stop, in branches the decision trees name themselves, and the case hands off with everything the agent read, ruled out, and was told. A person picks up a diagnosed case; the customer never starts over.</p>
-        </div>
-      </div>
-      <aside class="bnote io" style="--d:7" aria-label="Behavior note 01">
-        <span class="bnote-id">Note 01</span>
-        <p>Three silent reads before the agent&rsquo;s first word. The customer answered one question, total.</p>
-      </aside>
+  <!-- ================= 06 · the build ================= -->
+  <section class="wrap part" id="build" aria-labelledby="p6-h">
+    <p class="kicker mono part-head"><span class="knum">06</span><span>The build</span></p>
+    <h2 id="p6-h">A generator built to distrust the model, and a ten-day sprint.</h2>
+    <div class="prose">
+      <p>The framework is a system prompt before it is anything else: a generator that drafts a complete diagnostic decision tree for a territory, so an expert corrects a draft instead of authoring from a blank page. It runs a six-step reasoning pass, bans payroll concepts the product does not have, locks every draft to verified tools, and caps the questions the agent may ask, each with its written why. Here is the working prompt itself.</p>
     </div>
-  </section>
 
-  <!-- ================= THE FRAMEWORK ================= -->
-  <section class="shell band" id="framework" aria-labelledby="framework-h" data-state="compounding">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>The framework</span></p>
-      <h2 id="framework-h" class="io" style="--d:1">Instructions, not answers.</h2>
-      <p class="band-lede io" style="--d:2">The target was payroll&rsquo;s top contact drivers: high traffic, high complexity, and the kind of question an agent could resolve end to end, not just answer. One person hand-writing golden answers for all of them was fantasy. So the framework is instructions, because instructions compound where answers do not.</p>
-
-      <div class="range-grid">
-        <div class="range-cell io" style="--d:3">
-          <span class="label mono">What the instructions hold</span>
-          <p class="body">Templates for a complete golden answer, the tool and data dependencies behind each one, the exact format the agent team consumes, and a pass or fail gate on every case: can the agent infer this from the account, or must it be told? Clear the gate or do not ship.</p>
-        </div>
-        <div class="range-cell io" style="--d:4">
-          <span class="label mono">Built to distrust the model</span>
-          <p class="body">Troubleshooting territories get golden decision trees drafted by a system prompt, so an expert corrects a draft instead of authoring from a blank page. The prompt runs a six-step reasoning pass, bans payroll concepts the product does not have, and locks every draft to verified tools: the dangerous failure is not a wrong answer, it is a confident invented one.</p>
-        </div>
-        <div class="range-cell io" style="--d:5">
-          <span class="label mono">The people</span>
-          <p class="body">The diagnostic paths had to come from humans: about a week and a half of interviews with the people who resolve these calls. Support, engineering, the policy team. Nothing generated shipped as drafted; subject-matter experts validated every answer.</p>
-        </div>
-        <div class="range-cell io" style="--d:6">
-          <span class="label mono">What I did not build</span>
-          <p class="body">The agent. The payroll agent, its product vision, and its roadmap belong to the team that ships it. What I owned sits underneath: the ground truth for its diagnostic behavior, the generator that drafts it, and the gates that decide when it is good enough.</p>
-        </div>
-      </div>
-
-      <figure class="trace io" style="--d:7" aria-label="Redacted excerpt of the working generator system prompt">
-        <figcaption class="trace-hd mono">
-          <span>artifact · the diagnostic golden dataset generator</span>
-          <span>redacted excerpt · 2026</span>
-        </figcaption>
+    <figure class="trace" aria-label="Redacted excerpt of the working generator system prompt">
+      <figcaption class="trace-hd mono"><span>artifact &middot; the diagnostic golden dataset generator</span><span>redacted excerpt &middot; 2026</span></figcaption>
 <pre class="prompt-pre">SYSTEM PROMPT: DIAGNOSTIC GOLDEN DATASET GENERATOR
 
 The golden datasets you produce are NOT simple FAQ answers. They are
@@ -240,64 +220,95 @@ Data Not Retrievable (Must Ask User)
 
   - NEVER leave the agent without a clear next action
   - Every path must terminate in either resolution or escalation</pre>
-        <p class="trace-foot mono">four slices of the working prompt · lines omitted between slices, text otherwise verbatim, list formatting flattened · the full artifact adds output templates, branching rules, contrastive examples, and a validation checklist</p>
-      </figure>
+      <p class="trace-foot">four slices of the working prompt &middot; lines omitted between slices, text otherwise verbatim, list formatting flattened &middot; the full artifact adds output templates, branching rules, contrastive examples, and a validation checklist</p>
+    </figure>
 
-      <div class="range-grid">
-        <div class="range-cell io" style="--d:0">
-          <span class="label mono">Leading the sprint · what stayed with me</span>
-          <p class="body">The framework had one author; the delivery was a team of three I directed, in a sprint of about ten days. I held the generator prompt, the answer templates, the gates, and the plan: which territories, in what order, against the deadline. The team drafted the territories with the generator, correcting drafts instead of authoring from scratch.</p>
-        </div>
-        <div class="range-cell io" style="--d:1">
-          <span class="label mono">What the experts corrected</span>
-          <p class="body">Nothing shipped as drafted. The class of correction on the record: drafts that assumed the product could see everything, where the honest instruction is manual. The deepest territory reached <span class="num">version ten</span> before it settled, and one of the three signed off the closing accuracy pass across the full set.</p>
-        </div>
-      </div>
-      <p class="trace-foot sprint-foot mono io" style="--d:2">sourced from the sprint&rsquo;s own record: the generator prompt and versioned datasets in my files, and the validation log on the shared working document · names withheld</p>
+    <div class="prose">
+      <p class="opens">Around the generator sit the rest of the framework&rsquo;s parts: templates for a complete golden answer, the tool and data dependencies behind each one, the exact format the agent team consumes, and a pass or fail gate on every case: can the agent infer this from the account, or must it be told? Clear the gate or do not ship.</p>
+      <p>The delivery was a sprint of about ten days. I held the generator prompt, the templates, the gates, and the plan; the team of three drafted the nine territories with the generator and corrected drafts with the experts. Nothing generated shipped as drafted. The class of correction on the record: drafts that assumed the product could see everything, where the honest instruction is manual. The deepest territory reached version ten before it settled, and one of the three signed off the closing accuracy pass across the full set.</p>
     </div>
   </section>
 
-  <!-- ================= NEXT ================= -->
-  <section class="shell band" aria-label="Next case and handoff" data-state="continuing">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>Next case</span></p>
-      <ul class="contact-links io" style="--d:1">
-        <li>
-          <a href="quality-program.html">
-            <span class="cl-label mono">No. 04</span>
-            <span class="cl-value">The Quality Program</span>
-            <span class="cl-arrow" aria-hidden="true">&#8599;</span>
-          </a>
-        </li>
-        <li>
-          <a href="mailto:simonermuro@gmail.com">
-            <span class="cl-label mono">A human</span>
-            <span class="cl-value">simonermuro@gmail.com</span>
-            <span class="cl-arrow" aria-hidden="true">&#8599;</span>
-          </a>
-        </li>
-      </ul>
+  <!-- ================= 07 · results ================= -->
+  <section class="wrap part" id="results" aria-labelledby="p7-h">
+    <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
+    <h2 id="p7-h">The same sentence, handled the shipped way.</h2>
+    <div class="prose">
+      <p>Here is the behavior the ground truth teaches, recreated as the customer sees it. Part five showed the machinery; this is the conversation it produces. Same customer, same missing employee.</p>
     </div>
+
+    <div class="mockwrap">
+      <div class="mock" role="img" aria-label="Recreated chat: the same missing-employee question, answered after three silent reads with one question asked and an expert handoff offered">
+        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Payroll agent</span><span class="mtag">Recreation</span></div>
+        <div class="mock-body">
+          <div class="m-user">I just ran payroll and my employee Maria is not on it. What happened?</div>
+          <div class="m-agent">
+            <details class="m-work">
+              <summary><span class="chev" aria-hidden="true">&#8250;</span>Work done</summary>
+              <p class="m-worknote">Checked the payroll subscription, Maria&rsquo;s employee record and pay schedule, and this pay run against the next one.</p>
+            </details>
+            <p>Maria was added this afternoon, after this pay run was built this morning, so the run skipped her. Her setup is correct, and she is already on next week&rsquo;s run. Do you want her paid in this run instead, or is next week fine?</p>
+          </div>
+          <div class="m-user">In this one, please. She is expecting her check on Friday.</div>
+          <div class="m-agent">
+            <p>Then an additional payroll run for this period is the way to pay Maria now. You can start one yourself, or a payroll expert can take it from here with everything already checked, so you will not repeat a thing.</p>
+            <div class="m-handoff">
+              <p class="hff-t">Pay Maria in this period</p>
+              <p class="hff-p">Run an additional payroll for Maria, or bring in a payroll expert who starts with the full picture.</p>
+              <div class="m-actions">
+                <span class="m-btn primary">Start additional payroll</span>
+                <span class="m-btn ghost">Bring in an expert</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="m-composer" aria-hidden="true">Ask anything</div>
+        <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
+      </div>
+      <p class="mock-cap">The shipped behavior, recreated from the framework&rsquo;s golden path. The agent reads first, diagnoses, and spends its one question on the only fact it cannot retrieve: what the customer wants. Interface simplified; names and details invented.</p>
+    </div>
+
+    <div class="prose">
+      <p class="opens">The improvement, stated plainly. Before, the assistant asked four questions and every answer was already on the account; the customer supplied the data and still waited for a diagnosis. Now the agent reads those facts silently before its first word, names the cause, and asks one question, about intent, the one thing it genuinely cannot know. And when the fix is sensitive, the handoff carries the diagnosis with it, so a person starts from the middle of the case instead of the beginning.</p>
+    </div>
+
+    <div class="stats" role="list" aria-label="Measured outcomes and delivery receipts">
+      <div role="listitem"><span class="num">+9.8 pts</span><span class="lab">payroll conversation quality over the year, measured by the program&rsquo;s judge; my golden dataset work is part of what drove it</span></div>
+      <div role="listitem"><span class="num">1 question</span><span class="lab">asked of the customer in the shipped behavior, where the old flow asked four</span></div>
+      <div role="listitem"><span class="num">10 days</span><span class="lab">to deliver nine troubleshooting territories, a team of three working from one framework</span></div>
+    </div>
+
+    <div class="prose">
+      <p>One honest boundary on the number. The 9.8 points belong to the payroll surface as a whole, measured by the quality program&rsquo;s judge across the year. The diagnostic ground truth on this page is one input into that result, alongside the agent team&rsquo;s own work. How that judge works, and what it takes to trust one, is the next case.</p>
+    </div>
+  </section>
+
+  <!-- ================= 08 · learnings ================= -->
+  <section class="wrap part" id="learnings" aria-labelledby="p8-h">
+    <p class="kicker mono part-head"><span class="knum">08</span><span>Learnings</span></p>
+    <h2 id="p8-h">What I learned, and what I would do differently.</h2>
+    <div class="prose">
+      <p>Institutional knowledge lives in people, and the model will confidently invent whatever it cannot look up. A week and a half with the experts who resolve these calls was worth more than any amount of prompting, and nothing generated was allowed to ship as drafted.</p>
+      <p>Design the agent to its own strengths, not the expert&rsquo;s script. The expert interviews because a human starts blind; the agent starts with the account open. Porting the human question sequence would have shipped the old interrogation with a friendlier voice.</p>
+      <p>Instructions compound where answers do not. The framework outlived the sprint: partner teams picked it up for their own territories, which is what made the hand-written root causes defensible against the maintainability concern.</p>
+      <p>What I would do differently: bring engineering into the framework on day one. The maintainability pushback arrived mid-flight, and reusability was the answer we found under deadline. It was the right answer, and I would rather have designed it with them from the start than proven it to them at the end.</p>
+    </div>
+  </section>
+
+  <!-- ================= next case ================= -->
+  <section class="wrap nextcase" aria-label="Next case">
+    <p class="kicker mono part-head"><span class="knum">Next</span><span>Case No. 04</span></p>
+    <p><a href="quality-program.html">The Quality Program</a>: the judge behind the 9.8 points. Golden datasets, human evaluation, and the catch that set the bar: a right answer that did a wrong thing.</p>
   </section>
 
 </main>
 
 <footer class="footer" role="contentinfo">
-  <div class="shell">
-    <p class="foot-score mono">colophon, one line: <b>answered</b> in the factbox · her call <b>stated</b> plainly · <b>read</b> before asking in the trace · <b>handed off</b> to a human, above</p>
-    <p class="footer-inner mono">
-      <span>Simone Muro · Portfolio, 4th edition · 2026</span>
-      <span><a href="index.html">Home</a> · <a href="index.html#work">Work</a> · <a href="resume.html">Resume</a></span>
-    </p>
+  <div class="wrap footer-inner mono">
+    <span>Simone Muro &middot; Portfolio &middot; 2026</span>
+    <span><a href="index.html">Home</a> &middot; <a href="index.html#work">Work</a> &middot; <a href="resume.html">Resume</a></span>
   </div>
 </footer>
-
-<noscript>
-  <style>
-    .io,.rule-io{opacity:1 !important;transform:none !important;}
-    .progress,.trace-replay{display:none !important;}
-  </style>
-</noscript>
 
 </body>
 </html>
