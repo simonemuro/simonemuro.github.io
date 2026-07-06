@@ -107,7 +107,7 @@
       <div><dt>Surface</dt><dd>The voice support assistant on the QuickBooks phone line</dd></div>
       <div><dt>Role</dt><dd>Conversation designer; driver of the voice snippet, with a co-driver from the voice platform team &middot; 2022 to 2024</dd></div>
       <div><dt>Context</dt><dd>The assistant answered before any person; when the snippet work began, about 30% of callers offered self-help accepted it, the baseline the project wrote down</dd></div>
-      <div><dt>Results</dt><dd>Login redesign: acceptance 32% to 56%, containment 20% to 32%, $135,160 realized; the snippet&rsquo;s lift stated as a hypothesis, because that is what it is</dd></div>
+      <div><dt>Results</dt><dd>Voice snippet: shipped, a measured +3.9 point containment lift at the December 2024 experiment, then full production. Login redesign: acceptance 32% to 56%, containment 20% to 32%, $135,160 realized</dd></div>
     </dl>
   </section>
 
@@ -306,12 +306,16 @@ gerunds, and passive sentence constructions.</code></pre>
       </ol>
       <p class="trace-foot">from the release plan &middot; sample size math and internal system names removed &middot; scale beyond one intent staged for later phases</p>
     </figure>
+
+    <div class="prose">
+      <p>That plan is what carried the snippet from a prototype the platform could not yet support in 2023 all the way to production. I authored and prototyped the experience, then partnered with the platform and analytics teams to build it on the sanctioned path and measure it, as a named co-driver of the shipped work. The experiment launched on December 10, 2024, reached Bayesian significance, and the experience moved to full production shortly after.</p>
+    </div>
   </section>
 
   <!-- ================= 07 · results ================= -->
   <section class="wrap part" id="results" aria-labelledby="p7-h">
     <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
-    <h2 id="p7-h">What stayed a hypothesis, and what is receipted.</h2>
+    <h2 id="p7-h">What shipped, and what it moved.</h2>
     <div class="prose">
       <p>Here is the call the spec and the prompt produce, recreated: a teaser that proves the assistant understood, then the offer.</p>
     </div>
@@ -328,14 +332,15 @@ gerunds, and passive sentence constructions.</code></pre>
     </figure>
 
     <div class="prose">
-      <p class="opens">What I claim about the snippet, I claim exactly. Its success metrics were written as a hypothesis: a short snippet of the answer would move self-help acceptance from its 30 percent baseline toward 40, and containment from 20 toward 34, an increase of six points or more. I do not have a results readout for it, so on this page those numbers stay what they were: a hypothesis. The design, the driver role, and the release strategy are mine to claim. The lift is not, until it is measured.</p>
-      <p>The receipted numbers from this same voice program come from the clarifying question thread. The payroll redesign in 2022 proved the pattern. The login and password reset redesign in 2024 carried it furthest.</p>
+      <p class="opens">What I claim about the snippet, I claim exactly. The hypothesis going in was six points or more of containment. The experiment measured a lift of 3.9 points and reached Bayesian significance, so the effect was real, if smaller than the bet. That is the measured outcome of the experiment, not a separate long-run production readout, and I keep it at that. The platform teams owned the runtime; the prototype, the behavior spec, the prompt, the evaluation, and the release strategy were mine, and I carried the experience through as a named co-driver to the shipped version.</p>
+      <p>The rest of the receipted numbers come from the clarifying question thread of this same voice program. The payroll redesign in 2022 proved the pattern. The login and password reset redesign in 2024 carried it furthest.</p>
     </div>
 
-    <div class="stats" role="list" aria-label="Measured outcomes of the login and password reset redesign">
+    <div class="stats" role="list" aria-label="Measured outcomes across the voice program">
+      <div role="listitem"><span class="num">+3.9 pts</span><span class="lab">containment lift from the voice snippet, measured at the December 2024 experiment at Bayesian significance, then moved to full production</span></div>
       <div role="listitem"><span class="num">32% to 56%</span><span class="lab">self-help acceptance on the login and password reset flow after the clarifying question redesign, 2024</span></div>
-      <div role="listitem"><span class="num">20% to 32%</span><span class="lab">containment: the share of those calls resolved with no expert on the line</span></div>
-      <div role="listitem"><span class="num">$135,160</span><span class="lab">realized savings from the redesign, tracked after launch</span></div>
+      <div role="listitem"><span class="num">20% to 32%</span><span class="lab">containment on that flow: the share of those calls resolved with no expert on the line</span></div>
+      <div role="listitem"><span class="num">$135,160</span><span class="lab">realized savings from the login redesign, tracked after launch</span></div>
     </div>
 
     <div class="prose">
@@ -420,7 +425,7 @@ gerunds, and passive sentence constructions.</code></pre>
       <p>Write for the ear, not the eye. Steps that work on a screen are noise in the ear. Every rule in the prompt excerpt came from hearing what written help sounds like when a machine reads it aloud.</p>
       <p>The offer is the product. Callers were not refusing help; they were refusing an offer that carried no proof of understanding. Three sentences of the actual answer change the offer without changing the answer.</p>
       <p>De-risk in the release plan, not in the copy. A low risk intent with headroom, 50 customers first, a risk threshold before any throttle. That plan is what let a generated voice go out on a support line at all, and I would reuse it anywhere.</p>
-      <p>Two things I would do differently. I would tie the results readout to the launch plan on day one, so the hypothesis on this page could be a number instead; the honesty line above exists because I did not. And I would push past article links sooner. The post launch list already pointed there: bespoke spoken answers instead of links, and proactive help, so an invoicing question also surfaces the reminders and automation the caller will want next.</p>
+      <p>Two things I would do differently. I would push past article links sooner. The post launch list already pointed there: bespoke spoken answers instead of links, and proactive help, so an invoicing question also surfaces the reminders and automation the caller will want next. And I would carry the results readout the same way I carried the prototype, all the way through, so the measured lift and the full production story arrive together instead of the number trailing the ship by a year.</p>
     </div>
   </section>
 
