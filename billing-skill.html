@@ -36,13 +36,13 @@
     <p class="kicker mono">
       <span class="knum">Case No. 02</span>
       <span>BillingSkill</span>
-      <span>Intuit Intelligence</span>
+      <span>Agentic support platform</span>
     </p>
     <h1 id="case-h">Building the agent skill that explains QuickBooks subscription charges.</h1>
-    <p class="lede">When QuickBooks customers ask about a subscription charge, the real answer lives in their account: what they subscribe to, what changed, what a promotion did to the price. The <a href="charge-lookup.html">charge-lookup case</a> established that need. Delivering the answer moved to Intuit Intelligence, and I moved with it: I built the answer as a working agent skill, end to end, with an AI pair for the code. The skill, a local MCP tool server, and the 108-case eval that gates it.</p>
+    <p class="lede">When QuickBooks customers ask about a subscription charge, the real answer lives in their account: what they subscribe to, what changed, what a promotion did to the price. The <a href="charge-lookup.html">charge-lookup case</a> established that need. Delivering the answer moved to a successor agent platform, and I moved with it: I built the answer as a working agent skill, end to end, with an AI pair for the code. The skill, a local MCP tool server, and the 108-case eval that gates it.</p>
 
     <dl class="factrow">
-      <div><dt>Surface</dt><dd>Intuit Intelligence, subscription billing for QuickBooks</dd></div>
+      <div><dt>Surface</dt><dd>Agentic support platform, subscription billing for QuickBooks</dd></div>
       <div><dt>Role</dt><dd>Conversation designer for the surface; later built the agent skill solo, AI-paired &middot; 2026</dd></div>
       <div><dt>Build</dt><dd>A skill spec, a local MCP tool server, a golden dataset grown from 33 to 108 cases</dd></div>
       <div><dt>Status</dt><dd>Runs end to end on mock data; live data wiring scoped as engineering work</dd></div>
@@ -54,8 +54,8 @@
     <p class="kicker mono part-head"><span class="knum">01</span><span>Background</span></p>
     <h2 id="p1-h">The pivot, the mandate, and my element.</h2>
     <div class="prose">
-      <p>The <a href="charge-lookup.html">charge-lookup case</a> ends where this one begins. To provide a real charge explanation we needed to onboard billing APIs, and by then Intuit was building Intuit Intelligence, a unified central conversational experience, center stage in the product. The platform I had been building in was being superseded. We banked on the gains we already produced, and moved on to collaborating with the Intuit Intelligence teams, building agents to onboard the billing experience there.</p>
-      <p>At the same time, the company had a mandate that all teams, designers, product managers, managers, also become builders. I found myself in my element with that mandate. I proceeded to understand how the Intuit Intelligence platform and its experiences worked, and that is how the billing skill was born.</p>
+      <p>The <a href="charge-lookup.html">charge-lookup case</a> ends where this one begins. To provide a real charge explanation we needed to onboard billing APIs, and by then Intuit was building a unified agentic support experience, center stage in the product. The platform I had been building in was being superseded. We banked on the gains we already produced, and moved on to collaborating with the agent-platform teams, building agents to onboard the billing experience there.</p>
+      <p>At the same time, the company had a mandate that all teams, designers, product managers, managers, also become builders. I found myself in my element with that mandate. I proceeded to understand how the successor agent platform and its experiences worked, and that is how the billing skill was born.</p>
       <p>I built it myself, end to end, with an AI pair for the code. This case is the build.</p>
     </div>
   </section>
@@ -86,7 +86,7 @@
     <p class="kicker mono part-head"><span class="knum">04</span><span>Exploring solutions</span></p>
     <h2 id="p4-h">Skill plus server, and the wall we hit.</h2>
     <div class="prose">
-      <p>On Intuit Intelligence, an experience is a skill: a spec that tells the agent how to behave, backed by tools it can call. So the shape was clear early. A billing skill, and behind it one lookup tool the agent calls for account data. The boundary call came first: the tool is read-only. It can read plans, add-ons, and charges. It cannot change a subscription, and payment capture stays out of the channel entirely.</p>
+      <p>On the agentic support platform, an experience is a skill: a spec that tells the agent how to behave, backed by tools it can call. So the shape was clear early. A billing skill, and behind it one lookup tool the agent calls for account data. The boundary call came first: the tool is read-only. It can read plans, add-ons, and charges. It cannot change a subscription, and payment capture stays out of the channel entirely.</p>
       <p>Then the wall. Mid-build, the live billing API answered with a permission block, and access sat weeks deep in someone else&rsquo;s queue. I did not wait. I designed the lookup tool with three modes: live for the real API, eval for scenario injection, dev for mock data. Evaluation stopped depending on access. The live mode stayed stubbed behind a documented blocker, and nothing else stopped.</p>
     </div>
   </section>

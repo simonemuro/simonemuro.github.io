@@ -22,7 +22,12 @@
 <script src="v4.js" defer></script>
 <style>
   /* homepage scoped: hero receipts strip · structural only, house tokens */
-  .hero{padding-top:clamp(52px,8vh,110px);}
+  .hero{padding-top:clamp(38px,6vh,80px);padding-bottom:clamp(28px,4.5vh,68px);}
+  .hero-kicker{margin-bottom:clamp(24px,4vh,42px);}
+  .hero h1{font-size:clamp(3rem,6.2vw,5.7rem);max-width:18ch;}
+  .hero-main{display:grid;grid-template-columns:minmax(0,1.28fr) minmax(300px,.72fr);gap:clamp(28px,5vw,72px);align-items:start;}
+  .hero-statement,.hero-evidence{min-width:0;}
+  .hero-evidence .hero-sub:first-child{margin-top:0;}
   .hero-sub.mono{max-width:none;font-size:.66rem;letter-spacing:.1em;}
   .receipts{display:flex;flex-wrap:wrap;margin-top:clamp(12px,1.5vh,22px);color:var(--sub);font-size:.64rem;letter-spacing:.08em;}
   .receipts .rc{display:inline-flex;align-items:baseline;gap:7px;padding:5px 12px 5px 0;}
@@ -31,6 +36,24 @@
   .receipts a b{font-weight:400;color:var(--ink);font-variant-numeric:tabular-nums;}
   .receipts a:hover,.receipts a:focus-visible{color:var(--accent);}
   .receipts a:hover b,.receipts a:focus-visible b{color:var(--accent);}
+  .fit-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin-top:clamp(18px,2.6vh,30px);max-width:none;background:var(--hair);}
+  .fit-pill{background:var(--paper);padding:12px 14px;min-height:78px;}
+  .fit-pill .fit-label{display:block;color:var(--accent);margin-bottom:7px;}
+  .fit-pill .fit-copy{display:block;color:var(--sub);font-family:var(--sans);font-size:.88rem;line-height:1.35;letter-spacing:0;text-transform:none;}
+  .verb-ruler{margin-top:clamp(24px,3.5vh,44px);}
+  @media (max-width:900px){ .hero-main{display:block;} .hero-evidence{margin-top:18px;} .fit-strip{max-width:100%;} }
+  @media (max-width:560px){
+    .hero{padding-top:34px;padding-bottom:38px;}
+    .hero-kicker{margin-bottom:20px;gap:8px;font-size:.6rem;letter-spacing:.1em;}
+    .hero h1{font-size:clamp(2.25rem,11vw,2.7rem);}
+    .fit-strip{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:14px;}
+    .fit-pill{min-height:0;padding:9px 10px;}
+    .fit-pill .fit-label{margin-bottom:0;}
+    .fit-pill .fit-copy{display:none;}
+    .verb-ruler{margin-top:22px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;}
+    .verb-ruler::-webkit-scrollbar{display:none;}
+    .verb-ruler li{flex:0 0 auto;font-size:.82rem;gap:7px;padding:10px 12px 10px 0;}
+  }
   @media (max-width:760px){ .receipts .rc{border-left:0 !important;padding-left:0;} }
 </style>
 </head>
@@ -59,17 +82,42 @@
         <span>Agent behavior design</span>
         <span>Portfolio · 2016 to 2026</span>
       </p>
-      <h1 id="hero-h" class="io" style="--d:1">I design how agents <span class="acc">behave</span>, build them, and run the <em>evals</em> that prove them.</h1>
-      <p class="hero-led io" style="--d:2">I have led teams doing the same.</p>
-      <p class="hero-sub io" style="--d:3">Nine years across Meta, Apple Siri, Sam&rsquo;s Club, Intuit and Credit Karma. Three eras: NLU, LLM, agentic.</p>
-      <p class="hero-sub mono io" style="--d:4">Most recently Interim Product Manager and Conversational AI Manager at Intuit · led a team of three · Bay Area</p>
+      <div class="hero-main">
+        <div class="hero-statement">
+          <h1 id="hero-h" class="io" style="--d:1">I design how agents <span class="acc">behave</span>, build them, and run the <em>evals</em> that prove them.</h1>
+          <p class="hero-led io" style="--d:2">I have led teams doing the same.</p>
+        </div>
+        <div class="hero-evidence">
+          <p class="hero-sub io" style="--d:3">Nine years across Meta, Apple Siri, Sam&rsquo;s Club, Intuit and Credit Karma. Three eras: NLU, LLM, agentic.</p>
+          <p class="hero-sub mono io" style="--d:4">Most recently Manager II and interim PM for conversational AI at Intuit · Bay Area</p>
 
-      <p class="receipts mono" aria-label="Three receipted results, each linked to its case">
-        <span class="rc">receipts</span>
-        <a class="rc" href="quality-program.html">payroll agent quality <b>+9.8 points</b></a>
-        <a class="rc" href="cancellation-saves.html">savability classifier <b>96.6%</b></a>
-        <a class="rc" href="voice.html"><b>$135,160</b> realized on the phone line</a>
-      </p>
+          <p class="receipts mono" aria-label="Three receipted results, each linked to its case">
+            <span class="rc">receipts</span>
+            <a class="rc" href="quality-program.html">payroll agent quality <b>+9.8 points</b></a>
+            <a class="rc" href="cancellation-saves.html">savability classifier <b>96.6%</b></a>
+            <a class="rc" href="voice.html"><b>$135,160</b> realized on the phone line</a>
+          </p>
+
+          <div class="fit-strip mono io" style="--d:5" aria-label="Best-fit roles">
+            <div class="fit-pill">
+              <span class="fit-label">Model behavior</span>
+              <span class="fit-copy">prompts, system instructions, refusal, repair, eval criteria</span>
+            </div>
+            <div class="fit-pill">
+              <span class="fit-label">AI experience design</span>
+              <span class="fit-copy">voice, chat, agent workflows, handoff, high-stakes UX</span>
+            </div>
+            <div class="fit-pill">
+              <span class="fit-label">AI product</span>
+              <span class="fit-copy">PRDs, prioritization, launch bars, stakeholder tradeoffs</span>
+            </div>
+            <div class="fit-pill">
+              <span class="fit-label">Eval and enablement</span>
+              <span class="fit-copy">golden data, LLM judges, quality gates, team playbooks</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <ul class="verb-ruler io" style="--d:6" aria-label="The seven verbs of agent behavior">
         <li><span class="vn">01</span>answer</li>
@@ -266,7 +314,7 @@
           <div class="case-body">
             <h3><a href="payroll-intelligence.html">Payroll Intelligence</a></h3>
             <p>The diagnostic behavior: read the account, ask once, hand off with context. One question where the old flow interrogated.</p>
-            <span class="case-role"><b>role</b> · authored the framework; directed the team of three · 2026</span>
+            <span class="case-role"><b>role</b> · authored the framework; directed the delivery team · 2026</span>
           </div>
           <div class="case-meta">
             <span class="case-stat">1</span>
