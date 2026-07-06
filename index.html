@@ -4,60 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="Simone Muro designs how AI agents behave, builds them, and runs the evals that prove them. Nine years across Meta, Apple Siri, Sam's Club, Intuit and Credit Karma.">
-<meta property="og:title" content="Simone Muro. Agent behavior design.">
-<meta property="og:description" content="I design how agents behave, build them, and run the evals that prove them. I have led teams doing the same.">
+<meta name="description" content="Simone Muro designs and builds agentic AI experiences: model behavior, AI product strategy, experience design, and eval systems.">
+<meta property="og:title" content="Simone Muro · Agentic AI design and product craft">
+<meta property="og:description" content="Agent behavior design, AI product ownership, experience strategy, and eval systems across Meta, Apple Siri, Sam's Club, Intuit, and Credit Karma.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://simonemuro.github.io/">
 <meta name="twitter:card" content="summary">
-<title>Simone Muro. Agent behavior design.</title>
+<title>Simone Muro · Agentic AI design and product craft</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="v4.css">
-<!-- LIVE AGENT (one step from on): after deploying the Cloudflare Worker from
-     the private portfolio-agent repo (see its DEPLOY.md), paste your worker URL
-     below and uncomment the tag. That is the ONLY switch: with the tag commented
-     out, the contact-band box stays in curated mode (no backend, no cost).
-<meta name="agent-endpoint" content="https://simone-portfolio-agent.YOUR-SUBDOMAIN.workers.dev">
--->
+<link rel="stylesheet" href="home.css">
 <script src="v4.js" defer></script>
-<style>
-  /* homepage scoped: hero receipts strip · structural only, house tokens */
-  .hero{padding-top:clamp(38px,6vh,80px);padding-bottom:clamp(28px,4.5vh,68px);}
-  .hero-kicker{margin-bottom:clamp(24px,4vh,42px);}
-  .hero h1{font-size:clamp(3rem,6.2vw,5.7rem);max-width:18ch;}
-  .hero-main{display:grid;grid-template-columns:minmax(0,1.28fr) minmax(300px,.72fr);gap:clamp(28px,5vw,72px);align-items:start;}
-  .hero-statement,.hero-evidence{min-width:0;}
-  .hero-evidence .hero-sub:first-child{margin-top:0;}
-  .hero-sub.mono{max-width:none;font-size:.66rem;letter-spacing:.1em;}
-  .receipts{display:flex;flex-wrap:wrap;margin-top:clamp(12px,1.5vh,22px);color:var(--sub);font-size:.64rem;letter-spacing:.08em;}
-  .receipts .rc{display:inline-flex;align-items:baseline;gap:7px;padding:5px 12px 5px 0;}
-  .receipts .rc+.rc{border-left:1px solid var(--hair);padding-left:12px;}
-  .receipts a{color:var(--sub);text-decoration:none;}
-  .receipts a b{font-weight:400;color:var(--ink);font-variant-numeric:tabular-nums;}
-  .receipts a:hover,.receipts a:focus-visible{color:var(--accent);}
-  .receipts a:hover b,.receipts a:focus-visible b{color:var(--accent);}
-  .fit-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin-top:clamp(18px,2.6vh,30px);max-width:none;background:var(--hair);}
-  .fit-pill{background:var(--paper);padding:12px 14px;min-height:78px;}
-  .fit-pill .fit-label{display:block;color:var(--accent);margin-bottom:7px;}
-  .fit-pill .fit-copy{display:block;color:var(--sub);font-family:var(--sans);font-size:.88rem;line-height:1.35;letter-spacing:0;text-transform:none;}
-  .verb-ruler{margin-top:clamp(24px,3.5vh,44px);}
-  @media (max-width:900px){ .hero-main{display:block;} .hero-evidence{margin-top:18px;} .fit-strip{max-width:100%;} }
-  @media (max-width:560px){
-    .hero{padding-top:34px;padding-bottom:38px;}
-    .hero-kicker{margin-bottom:20px;gap:8px;font-size:.6rem;letter-spacing:.1em;}
-    .hero h1{font-size:clamp(2.25rem,11vw,2.7rem);}
-    .fit-strip{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:14px;}
-    .fit-pill{min-height:0;padding:9px 10px;}
-    .fit-pill .fit-label{margin-bottom:0;}
-    .fit-pill .fit-copy{display:none;}
-    .verb-ruler{margin-top:22px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;}
-    .verb-ruler::-webkit-scrollbar{display:none;}
-    .verb-ruler li{flex:0 0 auto;font-size:.82rem;gap:7px;padding:10px 12px 10px 0;}
-  }
-  @media (max-width:760px){ .receipts .rc{border-left:0 !important;padding-left:0;} }
-</style>
 </head>
-<body>
+<body class="home-lite">
 
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -66,6 +25,7 @@
     <a class="brand" href="#main">Simone Muro</a>
     <nav class="mast-nav mono" aria-label="Primary">
       <a href="#work">Work</a>
+      <a href="#about">About</a>
       <a href="resume.html">Resume</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -75,422 +35,280 @@
 
 <main id="main">
 
-  <!-- ================= HERO ================= -->
-  <section class="shell hero" aria-labelledby="hero-h" data-state="answering">
-    <div>
-      <p class="hero-kicker mono io" style="--d:0">
-        <span>Agent behavior design</span>
-        <span>Portfolio · 2016 to 2026</span>
-      </p>
-      <div class="hero-main">
-        <div class="hero-statement">
-          <h1 id="hero-h" class="io" style="--d:1">I design how agents <span class="acc">behave</span>, build them, and run the <em>evals</em> that prove them.</h1>
-          <p class="hero-led io" style="--d:2">I have led teams doing the same.</p>
-        </div>
-        <div class="hero-evidence">
-          <p class="hero-sub io" style="--d:3">Nine years across Meta, Apple Siri, Sam&rsquo;s Club, Intuit and Credit Karma. Three eras: NLU, LLM, agentic.</p>
-          <p class="hero-sub mono io" style="--d:4">Most recently Manager II and interim PM for conversational AI at Intuit · Bay Area</p>
-
-          <p class="receipts mono" aria-label="Three receipted results, each linked to its case">
-            <span class="rc">receipts</span>
-            <a class="rc" href="quality-program.html">payroll agent quality <b>+9.8 points</b></a>
-            <a class="rc" href="cancellation-saves.html">savability classifier <b>96.6%</b></a>
-            <a class="rc" href="voice.html"><b>$135,160</b> realized on the phone line</a>
-          </p>
-
-          <div class="fit-strip mono io" style="--d:5" aria-label="Best-fit roles">
-            <div class="fit-pill">
-              <span class="fit-label">Model behavior</span>
-              <span class="fit-copy">prompts, system instructions, refusal, repair, eval criteria</span>
-            </div>
-            <div class="fit-pill">
-              <span class="fit-label">AI experience design</span>
-              <span class="fit-copy">voice, chat, agent workflows, handoff, high-stakes UX</span>
-            </div>
-            <div class="fit-pill">
-              <span class="fit-label">AI product</span>
-              <span class="fit-copy">PRDs, prioritization, launch bars, stakeholder tradeoffs</span>
-            </div>
-            <div class="fit-pill">
-              <span class="fit-label">Eval and enablement</span>
-              <span class="fit-copy">golden data, LLM judges, quality gates, team playbooks</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <ul class="verb-ruler io" style="--d:6" aria-label="The seven verbs of agent behavior">
-        <li><span class="vn">01</span>answer</li>
-        <li><span class="vn">02</span>ask</li>
-        <li><span class="vn">03</span>act</li>
-        <li><span class="vn">04</span>verify</li>
-        <li><span class="vn">05</span>stop</li>
-        <li><span class="vn">06</span>repair</li>
-        <li><span class="vn">07</span>hand off</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ================= ERA RULER ================= -->
-  <section class="shell eras" aria-label="Three eras of conversational AI" data-state="recalling">
-    <div class="era-labels io" style="--d:0">
-      <span>NLU</span><span>LLM</span><span>agentic</span>
-    </div>
-    <div class="timeline rule-io" aria-hidden="true">
-      <span class="tick" style="left:0"></span>
-      <span class="tick minor" style="left:11%"></span>
-      <span class="tick minor" style="left:22%"></span>
-      <span class="tick minor" style="left:33%"></span>
-      <span class="tick minor" style="left:44%"></span>
-      <span class="tick" style="left:55%"></span>
-      <span class="tick minor" style="left:66%"></span>
-      <span class="tick minor" style="left:77%"></span>
-      <span class="tick" style="left:88%"></span>
-      <span class="tick now" style="left:100%"></span>
-    </div>
-    <div class="era-meta mono io" style="--d:1">
-      <span>2016</span>
-      <span class="companies">Meta · Apple Siri · Sam&rsquo;s Club · Intuit · Credit Karma</span>
-      <span>2026</span>
-    </div>
-  </section>
-
-  <!-- ================= THE TWO CALLS ================= -->
-  <section class="shell band" id="spine" aria-labelledby="spine-h" data-state="deciding">
-
-    <div class="spine-head">
-      <div>
-        <p class="kicker mono io" style="--d:0"><span class="knum">01</span><span>Two calls</span></p>
-        <h2 id="spine-h" class="io" style="--d:1">Most of the work is one question: what should the agent do here?</h2>
-        <p class="band-lede io" style="--d:2">Answer, ask, act, verify, stop, repair, hand off. Seven verbs, and a judgment call about which one fits. Two of those calls below, receipts attached.</p>
+  <section class="hero-simple shell" aria-labelledby="hero-h">
+    <div class="hero-copy">
+      <p class="eyebrow mono io" style="--d:0">Agentic AI design · product strategy · eval systems</p>
+      <h1 id="hero-h" class="io" style="--d:1">I design AI agents that know when to act, ask, stop, and hand off.</h1>
+      <p class="hero-lede io" style="--d:2">Then I build the prototype, write the evals, and turn the behavior into product decisions. Ten years across Meta, Apple Siri, Sam's Club, Intuit, and Credit Karma.</p>
+      <div class="hero-actions io" style="--d:3" aria-label="Primary actions">
+        <a class="button primary" href="#work">View selected work</a>
+        <a class="button" href="resume.html">Request resume</a>
       </div>
     </div>
 
-    <!-- Decision 01: Payroll -->
-    <article class="decision" id="decision-01" aria-labelledby="d1-h">
-      <div>
-        <p class="d-kicker mono io" style="--d:0">
-          <span class="d-no">Decision 01</span>
-          <span>Payroll Intelligence</span>
-          <span>diagnostic behavior</span>
-        </p>
-        <h3 id="d1-h" class="visually-hidden">Decision 01: the missing employee</h3>
-        <blockquote class="situation quoted io" style="--d:1">
-          <p>I ran payroll, but my employee Maria is not on it.</p>
-          <cite>A customer, inside the payroll agent</cite>
-        </blockquote>
-
-        <div class="d-grid">
-          <div class="d-setup io" style="--d:2">
-            <span class="label mono">The setup</span>
-            <p class="body">The agent can explain the ways an employee can miss a run. It can interrogate: which Maria, what pay schedule, when was she added. It can add her to the run and resubmit now. Or it can read the account first and see for itself.</p>
-          </div>
-          <div class="io" style="--d:3">
-            <h4 class="call-h">Her call</h4>
-            <p class="call-verb">verify.</p>
-            <p class="call-line">Read the account first, silently. Then ask only the one thing only the customer knows.</p>
-            <div class="receipt">
-              <span class="label mono">The receipt</span>
-              <p>The account already holds most of the answers: who Maria is, when she was added, which schedule she sits on. Wasted questions erode trust. So the agent reads everything it can, and spends exactly one question on what it cannot. The trace below is that behavior, step by step.</p>
-            </div>
-          </div>
-        </div>
-
-        <figure class="trace io" style="--d:4" data-trace="payroll trace">
-                <figcaption class="trace-hd mono">
-                  <span>trace · the behavior, compact</span>
-                  <span class="trace-state" data-trace-state>complete</span>
-                  <button class="trace-replay" type="button" data-trace-replay>replay</button>
-                </figcaption>
-                <ol class="trace-rows">
-                  <li class="t-row t-speech" data-d="480">
-                    <span class="t-time" aria-hidden="true">00.0</span>
-                    <div class="t-main"><span class="t-role">customer</span><p>&ldquo;I ran payroll, but my employee Maria is not on it.&rdquo;</p></div>
-                  </li>
-                  <li class="t-row t-note" data-d="440">
-                    <span class="t-time" aria-hidden="true">00.4</span>
-                    <div class="t-main">scope check: passed · payroll diagnostic is in scope</div>
-                  </li>
-                  <li class="t-row t-tool" data-d="420">
-                    <span class="t-time" aria-hidden="true">00.9</span>
-                    <div class="t-main"><code>read <b>employee("Maria")</b> &#8594; <span class="ok">ok</span> · active · added today, 2:04 pm</code></div>
-                  </li>
-                  <li class="t-row t-tool" data-d="420">
-                    <span class="t-time" aria-hidden="true">01.2</span>
-                    <div class="t-main"><code>read <b>payroll.runs(current, next)</b> &#8594; <span class="ok">ok</span> · this run built 9:12 am · next run: Maria on it</code></div>
-                  </li>
-                  <li class="t-row t-note" data-d="440">
-                    <span class="t-time" aria-hidden="true">01.5</span>
-                    <div class="t-main">cause found · added after the run was built · one fact left: intent</div>
-                  </li>
-                  <li class="t-row t-speech t-agent" data-d="620">
-                    <span class="t-time" aria-hidden="true">01.8</span>
-                    <div class="t-main"><span class="t-role">agent</span><p>&ldquo;Maria was added after this run was built, so it skipped her. She is already on next week&rsquo;s run. Do you want her paid in this one instead, or is next week fine?&rdquo;</p></div>
-                  </li>
-                  <li class="t-row t-note" data-d="400">
-                    <span class="t-time" aria-hidden="true">02.3</span>
-                    <div class="t-main">asked once instead of interrogating</div>
-                  </li>
-                </ol>
-          <p class="trace-foot mono">reconstructed from the shipped behavior spec · invented account data · pre-rendered, no live model</p>
-        </figure>
-      </div>
-    </article>
-
-    <!-- Decision 02: Quality -->
-    <article class="decision" id="decision-02" aria-labelledby="d2-h">
-      <div>
-        <p class="d-kicker mono io" style="--d:0">
-          <span class="d-no">Decision 02</span>
-          <span>The Quality Program</span>
-          <span>eval design</span>
-        </p>
-        <h3 id="d2-h" class="visually-hidden">Decision 02: the perfect answer that acts</h3>
-        <blockquote class="situation io" style="--d:1">
-          <p>The agent gives a perfect answer. It also changes the bank account for payroll deposits. No verification.</p>
-          <cite>A row in the eval set</cite>
-        </blockquote>
-
-        <div class="d-grid">
-          <div class="d-setup io" style="--d:2">
-            <span class="label mono">The setup</span>
-            <p class="body">Every word of the answer is correct. An answer-quality eval scores it and it passes. The question is whether that is the score that matters.</p>
-            <div class="score" aria-label="Eval scorecard">
-              <div class="score-row"><span>answer quality</span><span class="val-pass">pass</span></div>
-              <div class="score-row"><span>action authorization</span><span class="val-fail">hard fail</span></div>
-            </div>
-          </div>
-          <div class="io" style="--d:3">
-            <h4 class="call-h">Her call</h4>
-            <p class="call-verb">stop.</p>
-            <p class="call-line">Authorization is a hard fail. The ship is blocked, perfect answer and all.</p>
-            <div class="receipt">
-              <span class="label mono">The receipt</span>
-              <p>A right answer that does a wrong thing is exactly the failure that answer-checking misses. So the action gets its own gate: no verification, no ship. Quality is what the agent did, not just what it said. The same eval discipline moved measured conversation quality up 8, 9.8 and 13 points across Help, Payroll and Business Insights in a year.</p>
-            </div>
-          </div>
+    <div class="hero-proof io" style="--d:4" aria-label="Reconstructed agent design artifact">
+      <div class="proof-top">
+        <img src="assets/portrait.jpg" alt="Simone Muro portrait">
+        <div>
+          <p class="mono">Public reconstruction</p>
+          <h2>Agent behavior workbench</h2>
         </div>
       </div>
-    </article>
-
-  </section>
-
-  <!-- ================= CASE INDEX ================= -->
-  <section class="shell band" id="work" aria-labelledby="work-h" data-state="indexing">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">02</span><span>The index</span></p>
-      <h2 id="work-h" class="io" style="--d:1">Eight cases, three eras.</h2>
-      <p class="band-lede io" style="--d:2">Each one is a behavior decided, built, and proved. Outcome first, one line here, the full argument inside.</p>
-
-      <ol class="cases">
-        <li class="case io" style="--d:0">
-          <span class="case-no" aria-hidden="true">01</span>
-          <div class="case-body">
-            <h3><a href="charge-lookup.html">Charge lookup</a></h3>
-            <p>The page showed how much, customers called to ask why. The redesigned conversation moved voice self-help acceptance from 25 to 39 percent, chat resolution up 12 points, containment about 61.</p>
-            <span class="case-role"><b>role</b> · drove the discovery, flows, and PRD · 2025 to 2026</span>
-          </div>
-          <div class="case-meta">
-            <span class="case-stat">25&#8594;39%</span>
-            <span class="case-unit">voice acceptance</span>
-            <span class="case-era">LLM</span>
-          </div>
-        </li>
-        <li class="case io" style="--d:1">
-          <span class="case-no" aria-hidden="true">02</span>
-          <div class="case-body">
-            <h3><a href="billing-skill.html">BillingSkill</a></h3>
-            <p>The charge-lookup target state built working as an agent skill: the spec, a local MCP tool server, and the 108-case judge-scored eval that gates it.</p>
-            <span class="case-role"><b>role</b> · solo build, AI-paired · 2026</span>
-          </div>
-          <div class="case-meta">
-            <span class="case-stat">108</span>
-            <span class="case-unit">eval cases</span>
-            <span class="case-era">agentic</span>
-          </div>
-        </li>
-        <li class="case io" style="--d:2">
-          <span class="case-no" aria-hidden="true">03</span>
-          <div class="case-body">
-            <h3><a href="payroll-intelligence.html">Payroll Intelligence</a></h3>
-            <p>The diagnostic behavior: read the account, ask once, hand off with context. One question where the old flow interrogated.</p>
-            <span class="case-role"><b>role</b> · authored the framework; directed the delivery team · 2026</span>
-          </div>
-          <div class="case-meta">
-            <span class="case-stat">1</span>
-            <span class="case-unit">question asked</span>
-            <span class="case-era">agentic</span>
-          </div>
-        </li>
-        <li class="case io" style="--d:3">
-          <span class="case-no" aria-hidden="true">04</span>
-          <div class="case-body">
-            <h3><a href="quality-program.html">The Quality Program</a></h3>
-            <p>The generator that drafts the eval answer key. About three weeks of authoring became about one, across 3,000+ rows.</p>
-            <span class="case-role"><b>role</b> · owned the datasets; authored the generator · 2025 to 2026</span>
-          </div>
-          <div class="case-meta">
-            <span class="case-stat">3,000+</span>
-            <span class="case-unit">rows scored</span>
-            <span class="case-era">agentic</span>
-          </div>
-        </li>
-        <li class="case io" style="--d:4">
-          <span class="case-no" aria-hidden="true">05</span>
-          <div class="case-body">
-            <h3><a href="cancellation-saves.html">Cancellation Saves</a></h3>
-            <p>The saves flow asks why a customer cancels; an LLM classifier reads the answer. Savability accuracy 96.6 percent, reasons classified 60 to 96 percent, in evaluation.</p>
-            <span class="case-role"><b>role</b> · designed the saves flow; wrote the classifier prompt · 2022 to 2023</span>
-          </div>
-          <div class="case-meta">
-            <span class="case-stat">96.6%</span>
-            <span class="case-unit">savability accuracy</span>
-            <span class="case-era">LLM</span>
-          </div>
-        </li>
-        <li class="case io" style="--d:5">
-          <span class="case-no" aria-hidden="true">06</span>
-          <div class="case-body">
-            <h3><a href="voice.html">Voice</a></h3>
-            <p>GenAI answers on the 1-800 line, and a login redesign that took acceptance from 32 to 56 percent and containment from 20 to 32. $135,160 realized.</p>
-            <span class="case-role"><b>role</b> · designed the calls; drove the voice snippet · 2022 to 2024</span>
-          </div>
-          <div class="case-meta">
-            <span class="case-stat">32&#8594;56%</span>
-            <span class="case-unit">acceptance</span>
-            <span class="case-era">LLM</span>
-          </div>
-        </li>
-        <li class="case io" style="--d:6">
-          <span class="case-no" aria-hidden="true">07</span>
-          <div class="case-body">
-            <h3><a href="credit-karma.html">Credit Karma</a></h3>
-            <p>Regulated-finance prompts: the model reasons over approval odds and never states them. The structured output is the page.</p>
-            <span class="case-role"><b>role</b> · prompt design, regulated finance · 2024</span>
-          </div>
-          <div class="case-meta">
-            <span class="case-stat">0</span>
-            <span class="case-unit">odds stated</span>
-            <span class="case-era">LLM</span>
-          </div>
-        </li>
-        <li class="case io" style="--d:7">
-          <span class="case-no" aria-hidden="true">08</span>
-          <div class="case-body">
-            <h3><a href="operate-with-ai.html">How I Built This Site</a></h3>
-            <p>Agent crews did the typing, judges gated every page before it shipped, and the calls stayed hers.</p>
-            <span class="case-role"><b>role</b> · directed the build, AI-paired · 2026</span>
-          </div>
-          <div class="case-meta">
-            <span class="case-stat">08</span>
-            <span class="case-unit">you are here</span>
-            <span class="case-era">agentic</span>
-          </div>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- ================= RANGE ================= -->
-  <section class="shell band" id="range" aria-labelledby="range-h" data-state="rewinding">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">03</span><span>Range</span></p>
-      <h2 id="range-h" class="io" style="--d:1">The same judgment, before the model could reason.</h2>
-      <p class="band-lede io" style="--d:2">The question is older than the models that can answer it. She was asking it of intent matchers first, and at three companies before Intuit.</p>
-
-      <div class="range-grid">
-        <div class="range-cell io" style="--d:3">
-          <span class="label mono">NLU receipts · Intuit, FY22</span>
-          <p class="body">Rebuilt the assistant&rsquo;s NLU program: overall matching accuracy <span class="num">69 to 79 percent</span>, fallback <span class="num">5.7 down to 2.7</span>. Fallback design was repair design: the behavior for moments when the system lacked the information to proceed safely.</p>
+      <div class="agent-window" aria-hidden="true">
+        <div class="window-bar"><span></span><span></span><span></span></div>
+        <div class="agent-row">
+          <span class="agent-label">customer</span>
+          <p>I ran payroll, but Maria is not on it.</p>
         </div>
-        <div class="range-cell io" style="--d:4">
-          <span class="label mono">Before Intuit</span>
-          <p class="body">Meta, then Apple Siri, then Sam&rsquo;s Club as its sole designer. Nine years of the same question at different scales: what should the system do here, and how do you prove it?</p>
+        <div class="agent-steps">
+          <span>read account</span>
+          <span>find cause</span>
+          <span>ask once</span>
+          <span>handoff ready</span>
+        </div>
+        <div class="agent-row agent-answer">
+          <span class="agent-label">agent</span>
+          <p>Maria was added after this run was built. She is already on next week's run. Do you want her paid in this run instead?</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= CONTACT / HANDOFF ================= -->
-  <section class="shell band contact" id="contact" aria-labelledby="contact-h" data-state="handing off">
-    <div>
-      <p class="kicker mono io" style="--d:0"><span class="knum">04</span><span>Handoff</span></p>
-      <h2 id="contact-h" class="io" style="--d:1">A human takes it from here.</h2>
-      <p class="contact-lede io" style="--d:2">If the two calls above look like your product&rsquo;s hard calls, write to me. Or test the boundary first: the box below answers a few questions about this site and refuses the rest.</p>
+  <section class="shell proof-strip" aria-label="Selected outcomes">
+    <a href="billing-skill.html" class="proof-stat io" style="--d:0">
+      <span class="stat-num">108</span>
+      <span class="stat-copy">billing eval cases for a working agent skill</span>
+    </a>
+    <a href="quality-program.html" class="proof-stat io" style="--d:1">
+      <span class="stat-num">3,000+</span>
+      <span class="stat-copy">golden-dataset rows moved into a faster review pipeline</span>
+    </a>
+    <a href="voice.html" class="proof-stat io" style="--d:2">
+      <span class="stat-num">+3.9 pp</span>
+      <span class="stat-copy">GenAI voice containment lift at Bayesian significance</span>
+    </a>
+    <a href="cancellation-saves.html" class="proof-stat io" style="--d:3">
+      <span class="stat-num">96.6%</span>
+      <span class="stat-copy">savability classifier accuracy in evaluation</span>
+    </a>
+  </section>
 
-      <div class="refusal io" style="--d:3" data-refusal>
-        <script type="application/json" data-refusal-kb>
-        {
-          "handoff": "simonermuro@gmail.com",
-          "refusals": [
-            "out of scope, by design. that one belongs to a human: {email}",
-            "still out of scope. the handoff stands: {email}",
-            "third ask, same answer. a human is faster: {email}"
-          ],
-          "entries": [
-            { "match": ["simone", "who are you", "who is she", "about her"],
-              "reply": "Simone Muro. She designs how agents behave, builds them, and runs the evals that prove them. Nine years: Meta, Apple Siri, Sam's Club, Intuit, Credit Karma." },
-            { "match": ["resume", "cv"],
-              "reply": "One page, on this same system:", "href": "resume.html", "link": "resume.html" },
-            { "match": ["hire", "hiring", "interview", "job"],
-              "reply": "That conversation belongs to a human. Write to her:", "href": "mailto:simonermuro@gmail.com", "link": "simonermuro@gmail.com" },
-            { "match": ["chatbot", "llm", "model", "gpt", "claude", "are you ai", "real ai"],
-              "reply": "No live model here. Every reply in this box was written ahead of time and matched by keyword. Scope is a design decision: out of scope gets a refusal and a human." },
-            { "match": ["built", "build", "this site", "how was", "stack"],
-              "reply": "By hand, on its own design system, with an AI pair. Case 08 tells the story:", "href": "operate-with-ai.html", "link": "operate-with-ai.html" },
-            { "match": ["case", "work", "portfolio", "project"],
-              "reply": "Eight cases in the index above. Start with 01, Charge lookup: the page showed how much, customers called to ask why:", "href": "charge-lookup.html", "link": "charge-lookup.html" },
-            { "match": ["eval", "golden", "dataset"],
-              "reply": "She writes them, runs them, and built the generator that drafts the answer key: about three weeks of authoring became about one, across 3,000+ rows. Case 04:", "href": "quality-program.html", "link": "quality-program.html" },
-            { "match": ["voice", "phone", "1-800", "ivr"],
-              "reply": "GenAI answers on the 1-800 line, and a login redesign that moved acceptance from 32 to 56 percent. Case 06:", "href": "voice.html", "link": "voice.html" },
-            { "match": ["linkedin"],
-              "reply": "Right here:", "href": "https://linkedin.com/in/simonemuro", "link": "linkedin.com/in/simonemuro" },
-            { "match": ["email", "contact", "reach"],
-              "reply": "The human channel:", "href": "mailto:simonermuro@gmail.com", "link": "simonermuro@gmail.com" }
-          ]
-        }
-        </script>
-        <div class="refusal-hd mono">
-          <span class="rf-title">ask this page anything</span>
-          <span>scope: this site · curated replies · no live model</span>
-        </div>
-        <div class="refusal-log" data-refusal-log aria-live="polite">
-          <div class="rf-turn">
-            <p class="rf-page"><span class="rf-tag">the deal</span>this box answers questions about this site and its cases, from replies written ahead of time. anything past that gets refused, and a human gets the handoff.</p>
-          </div>
-          <noscript>
-            <div class="rf-turn">
-              <p class="rf-page"><span class="rf-tag rf-refused">refused: out of scope</span>scripts are off, so every question is out of scope by default. the handoff stands: <a href="mailto:simonermuro@gmail.com">simonermuro@gmail.com</a></p>
-            </div>
-          </noscript>
-        </div>
-        <form class="refusal-form">
-          <span class="prompt-ch" aria-hidden="true">&gt;</span>
-          <label class="visually-hidden" for="rf-q">Ask this page a question</label>
-          <input class="refusal-input" id="rf-q" type="text" autocomplete="off" maxlength="120" placeholder="Ask about her work">
-          <button class="refusal-send" type="submit">send</button>
-        </form>
-        <p class="refusal-foot mono">your question never leaves this tab, stored nowhere</p>
-      </div>
-
-      <ul class="contact-links io" style="--d:4">
-        <li>
-          <a href="mailto:simonermuro@gmail.com">
-            <span class="cl-label mono">Email</span>
-            <span class="cl-value">simonermuro@gmail.com</span>
-            <span class="cl-arrow" aria-hidden="true">&#8599;</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://linkedin.com/in/simonemuro">
-            <span class="cl-label mono">LinkedIn</span>
-            <span class="cl-value">linkedin.com/in/simonemuro</span>
-            <span class="cl-arrow" aria-hidden="true">&#8599;</span>
-          </a>
-        </li>
-      </ul>
+  <section class="shell router" aria-labelledby="router-h">
+    <div class="section-head compact">
+      <p class="eyebrow mono io" style="--d:0">Where to route me</p>
+      <h2 id="router-h" class="io" style="--d:1">Five hiring lanes, one underlying craft.</h2>
     </div>
+    <div class="router-grid" role="list">
+      <article class="route-card io" style="--d:0" role="listitem">
+        <span class="route-tag mono">Model behavior</span>
+        <p>System prompts, refusal and repair, tool boundaries, structured outputs, eval criteria.</p>
+      </article>
+      <article class="route-card io" style="--d:1" role="listitem">
+        <span class="route-tag mono">AI product / PM</span>
+        <p>PRDs, prioritization, launch bars, business cases, roadmap tradeoffs, cross-functional decisions.</p>
+      </article>
+      <article class="route-card io" style="--d:2" role="listitem">
+        <span class="route-tag mono">AI experience design</span>
+        <p>Voice and chat flows, agent handoff, high-stakes support, trust, recovery, and state design.</p>
+      </article>
+      <article class="route-card io" style="--d:3" role="listitem">
+        <span class="route-tag mono">AI enablement</span>
+        <p>Golden datasets, LLM judges, quality gates, training systems, team playbooks, review loops.</p>
+      </article>
+      <article class="route-card io" style="--d:4" role="listitem">
+        <span class="route-tag mono">Product design</span>
+        <p>Customer journeys, before and after states, expert transcript synthesis, UI behavior, measurable outcomes.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="shell artifact-row" aria-labelledby="artifact-h">
+    <div class="section-head">
+      <p class="eyebrow mono io" style="--d:0">Visual proof, public-safe</p>
+      <h2 id="artifact-h" class="io" style="--d:1">The raw artifacts stay private. The design decisions do not.</h2>
+      <p class="section-lede io" style="--d:2">These are reconstructed from decks, eval harnesses, prompts, and demos so hiring teams can see the work without exposing internal systems or customer data.</p>
+    </div>
+    <div class="artifact-grid">
+      <div class="artifact-panel io" style="--d:0">
+        <div class="mini-label mono">Agent skill</div>
+        <div class="mode-stack" aria-hidden="true">
+          <span>LIVE · real API contract</span>
+          <span>EVAL · scenario injection</span>
+          <span>DEV · mock account data</span>
+        </div>
+        <p>Designers could test behavior before live data access unblocked.</p>
+      </div>
+      <div class="artifact-panel io" style="--d:1">
+        <div class="mini-label mono">Eval harness</div>
+        <div class="eval-grid" aria-hidden="true">
+          <span>case</span><span>expected skill</span><span>gate</span>
+          <span>TC-05</span><span>filing + payment</span><span>partial</span>
+          <span>TC-06</span><span>debit + payment</span><span>fail</span>
+          <span>TC-07</span><span>setup</span><span>pass</span>
+        </div>
+        <p>Quality was scored by what the agent did, not only what it said.</p>
+      </div>
+      <div class="artifact-panel io" style="--d:2">
+        <div class="mini-label mono">Product call</div>
+        <div class="tradeoff-board" aria-hidden="true">
+          <span>Ship now</span>
+          <span>API blocked</span>
+          <span>Mockable eval path</span>
+          <span>Document blocker</span>
+        </div>
+        <p>Roadmap pressure became a staged release plan instead of a vague dependency.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell work" id="work" aria-labelledby="work-h">
+    <div class="section-head">
+      <p class="eyebrow mono io" style="--d:0">Selected case studies</p>
+      <h2 id="work-h" class="io" style="--d:1">Five projects that show the full range: craft, product judgment, build, eval, launch.</h2>
+    </div>
+
+    <div class="case-stack">
+      <article class="case-feature io" style="--d:0">
+        <a class="case-visual agent-skill" href="billing-skill.html" aria-label="Open BillingSkill case study">
+          <span class="screen-title mono">BillingSkill</span>
+          <span class="skill-line wide"></span>
+          <span class="skill-line"></span>
+          <span class="skill-chip">admin check</span>
+          <span class="skill-chip">charge lookup</span>
+          <span class="skill-chip">cancel intercept</span>
+          <span class="skill-score">108 evals · 13 intents</span>
+        </a>
+        <div class="case-copy">
+          <p class="case-kicker mono">Flagship · builder proof · AI product</p>
+          <h3><a href="billing-skill.html">Built the agent skill that explains QuickBooks subscription charges.</a></h3>
+          <p>I moved the target state from concept to working build: skill spec, read-only lookup tool, mock/eval/dev modes, and a 108-case eval set. Built solo, AI-paired, in five days.</p>
+          <dl class="case-proof">
+            <div><dt>Owned</dt><dd>Skill behavior, tool contract, eval design, API blocker handling.</dd></div>
+            <div><dt>Signals</dt><dd>PM tradeoffs, hands-on build, model behavior, testable launch gate.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="case-feature io" style="--d:1">
+        <a class="case-visual payroll-flow" href="payroll-intelligence.html" aria-label="Open Payroll Intelligence case study">
+          <span class="screen-title mono">Payroll agent</span>
+          <span class="flow-node">read account</span>
+          <span class="flow-node">diagnose</span>
+          <span class="flow-node">ask once</span>
+          <span class="flow-node">handoff</span>
+          <span class="flow-result">1 customer question</span>
+        </a>
+        <div class="case-copy">
+          <p class="case-kicker mono">Agent behavior · high-stakes support</p>
+          <h3><a href="payroll-intelligence.html">Designed payroll diagnostic behavior: read first, ask once, hand off with context.</a></h3>
+          <p>The work was not a better answer. It was a better sequence of action: what the agent should read, what it must ask, and where it should stop.</p>
+          <dl class="case-proof">
+            <div><dt>Owned</dt><dd>Diagnostic framework, prompt structure, golden answers, handoff criteria.</dd></div>
+            <div><dt>Signals</dt><dd>Model behavior, AI experience design, risk boundaries, team direction.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="case-feature io" style="--d:2">
+        <a class="case-visual quality-loop" href="quality-program.html" aria-label="Open quality program case study">
+          <span class="screen-title mono">Quality system</span>
+          <span class="loop-step">golden data</span>
+          <span class="loop-step">LLM judge</span>
+          <span class="loop-step">human review</span>
+          <span class="loop-step">release gate</span>
+          <span class="loop-metric">3 weeks &rarr; 1</span>
+        </a>
+        <div class="case-copy">
+          <p class="case-kicker mono">AI enablement · eval systems</p>
+          <h3><a href="quality-program.html">Scaled evaluation from manual authoring to a faster human-in-the-loop pipeline.</a></h3>
+          <p>I owned the quality program and built the generator pattern that turned blank-row authoring into review. The program measured gains across Help, Payroll, and Insights.</p>
+          <dl class="case-proof">
+            <div><dt>Owned</dt><dd>Golden dataset process, judge criteria, pipeline behavior, quality gates.</dd></div>
+            <div><dt>Signals</dt><dd>Enablement, leadership under ambiguity, operational judgment, eval rigor.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="case-feature io" style="--d:3">
+        <a class="case-visual voice-wave" href="voice.html" aria-label="Open voice case study">
+          <span class="screen-title mono">GenAI voice</span>
+          <span class="wave" aria-hidden="true"></span>
+          <span class="voice-card">summarize · clarify · escalate</span>
+          <span class="voice-metric">+3.9 pp containment</span>
+        </a>
+        <div class="case-copy">
+          <p class="case-kicker mono">Voice AI · launched experience</p>
+          <h3><a href="voice.html">Co-designed one of Intuit's first GenAI phone experiences.</a></h3>
+          <p>Voice has no screen to rescue it. The work was deciding what the model could say in seconds, when to clarify, and when to bring in a person.</p>
+          <dl class="case-proof">
+            <div><dt>Owned</dt><dd>Voice-ready summaries, disambiguation logic, response criteria, escalation moments.</dd></div>
+            <div><dt>Signals</dt><dd>Product launch, voice UX, eval framing, measurable business outcome.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="case-feature io" style="--d:4">
+        <a class="case-visual classifier-card" href="cancellation-saves.html" aria-label="Open Cancellation Saves case study">
+          <span class="screen-title mono">Savability classifier</span>
+          <span class="json-line">{ "reason": "price",</span>
+          <span class="json-line">"savable": true,</span>
+          <span class="json-line">"handoff": "retention" }</span>
+          <span class="class-score">96.6% accuracy</span>
+        </a>
+        <div class="case-copy">
+          <p class="case-kicker mono">Classifier strategy · Responsible AI</p>
+          <h3><a href="cancellation-saves.html">Designed a saves flow and LLM classifier for cancellation intent.</a></h3>
+          <p>The model's job was not to persuade. It was to classify the reason, decide whether a save path existed, and route the customer without hallucinating.</p>
+          <dl class="case-proof">
+            <div><dt>Owned</dt><dd>Savability definition, prompt behavior, structured output, safety bar.</dd></div>
+            <div><dt>Signals</dt><dd>Business framing, model behavior, ethical boundary setting, measurement.</dd></div>
+          </dl>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="shell about" id="about" aria-labelledby="about-h">
+    <div class="about-copy">
+      <p class="eyebrow mono io" style="--d:0">About</p>
+      <h2 id="about-h" class="io" style="--d:1">I work in the space where product intent becomes model behavior.</h2>
+      <p class="io" style="--d:2">I started in language-model training and NLU, moved through Siri and production voice/chat assistants, then into LLM and agentic systems at Intuit. My edge is translating messy customer problems into behaviors an AI system can execute, evaluate, and safely hand off.</p>
+      <p class="io" style="--d:3">I am comfortable as the product lead, the conversation designer, the eval owner, and the builder who opens the repo when the artifact needs to exist.</p>
+    </div>
+    <div class="about-card io" style="--d:4">
+      <img src="assets/portrait.jpg" alt="Portrait of Simone Muro">
+      <div class="timeline-mini">
+        <span>Meta</span>
+        <span>Apple Siri</span>
+        <span>Sam's Club</span>
+        <span>Intuit</span>
+        <span>Credit Karma</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell method" aria-labelledby="method-h">
+    <div class="section-head compact">
+      <p class="eyebrow mono io" style="--d:0">How I work</p>
+      <h2 id="method-h" class="io" style="--d:1">The operating system is simple.</h2>
+    </div>
+    <ol class="method-steps">
+      <li class="io" style="--d:0"><span class="mono">01</span><b>Define the job.</b> What outcome should this agent own, and what belongs to a human?</li>
+      <li class="io" style="--d:1"><span class="mono">02</span><b>Write the behavior.</b> Prompts, tools, states, failure paths, and handoff rules.</li>
+      <li class="io" style="--d:2"><span class="mono">03</span><b>Build the proof.</b> Prototypes, mock tools, scenario injection, and golden data.</li>
+      <li class="io" style="--d:3"><span class="mono">04</span><b>Gate the launch.</b> LLM judges, human review, regressions, and clear stop conditions.</li>
+    </ol>
+  </section>
+
+  <section class="shell contact-lite" id="contact" aria-labelledby="contact-h">
+    <p class="eyebrow mono io" style="--d:0">Handoff</p>
+    <h2 id="contact-h" class="io" style="--d:1">If your team is deciding how an agent should behave, I can help.</h2>
+    <div class="contact-actions io" style="--d:2">
+      <a class="button primary" href="mailto:simonermuro@gmail.com">simonermuro@gmail.com</a>
+      <a class="button" href="https://linkedin.com/in/simonemuro">LinkedIn</a>
+      <a class="button" href="resume.html">Request resume</a>
+    </div>
+    <p class="artifact-note io" style="--d:3">Artifacts on this site are reconstructed or redacted to protect confidential company, customer, and platform information. They preserve my role, process, decisions, and measured outcomes.</p>
   </section>
 
 </main>
@@ -498,15 +316,12 @@
 <footer class="footer" role="contentinfo">
   <div class="shell footer-inner mono">
     <span>Simone Muro · Portfolio · 2026</span>
-    <span>Set in Instrument Serif, Instrument Sans, Fragment Mono, self-hosted · No trackers, no live model · <a href="operate-with-ai.html">Case 08 tells the story</a></span>
+    <span><a href="#work">Work</a> · <a href="resume.html">Resume</a> · <a href="#contact">Contact</a></span>
   </div>
 </footer>
 
 <noscript>
-  <style>
-    .io,.rule-io{opacity:1 !important;transform:none !important;}
-    .progress,.trace-replay,.refusal-form,.refusal-foot{display:none !important;}
-  </style>
+  <style>.io,.rule-io{opacity:1 !important;transform:none !important;}</style>
 </noscript>
 
 </body>
