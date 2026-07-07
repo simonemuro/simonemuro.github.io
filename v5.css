@@ -621,6 +621,11 @@ body.v5 .artifact-note{
   color:#6f7f87;
 }
 
+body.v5 .evidence-screen{
+  max-width:760px;
+  margin:clamp(30px,5vh,46px) 0 0;
+}
+
 body.v5 .phone-gallery{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -1082,6 +1087,11 @@ body.v5 .spec-sheet{
   background:#fffdf7;
   padding:18px;
   font-family:var(--sans);
+}
+
+body.v5 .evidence-board{
+  max-width:900px;
+  margin:clamp(28px,5vh,44px) 0 0;
 }
 
 body.v5 .spec-grid{

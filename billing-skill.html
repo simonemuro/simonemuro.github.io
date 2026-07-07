@@ -64,7 +64,7 @@
         <ul class="snapshot-list">
           <li><b>Best for</b><span>AI PM, agentic design, model behavior, product design.</span></li>
           <li><b>I owned</b><span>Problem framing, behavior design, skill prompt, local build, test harness, and eval criteria.</span></li>
-          <li><b>Proof</b><span>Built in three days, tested locally, and gated with 108 eval cases.</span></li>
+          <li><b>Proof</b><span>Built solo in three days, tested locally, and gated with 108 eval cases.</span></li>
           <li><b>Mandate</b><span>Responded to a 3X velocity challenge: reduce build-cycle drag and deliver customer value faster.</span></li>
         </ul>
       </div>
@@ -87,6 +87,16 @@
       <p>The first DA MVP could improve classification and point customers to billing history, but it could not answer the deeper question itself. The target state required account-aware agent behavior: read the customer&rsquo;s plan, add-ons, next billing date, and charge history, then explain the why in plain language.</p>
     </div>
 
+    <div class="spec-sheet evidence-board" aria-label="CX research evidence">
+      <div class="board-title mono"><span>CX research signals</span><span>public-safe synthesis</span></div>
+      <div class="spec-grid">
+        <div><b>High-volume cluster</b><span>Billing issues, refunds, billing updates, and cancel/service changes crossed 1M+ annual contacts in the research slice.</span></div>
+        <div><b>Low satisfaction</b><span>Billing and refund contacts sat well below the 85 tNPS goal, making them a material customer-experience drag.</span></div>
+        <div><b>Growing pressure</b><span>Billing issues, refunds, and cancel/service contacts were not small edge cases; volume was growing year over year.</span></div>
+        <div><b>Detractor themes</b><span>Lack of transparency, unclear self-serve paths, fragmented support journeys, and expert knowledge gaps.</span></div>
+      </div>
+    </div>
+
     <div class="stats" role="list" aria-label="Billing problem signals">
       <div role="listitem"><span class="num">1M+</span><span class="lab">annual billing, cancel, and refund contacts in the support problem space</span></div>
       <div role="listitem"><span class="num">3 days</span><span class="lab">from problem framing to local agent prototype, test harness, and eval gate</span></div>
@@ -103,6 +113,29 @@
       <p>Those answers were not malicious. They were under-informed. Without billing data, the assistant could only give broad steps, link to settings, or speculate. For a money question, that creates the exact experience customers came to support to escape: slow, generic, and not grounded in their account.</p>
       <p>The design challenge was therefore not just conversation polish. It was agent capability: give the model a safe way to look up account facts, then constrain what it could do with them.</p>
     </div>
+
+    <figure class="product-screen evidence-screen" aria-label="Before-state Intuit Intelligence billing experience reconstruction">
+      <figcaption><span>before-state ui</span><b>Unhelpful answer to a money question</b></figcaption>
+      <div class="ii-top" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="ii-msg user">How much am I paying for my QBO subscription?</div>
+      <div class="ii-answer">
+        <p><b>Work done</b></p>
+        <p>The exact cost of your QuickBooks Online Advanced subscription depends on your billing plan and any discounts applied. Typically, pricing starts around $150 per month.</p>
+        <p>To see your current subscription fees, go to Settings &gt; Subscriptions and Billing. There, you can view billing and invoice information related to your subscription.</p>
+        <a href="#" aria-hidden="true">Billing and subscription</a>
+      </div>
+      <div class="ii-buttons" aria-hidden="true">
+        <span>Show my current subscription billing details</span>
+        <span>Compare subscription costs by month</span>
+        <span>Connect with an expert for further help</span>
+      </div>
+      <div class="failure-stack" aria-label="Why the before-state answer failed">
+        <span><b>Generic</b> Uses a typical public price instead of the customer&rsquo;s account.</span>
+        <span><b>Slow</b> Sends the customer to find the answer manually.</span>
+        <span><b>No context</b> Does not explain why the bill changed or what charge is driving concern.</span>
+      </div>
+      <p class="artifact-note">Screen-level reconstruction from real before-state testing. Customer and account details removed.</p>
+    </figure>
 
     <div class="failure-board" aria-label="Before-state assistant failures">
       <div><span>01</span><b>Generic guidance</b><p>Points to billing settings instead of explaining the actual charge.</p></div>
