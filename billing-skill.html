@@ -44,7 +44,7 @@
     <dl class="factrow">
       <div><dt>Why this problem</dt><dd>1M+ annual billing, cancel, and refund contacts; low-satisfaction support cluster; clear cost-to-serve and churn risk</dd></div>
       <div><dt>Role</dt><dd>Conversational AI lead, designer-builder, and prototype owner &middot; internal hackathon &middot; May 2026</dd></div>
-      <div><dt>Research base</dt><dd>DA and expert transcripts, mission-team contact-driver data, before-state screenshots, and controlled prototype tests</dd></div>
+      <div><dt>Research base</dt><dd>DA and expert transcripts, contact-driver data, before-state screenshots, and controlled prototype tests</dd></div>
       <div><dt>Status</dt><dd>Hackathon proof of concept; local stack with controlled test-account billing data; not a shipped production skill</dd></div>
     </dl>
 
@@ -60,7 +60,7 @@
       <div class="proof-copy">
         <span class="visual-label">Case snapshot</span>
         <h2>A hackathon POC with a product spine.</h2>
-        <p>This was not a production launch story. It was proof that a problem I knew from DA could become an agentic support experience: grounded in billing data, bounded by policy, and testable before a roadmap team committed to the full build.</p>
+        <p>This was not a production launch story. It was proof that a problem I knew from DA could become an agentic support experience: grounded in billing data, bounded by policy, and testable before roadmap commitment to the full build.</p>
         <ul class="snapshot-list">
           <li><b>Best for</b><span>AI PM, agentic design, model behavior, product design.</span></li>
           <li><b>I owned</b><span>Problem framing, behavior design, skill prompt, local build, test harness, and eval criteria.</span></li>
@@ -109,28 +109,28 @@
     <p class="kicker mono part-head"><span class="knum">02</span><span>The problem</span></p>
     <h2 id="p2-h">The assistant was answering around the problem.</h2>
     <div class="prose">
-      <p>Before-state testing showed the gap clearly. When a customer asked how much they were paying, the assistant could answer with typical QuickBooks pricing instead of the customer&rsquo;s actual plan. When they asked why they were charged multiple times, it gave plausible generic reasons. In one case, it misunderstood the billing question and searched reports instead.</p>
+      <p>Before-state testing showed the gap clearly. When a customer asked about an unfamiliar charge, the assistant could answer with broad billing guidance or plausible generic reasons instead of the customer&rsquo;s actual plan, add-ons, and recent billing history. In one case, it misunderstood the billing question and searched reports instead.</p>
       <p>Those answers were not malicious. They were under-informed. Without billing data, the assistant could only give broad steps, link to settings, or speculate. For a money question, that creates the exact experience customers came to support to escape: slow, generic, and not grounded in their account.</p>
       <p>The design challenge was therefore not just conversation polish. It was agent capability: give the model a safe way to look up account facts, then constrain what it could do with them.</p>
     </div>
 
     <figure class="product-screen evidence-screen" aria-label="Before-state Intuit Intelligence billing experience reconstruction">
-      <figcaption><span>before-state ui</span><b>Unhelpful answer to a money question</b></figcaption>
+      <figcaption><span>before-state ui</span><b>Unhelpful answer to an unfamiliar charge</b></figcaption>
       <div class="ii-top" aria-hidden="true"><span></span><span></span><span></span></div>
-      <div class="ii-msg user">How much am I paying for my QBO subscription?</div>
+      <div class="ii-msg user">I see a $288 charge I do not recognize. Why did my bill change?</div>
       <div class="ii-answer">
         <p><b>Work done</b></p>
-        <p>The exact cost of your QuickBooks Online Advanced subscription depends on your billing plan and any discounts applied. Typically, pricing starts around $150 per month.</p>
+        <p>Unfamiliar charges can happen for several reasons: multiple subscriptions, add-on services, mid-cycle changes, or a promotion ending.</p>
         <p>To see your current subscription fees, go to Settings &gt; Subscriptions and Billing. There, you can view billing and invoice information related to your subscription.</p>
         <a href="#" aria-hidden="true">Billing and subscription</a>
       </div>
       <div class="ii-buttons" aria-hidden="true">
-        <span>Show my current subscription billing details</span>
-        <span>Compare subscription costs by month</span>
+        <span>Show detailed billing charges breakdown</span>
+        <span>Explain charges for additional services</span>
         <span>Connect with an expert for further help</span>
       </div>
       <div class="failure-stack" aria-label="Why the before-state answer failed">
-        <span><b>Generic</b> Uses a typical public price instead of the customer&rsquo;s account.</span>
+        <span><b>Generic</b> Lists possible causes instead of using the customer&rsquo;s account.</span>
         <span><b>Slow</b> Sends the customer to find the answer manually.</span>
         <span><b>No context</b> Does not explain why the bill changed or what charge is driving concern.</span>
       </div>
@@ -139,7 +139,7 @@
 
     <div class="failure-board" aria-label="Before-state assistant failures">
       <div><span>01</span><b>Generic guidance</b><p>Points to billing settings instead of explaining the actual charge.</p></div>
-      <div><span>02</span><b>Typical, not personal</b><p>Names typical plan prices when the customer asked what they are paying.</p></div>
+      <div><span>02</span><b>Plausible, not personal</b><p>Lists possible causes when the customer needs the actual account reason.</p></div>
       <div><span>03</span><b>Wrong work</b><p>Can route into unrelated report logic because the billing intent is underspecified.</p></div>
       <div><span>04</span><b>No save moment</b><p>Cancellation can become self-serve instructions instead of a thoughtful handoff point.</p></div>
     </div>
@@ -160,10 +160,10 @@
     <p class="kicker mono part-head"><span class="knum">03</span><span>Why it mattered</span></p>
     <h2 id="p3-h">The hackathon was a way to prove the target state.</h2>
     <div class="prose">
-      <p>The DA MVP had a pragmatic strategy: classify the customer&rsquo;s billing question better, respond with empathy, and deep-link to billing history while the team worked toward richer data access. That was the right near-term move, but it still left the customer doing the detective work.</p>
+      <p>The DA MVP had a pragmatic strategy: classify the customer&rsquo;s billing question better, respond with empathy, and deep-link to billing history while richer data access remained future work. That was the right near-term move, but it still left the customer doing the detective work.</p>
       <p>BillSkill was the hackathon answer to the next question: what would it look like if the assistant could actually know the customer? Not in a vague personalization sense, but in a product-safe way: plan, add-ons, billing date, recent charge history, and admin boundaries.</p>
       <p>The internal challenge was about build velocity: the classic path from idea to requirements, design, build, test, review, and release had too much translation work, coordination churn, and low-value execution. BillingSkill was the right kind of proof because I could turn a known roadmap problem into something people could run, inspect, and evaluate in days.</p>
-      <p>The value of the POC was not that it shipped. It proved the shape of the experience, the tool contract, the handoff boundary, and the eval surface a production team would need to make account-aware billing support real.</p>
+      <p>The value of the POC was not that it shipped. It proved the shape of the experience, the tool contract, the handoff boundary, and the eval surface needed to make account-aware billing support real.</p>
     </div>
 
     <div class="decision-board" aria-label="From and to outcomes">
@@ -185,7 +185,7 @@
     <div class="flow-lane" aria-label="Billing lookup tool modes">
       <ol>
         <li><b>Tool</b><span>Read plan name, status, next billing date, add-ons, and recent billing facts.</span></li>
-        <li><b>Skill</b><span>Handle billing, pricing, duplicate-charge, cancel, refund, and escalation intents.</span></li>
+        <li><b>Skill</b><span>Handle unrecognized-charge, pricing, duplicate-charge, cancel, refund, and escalation intents.</span></li>
         <li><b>Widget</b><span>Offer specialist handoff or self-serve steps for cancel intent.</span></li>
         <li><b>Eval</b><span>Fail when the agent guesses, skips the lookup, loops the widget, or crosses policy boundaries.</span></li>
       </ol>
@@ -247,10 +247,10 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
       <div class="artifact-copy">
         <span class="visual-label">Prototype evidence</span>
         <h2>I tested the build, not the deck.</h2>
-        <p>I used Cursor to build the local harness, ran it in Streamlit, pointed it at the local agent stack, and tested the hard cases: cancel intent, duplicate-charge confusion, no-thanks fallback, and expert handoff. The raw screenshots include private run metadata, so this is reconstructed with mock IDs.</p>
+        <p>I used Cursor to build the local harness, ran it in Streamlit, pointed it at the local agent stack, and tested the hard cases: unfamiliar charge, changed amount, cancel intent, no-thanks fallback, and expert handoff. The raw screenshots include private run metadata, so this is reconstructed with mock IDs.</p>
         <ul class="artifact-list">
           <li><b>Harness</b><span>Streamlit chat surface with endpoint selection, clear chat, and conversation export.</span></li>
-          <li><b>Scenarios</b><span>Cancel subscription, cancel account, why am I charged twice, show me the steps.</span></li>
+          <li><b>Scenarios</b><span>Unrecognized charge, changed amount, cancel subscription, cancel account, show me the steps.</span></li>
           <li><b>Signals</b><span>Run time, tool trace, handoff decision, widget state, and whether the answer stayed inside boundaries.</span></li>
         </ul>
       </div>
@@ -268,19 +268,19 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
           </aside>
           <div class="streamlit-main">
             <div class="context-bar mono">session metadata · redacted</div>
-            <div class="chat-card user"><span class="avatar">u</span><b>why is quickbooks charging me twice?</b><em>17:18:27</em></div>
+            <div class="chat-card user"><span class="avatar">u</span><b>I see a $288 charge I do not recognize</b><em>17:18:27</em></div>
             <details class="trace-toggle">
               <summary>Detailed trace of agent execution</summary>
               <div>billing_lookup · plan + add-ons + billing history · pass</div>
             </details>
             <div class="chat-card agent"><span class="avatar bot">a</span>
-              <p>Based on your account, you are subscribed to QuickBooks Online Plus at $99/month with Payroll Core and Time Premium add-ons. Your estimated monthly charge is $224, and your next billing date is July 5, 2026.</p>
-              <p>There are no duplicate charges for the same period. The higher amount reflects add-ons and employee count changes; if your bank statement shows two charges for the same month, a specialist should investigate.</p>
-              <h3>What could be causing confusion</h3>
+              <p>Based on your account, the $288 charge is this cycle&rsquo;s subscription total. It is higher than the prior cycle because a welcome rate ended and the account added team members.</p>
+              <p>The base plan did not change. The difference comes from account-specific billing facts, not a duplicate charge.</p>
+              <h3>What changed this cycle</h3>
               <ul>
-                <li>Add-ons can make one monthly bill look like several line items.</li>
-                <li>Employee or user counts can change month to month.</li>
-                <li>A promotion ending can make the bill look unexpectedly higher.</li>
+                <li>Welcome rate ended, removing a $48 discount.</li>
+                <li>Two team members were added at $6 each.</li>
+                <li>The next step is human review if the customer did not make those changes.</li>
               </ul>
               <div class="streamlit-actions" aria-hidden="true">
                 <span>Connect with an expert</span>
@@ -295,7 +295,7 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
     </div>
 
     <div class="prose">
-      <p class="opens">The eval came with the skill, not after it. The dataset covered billing admin and non-admin cases, cancel flows, escalation paths, tool failures, and edge conditions. It gave us a way to judge whether the agent used account facts, avoided guesses, and routed safely.</p>
+      <p class="opens">The eval came with the skill, not after it. The dataset covered billing admin and non-admin cases, cancel flows, escalation paths, tool failures, and edge conditions. It gave me a way to judge whether the agent used account facts, avoided guesses, and routed safely.</p>
     </div>
 
     <div class="eval-sheet" aria-label="Golden dataset sample with gating criteria">
@@ -392,7 +392,7 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
     <h2 id="p8-h">What I learned, and what I would do differently.</h2>
     <div class="prose">
       <p>Domain knowledge was the shortcut. The hackathon only worked because the problem was already familiar from DA research, transcripts, before-state testing, and the earlier billing MVP.</p>
-      <p>An AI pair speeds up the typing, not the judgment. The hard part was still deciding what the agent should know, when it should act, when it should stop, and how the team would know whether it behaved correctly.</p>
+      <p>An AI pair speeds up the typing, not the judgment. The hard part was still deciding what the agent should know, when it should act, when it should stop, and how to prove whether it behaved correctly.</p>
       <p>The widget was a product decision, not a decoration. Cancel intent needed an explicit choice point so the customer could proceed on their own or connect with a specialist without the agent overstepping.</p>
       <p>If I continued the work, I would harden the permission checks and admin boundaries inside the tool layer, then run the eval against a broader set of billing, refund, cancel, and non-admin scenarios before any production pilot.</p>
     </div>
