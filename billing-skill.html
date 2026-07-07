@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="The target state from the charge-lookup case, built as a working agent skill: the boundaries, the MCP build, the 108-case eval, and the honest status. Case 02.">
+<meta name="description" content="The target state from the charge-lookup case, built as a working agent skill and tested locally in Streamlit: boundaries, tool calls, evals, and the honest status. Case 02.">
 <meta property="og:title" content="BillingSkill · Simone Muro">
-<meta property="og:description" content="The target state from the charge-lookup case, built as a working agent skill: the boundaries, the MCP build, the 108-case eval, and the honest status.">
+<meta property="og:description" content="The target state from the charge-lookup case, built as a working agent skill and tested locally in Streamlit: boundaries, tool calls, evals, and the honest status.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/billing-skill.html">
 <meta name="twitter:card" content="summary">
@@ -39,12 +39,12 @@
       <span>Agentic support platform</span>
     </p>
     <h1 id="case-h">Building the agent skill that explains QuickBooks subscription charges.</h1>
-    <p class="lede">The <a href="charge-lookup.html">charge-lookup case</a> proved the product need. This case shows the agentic build: skill instructions, read-only billing tool, mock/eval/dev modes, and an eval gate that made the target answer runnable.</p>
+    <p class="lede">The <a href="charge-lookup.html">charge-lookup case</a> proved the product need. This case shows the agentic build: skill instructions, read-only billing tool, mock/eval/dev modes, a local Streamlit test harness, and an eval gate that made the target answer runnable.</p>
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>Agentic support platform, subscription billing for QuickBooks</dd></div>
       <div><dt>Role</dt><dd>Conversation designer for the surface; later built the agent skill solo, AI-paired &middot; 2026</dd></div>
-      <div><dt>Build</dt><dd>A skill spec, a local MCP tool server, a golden dataset grown from 33 to 108 cases</dd></div>
+      <div><dt>Build</dt><dd>A skill spec, local tool server, Streamlit test harness, and a golden dataset grown from 33 to 108 cases</dd></div>
       <div><dt>Status</dt><dd>Runs end to end on mock data; live data wiring scoped as engineering work</dd></div>
     </dl>
 
@@ -55,8 +55,8 @@
         <p>The work proves a target state by making the agent run: read account data, explain the charge, respect boundaries, and fail tests before it fails customers.</p>
         <ul class="snapshot-list">
           <li><b>Best for</b><span>Model behavior, agentic design, AI PM.</span></li>
-          <li><b>I owned</b><span>Skill behavior, local MCP build, tool modes, and eval criteria.</span></li>
-          <li><b>Proof</b><span>Runs end to end on mock data; 108-case eval across 13 intent categories.</span></li>
+          <li><b>I owned</b><span>Skill behavior, local build, test harness, tool modes, and eval criteria.</span></li>
+          <li><b>Proof</b><span>Built AI-paired in Cursor, tested locally in Streamlit, gated with 108 eval cases.</span></li>
         </ul>
       </div>
       <div class="lab-panels" aria-label="Skill, tool, eval, and run artifacts">
@@ -176,6 +176,57 @@ fix: declare billing_lookup, re-register server
 call billing_lookup(plan, add_ons) -> <span class="ok">ok</span>
 read plan + payroll + team members -> <span class="ok">ok</span>
 answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
+    </div>
+
+    <div class="prototype-lab" aria-label="Public-safe reconstruction of the local Streamlit billing prototype test harness">
+      <div class="artifact-copy">
+        <span class="visual-label">Prototype evidence</span>
+        <h2>I tested it like a builder, not a deck.</h2>
+        <p>I used Cursor to build the local harness, ran it in Streamlit, pointed it at a local agent endpoint, and tested the hard cases: cancel intent, duplicate-charge confusion, no-thanks fallback, and expert handoff. The raw screenshots include internal traces, so this is reconstructed with mock IDs.</p>
+        <ul class="artifact-list">
+          <li><b>Harness</b><span>Streamlit chat surface with endpoint selection, clear chat, and conversation export.</span></li>
+          <li><b>Scenarios</b><span>Cancel subscription, cancel account, why am I charged twice, show me the steps.</span></li>
+          <li><b>Signals</b><span>Total run time, tool trace, handoff decision, and whether the answer stayed inside boundaries.</span></li>
+        </ul>
+      </div>
+      <figure class="streamlit-artifact" aria-label="Recreated Streamlit prototype run for BillingSkill">
+        <figcaption class="mono"><span>local streamlit test harness</span><span>public-safe reconstruction</span></figcaption>
+        <div class="streamlit-shell">
+          <aside class="streamlit-side" aria-hidden="true">
+            <b>Testing</b>
+            <span class="side-active">Chat Agent Demo</span>
+            <small>Endpoint</small>
+            <span class="side-pill">Local agent</span>
+            <small>Controls</small>
+            <span>Clear chat</span>
+            <span>Export conversation</span>
+          </aside>
+          <div class="streamlit-main">
+            <div class="context-bar mono">context id · mock-redacted</div>
+            <div class="chat-card user"><span class="avatar">u</span><b>why is quickbooks charging me twice?</b><em>17:18:27</em></div>
+            <details class="trace-toggle">
+              <summary>Detailed trace of agent execution</summary>
+              <div>billing_lookup · plan + add-ons + billing history · pass</div>
+            </details>
+            <div class="chat-card agent"><span class="avatar bot">a</span>
+              <p>Based on your account, you are subscribed to QuickBooks Online Plus at $99/month with Payroll Core and Time Premium add-ons. Your estimated monthly charge is $224, and your next billing date is July 5, 2026.</p>
+              <p>There are no duplicate charges for the same period. The higher amount reflects add-ons and employee count changes; if your bank statement shows two charges for the same month, a specialist should investigate.</p>
+              <h3>What could be causing confusion</h3>
+              <ul>
+                <li>Add-ons can make one monthly bill look like several line items.</li>
+                <li>Employee or user counts can change month to month.</li>
+                <li>A promotion ending can make the bill look unexpectedly higher.</li>
+              </ul>
+              <div class="streamlit-actions" aria-hidden="true">
+                <span>Connect with an expert</span>
+                <span>Show me the steps</span>
+              </div>
+            </div>
+            <div class="run-meta mono">total time 28.3s · trace id redacted · experience id redacted</div>
+          </div>
+        </div>
+        <p class="mock-cap">Recreated from local Streamlit screenshots. Internal product names, trace links, IDs, credentials, and account data removed.</p>
+      </figure>
     </div>
 
     <div class="prose">
