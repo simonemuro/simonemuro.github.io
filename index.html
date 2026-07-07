@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="v4.css">
 <link rel="stylesheet" href="home.css">
 <script src="v4.js" defer></script>
+<script src="v5-proto.js" defer></script>
 </head>
 <body class="home-lite">
 
@@ -46,31 +47,42 @@
       </div>
     </div>
 
-    <div class="hero-proof io" style="--d:4" aria-label="Reconstructed agent design artifact">
+    <div class="hero-proof hero-proto io" style="--d:4" aria-label="Playable reconstructed billing agent prototype">
       <div class="proof-top">
         <img src="assets/portrait.jpg" alt="Simone Muro portrait">
         <div>
-          <p class="mono">Public reconstruction</p>
-          <h2>Agent behavior workbench</h2>
+          <p class="mono">Playable prototype · mock data</p>
+          <h2>Demo billing agent</h2>
         </div>
       </div>
-      <div class="agent-window" aria-hidden="true">
-        <div class="window-bar"><span></span><span></span><span></span></div>
-        <div class="agent-row">
-          <span class="agent-label">customer</span>
-          <p>I ran payroll, but Maria is not on it.</p>
-        </div>
-        <div class="agent-steps">
-          <span>read account</span>
-          <span>find cause</span>
-          <span>ask once</span>
-          <span>handoff ready</span>
-        </div>
-        <div class="agent-row agent-answer">
-          <span class="agent-label">agent</span>
-          <p>Maria was added after this run was built. She is already on next week's run. Do you want her paid in this run instead?</p>
+      <div class="mock proto" id="proto" aria-label="Working prototype of a billing agent explaining a $288 subscription charge and easing it after customer consent. Pre-scripted run on mock data.">
+        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Subscription charge</span><span class="mtag mtag-proto">Target · prototype</span></div>
+        <div class="mock-body" id="proto-body">
+          <div class="m-user">I see a $288 charge on my card I do not recognize. Can you help me understand it?</div>
+          <div class="m-agent">
+            <details class="m-work proto-work" open>
+              <summary><span class="chev" aria-hidden="true">&#8250;</span><span class="wlab">Work done</span></summary>
+              <div class="proto-workbody">
+                <p class="proto-plan">Checked account access, plan, add-ons, team members, recent charges, and whether the ended welcome rate could be extended.</p>
+                <div class="proto-steps">
+                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Finding what changed</span><span class="pres">welcome rate ended <span class="em">+$48</span> · 2 seats +$12</span></div>
+                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Checking what could ease the increase</span><span class="pres">welcome rate may extend · annual billing available</span></div>
+                </div>
+              </div>
+            </details>
+            <p class="proto-lead">Here is what is behind the $288.00 this cycle.</p>
+            <p>Two things changed it: your six-month welcome rate ended, and two team members were added. I can request an extension before I do anything else.</p>
+            <div class="proto-chips" aria-hidden="true">
+              <span class="proto-chip">Extend welcome rate</span>
+              <span class="proto-chip">Other ways to save</span>
+            </div>
+          </div>
         </div>
       </div>
+      <div class="proto-ctl" id="proto-ctl" hidden>
+        <button type="button" class="proto-play" id="proto-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg><span id="proto-play-lab">Play the prototype</span></button>
+      </div>
+      <p class="mock-cap">Pre-scripted replay · no live model · public-safe reconstruction. The full case explains the product strategy and the successor BillingSkill build.</p>
     </div>
   </section>
 
