@@ -43,7 +43,7 @@
       <span>Agentic support platform</span>
     </p>
     <h1 id="case-h">Designing the diagnostic behavior of the QuickBooks payroll agent.</h1>
-    <p class="lede">QuickBooks Payroll runs payroll for small businesses. When something looks wrong, an employee missing from a pay run, a filing that did not go through, the question underneath is always the same: will my people get paid? In 2026 a payroll agent was being built on a successor agentic support platform to handle those moments, and the hard part was not what it should say. It was what it should do, and when. I designed the agent&rsquo;s diagnostic behavior and authored the ground truth that teaches it: read the account first, ask exactly once, hand off before guessing.</p>
+    <p class="lede">A payroll agent was being built for high-stakes support moments: missing employees, failed filings, pay runs that looked wrong. I designed the diagnostic behavior behind it: read the account first, ask exactly once, and hand off before guessing.</p>
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>The QuickBooks payroll agent on a successor agentic support platform, troubleshooting conversations</dd></div>
@@ -52,11 +52,22 @@
       <div><dt>Results</dt><dd>Payroll conversation quality up 9.8 points in a year, measured by the program&rsquo;s judge</dd></div>
     </dl>
 
-    <div class="case-skim" aria-label="Fast read for hiring reviewers">
-      <div><span class="skim-label">Best for</span><p><b>Model behavior, AI experience design, AI enablement.</b> Diagnostic behavior for a high-stakes agent.</p></div>
-      <div><span class="skim-label">I owned</span><p>The diagnostic framework, generator prompt, ground truth structure, and delivery direction.</p></div>
-      <div><span class="skim-label">Artifact</span><p>Fact map, read-before-ask trace, prompt excerpt, and ideal answer pattern.</p></div>
-      <div><span class="skim-label">Decision</span><p>Let the agent read account facts before speaking, ask once, and hand off before guessing.</p></div>
+    <div class="lab-hero" aria-label="Public-safe reconstruction of the payroll diagnostic design">
+      <div class="proof-copy">
+        <p class="kicker mono">Diagnostic model</p>
+        <h2>Read the account before the agent speaks.</h2>
+        <p>The work turns expert troubleshooting into a behavior contract: what the agent reads silently, what it may ask, when it must stop, and what context travels to a person.</p>
+        <ul class="snapshot-list">
+          <li><b>Owned</b><span>Framework, generator prompt, golden paths, expert review plan.</span></li>
+          <li><b>Public proof</b><span>Recreated from sanitized examples; raw payroll artifacts stay private.</span></li>
+        </ul>
+      </div>
+      <div class="lab-panels">
+        <div class="lab-card green"><b>Known before speaking</b><p>Subscription status, employee record, pay schedule, payroll run history.</p></div>
+        <div class="lab-card gold"><b>Worth asking</b><p>Only facts the system cannot retrieve, such as the customer&rsquo;s intent.</p></div>
+        <div class="lab-card blue"><b>Stop condition</b><p>Sensitive fixes hand off with the diagnosis attached, not a fresh interview.</p></div>
+        <div class="lab-card dark"><code>old: ask &rarr; ask &rarr; ask &rarr; ask<br>new: read &rarr; diagnose &rarr; ask once</code></div>
+      </div>
     </div>
   </section>
 
@@ -122,18 +133,15 @@
       <p>The insight that shaped everything came out of those interviews. The expert opens with a long interview because a human starts blind. The agent does not. Before its first reply it can read the account. So I mapped, for the missing-employee territory, the six facts that decide the diagnosis, and asked of each one: where does it live?</p>
     </div>
 
-    <figure class="goldrow" aria-label="Six facts that decide the diagnosis, and where each one lives">
-      <figcaption class="gr-hd mono"><span>the diagnosis &middot; six facts</span><span class="gr-mark">four readable &middot; two must ask</span></figcaption>
-      <dl class="gr-rows">
-        <div class="gr-row"><dt>subscription status</dt><dd>on the account</dd></div>
-        <div class="gr-row"><dt>employee list and status</dt><dd>on the account</dd></div>
-        <div class="gr-row"><dt>pay schedule assignments</dt><dd>on the account</dd></div>
-        <div class="gr-row"><dt>audit log of recent changes</dt><dd>on the account</dd></div>
-        <div class="gr-row gate"><dt>what the customer expected</dt><dd><span>only the customer holds it</span><b class="gr-res">must ask</b></dd></div>
-        <div class="gr-row gate"><dt>what is on their screen</dt><dd><span>only the customer holds it</span><b class="gr-res">must ask</b></dd></div>
-      </dl>
-      <p class="gr-foot">from the shipped framework &middot; each must-ask row carries a written justification in the dataset for why the system cannot look it up</p>
-    </figure>
+    <div class="spec-sheet" aria-label="Fact map for the missing employee diagnosis">
+      <div class="board-title"><span>fact map &middot; missing employee</span><span>four readable &middot; two askable</span></div>
+      <div class="spec-grid">
+        <div><b>Account facts</b><span>Subscription, employee status, schedule, recent payroll runs. These are read silently before the first turn.</span></div>
+        <div><b>Customer facts</b><span>What they expected to happen, and whether they want this run changed. These are the only facts worth asking for.</span></div>
+        <div><b>Diagnosis</b><span>Find the first account fact that explains the symptom, then name it in plain language.</span></div>
+        <div><b>Boundary</b><span>If the fix changes payroll, stop and hand off or offer a guided next action. No confident guessing.</span></div>
+      </div>
+    </div>
 
     <div class="prose">
       <p class="opens">Four of the six facts the old flow asked for were already readable. Only two truly belong to the customer. The design conclusion followed directly: do not mimic the expert&rsquo;s question sequence. Read first, then spend questions only on what cannot be retrieved.</p>

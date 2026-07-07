@@ -114,10 +114,12 @@ body.v5 .titleblock{
 body.v5 .titleblock > .kicker{order:1;}
 body.v5 .titleblock > h1{order:2;}
 body.v5 .titleblock > .case-skim{order:3;}
-body.v5 .titleblock > .lede{order:4;}
+body.v5 .titleblock > .lede{order:3;}
 body.v5 .titleblock > .factrow{order:5;}
 body.v5 .titleblock > .proof-hero,
-body.v5 .titleblock > .lab-hero{order:6;}
+body.v5 .titleblock > .lab-hero,
+body.v5 .titleblock > .evidence-split,
+body.v5 .titleblock > .agent-evidence{order:4;}
 body.v5 .kicker{
   display:flex;flex-wrap:wrap;gap:8px 20px;color:var(--sub);margin:0 0 22px;
 }

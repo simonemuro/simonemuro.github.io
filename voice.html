@@ -101,7 +101,7 @@
       <span>QuickBooks phone support</span>
     </p>
     <h1 id="case-h">Designing spoken answers for QuickBooks customers who call support.</h1>
-    <p class="lede">QuickBooks customers who call the support line reach a voice assistant before any person. The phone is the hardest surface for help: no screen, no links, no scrolling back, and an answer that has to survive being heard once, at talking speed. Callers kept refusing the help the assistant offered. I designed the assistant&rsquo;s side of those calls: the clarifying question redesigns that moved the receipted numbers in part seven, and the voice snippet, a generated answer spoken in the caller&rsquo;s ear, among the first on the phone channel, which I drove from behavior spec to release plan.</p>
+    <p class="lede">On the phone, help has to work when heard once: no screen, no links, no second read. I designed the assistant&rsquo;s side of those calls, from clarifying-question repairs to the GenAI voice snippet that proved the assistant understood before offering help.</p>
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>The voice support assistant on the QuickBooks phone line</dd></div>
@@ -110,11 +110,36 @@
       <div><dt>Results</dt><dd>Voice snippet: shipped, a measured +3.9 point containment lift at the December 2024 experiment, then full production. Login redesign: acceptance 32% to 56%, containment 20% to 32%, $135,160 realized</dd></div>
     </dl>
 
-    <div class="case-skim" aria-label="Fast read for hiring reviewers">
-      <div><span class="skim-label">Best for</span><p><b>AI experience design, voice AI, product design.</b> Help behavior with no screen, links, or second read.</p></div>
-      <div><span class="skim-label">I owned</span><p>Voice snippet behavior, prompt rules, clarifying-question redesigns, and rollout criteria.</p></div>
-      <div><span class="skim-label">Artifact</span><p>Playable audio clips, call-flow diagram, prompt excerpt, and transcript patterns.</p></div>
-      <div><span class="skim-label">Proof</span><p>+3.9 point containment lift, plus login self-help acceptance moving from 32% to 56%.</p></div>
+    <div class="proof-hero" aria-label="Voice case overview">
+      <div class="proof-copy">
+        <p class="kicker mono">Voice UX</p>
+        <h2>The product had to work when heard once.</h2>
+        <p>The design moved from blind link offers to spoken proof of understanding: a short answer, a clean offer, and exits that never trap the caller.</p>
+        <ul class="snapshot-list">
+          <li><b>My hands</b><span>Clarifying questions, behavior spec, prompt rules, rollout criteria.</span></li>
+          <li><b>Public proof</b><span>Playable synthetic clips and reconstructed call states below.</span></li>
+        </ul>
+      </div>
+      <div class="phone-gallery" aria-label="Three voice design states">
+        <div class="phone-shot alt-a">
+          <div class="phone-top"></div>
+          <span class="phone-kicker">Before</span>
+          <div class="phone-card"><b>Topic-only offer</b><p>&ldquo;I found an article. Want a link?&rdquo;</p></div>
+          <div class="mini-bars"><span></span><span></span><span></span></div>
+        </div>
+        <div class="phone-shot alt-b">
+          <div class="phone-top"></div>
+          <span class="phone-kicker">Repair</span>
+          <div class="phone-card"><b>One shaped question</b><p>Three likely meanings, one breath, then action.</p></div>
+          <div class="mini-bars"><span></span><span></span><span></span></div>
+        </div>
+        <div class="phone-shot alt-c">
+          <div class="phone-top"></div>
+          <span class="phone-kicker">Snippet</span>
+          <div class="phone-card"><b>Answer teaser</b><p>Enough proof to trust the link; the full steps move to a screen.</p></div>
+          <div class="mini-bars"><span></span><span></span><span></span></div>
+        </div>
+      </div>
     </div>
   </section>
 

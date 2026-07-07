@@ -39,7 +39,7 @@
       <span>QuickBooks agents</span>
     </p>
     <h1 id="case-h">Automating the answer key the QuickBooks AI agents are graded against.</h1>
-    <p class="lede">QuickBooks ships AI agents that talk to small-business owners about their books, and some of them can act on customer accounts. Before a new version ships, it is graded offline against a golden dataset: conversations with the right answer spelled out in full. The answer key. People authored that key by hand, one field at a time, about three weeks per dataset. On the AI quality-evaluation team I owned the offline datasets and the ground truth, and I automated the drafting so the experts could spend their time on judgment.</p>
+    <p class="lede">Before a QuickBooks agent ships, it is graded against a golden dataset: the answer key for what good behavior looks like. I owned that ground truth and automated the drafting so experts could spend their time on judgment, not data entry.</p>
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>The evaluation program behind the QuickBooks AI agents: golden datasets, a user simulator, an LLM judge</dd></div>
@@ -48,11 +48,21 @@
       <div><dt>Results</dt><dd>Conversation quality up 8, 9.8 and 13 points across three agent skills in a year; dataset turnaround from about three weeks to about one</dd></div>
     </dl>
 
-    <div class="case-skim" aria-label="Fast read for hiring reviewers">
-      <div><span class="skim-label">Best for</span><p><b>AI enablement, eval systems, technical PM.</b> The answer key and gates behind agent releases.</p></div>
-      <div><span class="skim-label">I owned</span><p>Offline datasets, ground truth, the generator, judge/simulator instructions, and review workflow.</p></div>
-      <div><span class="skim-label">Artifact</span><p>Hard-fail trace, golden row schema, generator behavior, and human review loop.</p></div>
-      <div><span class="skim-label">Proof</span><p>3,000+ graded rows, faster dataset turnaround, and measured quality gains across three skills.</p></div>
+    <div class="proof-hero" aria-label="Quality program overview">
+      <div class="proof-copy">
+        <p class="kicker mono">Eval system</p>
+        <h2>The answer key became a product surface.</h2>
+        <p>Instead of asking experts to type every field, the system drafts ground truth, preserves the original, then forces a human promotion step.</p>
+        <ul class="snapshot-list">
+          <li><b>My piece</b><span>Ground truth, generator, pipeline checks, review workflow.</span></li>
+          <li><b>Team piece</b><span>Runtime eval infrastructure, scoring engine, release gates.</span></li>
+        </ul>
+      </div>
+      <div class="impact-panel" aria-label="Quality program measures">
+        <div><span class="big">3 wk &rarr; 1</span><span class="label">Golden dataset turnaround after automated drafting.</span></div>
+        <div><span class="big">3,000+</span><span class="label">Rows moved through the faster review pipeline.</span></div>
+        <div><span class="big">12</span><span class="label">QA checks before recommendations reached reviewers.</span></div>
+      </div>
     </div>
   </section>
 
@@ -102,16 +112,18 @@
       <p>One row of the key is not a sentence. As the agents learned to take actions, render widgets, and draw charts, the right answer grew to match, and a person hand-entered every field, one row at a time. The chart alone is a label and a value for every point on every axis.</p>
     </div>
 
-    <figure class="goldrow" aria-label="The four fields of one ground-truth row, formerly typed by hand">
-      <figcaption class="gr-hd mono"><span>one row of the answer key &middot; four fields</span><span>schema real &middot; hand-entered before this work</span></figcaption>
-      <dl class="gr-rows">
-        <div class="gr-row"><dt>answer</dt><dd>What the agent should say, resolved and final, written out in full.</dd></div>
-        <div class="gr-row"><dt>actions</dt><dd>What it may do in this journey, and the verification each action requires.</dd></div>
-        <div class="gr-row"><dt>widgets</dt><dd>What it should render on screen for this question.</dd></div>
-        <div class="gr-row"><dt>chart</dt><dd>A label and a value for every point on every axis.</dd></div>
-      </dl>
-      <p class="gr-foot">the four ground-truth field types per row &middot; multi-turn journeys also carry simulator instructions for the turns</p>
-    </figure>
+    <div class="eval-sheet" aria-label="Golden dataset row schema">
+      <div class="board-title"><span>answer key row</span><span>what the judge grades</span></div>
+      <table class="eval-table">
+        <thead><tr><th>Field</th><th>What it defines</th><th>Failure it catches</th></tr></thead>
+        <tbody>
+          <tr><td>Answer</td><td>The resolved response, written out in full.</td><td>Fluent wording that is not actually correct.</td></tr>
+          <tr><td>Actions</td><td>What the agent may do, and what verification it needs first.</td><td>A correct answer paired with an unsafe write.</td></tr>
+          <tr><td>Widgets</td><td>The UI state the agent should render for the question.</td><td>A good answer with the wrong supporting surface.</td></tr>
+          <tr><td>Chart</td><td>Labels and values for every visible axis point.</td><td>Data viz that looks plausible but grades against nothing.</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <div class="prose">
       <p class="opens">A dataset took about three weeks to author, and that pace capped how much could be graded. Worse, the errors hid in the typing. A wrong ground truth is the most dangerous kind of error in an evaluation program, because it trains the judge to score incorrect behavior as correct, and the failure surfaces far downstream where it is hard to trace. And all of it was exactly the wrong use of an expert&rsquo;s judgment: the people who knew what a good answer looks like were spending their weeks on data entry.</p>

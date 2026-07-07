@@ -39,7 +39,7 @@
       <span>Credit Karma</span>
     </p>
     <h1 id="case-h">Helping Credit Karma members see why a card is recommended for them.</h1>
-    <p class="lede">Credit Karma shows members credit card offers matched to their credit profile. In 2024 I did a prompt engineering rotation there, writing the prompts behind a feature that explains, in the member&rsquo;s own terms, why a recommended card fits their wallet. The model reads the member&rsquo;s credit data, the card&rsquo;s real terms, and one signal it may never repeat: the member&rsquo;s approval odds. This case is that boundary, and the craft of shipping model-written language inside credit law.</p>
+    <p class="lede">At Credit Karma, I wrote prompts for AI-generated explanations of why a card fits a member&rsquo;s wallet. The hard part was the boundary: the model could reason over approval odds, but the member-facing copy could never state or imply them.</p>
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>Credit Karma&rsquo;s card recommendation pages; a model-written explanation on a recommended offer</dd></div>
@@ -48,11 +48,28 @@
       <div><dt>Status</dt><dd>Prompts shipped through reviewed, merged pull requests and product, legal, and trust and safety review; the rotation ended before an outcome number I can claim</dd></div>
     </dl>
 
-    <div class="case-skim" aria-label="Fast read for hiring reviewers">
-      <div><span class="skim-label">Best for</span><p><b>Prompt engineering, regulated AI, model behavior.</b> Personalized language inside a legally constrained surface.</p></div>
-      <div><span class="skim-label">I owned</span><p>Prompt revisions, synthetic profiles, rubric gates, and the approval-odds boundary.</p></div>
-      <div><span class="skim-label">Artifact</span><p>Before/after recommendation panel, prompt anatomy, grading rubric, and failure examples.</p></div>
-      <div><span class="skim-label">Boundary</span><p>The model may reason over approval odds. It may never state, hint, rank, or imply them.</p></div>
+    <div class="evidence-split" aria-label="Credit Karma prompt engineering evidence">
+      <div class="proof-copy">
+        <p class="kicker mono">Regulated prompt design</p>
+        <h2>The strongest signal stayed silent.</h2>
+        <p>The model could use approval-likelihood data to reason about fit, but the member-facing explanation could never state, hint, rank, or imply it.</p>
+        <ul class="snapshot-list">
+          <li><b>Owned</b><span>Prompt revisions, synthetic profiles, grading rubric, release boundary.</span></li>
+          <li><b>Limit</b><span>No conversion metric claimed; the rotation ended before outcome readout.</span></li>
+        </ul>
+      </div>
+      <div class="deck-artifact" aria-label="Prompt boundary slide">
+        <div class="board-title"><span>release boundary</span><span>public-safe</span></div>
+        <div class="deck-slide">
+          <h3>Personal, truthful, silent about odds.</h3>
+          <div class="deck-strip" aria-hidden="true">
+            <span>profile facts</span>
+            <span>card terms</span>
+            <span>fee named</span>
+            <span>odds hidden</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -121,6 +138,17 @@
       <p>For the approval-odds signal there were three honest options. Strip the data out of the context entirely, so the model cannot leak what it cannot see; the explanations get safer and worse, because the signal genuinely shapes which cards make sense. Refuse the topic, so any question near approval gets a canned deflection; safe, and the member learns nothing. Or let the model reason over the data and forbid it from ever surfacing it: not a percentage, not a range, not great chances, not a hedge that implies a number. I went with the third. It is the hardest one to hold, and it is the only one where the member gets the full benefit of the signal without ever being shown it.</p>
       <p>Testing that boundary needed member data, and real member data was untouchable. So the prompts were tested against synthetic member profiles I could publish revisions against: nine of them, spanning credit bands and wallet situations, from a near-prime member with four category cards and higher utilization to a strong-credit member whose wallet already matched the recommendation. Every revision ran against all nine.</p>
       <p>One more constraint shaped the writing. Production ran on two different models, and they did not take instructions the same way: the older one needed its reasoning spelled out step by step before it wrote a word, the newer one took direct instructions. So the prompt was not one artifact. It was a variant per model, kept in lockstep, with the same rules and the same boundary in both.</p>
+    </div>
+    <div class="eval-sheet" aria-label="Credit Karma prompt options">
+      <div class="board-title"><span>decision matrix</span><span>approval odds signal</span></div>
+      <table class="eval-table">
+        <thead><tr><th>Option</th><th>Product value</th><th>Risk</th><th>Decision</th></tr></thead>
+        <tbody>
+          <tr><td>Remove odds from context</td><td>Safer, but less personalized.</td><td>The explanation loses the strongest fit signal.</td><td>Rejected</td></tr>
+          <tr><td>Deflect approval questions</td><td>Clear compliance posture.</td><td>Reads evasive exactly where members need clarity.</td><td>Rejected</td></tr>
+          <tr><td>Reason over odds silently</td><td>Best personalization without exposing the protected signal.</td><td>Requires strict rubric and automatic failures.</td><td><span class="pass">Chosen</span></td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 

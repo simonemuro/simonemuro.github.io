@@ -43,7 +43,7 @@
       <span>QuickBooks support</span>
     </p>
     <h1 id="case-h">Hearing why QuickBooks customers cancel, and routing the savable ones to a specialist.</h1>
-    <p class="lede">QuickBooks customers cancel their subscriptions through the support assistant, chat and voice. Before the cancellation goes through, they say why, and the reason decides everything: a price complaint can often be saved by a specialist, a retirement cannot. I designed the flow that asks why, and when the intent model stopped getting better at hearing the answer, I built the LLM classifier that reads it. This case covers both, and the honest status of the second.</p>
+    <p class="lede">Before a QuickBooks subscription cancels, the customer says why. I designed the ask-why flow and the LLM classifier that reads the reason, then routes savable problems to a specialist without ever blocking someone who wants to leave.</p>
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>The QuickBooks support assistant, chat and voice, the subscription cancellation path</dd></div>
@@ -52,11 +52,30 @@
       <div><dt>Results</dt><dd>Savability accuracy 96.6% across about 300 utterances at 90% confidence; reasons classified 60% to 96% in evaluation; Responsible AI approved with no hallucination, profanity, bias, or toxicity findings</dd></div>
     </dl>
 
-    <div class="case-skim" aria-label="Fast read for hiring reviewers">
-      <div><span class="skim-label">Best for</span><p><b>AI product, model behavior, Responsible AI.</b> A business-critical classifier with explicit ethical boundaries.</p></div>
-      <div><span class="skim-label">I owned</span><p>The ask-why flow, LLM classifier prompt, structured output, routing bar, and RAI package.</p></div>
-      <div><span class="skim-label">Artifact</span><p>Classifier prompt, routing trace, reason taxonomy, and save/no-save boundary.</p></div>
-      <div><span class="skim-label">Decision</span><p>The model classifies and routes. It never argues, invents policy, or blocks cancellation.</p></div>
+    <div class="lab-hero" aria-label="Cancellation classifier overview">
+      <div class="proof-copy">
+        <p class="kicker mono">Classifier + route</p>
+        <h2>The model never argues with someone leaving.</h2>
+        <p>It reads the reason, returns strict JSON, and lets deterministic flow logic decide whether the next best step is a saves specialist or a clean goodbye.</p>
+        <ul class="snapshot-list">
+          <li><b>Owned</b><span>Ask-why flow, classifier prompt, output contract, RAI package.</span></li>
+          <li><b>Bar</b><span>Useful containment means respectful routing, not friction.</span></li>
+        </ul>
+      </div>
+      <div class="run-console" aria-label="Classifier output examples">
+        <div class="board-title"><span>strict output</span><span>mock values</span></div>
+<pre>{
+  "reason": "too expensive",
+  "savable": true,
+  "next_step": "offer_specialist"
+}
+
+{
+  "reason": "retiring",
+  "savable": false,
+  "next_step": "close_cleanly"
+}</pre>
+      </div>
     </div>
   </section>
 
@@ -99,6 +118,14 @@
       <p>The saves specialists could only fight for a customer when they knew what the fight was about. A price complaint that reaches a specialist with context is a conversation about the plan. A price complaint that reaches nobody is a lost subscription. Every reason the system could not hear was money left on the table.</p>
       <p>The queue cut the other way too. A specialist spending time on a call that was never savable, a business closing, a retirement, is a specialist not saving a call that was. The bar I set for the classifier was simple: if I send ten people to that queue, the ten should be truly savable. Not two.</p>
       <p>And the final reasons deserved better than a pitch. A customer retiring after thirty years does not want to hear an offer. They want their account closed out properly, with some grace.</p>
+    </div>
+    <div class="flow-lane" aria-label="Cancellation routing model">
+      <ol>
+        <li><b>Ask why</b><span>The customer names the reason in their own words.</span></li>
+        <li><b>Classify</b><span>The model writes JSON only; no raw model prose reaches the customer.</span></li>
+        <li><b>Route</b><span>Savable reasons get a specialist with context attached.</span></li>
+        <li><b>Exit</b><span>Final reasons get a respectful close, no pitch and no trap.</span></li>
+      </ol>
     </div>
   </section>
 
