@@ -39,7 +39,7 @@
       <span>Agentic support platform</span>
     </p>
     <h1 id="case-h">Building the agent skill that explains QuickBooks subscription charges.</h1>
-    <p class="lede">When QuickBooks customers ask about a subscription charge, the real answer lives in their account: what they subscribe to, what changed, what a promotion did to the price. The <a href="charge-lookup.html">charge-lookup case</a> established that need. Delivering the answer moved to a successor agent platform, and I moved with it: I built the answer as a working agent skill, end to end, with an AI pair for the code. The skill, a local MCP tool server, and the 108-case eval that gates it.</p>
+    <p class="lede">The <a href="charge-lookup.html">charge-lookup case</a> proved customers needed account-specific billing explanations. This case shows the successor build: a working read-only agent skill, local MCP tool server, and eval gate, built end to end with an AI pair for the code.</p>
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>Agentic support platform, subscription billing for QuickBooks</dd></div>
@@ -54,6 +54,12 @@
       <div><span class="skim-label">Artifact</span><p>Work-done trace, mock account answer, golden dataset row, and API blocker handling.</p></div>
       <div><span class="skim-label">Proof</span><p>108 eval cases across 13 intent categories; working build on mock data with honest live-data boundary.</p></div>
     </div>
+
+    <div class="case-arc" aria-label="Case arc: target state, build move, proof">
+      <div><span class="visual-label">Target state</span><b>Answer from account data.</b><p>The charge-lookup strategy needed a skill that could read plan, add-ons, promo dates, and recent charges.</p></div>
+      <div><span class="visual-label">Build move</span><b>Decouple eval from API access.</b><p>Live data blocked, so the tool ran in live, eval, and dev modes.</p></div>
+      <div><span class="visual-label">Proof</span><b>Working skill plus gate.</b><p>The build runs on mock data and is covered by 108 cases across 13 intent categories.</p></div>
+    </div>
   </section>
 
   <!-- ================= 01 · background ================= -->
@@ -61,9 +67,8 @@
     <p class="kicker mono part-head"><span class="knum">01</span><span>Background</span></p>
     <h2 id="p1-h">The pivot, the mandate, and my element.</h2>
     <div class="prose">
-      <p>The <a href="charge-lookup.html">charge-lookup case</a> ends where this one begins. To provide a real charge explanation we needed to onboard billing APIs, and by then Intuit was building a unified agentic support experience, center stage in the product. The platform I had been building in was being superseded. We banked on the gains we already produced, and moved on to collaborating with the agent-platform teams, building agents to onboard the billing experience there.</p>
-      <p>At the same time, the company had a mandate that all teams, designers, product managers, managers, also become builders. I found myself in my element with that mandate. I proceeded to understand how the successor agent platform and its experiences worked, and that is how the billing skill was born.</p>
-      <p>I built it myself, end to end, with an AI pair for the code. This case is the build.</p>
+      <p>The <a href="charge-lookup.html">charge-lookup case</a> ends where this one begins: the MVP moved the experience, but the target answer needed billing APIs. By then Intuit was moving support into a unified agentic platform.</p>
+      <p>The company also asked designers, PMs, and managers to become builders. I used that mandate to learn the successor platform and turn the billing answer into a working skill.</p>
     </div>
   </section>
 
@@ -72,10 +77,21 @@
     <p class="kicker mono part-head"><span class="knum">02</span><span>The problem</span></p>
     <h2 id="p2-h">A real answer needs data the agent could not touch.</h2>
     <div class="prose">
-      <p>The target answer from the charge-lookup case names the charge, names what changed, and shows the math. That is a data problem before it is a language problem. To say why a charge changed, the agent has to read the plan, the active add-ons, the promotional dates, and the recent charges, live, for that specific account.</p>
-      <p>The agent could not touch any of it. There was no billing tool for it to call. And without one, every reply is either generic, which is the article problem all over again, or guessed. A guessed number about someone&rsquo;s money is worse than no answer.</p>
+      <p>The target answer has to name the charge, what changed, and the math behind it. That means plan, add-ons, promotional dates, and recent charges for that specific account.</p>
+      <p>The agent had no billing tool to call. Without data, every reply was either generic, the article problem all over again, or guessed. A guessed number about someone&rsquo;s money is worse than no answer.</p>
       <p>So the problem was not writing the reply. It was giving the agent something true to say it with, inside boundaries that hold.</p>
     </div>
+
+    <figure class="architecture-map" aria-label="BillingSkill architecture map: skill, tool, data, eval">
+      <figcaption class="visual-hd mono"><span class="visual-title">Target architecture</span><span>skill behavior backed by tool data</span></figcaption>
+      <ol class="arch-steps">
+        <li><span class="step-no">01</span><b>Skill spec</b><p>When to use, who can receive detail, tone, refusal, and handoff rules.</p><span class="arch-arrow">feeds</span></li>
+        <li><span class="step-no">02</span><b>Lookup tool</b><p>Read-only account data: plan, add-ons, charges, promo state.</p><span class="arch-arrow">grounds</span></li>
+        <li><span class="step-no">03</span><b>Answer behavior</b><p>Explain the charge, show the math, collapse reasoning, never guess.</p><span class="arch-arrow">gated by</span></li>
+        <li><span class="step-no">04</span><b>Eval set</b><p>Scenario, mock data, expected action, and judge criteria per row.</p></li>
+      </ol>
+      <p class="visual-foot">Reconstructed system map. Internal names, tooling details, and account data are omitted.</p>
+    </figure>
   </section>
 
   <!-- ================= 03 · why it mattered ================= -->
@@ -83,8 +99,8 @@
     <p class="kicker mono part-head"><span class="knum">03</span><span>Why it mattered</span></p>
     <h2 id="p3-h">From a roadmap slide to a running agent.</h2>
     <div class="prose">
-      <p>The charge-lookup work proved what customers needed and moved the numbers a shipped MVP could move. What it could not prove, from inside a PRD, was that the target answer was buildable: safe boundaries, real account data, verifiable behavior. A working skill is a different kind of argument. It turns get buy-in into watch it run.</p>
-      <p>And building it myself was the point of the mandate. Decisions about agent behavior are cheap to state and expensive to keep. Owning the build meant every boundary I designed had to survive contact with the code.</p>
+      <p>The PRD proved the target answer was worth pursuing. It could not prove the answer was buildable: safe boundaries, real account data, verifiable behavior.</p>
+      <p>A working skill is a different argument. It turns get buy-in into watch it run, and it forces every behavior decision to survive contact with the code.</p>
     </div>
   </section>
 
@@ -96,6 +112,12 @@
       <p>On the agentic support platform, an experience is a skill: a spec that tells the agent how to behave, backed by tools it can call. So the shape was clear early. A billing skill, and behind it one lookup tool the agent calls for account data. The boundary call came first: the tool is read-only. It can read plans, add-ons, and charges. It cannot change a subscription, and payment capture stays out of the channel entirely.</p>
       <p>Then the wall. Mid-build, the live billing API answered with a permission block, and access sat weeks deep in someone else&rsquo;s queue. I did not wait. I designed the lookup tool with three modes: live for the real API, eval for scenario injection, dev for mock data. Evaluation stopped depending on access. The live mode stayed stubbed behind a documented blocker, and nothing else stopped.</p>
     </div>
+
+    <div class="mode-grid" aria-label="Lookup tool modes">
+      <div><span class="visual-label">Live</span><b>Real API contract</b><p>Reserved for production wiring once the billing data path unblocked.</p></div>
+      <div><span class="visual-label">Eval</span><b>Scenario injection</b><p>Each golden row controls the account data returned to the skill.</p></div>
+      <div><span class="visual-label">Dev</span><b>Mock account data</b><p>Let me design, debug, and demo the behavior without waiting on access.</p></div>
+    </div>
   </section>
 
   <!-- ================= 05 · design decisions ================= -->
@@ -104,6 +126,11 @@
     <h2 id="p5-h">The conversation design itself.</h2>
     <div class="prose">
       <p>Four decisions define the answer. Each one is visible in the recreated conversation in part seven.</p>
+    </div>
+    <div class="decision-board" aria-label="BillingSkill design decisions">
+      <div><span class="visual-label">Customer scan</span><b>Answer first.</b><p>The first sentence names what the charge is and why it changed before showing details.</p></div>
+      <div><span class="visual-label">Trust</span><b>Show work quietly.</b><p>The tool trace is available, but collapsed so the customer is not forced through internal reasoning.</p></div>
+      <div><span class="visual-label">Boundary</span><b>Read, do not change.</b><p>The skill explains and routes. Subscription changes and payment capture stay outside the agent.</p></div>
     </div>
     <ol class="decisions">
       <li>
@@ -160,8 +187,18 @@
     </figure>
 
     <div class="prose">
-      <p class="opens">The eval came with the skill, not after it. Every row in the golden dataset carries a scenario, the mock account data the tool returns, and gating criteria an LLM judge scores. The set started at 33 rows, scoped to subscription charges. Then 55 real production conversations reset the map: cancel intent, price complaints, downgrades. The set grew to 108 cases across 13 intent categories, and the skill grew from an answer engine into an intent router.</p>
+      <p class="opens">The eval came with the skill, not after it. It started at 33 subscription-charge rows, then 55 production conversations reset the map: cancel intent, price complaints, downgrades. The set grew to 108 cases across 13 intent categories.</p>
     </div>
+
+    <figure class="coverage-ladder" aria-label="Eval coverage grew from 33 planned cases to 108 cases across 13 intents">
+      <figcaption class="visual-hd mono"><span class="visual-title">Eval coverage</span><span>planned answer engine to intent router</span></figcaption>
+      <ol class="coverage-steps">
+        <li><span class="step-no">Start</span><b>33 planned rows</b><p>Subscription charge explanations from the original target state.</p><span class="coverage-bar"><span style="--w:31%"></span></span></li>
+        <li><span class="step-no">Evidence</span><b>55 real conversations</b><p>Production examples exposed cancel intent, price complaints, downgrades, and repair paths.</p><span class="coverage-bar"><span style="--w:51%"></span></span></li>
+        <li><span class="step-no">Gate</span><b>108 cases, 13 intents</b><p>The skill became a routed experience, not only a charge explanation.</p><span class="coverage-bar"><span style="--w:100%"></span></span></li>
+      </ol>
+      <p class="visual-foot">The number proves coverage, not business impact. The impact metrics live in the Charge Lookup case.</p>
+    </figure>
 
     <figure class="goldrow" aria-label="One golden dataset row: scenario, mock data, gating criteria, and the judge scores">
       <figcaption class="gr-hd mono"><span>golden row &middot; 1 of 108 &middot; 13 intents</span><span class="gr-mark">judge: 3 of 3 gates pass</span></figcaption>

@@ -55,6 +55,12 @@
       <div><span class="skim-label">Artifact</span><p>Before/after chat, routing trace, and the <a href="#proto">playable target-state billing agent</a>.</p></div>
       <div><span class="skim-label">Decision</span><p>Stop sending customers to pages that show the amount. Keep them in-channel and explain why.</p></div>
     </div>
+
+    <div class="case-arc" aria-label="Case arc: problem, design shift, outcome">
+      <div><span class="visual-label">Problem</span><b>The page showed how much.</b><p>Customers were calling because they needed to know why the charge changed.</p></div>
+      <div><span class="visual-label">Design shift</span><b>Classify the exact billing question.</b><p>Price increase, double charge, unknown charge, and how-much questions each needed a different path.</p></div>
+      <div><span class="visual-label">Outcome</span><b>Containment moved.</b><p>Billing chat containment reached about 61%, with self-help resolution up 12 points.</p></div>
+    </div>
   </section>
 
   <!-- ================= 01 · background ================= -->
@@ -73,12 +79,22 @@
     <p class="kicker mono part-head"><span class="knum">02</span><span>The problem</span></p>
     <h2 id="p2-h">I walked the journey myself.</h2>
     <div class="prose">
-      <p>I typed the questions into the chat experience, the voice experience, the in-product search, and Google, to see what help customers actually got.</p>
-      <p>The self-help path went search bar, then articles, then instructions to open the Billing and Subscription page under Settings. You had to be the account administrator to see it at all. There you saw a breakdown of what you were subscribed to and how much each part cost. How much, but not why. A subscription that had been $228.00 for months shows $288.00 this month, and the page shows the amount with no explanation for the change.</p>
-      <p>The articles also linked to an account lookup tool that lived outside the product and outside the help experience: enter the amount charged to your card and the date, get a breakdown of the charges. Still no why.</p>
-      <p>That was the problem in one line. The page showed how much. Customers were calling to ask why.</p>
-      <p>So customers who wanted an explanation eventually had to call support. Here is what the assistant itself gave them, recreated.</p>
+      <p>I tested the real path myself: chat, voice, in-product search, and Google.</p>
+      <p>The answer kept sending customers to settings, articles, or a card-charge lookup. Each surface could show what was billed. None could explain what changed.</p>
+      <p>A $228 subscription could become $288 and still show no reason. That was the problem: the page showed how much. Customers were calling to ask why.</p>
+      <p>Here is the before state, recreated.</p>
     </div>
+
+    <figure class="journey-map" aria-label="Before journey map: every path shows amount, not explanation">
+      <figcaption class="visual-hd mono"><span class="visual-title">Before journey</span><span>amount visible, reason missing</span></figcaption>
+      <ol class="journey-steps">
+        <li><span class="step-no">01</span><b>Ask support</b><p>The assistant sends the customer toward settings or articles.</p></li>
+        <li><span class="step-no">02</span><b>Open billing</b><p>The page shows plan pieces and charges, but not what changed.</p></li>
+        <li><span class="step-no">03</span><b>Try lookup</b><p>An external lookup can itemize a statement charge, still without the why.</p></li>
+        <li><span class="step-no">04</span><b>Call support</b><p>The expert explains promo dates, seat math, discounts, and options.</p></li>
+      </ol>
+      <p class="visual-foot">Design gap: every self-help step required customer effort, but the actual explanation lived with the expert.</p>
+    </figure>
 
     <div class="mockwrap">
       <div class="mock" role="img" aria-label="Recreated chat: the customer asks about a charge they do not recognize and the assistant replies with text directions to a settings page">
@@ -116,6 +132,13 @@
       <p>Two patterns came straight out of the transcripts. Customers were often caught off guard by a promotional period or discount ending, the subscription snapping back to regular price. And payroll charges confused people: a base subscription plus six dollars for each employee added, so adding employees made the amount go up. They are also the two causes inside the $288.00 example this page follows: a welcome rate that ended, and two team members added.</p>
       <p>The insight, stated plainly: the digital experiences were not personalized, and articles and instructions were not solving the question. To help, the conversational experience had to go beyond self-help articles, toward personalized information and explainability about charges.</p>
     </div>
+
+    <div class="insight-grid" aria-label="Transcript insights that shaped the billing redesign">
+      <div><span class="visual-label">Signal 01</span><b>Promo ended</b><p>Customers were surprised when a welcome rate snapped back to regular price.</p></div>
+      <div><span class="visual-label">Signal 02</span><b>Seats changed</b><p>Payroll charges moved when employees or users were added.</p></div>
+      <div><span class="visual-label">Signal 03</span><b>Tier jump</b><p>Discount extensions and refunds often required a higher support tier.</p></div>
+      <div><span class="visual-label">Signal 04</span><b>Articles failed</b><p>Generic instructions did not answer the customer&rsquo;s actual billing question.</p></div>
+    </div>
   </section>
 
   <!-- ================= 05 · design decisions ================= -->
@@ -124,6 +147,11 @@
     <h2 id="p5-h">Understand the question, keep them in the journey.</h2>
     <div class="prose">
       <p>Three decisions define the redesign. Each one is visible in the shipped conversation in part seven.</p>
+    </div>
+    <div class="decision-board" aria-label="Design decisions and why they mattered">
+      <div><span class="visual-label">Classify</span><b>Question type, not topic.</b><p>One billing intent was too broad. The language model separated lookup, price increase, double charge, and how-much questions.</p></div>
+      <div><span class="visual-label">Keep in flow</span><b>Offer the tool in-channel.</b><p>The assistant stopped sending people away to hunt for a page that still did not explain the change.</p></div>
+      <div><span class="visual-label">Phase it</span><b>Ship useful before perfect.</b><p>The MVP moved the experience while billing APIs onboarded toward account-specific answers.</p></div>
     </div>
     <ol class="decisions">
       <li>
@@ -169,6 +197,17 @@
       <p>From experience I knew API onboarding is a lengthy process. Identify the owners, find out whether the APIs even exist, work out how to onboard them into the chat system. So I wrote a PRD, defined the MVP, and planned the rollout in phases, MVP then v1, v2, v3, improving the existing experience with the minimum required capabilities while the APIs onboarded toward the target state.</p>
       <p>The content strategy came together with the conversation designers: both the voice assistant and chat offer the charge lookup tool with engaging language. The voice assistant switched from offering a self-help article to offering the tool, sent by text or email.</p>
     </div>
+
+    <figure class="roadmap" aria-label="Phased roadmap from shipped MVP to target account-aware answer">
+      <figcaption class="visual-hd mono"><span class="visual-title">Phased PRD</span><span>ship value while data access catches up</span></figcaption>
+      <ol class="roadmap-steps">
+        <li><span class="step-no">MVP</span><b>Classify and offer lookup</b><p>Use existing tool, improve language, keep help in the assistant.</p></li>
+        <li><span class="step-no">V1</span><b>Deeper billing types</b><p>Separate price increase, duplicate charge, unknown charge, and how-much intents.</p></li>
+        <li><span class="step-no">V2</span><b>Account context</b><p>Read plan, add-ons, promo dates, charges, and customer permissions.</p></li>
+        <li><span class="step-no">Target</span><b>Explain and ease</b><p>Answer with the math, then offer a safe next action when one exists.</p></li>
+      </ol>
+      <p class="visual-foot">Product tradeoff: do not wait for the final API shape to improve the current journey.</p>
+    </figure>
   </section>
 
   <!-- ================= 07 · results ================= -->
@@ -214,7 +253,13 @@
     </div>
 
     <div class="prose">
-      <p class="opens">The phased roadmap pointed further than the MVP. This was the target state it was onboarding APIs toward, and it is not a drawing. Here is the agentic prototype I built of that experience, with mock data: the agent plans its work in the open, reads the account, explains the charge in plain terms, and eases it where it can once the customer agrees. The whole conversation is on the page as it stands, and you can press play to watch the agent run through it.</p>
+      <p class="opens">The roadmap pointed beyond the MVP. The target state needed account data: read the plan, explain what changed, and offer a safe next action when one existed. I built that target as a working prototype with mock data.</p>
+    </div>
+
+    <div class="decision-board" aria-label="What shipped versus the target state">
+      <div><span class="visual-label">Shipped MVP</span><b>Classify and route.</b><p>Understands the exact billing question and offers the lookup path inside the assistant.</p></div>
+      <div><span class="visual-label">Target prototype</span><b>Explain with account data.</b><p>Reads plan, add-ons, recent charges, promo dates, and what changed this cycle.</p></div>
+      <div><span class="visual-label">Successor build</span><b>Make the target runnable.</b><p>The next case turns the account-aware answer into a working agent skill with evals.</p></div>
     </div>
 
     <div class="mockwrap">
@@ -292,9 +337,8 @@
     </div>
 
     <div class="prose">
-      <p class="opens">But we knew that to provide a real charge explanation and a personalized experience, we needed to onboard APIs and bring in the specific subscription charges for that account. That is when I hit a roadblock. At that time, teams at Intuit were building a successor agentic support platform that would live outside the help panel, center stage in the product, as the new chat experience customers would interact with. I did not get buy-in from teams to connect and build APIs into the platform I was building in, because that experience was moving to the successor platform.</p>
-      <p>We banked on the gains we already produced, and moved on to collaborating with the agent-platform teams, building agents to onboard the billing experience there.</p>
-      <p>The heart of the target state above, the personalized charge explanation, later became a working build, as an agent skill for the successor platform: the skill reads the account itself and answers this same question, read-only. That is the next case: <a href="billing-skill.html">BillingSkill</a>.</p>
+      <p class="opens">The roadblock was live data. The deeper answer belonged on Intuit&rsquo;s successor agentic support platform, so we banked the MVP gains and moved the billing experience there.</p>
+      <p>The next case turns the prototype&rsquo;s heart, account-aware charge explanation, into a working read-only agent skill with evals: <a href="billing-skill.html">BillingSkill</a>.</p>
     </div>
   </section>
 
