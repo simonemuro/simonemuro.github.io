@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light">
 <meta name="description" content="A payroll agent that reads the account before it speaks, asks only for facts it cannot infer from context, data, or tools, and hands off before it guesses. Case 03.">
 <meta property="og:title" content="Payroll Intelligence &middot; Simone Muro">
-<meta property="og:description" content="Read the account first. Ask exactly once. Hand off before guessing. The diagnostic ground truth behind a payroll agent, and the behavior it produced.">
+<meta property="og:description" content="Read the account first. Ask only for facts the agent cannot infer. Hand off before guessing. The diagnostic ground truth behind a payroll agent, and the behavior it produced.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/payroll-intelligence.html">
 <meta name="twitter:card" content="summary">
@@ -52,46 +52,72 @@
       <div><dt>Results</dt><dd>Payroll conversation quality up 9.8 points in a year, measured by the program&rsquo;s judge</dd></div>
     </dl>
 
-    <div class="lab-hero" aria-label="Public-safe reconstruction of the payroll diagnostic design">
-      <div class="proof-copy">
-        <p class="kicker mono">Diagnostic model</p>
-        <h2>Read the account before the agent speaks.</h2>
-        <p>The work turns expert troubleshooting into a behavior contract: what the agent reads silently, what it may ask, when it must stop, and what context travels to a person.</p>
-        <ul class="snapshot-list">
-          <li><b>Owned</b><span>Framework, generator prompt, golden paths, expert review plan.</span></li>
-          <li><b>Public proof</b><span>Recreated from sanitized examples; raw payroll artifacts stay private.</span></li>
-        </ul>
-      </div>
-      <div class="agent-screen" role="img" aria-label="Public-safe reconstruction of the Intuit Intelligence payroll agent experience">
-        <div class="agent-top mono"><span>Intuit Intelligence</span><span>public-safe reconstruction</span></div>
-        <div class="agent-layout">
-          <aside class="agent-rail" aria-hidden="true">
-            <span class="rail-title">Recent</span>
-            <span class="rail-item active">Missing employee</span>
-            <span class="rail-item">State payroll tax</span>
-            <span class="rail-item">Debit without payment</span>
-          </aside>
-          <div class="agent-main">
-            <div class="agent-question">I ran payroll and Maria is missing. What happened?</div>
-            <div class="agent-chip mono">TID: redacted &middot; tools used</div>
-            <div class="agent-work"><span>Work done</span><b>Checked subscription, employee record, pay schedule, current run, next run.</b></div>
-            <div class="agent-answer">
-              <h3>Maria was added after this pay run was built.</h3>
-              <p>Her setup is active and she appears on the next run. To pay her in this period, the agent needs the one fact it cannot see: what you want to happen now.</p>
-              <div class="agent-table">
-                <span>subscription</span><b>active</b>
-                <span>employee</span><b>active</b>
-                <span>current run</span><b>built before add</b>
+    <div class="journey-map" aria-label="Case study journey">
+      <div><span class="jnum">01</span><b>Before</b><p>Generic answers, customer interviews, and no account-specific diagnosis.</p></div>
+      <div><span class="jnum">02</span><b>Research</b><p>Experts decomposed the top payroll contact drivers into root causes.</p></div>
+      <div><span class="jnum">03</span><b>Decision</b><p>Read retrievable data first. Ask only for customer-held facts.</p></div>
+      <div><span class="jnum">04</span><b>System</b><p>A reusable diagnostic generator turned the behavior into ground truth.</p></div>
+      <div><span class="jnum">05</span><b>Impact</b><p>Quality lift, faster territory coverage, and handoffs with context.</p></div>
+    </div>
+
+    <div class="before-after" aria-label="Before and after experience reconstruction">
+      <figure class="product-screen before-screen" aria-label="Before experience reconstruction">
+        <figcaption><span>before</span><b>Generic, slow, sometimes wrong</b></figcaption>
+        <div class="ii-top" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="ii-msg user">Why are you charging me 3 times monthly?</div>
+        <div class="ii-answer">
+          <p><b>Work done</b></p>
+          <p>Multiple monthly charges can happen for several reasons: multiple subscriptions, mid-billing changes, add-on services, or temporary pre-authorization.</p>
+          <p>Check Settings &gt; Subscriptions and billing to see which charge each service relates to.</p>
+          <a href="#" aria-hidden="true">Billing and subscription</a>
+        </div>
+        <div class="ii-buttons" aria-hidden="true">
+          <span>Show detailed billing charges breakdown</span>
+          <span>Explain charges for additional services</span>
+          <span>Review subscription invoices</span>
+        </div>
+        <div class="failure-stack" aria-label="Before-state failure patterns">
+          <span><b>Generic</b> Lists possible causes instead of using the account.</span>
+          <span><b>Slow</b> Sends the customer to inspect invoices manually.</span>
+          <span><b>Wrong path</b> A similar prompt triggered a Profit and Loss report instead of billing context.</span>
+        </div>
+        <p class="artifact-note">Reconstructed from real Intuit Intelligence before-state screenshots supplied for this portfolio. Interface simplified; customer and account details removed.</p>
+      </figure>
+
+      <figure class="product-screen after-screen" aria-label="After experience reconstruction">
+        <figcaption><span>after</span><b>Account-aware diagnosis</b></figcaption>
+        <div class="agent-screen">
+          <div class="agent-top mono"><span>Intuit Intelligence</span><span>public-safe reconstruction</span></div>
+          <div class="agent-layout">
+            <aside class="agent-rail" aria-hidden="true">
+              <span class="rail-title">Recent</span>
+              <span class="rail-item active">Missing employee</span>
+              <span class="rail-item">State payroll tax</span>
+              <span class="rail-item">Debit without payment</span>
+            </aside>
+            <div class="agent-main">
+              <div class="agent-question">I ran payroll and Maria is missing. What happened?</div>
+              <div class="agent-chip mono">tools used &middot; ids redacted</div>
+              <div class="agent-work"><span>Work done</span><b>Checked subscription, employee record, pay schedule, current run, next run.</b></div>
+              <div class="agent-answer">
+                <h3>Maria was added after this pay run was built.</h3>
+                <p>Her setup is active and she appears on the next run. To pay her in this period, the agent needs the fact it cannot see: what you want to happen now.</p>
+                <div class="agent-table">
+                  <span>subscription</span><b>active</b>
+                  <span>employee</span><b>active</b>
+                  <span>current run</span><b>built before add</b>
+                </div>
               </div>
-            </div>
-            <div class="agent-actions" aria-hidden="true">
-              <span>Pay in this run</span>
-              <span>Next run is fine</span>
-              <span>Bring in expert</span>
+              <div class="agent-actions" aria-hidden="true">
+                <span>Pay in this run</span>
+                <span>Next run is fine</span>
+                <span>Bring in expert</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <p class="artifact-note">Recreated from the payroll diagnostic framework and internal eval screenshots. Names and account data are invented.</p>
+      </figure>
     </div>
   </section>
 
@@ -100,19 +126,38 @@
     <p class="kicker mono part-head"><span class="knum">01</span><span>Background</span></p>
     <h2 id="p1-h">An agent was being built. Its judgment was not.</h2>
     <div class="prose">
-      <p>The payroll team was building an agent for the questions customers bring to payroll support: the missing employee, the filing that looks wrong, the amount that does not match. The topics were chosen deliberately, by call volume, customer pain, and how long an expert spends resolving each one. High traffic, high complexity, and the kind of question an agent could resolve end to end, not just answer.</p>
-      <p>My part sat underneath the agent. A language model asked for payroll knowledge it cannot look up will invent it, confidently, and payroll is exactly the domain where a confident invention hurts someone. So the agent&rsquo;s diagnostic behavior had to be written down as ground truth: what to read, what to ask, when to stop. I designed that behavior and authored the framework that produces it.</p>
-      <p>Manager was my title; the framework had one author. I wrote the generator system prompt, the answer templates, and the pass or fail gates myself, and I held the plan: which territories, in what order, against the deadline. The delivery team I directed drafted the nine troubleshooting territories with the generator and took every draft to the experts. The agent itself, its product vision and its roadmap, belongs to the team that ships it. What I owned is the ground truth for how it diagnoses.</p>
+      <p>The payroll team was building an agent for high-stakes support moments: the missing employee, the filing that looks wrong, the debit that does not match. These topics were selected by call volume, customer pain, and expert handle time.</p>
+      <p>My part sat underneath the product surface. I designed the diagnostic behavior: what the agent reads silently, what it may ask, when it must stop, and what context travels to a person.</p>
+      <p>I authored the generator prompt, the answer templates, and the gates myself, then directed the team using that framework across nine troubleshooting territories. The product roadmap belonged to the shipping team; the ground truth for diagnosis was the thing I owned.</p>
     </div>
   </section>
 
   <!-- ================= 02 · the problem ================= -->
   <section class="wrap part" id="problem" aria-labelledby="p2-h">
     <p class="kicker mono part-head"><span class="knum">02</span><span>The problem</span></p>
-    <h2 id="p2-h">One sentence, six possible causes, and an interrogation.</h2>
+    <h2 id="p2-h">The system could sound helpful while avoiding the real question.</h2>
     <div class="prose">
-      <p>Take the sentence this page follows: my employee is missing from this pay run. Half a dozen root causes wear that one sentence. A subscription lapsed. The employee was made inactive. She is on a different pay schedule. She was added after the run was built. The run is the wrong one. The employee is fine and the customer is looking at the wrong screen.</p>
-      <p>A human expert opens with a long interview, because a human starts blind. The support flows before the agent inherited that interview. Here is the shape of it, recreated.</p>
+      <p>The warning sign was not that the assistant failed loudly. It failed politely. In the before-state billing screenshots, the customer asks what they are paying or why they are being charged multiple times. The assistant lists generic reasons, quotes a typical plan price, sends the customer to Settings, or in one case misunderstands the request and runs a Profit and Loss report about service expenses.</p>
+      <p>Payroll had the same risk with higher stakes. Take the sentence this page follows: my employee is missing from this pay run. Half a dozen root causes wear that one sentence. A subscription lapsed. The employee was made inactive. She is on a different pay schedule. She was added after the run was built. The run is the wrong one. The employee is fine and the customer is looking at the wrong screen.</p>
+      <p>A human expert opens with a long interview because a human starts blind. The agent should not. Here is the payroll version of the old pattern, recreated.</p>
+    </div>
+
+    <div class="failure-board" aria-label="Before experience failure patterns">
+      <div>
+        <span class="mono">billing prompt</span>
+        <b>Why are you charging me three times monthly?</b>
+        <p>Answer gives possible reasons, then asks the customer to inspect invoices.</p>
+      </div>
+      <div>
+        <span class="mono">billing prompt</span>
+        <b>How much am I paying for the service?</b>
+        <p>Answer gives a typical public price, not the account&rsquo;s actual payment.</p>
+      </div>
+      <div>
+        <span class="mono">misfire</span>
+        <b>Same question, wrong tool.</b>
+        <p>The assistant checks a Profit and Loss report and concludes there are no service expenses.</p>
+      </div>
     </div>
 
     <div class="mockwrap">
@@ -133,7 +178,7 @@
     </div>
 
     <div class="prose">
-      <p class="opens">Four questions asked of the customer, and every answer already sits on the account: the employee list, the audit log, the schedule table, the run history. That is the problem in one line. The system interviewed the customer for facts it was already holding.</p>
+      <p class="opens">The old flow asked the customer for facts that already sit on the account: the employee list, the audit log, the schedule table, the run history. That is the problem in one line. The system interviewed the customer for facts it was already holding.</p>
     </div>
   </section>
 
@@ -153,8 +198,8 @@
     <p class="kicker mono part-head"><span class="knum">04</span><span>Exploring solutions</span></p>
     <h2 id="p4-h">The experts, and the fact map that changed the design.</h2>
     <div class="prose">
-      <p>The diagnostic paths had to come from humans. We spent about a week and a half interviewing the people who resolve these calls: support, engineering, the policy team. What questions they ask, in what order, what they rule out, where they stop and send the case up.</p>
-      <p>The insight that shaped everything came out of those interviews. The expert opens with a long interview because a human starts blind. The agent does not. Before its first reply it can read the account. So I mapped, for the missing-employee territory, the six facts that decide the diagnosis, and asked of each one: where does it live?</p>
+      <p>The diagnostic paths had to come from humans. For about a week and a half, we interviewed support, engineering, and policy experts to capture how they ruled cases in and out.</p>
+      <p>The insight that shaped the design came from comparing the expert interview to the agent&rsquo;s advantage. A person starts blind. The agent starts with the account open. So I mapped each deciding fact to the place it lives.</p>
     </div>
 
     <div class="spec-sheet" aria-label="Fact map for the missing employee diagnosis">
@@ -170,6 +215,40 @@
     <div class="prose">
       <p class="opens">Four of the six facts the old flow asked for were already readable. Only two truly belong to the customer. The design conclusion followed directly: do not mimic the expert&rsquo;s question sequence. Read first, then spend questions only on what cannot be retrieved.</p>
       <p>Engineering pushed back on one thing, and it was fair: hand-written root causes for every territory would be a maintenance burden as the agent grew. The answer was to make the framework itself reusable, instructions rather than answers, so each new territory starts from the same machinery instead of a blank page. Part six shows that machinery.</p>
+    </div>
+
+    <div class="research-gallery" aria-label="Source artifacts recreated for public viewing">
+      <figure class="research-card deck-card">
+        <figcaption class="mono">source artifact &middot; craft deck</figcaption>
+        <div class="deck-cover" aria-hidden="true">
+          <span>Payroll agent</span>
+          <b>Experience design companion artifacts</b>
+          <em>behavior guide &middot; context schema &middot; eval dataset &middot; escalation spec</em>
+        </div>
+        <p>The deck translated a messy support domain into working surfaces for product, engineering, and QA.</p>
+      </figure>
+      <figure class="research-card">
+        <figcaption class="mono">source artifact &middot; eval sheet</figcaption>
+        <div class="eval-mini" aria-hidden="true">
+          <span>Case</span><span>Expected skill</span><span>Gate</span>
+          <b>TC-05</b><b>state tax liability</b><b class="warn">partial</b>
+          <b>TC-06</b><b>debit without payment</b><b class="fail">fail</b>
+          <b>TC-07</b><b>setup diagnosis</b><b class="pass">pass</b>
+        </div>
+        <p>The internal sheet scored what the agent did, not only what it said: tool use, root-cause match, escalation quality.</p>
+      </figure>
+      <figure class="research-card decision-card">
+        <figcaption class="mono">design artifact &middot; root-cause map</figcaption>
+        <div class="decision-map" aria-hidden="true">
+          <span class="rc-node main">Missing from run</span>
+          <span class="rc-node">Inactive</span>
+          <span class="rc-node">Wrong schedule</span>
+          <span class="rc-node">Added after build</span>
+          <span class="rc-node">Contractor</span>
+          <span class="rc-node">Setup incomplete</span>
+        </div>
+        <p>One customer sentence became a diagnosis tree. The agent needed the tree before it needed a friendly answer.</p>
+      </figure>
     </div>
   </section>
 
@@ -222,7 +301,7 @@
         <li><span class="t-time" aria-hidden="true">02.1</span><div>cause found &middot; added after the run was built &middot; one fact left: intent</div></li>
         <li><span class="t-time" aria-hidden="true">02.4</span><div>agent: &ldquo;Maria was added after this run was built, so it skipped her. She is already on next week&rsquo;s run. Do you want her paid in this one instead, or is next week fine?&rdquo;</div></li>
         <li><span class="t-time" aria-hidden="true">03.0</span><div>customer: &ldquo;This one, please.&rdquo;</div></li>
-        <li><span class="t-time" aria-hidden="true">03.3</span><div>resolved &middot; questions asked of the customer: one</div></li>
+        <li><span class="t-time" aria-hidden="true">03.3</span><div>resolved &middot; no known-fact questions asked of the customer</div></li>
       </ol>
       <p class="trace-foot">reconstructed from the shipped behavior spec &middot; invented account data &middot; pre-rendered, no live model</p>
     </figure>
@@ -254,7 +333,6 @@ this internal reasoning:
 
 Data Not Retrievable (Must Ask User)
   - Each question MUST have a "Why:" explanation
-  - Limit to 2-5 questions maximum - be selective
   - Only include questions for data that truly cannot be retrieved
 
   - NEVER leave the agent without a clear next action
