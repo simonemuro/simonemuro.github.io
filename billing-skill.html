@@ -39,18 +39,18 @@
       <span>Agentic support platform</span>
     </p>
     <h1 id="case-h">Turning billing anxiety into an account-aware agent prototype.</h1>
-    <p class="lede">I knew the problem from building in QuickBooks Digital Assistant: customers were asking about charges they did not recognize, refunds, cancellations, and pricing, and the assistant could mostly send them to settings. When an internal challenge asked designers, PMs, and managers to become builder powerhouses delivering 3X velocity, AJ Jenkins and I used that real problem space to build BillSkill: a working proof of concept that let the agent read billing context, explain what changed, and route safely when the moment became cancellation or refund risk.</p>
+    <p class="lede">I knew the problem from building in QuickBooks Digital Assistant: customers were asking about charges they did not recognize, refunds, cancellations, and pricing, and the assistant could mostly send them to settings. When an internal challenge asked designers, PMs, and managers to become builder powerhouses delivering 3X velocity, I used that real problem space to build BillSkill: a working proof of concept that let the agent read billing context, explain what changed, and route safely when the moment became cancellation or refund risk.</p>
 
     <dl class="factrow">
       <div><dt>Why this problem</dt><dd>1M+ annual billing, cancel, and refund contacts; low-satisfaction support cluster; clear cost-to-serve and churn risk</dd></div>
-      <div><dt>Role</dt><dd>Conversational AI lead and co-builder with AJ Jenkins &middot; internal hackathon &middot; May 2026</dd></div>
+      <div><dt>Role</dt><dd>Conversational AI lead, designer-builder, and prototype owner &middot; internal hackathon &middot; May 2026</dd></div>
       <div><dt>Research base</dt><dd>DA and expert transcripts, mission-team contact-driver data, before-state screenshots, and controlled prototype tests</dd></div>
       <div><dt>Status</dt><dd>Hackathon proof of concept; local stack with controlled test-account billing data; not a shipped production skill</dd></div>
     </dl>
 
     <div class="journey-map" aria-label="BillingSkill story journey">
       <div><span class="jnum">01</span><b>Known problem</b><p>Billing questions created anxiety because customers could see money leaving, but not why.</p></div>
-      <div><span class="jnum">02</span><b>Bad answer</b><p>The assistant gave generic guidance when customers needed account-specific explanation.</p></div>
+      <div><span class="jnum">02</span><b>Unhelpful answer</b><p>The assistant gave generic guidance when customers needed account-specific explanation.</p></div>
       <div><span class="jnum">03</span><b>Target state</b><p>Use account data to explain charges, then hand off safely for cancel, refund, or plan changes.</p></div>
       <div><span class="jnum">04</span><b>Builder challenge</b><p>Use the hackathon to prove designers could build the agent experience, not only specify it.</p></div>
       <div><span class="jnum">05</span><b>Proof</b><p>Working prototype, human-in-the-loop cancel widget, and 108 eval cases across billing scenarios.</p></div>
@@ -64,7 +64,7 @@
         <ul class="snapshot-list">
           <li><b>Best for</b><span>AI PM, agentic design, model behavior, product design.</span></li>
           <li><b>I owned</b><span>Problem framing, behavior design, skill prompt, local build, test harness, and eval criteria.</span></li>
-          <li><b>Proof</b><span>Built by two designers in three days, tested locally, and gated with 108 eval cases.</span></li>
+          <li><b>Proof</b><span>Built in three days, tested locally, and gated with 108 eval cases.</span></li>
           <li><b>Mandate</b><span>Responded to an internal 3X builder challenge for designers, PMs, and managers.</span></li>
         </ul>
       </div>
@@ -83,13 +83,13 @@
     <h2 id="p1-h">Why billing was worth solving.</h2>
     <div class="prose">
       <p>The billing problem did not start at the hackathon. I had already worked on the Digital Assistant path for Intuit Fees: a high-volume support area where customers asked why they were charged, why the amount changed, how to get a refund, or how to cancel.</p>
-      <p>The business case was not abstract. Billing, cancel, and refund questions represented more than one million annual support contacts in the SMB support data we used. They were also emotionally loaded: customers felt fear, frustration, and loss of control when they saw an unfamiliar charge and could not get a clear explanation.</p>
+      <p>The business case was not abstract. Billing, cancel, and refund questions represented more than one million annual support contacts in the SMB support data I used. They were also emotionally loaded: customers felt fear, frustration, and loss of control when they saw an unfamiliar charge and could not get a clear explanation.</p>
       <p>The first DA MVP could improve classification and point customers to billing history, but it could not answer the deeper question itself. The target state required account-aware agent behavior: read the customer&rsquo;s plan, add-ons, next billing date, and charge history, then explain the why in plain language.</p>
     </div>
 
     <div class="stats" role="list" aria-label="Billing problem signals">
       <div role="listitem"><span class="num">1M+</span><span class="lab">annual billing, cancel, and refund contacts in the support problem space</span></div>
-      <div role="listitem"><span class="num">3 days</span><span class="lab">internal hackathon build by two designers, in response to a 3X builder challenge</span></div>
+      <div role="listitem"><span class="num">3 days</span><span class="lab">internal hackathon build in response to a 3X builder challenge</span></div>
       <div role="listitem"><span class="num">108</span><span class="lab">golden-dataset cases covering admin, non-admin, cancel, handoff, and edge conditions</span></div>
     </div>
   </section>
@@ -129,7 +129,7 @@
     <div class="prose">
       <p>The DA MVP had a pragmatic strategy: classify the customer&rsquo;s billing question better, respond with empathy, and deep-link to billing history while the team worked toward richer data access. That was the right near-term move, but it still left the customer doing the detective work.</p>
       <p>BillSkill was the hackathon answer to the next question: what would it look like if the assistant could actually know the customer? Not in a vague personalization sense, but in a product-safe way: plan, add-ons, billing date, recent charge history, and admin boundaries.</p>
-      <p>The internal prompt was also cultural: designers, PMs, and managers were being challenged to become builders, not only strategists. That made BillingSkill the right kind of proof. We could turn a known roadmap problem into something people could run, inspect, and evaluate.</p>
+      <p>The internal prompt was also cultural: designers, PMs, and managers were being challenged to become builders, not only strategists. That made BillingSkill the right kind of proof. I could turn a known roadmap problem into something people could run, inspect, and evaluate.</p>
       <p>The value of the POC was not that it shipped. It proved the shape of the experience, the tool contract, the handoff boundary, and the eval surface a production team would need to make account-aware billing support real.</p>
     </div>
 
@@ -143,9 +143,9 @@
   <!-- ================= 04 · exploring solutions ================= -->
   <section class="wrap part" id="solutions" aria-labelledby="p4-h">
     <p class="kicker mono part-head"><span class="knum">04</span><span>Exploring solutions</span></p>
-    <h2 id="p4-h">What we built in the hackathon.</h2>
+    <h2 id="p4-h">What I built in the hackathon.</h2>
     <div class="prose">
-      <p>We built a local three-part stack: a billing lookup server, a production-format remote skill definition, and a Streamlit test UI that let us run the agent against a controlled test account. The skill returned account-specific billing facts and used a confirmation widget when the customer wanted to cancel.</p>
+      <p>I built a local three-part stack: a billing lookup server, a production-format remote skill definition, and a Streamlit test UI that let me run the agent against a controlled test account. The skill returned account-specific billing facts and used a confirmation widget when the customer wanted to cancel.</p>
       <p>The cancel widget mattered because cancellation is not only an information request. It is a decision moment. The assistant should not trap the customer, but it should create a measurable save opportunity: connect to a billing specialist, or show self-serve steps if the customer wants to proceed alone.</p>
     </div>
 
@@ -214,7 +214,7 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
       <div class="artifact-copy">
         <span class="visual-label">Prototype evidence</span>
         <h2>I tested it like a builder, not a deck.</h2>
-        <p>We used Cursor to build the local harness, ran it in Streamlit, pointed it at the local agent stack, and tested the hard cases: cancel intent, duplicate-charge confusion, no-thanks fallback, and expert handoff. The raw screenshots include private run metadata, so this is reconstructed with mock IDs.</p>
+        <p>I used Cursor to build the local harness, ran it in Streamlit, pointed it at the local agent stack, and tested the hard cases: cancel intent, duplicate-charge confusion, no-thanks fallback, and expert handoff. The raw screenshots include private run metadata, so this is reconstructed with mock IDs.</p>
         <ul class="artifact-list">
           <li><b>Harness</b><span>Streamlit chat surface with endpoint selection, clear chat, and conversation export.</span></li>
           <li><b>Scenarios</b><span>Cancel subscription, cancel account, why am I charged twice, show me the steps.</span></li>
