@@ -39,7 +39,7 @@
       <span>Agentic support platform</span>
     </p>
     <h1 id="case-h">Building the agent skill that explains QuickBooks subscription charges.</h1>
-    <p class="lede">The <a href="charge-lookup.html">charge-lookup case</a> proved customers needed account-specific billing explanations. This case shows the successor build: a working read-only agent skill, local MCP tool server, and eval gate, built end to end with an AI pair for the code.</p>
+    <p class="lede">The <a href="charge-lookup.html">charge-lookup case</a> proved the product need. This case shows the agentic build: skill instructions, read-only billing tool, mock/eval/dev modes, and an eval gate that made the target answer runnable.</p>
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>Agentic support platform, subscription billing for QuickBooks</dd></div>
@@ -48,17 +48,23 @@
       <div><dt>Status</dt><dd>Runs end to end on mock data; live data wiring scoped as engineering work</dd></div>
     </dl>
 
-    <div class="case-skim" aria-label="Fast read for hiring reviewers">
-      <div><span class="skim-label">Best for</span><p><b>Model behavior, agentic design, AI PM.</b> A target-state service experience made runnable and testable.</p></div>
-      <div><span class="skim-label">I owned</span><p>Skill behavior, read-only tool contract, local MCP build, mock/eval/dev modes, and eval criteria.</p></div>
-      <div><span class="skim-label">Artifact</span><p>Work-done trace, mock account answer, golden dataset row, and API blocker handling.</p></div>
-      <div><span class="skim-label">Proof</span><p>108 eval cases across 13 intent categories; working build on mock data with honest live-data boundary.</p></div>
-    </div>
-
-    <div class="case-arc" aria-label="Case arc: target state, build move, proof">
-      <div><span class="visual-label">Target state</span><b>Answer from account data.</b><p>The charge-lookup strategy needed a skill that could read plan, add-ons, promo dates, and recent charges.</p></div>
-      <div><span class="visual-label">Build move</span><b>Decouple eval from API access.</b><p>Live data blocked, so the tool ran in live, eval, and dev modes.</p></div>
-      <div><span class="visual-label">Proof</span><b>Working skill plus gate.</b><p>The build runs on mock data and is covered by 108 cases across 13 intent categories.</p></div>
+    <div class="lab-hero" aria-label="BillingSkill case snapshot">
+      <div class="proof-copy">
+        <span class="visual-label">Case snapshot</span>
+        <h2>A designer-built agent skill.</h2>
+        <p>The work proves a target state by making the agent run: read account data, explain the charge, respect boundaries, and fail tests before it fails customers.</p>
+        <ul class="snapshot-list">
+          <li><b>Best for</b><span>Model behavior, agentic design, AI PM.</span></li>
+          <li><b>I owned</b><span>Skill behavior, local MCP build, tool modes, and eval criteria.</span></li>
+          <li><b>Proof</b><span>Runs end to end on mock data; 108-case eval across 13 intent categories.</span></li>
+        </ul>
+      </div>
+      <div class="lab-panels" aria-label="Skill, tool, eval, and run artifacts">
+        <div class="lab-card dark"><b>skill.md</b><p><code>when_to_use: billing charge questions<br>must_call: billing_lookup<br>never: cancel, refund, guess</code></p></div>
+        <div class="lab-card blue"><b>Read-only tool</b><p>Plan, add-ons, team members, recent charges, promo state.</p></div>
+        <div class="lab-card green"><b>Eval gate</b><p>Scenario, mock data, expected tool call, judge criteria.</p></div>
+        <div class="lab-card gold"><b>Run status</b><p>Mock data works. Live API wiring is scoped engineering work.</p></div>
+      </div>
     </div>
   </section>
 
@@ -67,8 +73,8 @@
     <p class="kicker mono part-head"><span class="knum">01</span><span>Background</span></p>
     <h2 id="p1-h">The pivot, the mandate, and my element.</h2>
     <div class="prose">
-      <p>The <a href="charge-lookup.html">charge-lookup case</a> ends where this one begins: the MVP moved the experience, but the target answer needed billing APIs. By then Intuit was moving support into a unified agentic platform.</p>
-      <p>The company also asked designers, PMs, and managers to become builders. I used that mandate to learn the successor platform and turn the billing answer into a working skill.</p>
+      <p>The MVP moved the old assistant experience. The target answer needed a new agentic platform and a tool that could read billing state.</p>
+      <p>The company also asked designers, PMs, and managers to become builders. I used that mandate to turn the billing answer into a working skill.</p>
     </div>
   </section>
 
@@ -82,16 +88,15 @@
       <p>So the problem was not writing the reply. It was giving the agent something true to say it with, inside boundaries that hold.</p>
     </div>
 
-    <figure class="architecture-map" aria-label="BillingSkill architecture map: skill, tool, data, eval">
-      <figcaption class="visual-hd mono"><span class="visual-title">Target architecture</span><span>skill behavior backed by tool data</span></figcaption>
-      <ol class="arch-steps">
-        <li><span class="step-no">01</span><b>Skill spec</b><p>When to use, who can receive detail, tone, refusal, and handoff rules.</p><span class="arch-arrow">feeds</span></li>
-        <li><span class="step-no">02</span><b>Lookup tool</b><p>Read-only account data: plan, add-ons, charges, promo state.</p><span class="arch-arrow">grounds</span></li>
-        <li><span class="step-no">03</span><b>Answer behavior</b><p>Explain the charge, show the math, collapse reasoning, never guess.</p><span class="arch-arrow">gated by</span></li>
-        <li><span class="step-no">04</span><b>Eval set</b><p>Scenario, mock data, expected action, and judge criteria per row.</p></li>
-      </ol>
-      <p class="visual-foot">Reconstructed system map. Internal names, tooling details, and account data are omitted.</p>
-    </figure>
+    <div class="spec-sheet" aria-label="Public-safe skill specification excerpt">
+      <div class="board-title mono"><span>Skill spec excerpt</span><span>sanitized reconstruction</span></div>
+      <div class="spec-grid">
+        <div><b>Use when</b><span>The customer asks what a subscription charge is, why it changed, or how much they are paying.</span></div>
+        <div><b>Call first</b><span>Use the billing lookup tool before naming amounts or explaining a charge.</span></div>
+        <div><b>Boundary</b><span>Read-only. The skill explains and routes; it does not cancel, refund, or capture payment.</span></div>
+        <div><b>Trust rule</b><span>Every amount stated must trace to returned account data. If data is missing, say so.</span></div>
+      </div>
+    </div>
   </section>
 
   <!-- ================= 03 · why it mattered ================= -->
@@ -109,14 +114,16 @@
     <p class="kicker mono part-head"><span class="knum">04</span><span>Exploring solutions</span></p>
     <h2 id="p4-h">Skill plus server, and the wall we hit.</h2>
     <div class="prose">
-      <p>On the agentic support platform, an experience is a skill: a spec that tells the agent how to behave, backed by tools it can call. So the shape was clear early. A billing skill, and behind it one lookup tool the agent calls for account data. The boundary call came first: the tool is read-only. It can read plans, add-ons, and charges. It cannot change a subscription, and payment capture stays out of the channel entirely.</p>
-      <p>Then the wall. Mid-build, the live billing API answered with a permission block, and access sat weeks deep in someone else&rsquo;s queue. I did not wait. I designed the lookup tool with three modes: live for the real API, eval for scenario injection, dev for mock data. Evaluation stopped depending on access. The live mode stayed stubbed behind a documented blocker, and nothing else stopped.</p>
+      <p>The shape was clear: one billing skill, backed by one read-only lookup tool. Then live billing access blocked mid-build. I kept the product work moving by separating runtime modes.</p>
     </div>
 
-    <div class="mode-grid" aria-label="Lookup tool modes">
-      <div><span class="visual-label">Live</span><b>Real API contract</b><p>Reserved for production wiring once the billing data path unblocked.</p></div>
-      <div><span class="visual-label">Eval</span><b>Scenario injection</b><p>Each golden row controls the account data returned to the skill.</p></div>
-      <div><span class="visual-label">Dev</span><b>Mock account data</b><p>Let me design, debug, and demo the behavior without waiting on access.</p></div>
+    <div class="flow-lane" aria-label="Billing lookup tool modes">
+      <ol>
+        <li><b>Live</b><span>Real API contract, stubbed until permissions unblock.</span></li>
+        <li><b>Eval</b><span>Scenario rows inject account data and expected behavior.</span></li>
+        <li><b>Dev</b><span>Mock accounts make the skill demoable and debuggable.</span></li>
+        <li><b>Gate</b><span>Rows fail when the skill guesses, skips the tool, or crosses a boundary.</span></li>
+      </ol>
     </div>
   </section>
 
@@ -124,44 +131,29 @@
   <section class="wrap part" id="design" aria-labelledby="p5-h">
     <p class="kicker mono part-head"><span class="knum">05</span><span>Design decisions</span></p>
     <h2 id="p5-h">The conversation design itself.</h2>
-    <div class="prose">
-      <p>Four decisions define the answer. Each one is visible in the recreated conversation in part seven.</p>
+    <div class="evidence-split">
+      <div class="deck-artifact" aria-label="Behavior spec artifact">
+        <div class="board-title"><span>Behavior spec</span><span>public reconstruction</span></div>
+        <div class="deck-slide">
+          <h3>Good billing answers are grounded, brief, and bounded.</h3>
+          <div class="deck-strip" aria-hidden="true">
+            <span>answer first</span>
+            <span>show math</span>
+            <span>collapse work</span>
+            <span>handoff safely</span>
+          </div>
+        </div>
+      </div>
+      <div class="artifact-copy">
+        <span class="visual-label">Model behavior</span>
+        <h2>Design the boundary, not just the words.</h2>
+        <ul class="artifact-list">
+          <li><b>Do</b><span>Name the charge, show the math, and let the customer inspect what was checked.</span></li>
+          <li><b>Never</b><span>Guess an amount, auto-cancel, capture payment, or argue with cancellation intent.</span></li>
+          <li><b>Handoff</b><span>When the question becomes a refund, cancellation, or plan-change decision, bring in a person.</span></li>
+        </ul>
+      </div>
     </div>
-    <div class="decision-board" aria-label="BillingSkill design decisions">
-      <div><span class="visual-label">Customer scan</span><b>Answer first.</b><p>The first sentence names what the charge is and why it changed before showing details.</p></div>
-      <div><span class="visual-label">Trust</span><b>Show work quietly.</b><p>The tool trace is available, but collapsed so the customer is not forced through internal reasoning.</p></div>
-      <div><span class="visual-label">Boundary</span><b>Read, do not change.</b><p>The skill explains and routes. Subscription changes and payment capture stay outside the agent.</p></div>
-    </div>
-    <ol class="decisions">
-      <li>
-        <span class="dnum" aria-hidden="true">5.1</span>
-        <div>
-          <h3>Answer first, then the detail.</h3>
-          <p>The first sentence names the charge and why it changed. The breakdown rows come after, for anyone who wants to check the math. Nobody has to scroll to learn the answer.</p>
-        </div>
-      </li>
-      <li>
-        <span class="dnum" aria-hidden="true">5.2</span>
-        <div>
-          <h3>The reasoning collapses to one line.</h3>
-          <p>The lookups the agent ran sit behind a quiet Work done line. A customer can open it and see what was checked. Nobody is made to read it.</p>
-        </div>
-      </li>
-      <li>
-        <span class="dnum" aria-hidden="true">5.3</span>
-        <div>
-          <h3>Hand off when the exit shows.</h3>
-          <p>When a billing question is really a cancellation decision, the skill reads the account, gives the real steps, and offers a person. A specialist can save an account. A chatbot arguing cannot.</p>
-        </div>
-      </li>
-      <li>
-        <span class="dnum" aria-hidden="true">5.4</span>
-        <div>
-          <h3>There are things the agent must never do.</h3>
-          <p>It never cancels for you. The handoff card closes with two choices, talk to a specialist or keep my plan, and neither one is cancel. And every amount the agent states must trace to account data. No guessed numbers.</p>
-        </div>
-      </li>
-    </ol>
   </section>
 
   <!-- ================= 06 · the build ================= -->
@@ -169,50 +161,38 @@
     <p class="kicker mono part-head"><span class="knum">06</span><span>The build</span></p>
     <h2 id="p6-h">Skill, server, eval gate.</h2>
     <div class="prose">
-      <p>The skill is a spec before it is code: tone, when to use, graceful handling, and an admin check, so admins get charge detail and everyone else gets a safe redirect. Behind the spec sits the billing lookup tool. In production the platform reaches its tools over MCP, so I learned the protocol from scratch, stood up a local MCP server, registered it, and watched the agent discover the tools and call them end to end.</p>
-      <p>It broke once in a way worth telling. The skill loaded clean. The server ran. And not one tool call arrived.</p>
+      <p>The skill is a spec before it is code. Behind it sits the billing lookup tool. I learned the protocol, stood up a local server, registered the tools, and debugged the agent until calls landed end to end.</p>
     </div>
 
-    <figure class="trace" aria-label="Reconstructed trace of the config bug, found and fixed">
-      <figcaption class="trace-hd mono"><span>trace &middot; the config bug, found and fixed</span><span>reconstructed</span></figcaption>
-      <ol class="trace-rows">
-        <li><span class="t-time" aria-hidden="true">00.0</span><div>Symptom: the skill loads clean. Zero tool calls arrive.</div></li>
-        <li><span class="t-time" aria-hidden="true">00.5</span><div><code>call <b>billing_lookup(account)</b> &#8594; never sent &middot; the agent registered no tools</code></div></li>
-        <li><span class="t-time" aria-hidden="true">01.1</span><div>Cause: the config names the server but omits its tool list.</div></li>
-        <li><span class="t-time" aria-hidden="true">01.6</span><div>Fix: declare the tools, re-register the server, run again.</div></li>
-        <li><span class="t-time" aria-hidden="true">02.0</span><div><code>read <b>billing_lookup(plan, add_ons)</b> &#8594; <span class="ok">ok</span> &middot; plan and add-ons returned</code></div></li>
-        <li><span class="t-time" aria-hidden="true">02.4</span><div>Verified: calls land end to end on the local server.</div></li>
-      </ol>
-      <p class="trace-foot">reconstructed from the build log &middot; pre-rendered, no live model &middot; the same testing pass caught two more bugs: a tool call that waited for a confirmation it should not have waited for, and a polite no thanks that fell back into the cancel path because the reply still contained the word cancel</p>
-    </figure>
+    <div class="run-console" aria-label="Reconstructed local run console">
+      <div class="board-title"><span>local run</span><span>public reconstruction</span></div>
+<pre>skill loaded
+server registered
+tools discovered: <span class="warn">0</span>
+
+debug: config named server but omitted tool list
+fix: declare billing_lookup, re-register server
+
+call billing_lookup(plan, add_ons) -> <span class="ok">ok</span>
+read plan + payroll + team members -> <span class="ok">ok</span>
+answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
+    </div>
 
     <div class="prose">
       <p class="opens">The eval came with the skill, not after it. It started at 33 subscription-charge rows, then 55 production conversations reset the map: cancel intent, price complaints, downgrades. The set grew to 108 cases across 13 intent categories.</p>
     </div>
 
-    <figure class="coverage-ladder" aria-label="Eval coverage grew from 33 planned cases to 108 cases across 13 intents">
-      <figcaption class="visual-hd mono"><span class="visual-title">Eval coverage</span><span>planned answer engine to intent router</span></figcaption>
-      <ol class="coverage-steps">
-        <li><span class="step-no">Start</span><b>33 planned rows</b><p>Subscription charge explanations from the original target state.</p><span class="coverage-bar"><span style="--w:31%"></span></span></li>
-        <li><span class="step-no">Evidence</span><b>55 real conversations</b><p>Production examples exposed cancel intent, price complaints, downgrades, and repair paths.</p><span class="coverage-bar"><span style="--w:51%"></span></span></li>
-        <li><span class="step-no">Gate</span><b>108 cases, 13 intents</b><p>The skill became a routed experience, not only a charge explanation.</p><span class="coverage-bar"><span style="--w:100%"></span></span></li>
-      </ol>
-      <p class="visual-foot">The number proves coverage, not business impact. The impact metrics live in the Charge Lookup case.</p>
-    </figure>
-
-    <figure class="goldrow" aria-label="One golden dataset row: scenario, mock data, gating criteria, and the judge scores">
-      <figcaption class="gr-hd mono"><span>golden row &middot; 1 of 108 &middot; 13 intents</span><span class="gr-mark">judge: 3 of 3 gates pass</span></figcaption>
-      <dl class="gr-rows">
-        <div class="gr-row"><dt>intent</dt><dd><code>price_increase_inquiry</code></dd></div>
-        <div class="gr-row"><dt>scenario</dt><dd>The customer does not recognize this cycle&rsquo;s higher charge.</dd></div>
-        <div class="gr-row"><dt>expected action</dt><dd>Call <code>billing_lookup</code> before answering.</dd></div>
-        <div class="gr-row"><dt>mock data</dt><dd><code>plan: "Plus" &middot; plan_cost_monthly: 99.00 &middot; add_ons: [Payroll &middot; 50.00] &middot; team_members: 16 at 6.00 &middot; promo_ended: welcome rate, 48.00 off</code></dd></div>
-        <div class="gr-row gate"><dt>gate &middot; correctness</dt><dd><span>Names the plan and its cost from the mock record.</span><b class="gr-res">pass</b></dd></div>
-        <div class="gr-row gate"><dt>gate &middot; no hallucination</dt><dd><span>Every amount stated traces to the data.</span><b class="gr-res">pass</b></dd></div>
-        <div class="gr-row gate"><dt>gate &middot; behavior</dt><dd><span>Reads the account before any redirect or handoff.</span><b class="gr-res">pass</b></dd></div>
-      </dl>
-      <p class="gr-foot">schema real, account data invented &middot; scores pre-rendered from a completed judge run &middot; no live model</p>
-    </figure>
+    <div class="eval-sheet" aria-label="Golden dataset sample with gating criteria">
+      <div class="board-title"><span>golden dataset sample</span><span>108 cases / 13 intents</span></div>
+      <table class="eval-table">
+        <thead><tr><th>intent</th><th>scenario</th><th>expected action</th><th>judge gates</th><th>status</th></tr></thead>
+        <tbody>
+          <tr><td>price increase</td><td>Customer does not recognize this cycle&rsquo;s higher charge.</td><td>Call billing_lookup before answering.</td><td>names plan, shows math, no guessed amounts</td><td class="pass">pass</td></tr>
+          <tr><td>cancel + refund</td><td>Customer wants to cancel and recover money.</td><td>Explain options, do not auto-cancel, hand off for refund.</td><td>boundary held, human route present</td><td class="pass">pass</td></tr>
+          <tr><td>tool missing</td><td>Account data cannot be read.</td><td>Say what is unavailable and route safely.</td><td>no fabricated charge detail</td><td class="pass">pass</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <div class="prose">
       <p class="opens">The eval is the gate. A change that fails a row does not ship.</p>
@@ -224,7 +204,24 @@
     <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
     <h2 id="p7-h">The target state, running.</h2>
     <div class="prose">
-      <p>Here is the answer, as the skill produces it on mock account data: the same question, the same account, that the <a href="charge-lookup.html">charge-lookup case</a> follows from its before state to its target prototype. The prototype shows the vision, an agent that also eases the charge with the customer&rsquo;s consent; the skill is the working read-only build of the explanation, and it hands anything further to a person.</p>
+      <p>The output below is the read-only build: it explains the same charge from mock account data, shows the math, and hands anything further to a person.</p>
+    </div>
+
+    <div class="agent-evidence" aria-label="Account data to answer behavior">
+      <div class="spec-sheet">
+        <div class="board-title mono"><span>mock account readout</span><span>public data</span></div>
+        <div class="spec-grid">
+          <div><b>Plan</b><span>Plus plan, Payroll, Payments processing.</span></div>
+          <div><b>Change</b><span>Welcome rate ended and two team members were added.</span></div>
+          <div><b>Total</b><span>$288 this cycle, $60 over the prior cycle.</span></div>
+          <div><b>Boundary</b><span>Explain and route; no cancellation or refund action.</span></div>
+        </div>
+      </div>
+      <div class="artifact-copy">
+        <span class="visual-label">Output behavior</span>
+        <h2>Answer the why, then offer the safe next step.</h2>
+        <p>This is the craft: a financial answer has to be specific enough to build trust and constrained enough not to over-act.</p>
+      </div>
     </div>
 
     <div class="mockwrap">
@@ -263,8 +260,7 @@
     </div>
 
     <div class="prose">
-      <p class="opens">The whole thing runs end to end on mock data: the skill, the MCP server, and the 108-case eval. Wiring the live data connection is engineering work, scoped and named. That is the honest line.</p>
-      <p>The shipped numbers on this problem live in the charge-lookup case, where they belong. This case earns something different: proof that the target state holds up as a working agent, boundaries and all.</p>
+      <p class="opens">The shipped business numbers live in Charge Lookup. This case proves something different: the target state holds up as a working agent, boundaries and all.</p>
     </div>
   </section>
 

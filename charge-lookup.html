@@ -40,7 +40,7 @@
       <span>QuickBooks support</span>
     </p>
     <h1 id="case-h">Helping QuickBooks customers understand their subscription charges.</h1>
-    <p class="lede">QuickBooks customers pay a monthly subscription. When a charge changes or looks unfamiliar, they ask support about it, and billing and subscription questions were among the top drivers of support contacts. Everywhere a customer could look, the product, the help articles, the assistant, they could find how much they were charged, never why. The only path to an explanation was a phone call. I redesigned the assistant&rsquo;s side of that conversation so the question got understood and the help stayed in the conversation.</p>
+    <p class="lede">A high-volume billing question had a simple failure: every surface showed customers what they were charged, but not why the amount changed. I redesigned the assistant to classify the exact billing question, keep the customer in the help flow, and point the roadmap toward account-aware answers.</p>
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>The QuickBooks support assistant, chat and voice, subscription billing</dd></div>
@@ -49,17 +49,37 @@
       <div><dt>Results</dt><dd>Voice self-help acceptance 25% to 39%; chat self-help resolution up 12 points; chat containment about 61%</dd></div>
     </dl>
 
-    <div class="case-skim" aria-label="Fast read for hiring reviewers">
-      <div><span class="skim-label">Best for</span><p><b>AI PM, product design, AI experience design.</b> A high-volume support problem turned into a phased product strategy.</p></div>
-      <div><span class="skim-label">I owned</span><p>Discovery, transcript synthesis, the phased PRD, and the assistant behavior strategy.</p></div>
-      <div><span class="skim-label">Artifact</span><p>Before/after chat, routing trace, and the <a href="#proto">playable target-state billing agent</a>.</p></div>
-      <div><span class="skim-label">Decision</span><p>Stop sending customers to pages that show the amount. Keep them in-channel and explain why.</p></div>
-    </div>
-
-    <div class="case-arc" aria-label="Case arc: problem, design shift, outcome">
-      <div><span class="visual-label">Problem</span><b>The page showed how much.</b><p>Customers were calling because they needed to know why the charge changed.</p></div>
-      <div><span class="visual-label">Design shift</span><b>Classify the exact billing question.</b><p>Price increase, double charge, unknown charge, and how-much questions each needed a different path.</p></div>
-      <div><span class="visual-label">Outcome</span><b>Containment moved.</b><p>Billing chat containment reached about 61%, with self-help resolution up 12 points.</p></div>
+    <div class="proof-hero" aria-label="Charge Lookup case snapshot">
+      <div class="proof-copy">
+        <span class="visual-label">Case snapshot</span>
+        <h2>From deflection to explanation.</h2>
+        <p>The work is a product strategy story: find the real customer question, ship the useful slice, and use the prototype to show where the agent should go next.</p>
+        <ul class="snapshot-list">
+          <li><b>Best for</b><span>AI PM, product design, AI experience design.</span></li>
+          <li><b>I owned</b><span>Discovery, transcript synthesis, assistant behavior, and phased PRD.</span></li>
+          <li><b>Result</b><span>Voice self-help acceptance 25% to 39%; billing chat containment about 61%.</span></li>
+        </ul>
+      </div>
+      <div class="phone-gallery" aria-label="Before, shipped, and target-state product moments">
+        <div class="phone-shot alt-a">
+          <div class="phone-top" aria-hidden="true"></div>
+          <span class="phone-kicker">Before</span>
+          <div class="phone-card"><b>Directions, not an answer</b><p>Settings. Articles. Account history. The customer still had to infer what changed.</p></div>
+          <div class="mini-bars" aria-hidden="true"><span></span><span></span><span></span></div>
+        </div>
+        <div class="phone-shot alt-b">
+          <div class="phone-top" aria-hidden="true"></div>
+          <span class="phone-kicker">Shipped MVP</span>
+          <div class="phone-card"><b>Classify and offer lookup</b><p>The assistant recognizes the billing question and offers the charge lookup path in-channel.</p></div>
+          <div class="phone-card"><b>+12 pts</b><p>Self-help resolution lift in chat for billing questions.</p></div>
+        </div>
+        <div class="phone-shot alt-c">
+          <div class="phone-top" aria-hidden="true"></div>
+          <span class="phone-kicker">Target</span>
+          <div class="phone-card"><b>Explain what changed</b><p>Plan, add-ons, promo dates, and recent charges become an account-aware answer.</p></div>
+          <div class="phone-card"><b>Playable prototype</b><p><a href="#proto">Watch the billing agent run.</a></p></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -68,9 +88,8 @@
     <p class="kicker mono part-head"><span class="knum">01</span><span>Background</span></p>
     <h2 id="p1-h">Finding the question worth solving.</h2>
     <div class="prose">
-      <p>I was a Conversational AI Manager on the Conversational AI Experiences team, inside the digital arm of the customer success organization. The organization had a company-wide goal of reducing support contacts, and every team was asked to find where they could move that number.</p>
-      <p>I worked cross functionally with the organization&rsquo;s analysts to identify the top contact drivers. Billing and subscription was one of the top twenty. We kept going, breaking down the topics under that umbrella, using analytics and generative AI to hone in on the top questions customers asked about billing and subscriptions. Charge lookup was one of the high volume topics.</p>
-      <p>Manager was my title; this was not delegated work. I did the discovery myself, typed the questions in myself, pulled the call transcripts myself, ideated the conversation flows, and wrote the phased PRD. The conversation designers on my team wrote the production dialogue with me setting the content strategy and the bar. Where the line between my hands and my direction matters in this story, I say which is which.</p>
+      <p>The organization had a company-wide contact-reduction goal. Billing and subscription was one of the top support drivers, and charge lookup was one of the highest-volume questions inside it.</p>
+      <p>Manager was my title, but this was hands-on work: I tested the journeys, pulled transcripts, synthesized expert behavior, shaped the assistant strategy, and wrote the phased PRD.</p>
     </div>
   </section>
 
@@ -85,16 +104,14 @@
       <p>Here is the before state, recreated.</p>
     </div>
 
-    <figure class="journey-map" aria-label="Before journey map: every path shows amount, not explanation">
-      <figcaption class="visual-hd mono"><span class="visual-title">Before journey</span><span>amount visible, reason missing</span></figcaption>
-      <ol class="journey-steps">
-        <li><span class="step-no">01</span><b>Ask support</b><p>The assistant sends the customer toward settings or articles.</p></li>
-        <li><span class="step-no">02</span><b>Open billing</b><p>The page shows plan pieces and charges, but not what changed.</p></li>
-        <li><span class="step-no">03</span><b>Try lookup</b><p>An external lookup can itemize a statement charge, still without the why.</p></li>
-        <li><span class="step-no">04</span><b>Call support</b><p>The expert explains promo dates, seat math, discounts, and options.</p></li>
+    <div class="flow-lane" aria-label="Before journey: every self-help path shows amount, not reason">
+      <ol>
+        <li><b>Ask support</b><span>The assistant routes to settings or articles.</span></li>
+        <li><b>Open billing</b><span>The page shows subscriptions and charges.</span></li>
+        <li><b>Try lookup</b><span>The statement tool itemizes the amount.</span></li>
+        <li><b>Call expert</b><span>The person explains promo dates, seat math, and options.</span></li>
       </ol>
-      <p class="visual-foot">Design gap: every self-help step required customer effort, but the actual explanation lived with the expert.</p>
-    </figure>
+    </div>
 
     <div class="mockwrap">
       <div class="mock" role="img" aria-label="Recreated chat: the customer asks about a charge they do not recognize and the assistant replies with text directions to a settings page">
@@ -117,9 +134,14 @@
   <section class="wrap part" id="why" aria-labelledby="p3-h">
     <p class="kicker mono part-head"><span class="knum">03</span><span>Why it mattered</span></p>
     <h2 id="p3-h">Calls that ended in downgrades and cancellations.</h2>
-    <div class="prose">
-      <p>The supportability teams, the people taking the phone calls, confirmed it: customers called because they wanted an explanation. Some of those calls turned into downgrades or cancellations.</p>
-      <p>And billing and subscription calls transferred the most internally, tier two to tier three, because customers asked for discount extensions or refunds that only a higher tier could approve. The most expensive kind of call, on one of the highest volume topics: about 800,000 billing and subscription support contacts a year.</p>
+    <div class="evidence-split">
+      <div class="prose">
+        <p>The supportability teams confirmed the core pattern: customers called because they wanted an explanation. Some calls turned into downgrades or cancellations, and many transferred internally when discount extensions or refunds required a higher tier.</p>
+      </div>
+      <div class="impact-panel" aria-label="Business scale and outcome context">
+        <div><span class="big">~800K</span><span class="label">annual billing and subscription support contacts</span></div>
+        <div><span class="big">Top 20</span><span class="label">company contact-reduction driver</span></div>
+      </div>
     </div>
   </section>
 
@@ -127,17 +149,25 @@
   <section class="wrap part" id="solutions" aria-labelledby="p4-h">
     <p class="kicker mono part-head"><span class="knum">04</span><span>Exploring solutions</span></p>
     <h2 id="p4-h">Transcripts, and how the experts actually did it.</h2>
-    <div class="prose">
-      <p>I interviewed the supportability teams and pulled real transcripts: phone conversations with experts, and the live support chat channels, not the AI chat. Partly to validate why customers called. Mostly to learn how the experts actually handled it: what solutions they found, what questions they asked, what the outcomes were.</p>
-      <p>Two patterns came straight out of the transcripts. Customers were often caught off guard by a promotional period or discount ending, the subscription snapping back to regular price. And payroll charges confused people: a base subscription plus six dollars for each employee added, so adding employees made the amount go up. They are also the two causes inside the $288.00 example this page follows: a welcome rate that ended, and two team members added.</p>
-      <p>The insight, stated plainly: the digital experiences were not personalized, and articles and instructions were not solving the question. To help, the conversational experience had to go beyond self-help articles, toward personalized information and explainability about charges.</p>
-    </div>
-
-    <div class="insight-grid" aria-label="Transcript insights that shaped the billing redesign">
-      <div><span class="visual-label">Signal 01</span><b>Promo ended</b><p>Customers were surprised when a welcome rate snapped back to regular price.</p></div>
-      <div><span class="visual-label">Signal 02</span><b>Seats changed</b><p>Payroll charges moved when employees or users were added.</p></div>
-      <div><span class="visual-label">Signal 03</span><b>Tier jump</b><p>Discount extensions and refunds often required a higher support tier.</p></div>
-      <div><span class="visual-label">Signal 04</span><b>Articles failed</b><p>Generic instructions did not answer the customer&rsquo;s actual billing question.</p></div>
+    <div class="evidence-split">
+      <div class="transcript-board" aria-label="Transcript synthesis board">
+        <div class="board-title"><span>Transcript synthesis</span><span>public reconstruction</span></div>
+        <div class="sticky-grid">
+          <div class="sticky"><b>Promo ended</b><span>Customer saw a larger charge after a welcome rate expired.</span></div>
+          <div class="sticky"><b>Seats changed</b><span>Payroll math changed when employees or users were added.</span></div>
+          <div class="sticky"><b>Tier jump</b><span>Discount extensions and refunds often needed a higher support tier.</span></div>
+          <div class="sticky"><b>Article gap</b><span>Generic instructions showed where to look, not what changed.</span></div>
+        </div>
+      </div>
+      <div class="artifact-copy">
+        <span class="visual-label">Research move</span>
+        <h2>Use expert calls as design material.</h2>
+        <p>I pulled phone and live-chat transcripts to learn how experts actually solved the problem: what they checked, what they explained, and what next step they offered.</p>
+        <ul class="artifact-list">
+          <li><b>Input</b><span>Expert transcripts, live support chat, self-help journey audit.</span></li>
+          <li><b>Output</b><span>Question types, response strategy, phased PRD.</span></li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -145,37 +175,29 @@
   <section class="wrap part" id="design" aria-labelledby="p5-h">
     <p class="kicker mono part-head"><span class="knum">05</span><span>Design decisions</span></p>
     <h2 id="p5-h">Understand the question, keep them in the journey.</h2>
-    <div class="prose">
-      <p>Three decisions define the redesign. Each one is visible in the shipped conversation in part seven.</p>
+    <div class="evidence-split">
+      <div class="deck-artifact" aria-label="Reconstructed PRD decision slide">
+        <div class="board-title"><span>PRD decision slide</span><span>public reconstruction</span></div>
+        <div class="deck-slide">
+          <h3>One billing topic is not one customer question.</h3>
+          <div class="deck-strip" aria-hidden="true">
+            <span>price increase</span>
+            <span>unknown charge</span>
+            <span>double charge</span>
+            <span>how much</span>
+          </div>
+        </div>
+      </div>
+      <div class="artifact-copy">
+        <span class="visual-label">Product call</span>
+        <h2>Ship the useful slice.</h2>
+        <p>The target answer needed billing APIs. The MVP did not wait for them: classify the question better, stop sending customers to articles, and offer the existing lookup tool inside the assistant.</p>
+        <ul class="artifact-list">
+          <li><b>Now</b><span>Hybrid NLU + language model routing.</span></li>
+          <li><b>Next</b><span>Account-aware explanation once billing data is available.</span></li>
+        </ul>
+      </div>
     </div>
-    <div class="decision-board" aria-label="Design decisions and why they mattered">
-      <div><span class="visual-label">Classify</span><b>Question type, not topic.</b><p>One billing intent was too broad. The language model separated lookup, price increase, double charge, and how-much questions.</p></div>
-      <div><span class="visual-label">Keep in flow</span><b>Offer the tool in-channel.</b><p>The assistant stopped sending people away to hunt for a page that still did not explain the change.</p></div>
-      <div><span class="visual-label">Phase it</span><b>Ship useful before perfect.</b><p>The MVP moved the experience while billing APIs onboarded toward account-specific answers.</p></div>
-    </div>
-    <ol class="decisions">
-      <li>
-        <span class="dnum" aria-hidden="true">5.1</span>
-        <div>
-          <h3>Disambiguate the question, not just the topic.</h3>
-          <p>A price increase, a double charge or a perceived double charge, a charge they do not understand, and simply how much am I paying are different questions, and they need different responses. The assistant had to figure out which one it was hearing before it answered.</p>
-        </div>
-      </li>
-      <li>
-        <span class="dnum" aria-hidden="true">5.2</span>
-        <div>
-          <h3>Keep the customer in the help journey.</h3>
-          <p>Stop linking self-help articles. The lookup tool already existed; the redesign offered it inside the assistant window instead of sending the customer outside to do it alone.</p>
-        </div>
-      </li>
-      <li>
-        <span class="dnum" aria-hidden="true">5.3</span>
-        <div>
-          <h3>Go hybrid: NLU plus a language model.</h3>
-          <p>The platform was NLU based, and NLU intents struggle with nuance: one billing intent cannot tell a lookup from an explanation from a how-much question. So the NLU processes the initial question, and a language model classifies the exact type and puts the customer in the right bucket.</p>
-        </div>
-      </li>
-    </ol>
 
     <figure class="trace" aria-label="Simplified flow: how one billing question gets routed by the hybrid classifier">
       <figcaption class="trace-hd mono"><span>flow &middot; one question, routed</span><span>simplified</span></figcaption>
@@ -193,21 +215,18 @@
     <p class="kicker mono part-head"><span class="knum">06</span><span>The build</span></p>
     <h2 id="p6-h">A phased PRD, because APIs take time.</h2>
     <div class="prose">
-      <p>Full personalization needed the assistant connected to billing APIs: billing and payment history, amounts, promotional periods, discounts and their dates. Data a system could read and reason about.</p>
-      <p>From experience I knew API onboarding is a lengthy process. Identify the owners, find out whether the APIs even exist, work out how to onboard them into the chat system. So I wrote a PRD, defined the MVP, and planned the rollout in phases, MVP then v1, v2, v3, improving the existing experience with the minimum required capabilities while the APIs onboarded toward the target state.</p>
-      <p>The content strategy came together with the conversation designers: both the voice assistant and chat offer the charge lookup tool with engaging language. The voice assistant switched from offering a self-help article to offering the tool, sent by text or email.</p>
+      <p>Full personalization needed billing APIs. I scoped the roadmap so the team could ship a better experience before that dependency landed, then absorb account data phase by phase.</p>
     </div>
 
-    <figure class="roadmap" aria-label="Phased roadmap from shipped MVP to target account-aware answer">
-      <figcaption class="visual-hd mono"><span class="visual-title">Phased PRD</span><span>ship value while data access catches up</span></figcaption>
-      <ol class="roadmap-steps">
-        <li><span class="step-no">MVP</span><b>Classify and offer lookup</b><p>Use existing tool, improve language, keep help in the assistant.</p></li>
-        <li><span class="step-no">V1</span><b>Deeper billing types</b><p>Separate price increase, duplicate charge, unknown charge, and how-much intents.</p></li>
-        <li><span class="step-no">V2</span><b>Account context</b><p>Read plan, add-ons, promo dates, charges, and customer permissions.</p></li>
-        <li><span class="step-no">Target</span><b>Explain and ease</b><p>Answer with the math, then offer a safe next action when one exists.</p></li>
-      </ol>
-      <p class="visual-foot">Product tradeoff: do not wait for the final API shape to improve the current journey.</p>
-    </figure>
+    <div class="roadmap-board" aria-label="Phased PRD roadmap">
+      <div class="board-title mono"><span>Phased PRD</span><span>ship value while data access catches up</span></div>
+      <div class="roadmap-swimlane">
+        <div><span>MVP</span><b>Classify and offer lookup</b><p>Use the existing lookup tool, rewrite the assistant offer, keep the customer in-channel.</p></div>
+        <div><span>V1</span><b>Separate question types</b><p>Price increase, duplicate charge, unknown charge, and how-much routes.</p></div>
+        <div><span>V2</span><b>Read account context</b><p>Plan, add-ons, promo dates, charges, permissions.</p></div>
+        <div><span>Target</span><b>Explain and ease</b><p>Show the math and offer a safe next action when one exists.</p></div>
+      </div>
+    </div>
   </section>
 
   <!-- ================= 07 · results ================= -->
@@ -215,7 +234,7 @@
     <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
     <h2 id="p7-h">What shipped, what it moved, and the real ending.</h2>
     <div class="prose">
-      <p>Here is the shipped MVP, recreated. Same question. The assistant now understands which billing question it is hearing and offers the lookup tool without sending the customer away.</p>
+      <p>Same customer question, shipped MVP. The assistant now understands the billing question and offers the lookup tool without sending the customer away.</p>
     </div>
 
     <div class="mockwrap">
@@ -242,8 +261,7 @@
     </div>
 
     <div class="prose">
-      <p class="opens">The improvement, stated plainly. Before, the assistant answered this question with directions: go to Settings, open Billing and Subscription, check your history. The customer left the conversation to go find a page that would only show them the amount again. Now the assistant acknowledges the worry, understands which billing question it is hearing, and hands the customer the tool that actually answers it, with language that invites them to use it.</p>
-      <p>Those updates alone moved both channels.</p>
+      <p class="opens">Those updates moved both channels.</p>
     </div>
 
     <div class="stats" role="list" aria-label="Measured outcomes">
@@ -254,12 +272,6 @@
 
     <div class="prose">
       <p class="opens">The roadmap pointed beyond the MVP. The target state needed account data: read the plan, explain what changed, and offer a safe next action when one existed. I built that target as a working prototype with mock data.</p>
-    </div>
-
-    <div class="decision-board" aria-label="What shipped versus the target state">
-      <div><span class="visual-label">Shipped MVP</span><b>Classify and route.</b><p>Understands the exact billing question and offers the lookup path inside the assistant.</p></div>
-      <div><span class="visual-label">Target prototype</span><b>Explain with account data.</b><p>Reads plan, add-ons, recent charges, promo dates, and what changed this cycle.</p></div>
-      <div><span class="visual-label">Successor build</span><b>Make the target runnable.</b><p>The next case turns the account-aware answer into a working agent skill with evals.</p></div>
     </div>
 
     <div class="mockwrap">
