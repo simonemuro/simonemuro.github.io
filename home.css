@@ -139,13 +139,6 @@ body.home-lite .proof-top{
   border-bottom:1px solid var(--hair);
 }
 
-body.home-lite .proof-top img{
-  width:64px;
-  height:64px;
-  object-fit:cover;
-  filter:saturate(.9);
-}
-
 body.home-lite .proof-top p{color:var(--sub);margin:0 0 4px;}
 body.home-lite .proof-top h2{font-size:1.55rem;max-width:none;margin:0;}
 
@@ -821,7 +814,6 @@ body.home-lite .footer{border-top:1px solid var(--hair);}
   body.home-lite .mock-cap{display:none;}
   body.home-lite .proof-stat{padding:14px;}
   body.home-lite .stat-copy{font-size:.92rem;}
-  body.home-lite .proof-top img{width:54px;height:54px;}
   body.home-lite .case-feature{padding:12px;}
   body.home-lite .case-visual{min-height:260px;}
   body.home-lite .contact-actions .button,
