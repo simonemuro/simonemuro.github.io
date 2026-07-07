@@ -829,9 +829,10 @@ body.home-lite .contact-lite{
 body.home-lite .contact-lite h2{max-width:20ch;}
 body.home-lite .artifact-note{
   color:var(--sub);
-  max-width:70ch;
-  line-height:1.48;
-  margin-top:28px;
+  max-width:52ch;
+  font-size:.82rem;
+  line-height:1.45;
+  margin-top:22px;
 }
 
 body.home-lite .footer{border-top:1px solid var(--hair);}
