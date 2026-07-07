@@ -500,7 +500,6 @@ body.home-lite .stat-copy{
   line-height:1.35;
 }
 
-body.home-lite .router,
 body.home-lite .work,
 body.home-lite .about,
 body.home-lite .method,
@@ -527,23 +526,6 @@ body.home-lite .section-lede{
   line-height:1.48;
   margin:0;
 }
-
-body.home-lite .router-grid{
-  display:grid;
-  grid-template-columns:repeat(5,minmax(0,1fr));
-  gap:1px;
-  background:var(--hair);
-  border:1px solid var(--hair);
-}
-
-body.home-lite .route-card{
-  background:var(--card);
-  min-height:178px;
-  padding:18px;
-}
-
-body.home-lite .route-tag{display:block;color:var(--accent);margin-bottom:18px;}
-body.home-lite .route-card p{color:var(--sub);line-height:1.42;margin:0;}
 
 body.home-lite .case-stack{display:grid;gap:22px;}
 
@@ -784,7 +766,6 @@ body.home-lite .footer{border-top:1px solid var(--hair);}
   }
   body.home-lite h1{max-width:12ch;}
   body.home-lite .proof-strip,
-  body.home-lite .router-grid,
   body.home-lite .method-steps{
     grid-template-columns:repeat(2,minmax(0,1fr));
   }
@@ -806,7 +787,6 @@ body.home-lite .footer{border-top:1px solid var(--hair);}
   body.home-lite h1{font-size:clamp(2.35rem,11vw,3rem);max-width:none;}
   body.home-lite h2{font-size:clamp(2rem,11vw,2.7rem);}
   body.home-lite .hero-simple,
-  body.home-lite .router,
   body.home-lite .work,
   body.home-lite .about,
   body.home-lite .method,
@@ -826,7 +806,6 @@ body.home-lite .footer{border-top:1px solid var(--hair);}
     padding-inline:8px;
     font-size:.58rem;
   }
-  body.home-lite .router-grid,
   body.home-lite .method-steps,
   body.home-lite .case-proof{
     grid-template-columns:1fr;
