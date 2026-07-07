@@ -1173,6 +1173,50 @@ body.v5 .run-console pre{
 body.v5 .run-console .ok{color:#9ad69d;}
 body.v5 .run-console .warn{color:#f4cb76;}
 
+body.v5 .debug-grid{
+  max-width:1120px;
+  margin:clamp(28px,5vh,52px) 0 0;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(18px,3vw,28px);
+}
+
+body.v5 .debug-card{
+  border:1px solid var(--hair);
+  background:#fffdf7;
+  padding:clamp(20px,3vw,30px);
+}
+
+body.v5 .debug-card h3{
+  margin:10px 0 12px;
+  font-family:var(--display);
+  font-weight:400;
+  font-size:clamp(1.6rem,2.8vw,2.2rem);
+  line-height:1.05;
+}
+
+body.v5 .debug-card p{
+  margin:14px 0 0;
+  color:var(--muted);
+  line-height:1.5;
+}
+
+body.v5 .bad-output{
+  margin-top:18px;
+  border:1px solid var(--hair);
+  background:#f8f1e6;
+  padding:14px 16px;
+  color:#4b4338;
+  font-size:.72rem;
+  line-height:1.7;
+}
+
+body.v5 .prompt-quote{
+  border-left:3px solid var(--accent);
+  padding-left:16px;
+  color:var(--ink);
+}
+
 body.v5 .prototype-lab{
   max-width:1120px;
   margin:clamp(34px,6vh,58px) 0 0;
@@ -1901,6 +1945,7 @@ body.v5 .footer a:hover{color:var(--accent);}
   body.v5 .evidence-split,
   body.v5 .agent-evidence,
   body.v5 .before-after,
+  body.v5 .debug-grid,
   body.v5 .prototype-lab{grid-template-columns:1fr;}
   body.v5 .journey-map{grid-template-columns:repeat(3,minmax(0,1fr));}
   body.v5 .journey-map > div:nth-child(4){border-left:0;border-top:1px solid var(--hair);}

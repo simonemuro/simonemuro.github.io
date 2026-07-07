@@ -69,7 +69,7 @@
         </ul>
       </div>
       <div class="lab-panels" aria-label="Skill, tool, eval, and run artifacts">
-        <div class="lab-card dark"><b>skill.md</b><p><code>when_to_use: billing charge questions<br>must_call: billing_lookup<br>never: cancel, refund, guess</code></p></div>
+        <div class="lab-card dark"><b>Behavior rules</b><p><code>answer from account facts<br>explain before acting<br>route high-risk changes to a person</code></p></div>
         <div class="lab-card blue"><b>Read-only tool</b><p>Plan, add-ons, team members, recent charges, promo state.</p></div>
         <div class="lab-card green"><b>Eval gate</b><p>Scenario, mock data, expected tool call, judge criteria.</p></div>
         <div class="lab-card gold"><b>Run status</b><p>Local POC works against controlled test data. Production hardening remained future work.</p></div>
@@ -232,7 +232,7 @@
           <h3>Good billing answers are grounded, brief, and bounded.</h3>
           <div class="deck-strip" aria-hidden="true">
             <span>answer first</span>
-            <span>show math</span>
+            <span>explain math</span>
             <span>collapse work</span>
             <span>handoff safely</span>
           </div>
@@ -242,8 +242,8 @@
         <span class="visual-label">Model behavior</span>
         <h2>Design the boundary, not just the words.</h2>
         <ul class="artifact-list">
-          <li><b>Do</b><span>Name the charge, show the math, and let the customer inspect what was checked.</span></li>
-          <li><b>Never</b><span>Guess an amount, auto-cancel, capture payment, or argue with cancellation intent.</span></li>
+          <li><b>Do</b><span>Name the charge, explain the calculation in plain language, and let the customer inspect what was checked.</span></li>
+          <li><b>Never</b><span>Guess an amount, auto-cancel, capture payment, or suggest downgrade based on price alone.</span></li>
           <li><b>Handoff</b><span>When the question becomes a refund, cancellation, or plan-change decision, bring in a person.</span></li>
         </ul>
       </div>
@@ -256,6 +256,7 @@
     <h2 id="p6-h">Skill, server, eval gate.</h2>
     <div class="prose">
       <p>The skill is a spec before it is code. Behind it sits the billing lookup tool. I learned the protocol, stood up a local server, registered the tools, and debugged the agent until calls landed end to end.</p>
+      <p>The real work was not making the demo look convincing. It was catching the moments where the model sounded helpful but crossed the product boundary.</p>
     </div>
 
     <div class="run-console" aria-label="Reconstructed local run console">
@@ -272,11 +273,36 @@ read plan + payroll + team members -> <span class="ok">ok</span>
 answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
     </div>
 
+    <div class="debug-grid" aria-label="Model behavior fixes from local BillingSkill testing">
+      <article class="debug-card">
+        <span class="visual-label">Model behavior bug</span>
+        <h3>Formula leak</h3>
+        <p>The local run exposed raw pricing logic in the customer-facing answer. Instead of saying the payroll add-on was 75 dollars, the response showed calculation syntax in the table details.</p>
+        <div class="bad-output mono" aria-label="Example of raw formula leakage">
+          Payroll Core · 75 dollars · 45base + 6 x 5 employees<br>
+          Time Premium · 50 dollars · 20base + 10 x 3 users
+        </div>
+        <p class="prompt-quote">Design correction: customer-facing answers needed plain-language totals, not raw pricing logic or calculation syntax.</p>
+      </article>
+      <article class="debug-card">
+        <span class="visual-label">Boundary bug</span>
+        <h3>Unsafe downgrade advice</h3>
+        <p>A price-pressure test turned into cost-reduction advice. The agent suggested a downgrade even though plan changes can remove features, break workflows, affect add-ons, and create business risk.</p>
+        <div class="bad-output mono" aria-label="Example of unsafe downgrade behavior">
+          Steps to lower your subscription cost<br>
+          1. Review add-ons and user counts<br>
+          2. Consider downgrading your plan<br>
+          3. Remove unused add-ons
+        </div>
+        <p class="prompt-quote">Design correction: informational billing questions should explain the bill. Cost-saving or plan-change paths belong to an explicit customer request or a specialist conversation.</p>
+      </article>
+    </div>
+
     <div class="prototype-lab" aria-label="Public-safe reconstruction of the local Streamlit billing prototype test harness">
       <div class="artifact-copy">
         <span class="visual-label">Prototype evidence</span>
         <h2>I tested the build, not the deck.</h2>
-        <p>I used Cursor to build the local harness, ran it in Streamlit, pointed it at the local agent stack, and tested the hard cases: unfamiliar charge, changed amount, cancel intent, no-thanks fallback, and expert handoff. The raw screenshots include private run metadata, so this is reconstructed with mock IDs.</p>
+        <p>I used Cursor and the model as build partners, then treated every generated behavior as something to verify. I ran the local harness in Streamlit, pointed it at the agent stack, and tested the hard cases: unfamiliar charge, changed amount, cancel intent, no-thanks fallback, and expert handoff. The raw screenshots include private run metadata, so this is reconstructed with mock IDs.</p>
         <ul class="artifact-list">
           <li><b>Harness</b><span>Streamlit chat surface with endpoint selection, clear chat, and conversation export.</span></li>
           <li><b>Scenarios</b><span>Unrecognized charge, changed amount, cancel subscription, cancel account, show me the steps.</span></li>
@@ -332,7 +358,7 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
       <table class="eval-table">
         <thead><tr><th>intent</th><th>scenario</th><th>expected action</th><th>judge gates</th><th>status</th></tr></thead>
         <tbody>
-          <tr><td>price increase</td><td>Customer does not recognize this cycle&rsquo;s higher charge.</td><td>Call billing_lookup before answering.</td><td>names plan, shows math, no guessed amounts</td><td class="pass">pass</td></tr>
+          <tr><td>price increase</td><td>Customer does not recognize this cycle&rsquo;s higher charge.</td><td>Call billing_lookup before answering.</td><td>names plan, explains math, no guessed amounts</td><td class="pass">pass</td></tr>
           <tr><td>cancel + refund</td><td>Customer wants to cancel and recover money.</td><td>Explain options, do not auto-cancel, hand off for refund.</td><td>boundary held, human route present</td><td class="pass">pass</td></tr>
           <tr><td>tool missing</td><td>Account data cannot be read.</td><td>Say what is unavailable and route safely.</td><td>no fabricated charge detail</td><td class="pass">pass</td></tr>
         </tbody>
@@ -349,7 +375,7 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
     <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
     <h2 id="p7-h">The target state, running.</h2>
     <div class="prose">
-      <p>The output below is a public reconstruction of the read-only build: it explains a charge from account-style data, shows the math, and hands anything further to a person. The actual hackathon run used a controlled test account; the business name and amounts here are invented.</p>
+      <p>The output below is a public reconstruction of the read-only build: it explains a charge from account-style data, shows the calculation in plain English, and hands anything further to a person. The actual hackathon run used a controlled test account; the business name and amounts here are invented.</p>
     </div>
 
     <div class="agent-evidence" aria-label="Account data to answer behavior">
@@ -387,10 +413,10 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
               <div class="m-row" role="row"><span class="rlab" role="cell"><b>Payments processing</b><span class="rsub">card fees this month</span></span><span class="ramt" role="cell">$43.00</span></div>
               <div class="m-row total" role="row"><span class="rlab" role="cell">Total this cycle</span><span class="ramt" role="cell">$288.00</span></div>
             </div>
-            <p>If you did not add those team members, or you want to look at your options, I can bring in a person.</p>
+            <p>If you did not add those team members, or this still does not look right, I can bring in a person.</p>
             <div class="m-handoff">
               <p class="hff-t">Review this charge with a specialist</p>
-              <p class="hff-p">A billing specialist can walk through this charge and your plan options with you.</p>
+              <p class="hff-p">A billing specialist can walk through this charge and the safest next step with you.</p>
               <div class="m-actions">
                 <span class="m-btn primary">Talk to a specialist</span>
                 <span class="m-btn ghost">Keep my plan</span>
