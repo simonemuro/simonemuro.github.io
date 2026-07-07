@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="A payroll agent that reads the account before it speaks, asks exactly one question, and hands off before it guesses. The diagnostic ground truth behind it, and the ten-day sprint that delivered it. Case 03.">
+<meta name="description" content="A payroll agent that reads the account before it speaks, asks only for facts it cannot infer from context, data, or tools, and hands off before it guesses. Case 03.">
 <meta property="og:title" content="Payroll Intelligence &middot; Simone Muro">
 <meta property="og:description" content="Read the account first. Ask exactly once. Hand off before guessing. The diagnostic ground truth behind a payroll agent, and the behavior it produced.">
 <meta property="og:type" content="article">
@@ -43,7 +43,7 @@
       <span>Agentic support platform</span>
     </p>
     <h1 id="case-h">Designing the diagnostic behavior of the QuickBooks payroll agent.</h1>
-    <p class="lede">A payroll agent was being built for high-stakes support moments: missing employees, failed filings, pay runs that looked wrong. I designed the diagnostic behavior behind it: read the account first, ask exactly once, and hand off before guessing.</p>
+    <p class="lede">A payroll agent was being built for high-stakes support moments: missing employees, failed filings, pay runs that looked wrong. I designed the diagnostic behavior behind it: read the account first, ask only for facts the system cannot infer from context, data, or tools, and hand off before guessing.</p>
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>The QuickBooks payroll agent on a successor agentic support platform, troubleshooting conversations</dd></div>
@@ -62,11 +62,35 @@
           <li><b>Public proof</b><span>Recreated from sanitized examples; raw payroll artifacts stay private.</span></li>
         </ul>
       </div>
-      <div class="lab-panels">
-        <div class="lab-card green"><b>Known before speaking</b><p>Subscription status, employee record, pay schedule, payroll run history.</p></div>
-        <div class="lab-card gold"><b>Worth asking</b><p>Only facts the system cannot retrieve, such as the customer&rsquo;s intent.</p></div>
-        <div class="lab-card blue"><b>Stop condition</b><p>Sensitive fixes hand off with the diagnosis attached, not a fresh interview.</p></div>
-        <div class="lab-card dark"><code>old: ask &rarr; ask &rarr; ask &rarr; ask<br>new: read &rarr; diagnose &rarr; ask once</code></div>
+      <div class="agent-screen" role="img" aria-label="Public-safe reconstruction of the Intuit Intelligence payroll agent experience">
+        <div class="agent-top mono"><span>Intuit Intelligence</span><span>public-safe reconstruction</span></div>
+        <div class="agent-layout">
+          <aside class="agent-rail" aria-hidden="true">
+            <span class="rail-title">Recent</span>
+            <span class="rail-item active">Missing employee</span>
+            <span class="rail-item">State payroll tax</span>
+            <span class="rail-item">Debit without payment</span>
+          </aside>
+          <div class="agent-main">
+            <div class="agent-question">I ran payroll and Maria is missing. What happened?</div>
+            <div class="agent-chip mono">TID: redacted &middot; tools used</div>
+            <div class="agent-work"><span>Work done</span><b>Checked subscription, employee record, pay schedule, current run, next run.</b></div>
+            <div class="agent-answer">
+              <h3>Maria was added after this pay run was built.</h3>
+              <p>Her setup is active and she appears on the next run. To pay her in this period, the agent needs the one fact it cannot see: what you want to happen now.</p>
+              <div class="agent-table">
+                <span>subscription</span><b>active</b>
+                <span>employee</span><b>active</b>
+                <span>current run</span><b>built before add</b>
+              </div>
+            </div>
+            <div class="agent-actions" aria-hidden="true">
+              <span>Pay in this run</span>
+              <span>Next run is fine</span>
+              <span>Bring in expert</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -152,7 +176,7 @@
   <!-- ================= 05 · design decisions ================= -->
   <section class="wrap part" id="design" aria-labelledby="p5-h">
     <p class="kicker mono part-head"><span class="knum">05</span><span>Design decisions</span></p>
-    <h2 id="p5-h">Read first. Ask once. Stop before guessing.</h2>
+    <h2 id="p5-h">Read first. Ask only when the answer lives elsewhere. Stop before guessing.</h2>
     <div class="prose">
       <p>Four decisions define the behavior. Each one is visible in the recreated conversation in part seven.</p>
     </div>
@@ -168,7 +192,7 @@
         <span class="dnum" aria-hidden="true">5.2</span>
         <div>
           <h3>Every question carries a written why.</h3>
-          <p>A question may be asked only when the system truly cannot retrieve the answer, and each one ships with a written justification saying so. In the missing-employee territory, only two facts survive that test: what the customer expected, and what is on their screen.</p>
+          <p>A question may be asked only when the answer cannot be inferred from the customer data, available tools, or conversation context. Each one ships with a written justification saying where the fact lives and why the system cannot see it. In the missing-employee territory, that usually means the customer&rsquo;s intent or what they are seeing on their screen.</p>
         </div>
       </li>
       <li>
@@ -187,7 +211,7 @@
       </li>
     </ol>
 
-    <figure class="trace" aria-label="Reconstructed trace: the read-before-ask session, three silent reads then one question">
+    <figure class="trace" aria-label="Reconstructed trace: the read-before-ask session, silent reads then a customer-held fact">
       <figcaption class="trace-hd mono"><span>trace &middot; the read-before-ask session</span><span>reconstructed</span></figcaption>
       <ol class="trace-rows">
         <li><span class="t-time" aria-hidden="true">00.0</span><div>customer: &ldquo;I ran payroll, but my employee Maria is not on it.&rdquo;</div></li>
@@ -253,7 +277,7 @@ Data Not Retrievable (Must Ask User)
     </div>
 
     <div class="mockwrap">
-      <div class="mock" role="img" aria-label="Recreated chat: the same missing-employee question, answered after three silent reads with one question asked and an expert handoff offered">
+      <div class="mock" role="img" aria-label="Recreated chat: the same missing-employee question, answered after silent reads with customer-held context requested and an expert handoff offered">
         <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Payroll agent</span><span class="mtag">Recreation</span></div>
         <div class="mock-body">
           <div class="m-user">I just ran payroll and my employee Maria is not on it. What happened?</div>
@@ -280,16 +304,16 @@ Data Not Retrievable (Must Ask User)
         <div class="m-composer" aria-hidden="true">Ask anything</div>
         <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
       </div>
-      <p class="mock-cap">The shipped behavior, recreated from the framework&rsquo;s golden path. The agent reads first, diagnoses, and spends its one question on the only fact it cannot retrieve: what the customer wants. Interface simplified; names and details invented.</p>
+      <p class="mock-cap">The shipped behavior, recreated from the framework&rsquo;s golden path. The agent reads first, diagnoses, and asks only for the fact it cannot retrieve here: what the customer wants. Interface simplified; names and details invented.</p>
     </div>
 
     <div class="prose">
-      <p class="opens">The improvement, stated plainly. Before, the assistant asked four questions and every answer was already on the account; the customer supplied the data and still waited for a diagnosis. Now the agent reads those facts silently before its first word, names the cause, and asks one question, about intent, the one thing it genuinely cannot know. And when the fix is sensitive, the handoff carries the diagnosis with it, so a person starts from the middle of the case instead of the beginning.</p>
+      <p class="opens">The improvement, stated plainly. Before, the assistant asked four questions and every answer was already on the account; the customer supplied the data and still waited for a diagnosis. Now the agent reads those facts silently before its first word, names the cause, and asks only for customer-held context when it needs it. And when the fix is sensitive, the handoff carries the diagnosis with it, so a person starts from the middle of the case instead of the beginning.</p>
     </div>
 
     <div class="stats" role="list" aria-label="Measured outcomes and delivery receipts">
       <div role="listitem"><span class="num">+9.8 pts</span><span class="lab">payroll conversation quality over the year, measured by the program&rsquo;s judge; my golden dataset work is part of what drove it</span></div>
-      <div role="listitem"><span class="num">1 question</span><span class="lab">asked of the customer in the shipped behavior, where the old flow asked four</span></div>
+      <div role="listitem"><span class="num">Ask gate</span><span class="lab">questions allowed only for facts not visible in customer data, tools, or conversation context</span></div>
       <div role="listitem"><span class="num">10 days</span><span class="lab">to deliver nine troubleshooting territories from one shared framework</span></div>
     </div>
 
