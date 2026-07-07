@@ -565,6 +565,11 @@ body.v5 .ii-answer{
 }
 
 body.v5 .ii-answer p{margin:0 0 11px;}
+body.v5 .ii-answer ol{
+  margin:0 0 14px 1.2em;
+  padding:0;
+}
+body.v5 .ii-answer li{margin:4px 0;}
 body.v5 .ii-answer a{
   display:inline-flex;
   padding:10px 14px;

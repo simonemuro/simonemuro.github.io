@@ -182,6 +182,35 @@
       <p>The cancel widget mattered because cancellation is not only an information request. It is a decision moment. The assistant should not trap the customer, but it should create a measurable save opportunity: connect to a billing specialist, or show self-serve steps if the customer wants to proceed alone.</p>
     </div>
 
+    <figure class="product-screen evidence-screen cancel-evidence" aria-label="Before-state cancel experience reconstruction">
+      <figcaption><span>cancel branch</span><b>Help content instead of account-aware triage</b></figcaption>
+      <div class="ii-top" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="ii-msg user">I want to cancel my subscription</div>
+      <div class="ii-answer">
+        <p><b>Work done</b></p>
+        <p>To cancel your subscription, follow these steps within the software:</p>
+        <ol>
+          <li>Select the gear icon.</li>
+          <li>Choose Account and Settings.</li>
+          <li>Click Billing &amp; subscription.</li>
+          <li>Locate your subscription.</li>
+          <li>Select Cancel subscription.</li>
+        </ol>
+        <a href="#" aria-hidden="true">Billing and subscription</a>
+      </div>
+      <div class="ii-buttons" aria-hidden="true">
+        <span>Download subscription invoices</span>
+        <span>Read-only access after cancellation</span>
+        <span>Reactivate subscription later</span>
+      </div>
+      <div class="failure-stack" aria-label="Why the cancel answer failed">
+        <span><b>Help-skill fallback</b> Fetches internal help content instead of checking the account.</span>
+        <span><b>No triage</b> Does not inspect plan, add-ons, renewal date, or multi-product risk.</span>
+        <span><b>No save moment</b> Gives steps before offering specialist review or plan options.</span>
+      </div>
+      <p class="artifact-note">Screen-level reconstruction from real cancel before-state testing. Interface simplified; internal help content and account details removed.</p>
+    </figure>
+
     <div class="flow-lane" aria-label="Billing lookup tool modes">
       <ol>
         <li><b>Tool</b><span>Read plan name, status, next billing date, add-ons, and recent billing facts.</span></li>
