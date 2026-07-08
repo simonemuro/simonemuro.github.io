@@ -37,6 +37,10 @@ body.home-lite h1{
   max-width:12.6ch;
 }
 
+body.home-lite .hero-accent{
+  color:var(--accent);
+}
+
 body.home-lite h2{
   font-family:var(--serif);
   font-weight:400;
