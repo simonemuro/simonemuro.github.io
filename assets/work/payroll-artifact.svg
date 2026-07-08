@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">Payroll tax diagnostic artifact</title>
+  <desc id="desc">Public-safe reconstruction of a payroll tax liability answer that uses setup, payment group, liability, and payment-detail lookups.</desc>
+  <rect width="1400" height="900" fill="#f6f9fb"/>
+  <rect width="120" height="900" fill="#eaf2f6"/>
+  <text x="70" y="82" fill="#607381" font-family="Arial, sans-serif" font-size="22" letter-spacing="3" text-anchor="middle">PAYROLL TAX</text>
+  <text x="170" y="82" fill="#2f3a40" font-family="Arial, sans-serif" font-size="46" font-weight="700">Payroll tax diagnostic</text>
+  <text x="170" y="136" fill="#63747d" font-family="Arial, sans-serif" font-size="28">State liability question · account-aware tool path</text>
+  <line x1="170" y1="180" x2="1320" y2="180" stroke="#cbd9df" stroke-width="3"/>
+  <rect x="170" y="230" width="1060" height="560" rx="28" fill="#fff" stroke="#d5e2e8" stroke-width="3"/>
+  <text x="220" y="284" fill="#8a9aa3" font-family="Arial, sans-serif" font-size="22">Customer</text>
+  <rect x="220" y="310" width="670" height="82" rx="22" fill="#e7f0f5" stroke="#ccdce4" stroke-width="2"/>
+  <text x="250" y="362" fill="#33434a" font-family="Arial, sans-serif" font-size="31" font-weight="700">What are my state payroll tax liabilities?</text>
+  <text x="220" y="456" fill="#2f3a40" font-family="Arial, sans-serif" font-size="31" font-weight="700">Work done</text>
+  <g font-family="Arial, sans-serif">
+    <g transform="translate(220 505)">
+      <rect width="220" height="112" rx="18" fill="#f5fafc" stroke="#d5e2e8" stroke-width="2"/>
+      <circle cx="38" cy="56" r="22" fill="#2563eb"/>
+      <text x="38" y="64" fill="#fff" font-size="21" font-weight="700" text-anchor="middle">1</text>
+      <text x="72" y="38" fill="#2f3a40" font-size="21" font-weight="700">Setup context</text>
+      <text x="72" y="70" fill="#6b7c84" font-size="18">active jurisdictions</text>
+    </g>
+    <line x1="440" y1="561" x2="475" y2="561" stroke="#8fb7ca" stroke-width="4"/>
+    <g transform="translate(475 505)">
+      <rect width="220" height="112" rx="18" fill="#f5fafc" stroke="#d5e2e8" stroke-width="2"/>
+      <circle cx="38" cy="56" r="22" fill="#2563eb"/>
+      <text x="38" y="64" fill="#fff" font-size="21" font-weight="700" text-anchor="middle">2</text>
+      <text x="72" y="38" fill="#2f3a40" font-size="21" font-weight="700">Payment groups</text>
+      <text x="72" y="70" fill="#6b7c84" font-size="18">state + federal</text>
+    </g>
+    <line x1="695" y1="561" x2="730" y2="561" stroke="#8fb7ca" stroke-width="4"/>
+    <g transform="translate(730 505)">
+      <rect width="220" height="112" rx="18" fill="#f5fafc" stroke="#d5e2e8" stroke-width="2"/>
+      <circle cx="38" cy="56" r="22" fill="#2563eb"/>
+      <text x="38" y="64" fill="#fff" font-size="21" font-weight="700" text-anchor="middle">3</text>
+      <text x="72" y="38" fill="#2f3a40" font-size="21" font-weight="700">Liability report</text>
+      <text x="72" y="70" fill="#6b7c84" font-size="18">current balance</text>
+    </g>
+    <line x1="950" y1="561" x2="985" y2="561" stroke="#8fb7ca" stroke-width="4"/>
+    <g transform="translate(985 505)">
+      <rect width="220" height="112" rx="18" fill="#f5fafc" stroke="#d5e2e8" stroke-width="2"/>
+      <circle cx="38" cy="56" r="22" fill="#2563eb"/>
+      <text x="38" y="64" fill="#fff" font-size="21" font-weight="700" text-anchor="middle">4</text>
+      <text x="72" y="38" fill="#2f3a40" font-size="21" font-weight="700">Payment details</text>
+      <text x="72" y="70" fill="#6b7c84" font-size="18">paid vs owed</text>
+    </g>
+  </g>
+  <rect x="220" y="660" width="600" height="90" rx="14" fill="#fff" stroke="#d5e2e8" stroke-width="2"/>
+  <text x="245" y="704" fill="#2f3a40" font-family="Arial, sans-serif" font-size="30" font-weight="700">California total</text>
+  <text x="790" y="704" fill="#2f3a40" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="end">$26,586.74</text>
+  <text x="245" y="734" fill="#6b7c84" font-family="Arial, sans-serif" font-size="18">checks state obligations before answering</text>
+  <g font-family="Arial, sans-serif" font-size="20" fill="#3b5664" text-anchor="middle">
+    <rect x="940" y="265" width="225" height="48" rx="24" fill="#eef7fb" stroke="#b9d7e5" stroke-width="2"/>
+    <text x="1052" y="296">not federal-only</text>
+    <rect x="940" y="325" width="225" height="48" rx="24" fill="#eef7fb" stroke="#b9d7e5" stroke-width="2"/>
+    <text x="1052" y="356">not stale</text>
+    <rect x="940" y="385" width="225" height="48" rx="24" fill="#eef7fb" stroke="#b9d7e5" stroke-width="2"/>
+    <text x="1052" y="416">not a guess</text>
+  </g>
+</svg>

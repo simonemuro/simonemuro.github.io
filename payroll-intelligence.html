@@ -43,7 +43,7 @@
       <span>Agentic support platform</span>
     </p>
     <h1 id="case-h">Designing the diagnostic behavior of the QuickBooks payroll agent.</h1>
-    <p class="lede">A payroll agent was being built for high-stakes support moments: missing employees, failed filings, pay runs that looked wrong. I designed the diagnostic behavior behind it: read the account first, ask only for facts the system cannot infer from context, data, or tools, and hand off before guessing.</p>
+    <p class="lede">A payroll agent was being built for high-stakes support moments: tax liabilities, failed filings, debits that did not match agency payments, and pay runs that looked wrong. I designed the diagnostic behavior behind it: read the account first, ask only for facts the system cannot infer from context, data, or tools, and hand off before guessing.</p>
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>The QuickBooks payroll agent on a successor agentic support platform, troubleshooting conversations</dd></div>
@@ -62,26 +62,26 @@
 
     <div class="before-after" aria-label="Before and after experience reconstruction">
       <figure class="product-screen before-screen" aria-label="Before experience reconstruction">
-        <figcaption><span>before</span><b>Generic, slow, sometimes wrong</b></figcaption>
+        <figcaption><span>before</span><b>Generic, incomplete, sometimes wrong</b></figcaption>
         <div class="ii-top" aria-hidden="true"><span></span><span></span><span></span></div>
-        <div class="ii-msg user">Why are you charging me 3 times monthly?</div>
+        <div class="ii-msg user">What are my state payroll tax liabilities?</div>
         <div class="ii-answer">
           <p><b>Work done</b></p>
-          <p>Multiple monthly charges can happen for several reasons: multiple subscriptions, mid-billing changes, add-on services, or temporary pre-authorization.</p>
-          <p>Check Settings &gt; Subscriptions and billing to see which charge each service relates to.</p>
-          <a href="#" aria-hidden="true">Billing and subscription</a>
+          <p>Your payroll tax liability depends on wages, employees, filing setup, and agency schedules. You may owe federal and state taxes.</p>
+          <p>Check Payroll &gt; Taxes to review forms, payments, and upcoming due dates.</p>
+          <a href="#" aria-hidden="true">Payroll taxes</a>
         </div>
         <div class="ii-buttons" aria-hidden="true">
-          <span>Show detailed billing charges breakdown</span>
-          <span>Explain charges for additional services</span>
-          <span>Review subscription invoices</span>
+          <span>Show federal payroll taxes</span>
+          <span>Review tax setup</span>
+          <span>Talk to an expert</span>
         </div>
         <div class="failure-stack" aria-label="Before-state failure patterns">
-          <span><b>Generic</b> Lists possible causes instead of using the account.</span>
-          <span><b>Slow</b> Sends the customer to inspect invoices manually.</span>
-          <span><b>Wrong path</b> A similar prompt triggered a Profit and Loss report instead of billing context.</span>
+          <span><b>Incomplete</b> Stops at general payroll tax guidance when state obligations exist.</span>
+          <span><b>Stale</b> Adds old-data caveats even when current tools can answer.</span>
+          <span><b>Vague</b> Lists possibilities instead of calling the tools that resolve the ambiguity.</span>
         </div>
-        <p class="artifact-note">Reconstructed from real Intuit Intelligence before-state screenshots supplied for this portfolio. Interface simplified; customer and account details removed.</p>
+        <p class="artifact-note">Reconstructed from payroll-tax evaluation notes and screenshots. Interface simplified; customer and account details removed.</p>
       </figure>
 
       <figure class="product-screen after-screen" aria-label="After experience reconstruction">
@@ -90,33 +90,33 @@
           <div class="agent-top mono"><span>Intuit Intelligence</span><span>public-safe reconstruction</span></div>
           <div class="agent-layout">
             <aside class="agent-rail" aria-hidden="true">
-              <span class="rail-title">Recent</span>
-              <span class="rail-item active">Missing employee</span>
-              <span class="rail-item">State payroll tax</span>
-              <span class="rail-item">Debit without payment</span>
+              <span class="rail-title">Diagnostic path</span>
+              <span class="rail-item active">State liabilities</span>
+              <span class="rail-item">Payment groups</span>
+              <span class="rail-item">Debit matching</span>
             </aside>
             <div class="agent-main">
-              <div class="agent-question">I ran payroll and Maria is missing. What happened?</div>
+              <div class="agent-question">What are my state payroll tax liabilities?</div>
               <div class="agent-chip mono">tools used &middot; ids redacted</div>
-              <div class="agent-work"><span>Work done</span><b>Checked subscription, employee record, pay schedule, current run, next run.</b></div>
+              <div class="agent-work"><span>Work done</span><b>Checked active jurisdictions, payment groups, liability report, and payments.</b></div>
               <div class="agent-answer">
-                <h3>Maria was added after this pay run was built.</h3>
-                <p>Her setup is active and she appears on the next run. To pay her in this period, the agent needs the fact it cannot see: what you want to happen now.</p>
+                <h3>Your California payroll tax liabilities total $26,586.74.</h3>
+                <p>Most of the total is state income tax withholding. Disability insurance and unemployment insurance make up the remaining amount.</p>
                 <div class="agent-table">
-                  <span>subscription</span><b>active</b>
-                  <span>employee</span><b>active</b>
-                  <span>current run</span><b>built before add</b>
+                  <span>CA income tax</span><b>$23,575.50</b>
+                  <span>CA disability</span><b>$2,179.98</b>
+                  <span>CA unemployment</span><b>checked</b>
                 </div>
               </div>
               <div class="agent-actions" aria-hidden="true">
-                <span>Pay in this run</span>
-                <span>Next run is fine</span>
+                <span>Show by month</span>
+                <span>Compare by state</span>
                 <span>Bring in expert</span>
               </div>
             </div>
           </div>
         </div>
-        <p class="artifact-note">Recreated from the payroll diagnostic framework and internal eval screenshots. Names and account data are invented.</p>
+        <p class="artifact-note">Recreated from payroll-tax eval screenshots. Names, IDs, and account details removed; amounts mirror the public-safe evaluation example.</p>
       </figure>
     </div>
   </section>
@@ -126,7 +126,7 @@
     <p class="kicker mono part-head"><span class="knum">01</span><span>Background</span></p>
     <h2 id="p1-h">An agent was being built. Its judgment was not.</h2>
     <div class="prose">
-      <p>The payroll team was building an agent for high-stakes support moments: the missing employee, the filing that looks wrong, the debit that does not match. These topics were selected by call volume, customer pain, and expert handle time.</p>
+      <p>The payroll team was building an agent for high-stakes support moments: tax liabilities, filings that looked wrong, debits that did not match agency payments. These topics were selected by call volume, customer pain, and expert handle time.</p>
       <p>My part sat underneath the product surface. I designed the diagnostic behavior: what the agent reads silently, what it may ask, when it must stop, and what context travels to a person.</p>
       <p>I authored the generator prompt, the answer templates, and the gates myself, then directed the team using that framework across nine troubleshooting territories. The product roadmap belonged to the shipping team; the ground truth for diagnosis was the thing I owned.</p>
     </div>
@@ -137,48 +137,46 @@
     <p class="kicker mono part-head"><span class="knum">02</span><span>The problem</span></p>
     <h2 id="p2-h">The system could sound helpful while avoiding the real question.</h2>
     <div class="prose">
-      <p>The warning sign was not that the assistant failed loudly. It failed politely. In the before-state billing screenshots, the customer asks what they are paying or why they are being charged multiple times. The assistant lists generic reasons, quotes a typical plan price, sends the customer to Settings, or in one case misunderstands the request and runs a Profit and Loss report about service expenses.</p>
-      <p>Payroll had the same risk with higher stakes. Take the sentence this page follows: my employee is missing from this pay run. Half a dozen root causes wear that one sentence. A subscription lapsed. The employee was made inactive. She is on a different pay schedule. She was added after the run was built. The run is the wrong one. The employee is fine and the customer is looking at the wrong screen.</p>
-      <p>A human expert opens with a long interview because a human starts blind. The agent should not. Here is the payroll version of the old pattern, recreated.</p>
+      <p>The warning sign was not that the assistant failed loudly. It failed politely. In payroll-tax eval runs, the agent could list general guidance, stop at federal data when state obligations existed, add stale-data caveats, or name possible causes when one more tool call would resolve the ambiguity.</p>
+      <p>Payroll support carries a different kind of pressure. A customer asking about liabilities, filings, or a bank debit is really asking whether money moved correctly and whether compliance is at risk. A plausible generic answer can still leave the customer exposed.</p>
+      <p>The design problem was sequence. The agent had tools for setup, active jurisdictions, payment groups, filings, debits, liability reports, and payment details. The diagnostic framework had to turn those data paths into the requirements for how the skill should behave.</p>
     </div>
 
     <div class="failure-board" aria-label="Before experience failure patterns">
       <div>
-        <span class="mono">billing prompt</span>
-        <b>Why are you charging me three times monthly?</b>
-        <p>Answer gives possible reasons, then asks the customer to inspect invoices.</p>
+        <span class="mono">payroll prompt</span>
+        <b>What are my state payroll tax liabilities?</b>
+        <p>The answer risks stopping at federal data unless it first discovers every active jurisdiction.</p>
       </div>
       <div>
-        <span class="mono">billing prompt</span>
-        <b>How much am I paying for the service?</b>
-        <p>Answer gives a typical public price, not the account&rsquo;s actual payment.</p>
+        <span class="mono">payroll prompt</span>
+        <b>I see a debit but no payment to the agency.</b>
+        <p>The answer must match a bank withdrawal to payroll tax payment records before explaining what happened.</p>
       </div>
       <div>
-        <span class="mono">misfire</span>
-        <b>Same question, wrong tool.</b>
-        <p>The assistant checks a Profit and Loss report and concludes there are no service expenses.</p>
+        <span class="mono">eval finding</span>
+        <b>Specific data exists.</b>
+        <p>If the agent is about to list possibilities, the next move is usually another tool call.</p>
       </div>
     </div>
 
     <div class="mockwrap">
-      <div class="mock" role="img" aria-label="Recreated chat: the customer reports a missing employee and the assistant responds with a series of questions">
-        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Support assistant</span><span class="mtag">Recreation</span></div>
+      <div class="mock" role="img" aria-label="Recreated chat: the customer asks about state payroll tax liabilities and receives generic guidance">
+        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Payroll assistant</span><span class="mtag">Recreation</span></div>
         <div class="mock-body">
-          <div class="m-user">I just ran payroll and my employee Maria is not on it. What happened?</div>
-          <div class="m-agent"><p>I can help with that. First, a few questions. What is the employee&rsquo;s full name?</p></div>
-          <div class="m-user">Maria Delgado.</div>
-          <div class="m-agent"><p>Thank you. When did you add Maria, and which pay schedule is she assigned to?</p></div>
-          <div class="m-user">I added her today. Weekly, the same as everyone else.</div>
-          <div class="m-agent"><p>Got it. And did you already submit payroll for this pay period?</p></div>
+          <div class="m-user">What are my state payroll tax liabilities?</div>
+          <div class="m-agent"><p>You may have state payroll tax liabilities depending on your employees, wages, and filing setup. Check your payroll tax center for forms, payments, and notices.</p></div>
+          <div class="m-user">Which state amounts do I owe?</div>
+          <div class="m-agent"><p>You can review state tax forms and payment history in Payroll &gt; Taxes. If you are unsure, contact a payroll specialist.</p></div>
         </div>
         <div class="m-composer" aria-hidden="true">Ask anything</div>
         <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
       </div>
-      <p class="mock-cap">The before experience. Recreated; the question sequence is the real pattern the framework replaced. Interface simplified; names and details invented.</p>
+      <p class="mock-cap">The before pattern. Recreated from eval notes: guidance that sounds reasonable, but does not prove the agent checked the account.</p>
     </div>
 
     <div class="prose">
-      <p class="opens">The old flow asked the customer for facts that already sit on the account: the employee list, the audit log, the schedule table, the run history. That is the problem in one line. The system interviewed the customer for facts it was already holding.</p>
+      <p class="opens">The old pattern left too much room for a broadly helpful answer. The diagnostic had to force a narrower path: discover active jurisdictions, resolve the relevant payment groups, pull liability and payment data, compare records, and ask only when the missing fact truly lives outside the system.</p>
     </div>
   </section>
 
@@ -187,7 +185,7 @@
     <p class="kicker mono part-head"><span class="knum">03</span><span>Why it mattered</span></p>
     <h2 id="p3-h">Payroll is where a confident wrong answer hurts someone.</h2>
     <div class="prose">
-      <p>Behind every payroll question sits the same one: will my people get paid? A customer asking about a missing employee is often hours from a pay date. An interrogation spends that customer&rsquo;s calm at the worst possible moment, and it is the same interview that makes these calls long for the experts who take them.</p>
+      <p>Behind every payroll-tax question sits the same fear: did money move correctly, and am I still compliant? A customer asking about state liabilities or an unexplained bank debit may be days from a filing deadline. A generic answer spends that customer&rsquo;s calm at the worst possible moment, and it is the same ambiguity that makes these calls long for experts.</p>
       <p>The deeper risk was the model itself. Payroll is regulated, full of rules a model can imitate without knowing. Asked about a filing schedule or a tax rule it cannot look up, a model will produce a fluent, confident invention. The dangerous failure in this domain is not a wrong answer that looks wrong. It is a wrong answer that looks right.</p>
       <p>So the diagnostic knowledge could not be left to the model, and it could not be left implicit in the heads of experts. It had to be written down, tested, and validated by the people who already carry it.</p>
     </div>
@@ -198,23 +196,23 @@
     <p class="kicker mono part-head"><span class="knum">04</span><span>Exploring solutions</span></p>
     <h2 id="p4-h">The experts, and the fact map that changed the design.</h2>
     <div class="prose">
-      <p>The diagnostic paths had to come from humans. For about a week and a half, we interviewed support, engineering, and policy experts to capture how they ruled cases in and out.</p>
-      <p>The insight that shaped the design came from comparing the expert interview to the agent&rsquo;s advantage. A person starts blind. The agent starts with the account open. So I mapped each deciding fact to the place it lives.</p>
+      <p>The diagnostic paths had to come from humans and the actual skill architecture. I compared support expertise with the Omni Agent payroll-tax skills: setup context, active jurisdictions, payment groups, tax payment details, liability reports, and employer debit records.</p>
+      <p>The insight that shaped the design came from comparing the expert interview to the agent&rsquo;s advantage. A person starts by asking for context. The agent can start by reading the setup and transaction record. So I mapped each deciding fact to the tool that should prove it.</p>
     </div>
 
-    <div class="spec-sheet" aria-label="Fact map for the missing employee diagnosis">
-      <div class="board-title"><span>fact map &middot; missing employee</span><span>four readable &middot; two askable</span></div>
+    <div class="spec-sheet" aria-label="Fact map for payroll tax liability diagnosis">
+      <div class="board-title"><span>fact map &middot; payroll tax liabilities</span><span>read first &middot; ask only if missing</span></div>
       <div class="spec-grid">
-        <div><b>Account facts</b><span>Subscription, employee status, schedule, recent payroll runs. These are read silently before the first turn.</span></div>
-        <div><b>Customer facts</b><span>What they expected to happen, and whether they want this run changed. These are the only facts worth asking for.</span></div>
-        <div><b>Diagnosis</b><span>Find the first account fact that explains the symptom, then name it in plain language.</span></div>
-        <div><b>Boundary</b><span>If the fix changes payroll, stop and hand off or offer a guided next action. No confident guessing.</span></div>
+        <div><b>Setup facts</b><span>Active federal, state, and local jurisdictions; e-service status; payment groups. Read these before narrowing the answer.</span></div>
+        <div><b>Money facts</b><span>Liability report, payment details, debit records, and audit history. Use these to compare owed, paid, and withdrawn amounts.</span></div>
+        <div><b>Diagnosis</b><span>Do not stop federal-only. If the answer is hedged, stale, or lists possibilities, the diagnostic is incomplete.</span></div>
+        <div><b>Boundary</b><span>If action changes a filing, payment, or agency response, hand off with the records already checked.</span></div>
       </div>
     </div>
 
     <div class="prose">
-      <p class="opens">Four of the six facts the old flow asked for were already readable. Only two truly belong to the customer. The design conclusion followed directly: do not mimic the expert&rsquo;s question sequence. Read first, then spend questions only on what cannot be retrieved.</p>
-      <p>Engineering pushed back on one thing, and it was fair: hand-written root causes for every territory would be a maintenance burden as the agent grew. The answer was to make the framework itself reusable, instructions rather than answers, so each new territory starts from the same machinery instead of a blank page. Part six shows that machinery.</p>
+      <p class="opens">The design conclusion followed directly: do not mimic a broad support script. A liability question must discover active jurisdictions first. A debit question must narrow the date range and match the withdrawal to payment records. A setup question must read setup status before explaining next steps.</p>
+      <p>Engineering pushed back on one thing, and it was fair: hand-written root causes for every territory would be a maintenance burden as the agent grew. The answer was to make the framework itself reusable, instructions rather than answers, so each new territory starts from the same diagnostic machinery instead of a blank page. Part six shows that machinery.</p>
     </div>
 
     <div class="research-gallery" aria-label="Source artifacts recreated for public viewing">
@@ -222,32 +220,32 @@
         <figcaption class="mono">source artifact &middot; craft deck</figcaption>
         <div class="deck-cover" aria-hidden="true">
           <span>Payroll agent</span>
-          <b>Experience design companion artifacts</b>
-          <em>behavior guide &middot; context schema &middot; eval dataset &middot; escalation spec</em>
+          <b>Diagnostic companion artifacts</b>
+          <em>skill map &middot; tool contract &middot; eval cases &middot; escalation spec</em>
         </div>
-        <p>The deck translated a messy support domain into working surfaces for product, engineering, and QA.</p>
+        <p>The artifacts translated support expertise into data dependencies the agent could execute and QA could test.</p>
       </figure>
       <figure class="research-card">
         <figcaption class="mono">source artifact &middot; eval sheet</figcaption>
         <div class="eval-mini" aria-hidden="true">
           <span>Case</span><span>Expected skill</span><span>Gate</span>
-          <b>TC-05</b><b>state tax liability</b><b class="warn">partial</b>
-          <b>TC-06</b><b>debit without payment</b><b class="fail">fail</b>
-          <b>TC-07</b><b>setup diagnosis</b><b class="pass">pass</b>
+          <b>TC-05</b><b>filing + payment</b><b class="warn">partial</b>
+          <b>TC-06</b><b>debit + payment</b><b class="fail">fail</b>
+          <b>TC-07</b><b>state liabilities</b><b class="warn">partial</b>
         </div>
         <p>The internal sheet scored what the agent did, not only what it said: tool use, root-cause match, escalation quality.</p>
       </figure>
       <figure class="research-card decision-card">
-        <figcaption class="mono">design artifact &middot; root-cause map</figcaption>
+        <figcaption class="mono">design artifact &middot; tool path</figcaption>
         <div class="decision-map" aria-hidden="true">
-          <span class="rc-node main">Missing from run</span>
-          <span class="rc-node">Inactive</span>
-          <span class="rc-node">Wrong schedule</span>
-          <span class="rc-node">Added after build</span>
-          <span class="rc-node">Contractor</span>
-          <span class="rc-node">Setup incomplete</span>
+          <span class="rc-node main">State liabilities</span>
+          <span class="rc-node">Setup context</span>
+          <span class="rc-node">Payment groups</span>
+          <span class="rc-node">Liability report</span>
+          <span class="rc-node">Payment details</span>
+          <span class="rc-node">Expert handoff</span>
         </div>
-        <p>One customer sentence became a diagnosis tree. The agent needed the tree before it needed a friendly answer.</p>
+        <p>One customer question became a tool sequence. The agent needed the path before it needed a friendly answer.</p>
       </figure>
     </div>
   </section>
@@ -257,21 +255,21 @@
     <p class="kicker mono part-head"><span class="knum">05</span><span>Design decisions</span></p>
     <h2 id="p5-h">Read first. Ask only when the answer lives elsewhere. Stop before guessing.</h2>
     <div class="prose">
-      <p>Four decisions define the behavior. Each one is visible in the recreated conversation in part seven.</p>
+      <p>Four decisions define the behavior. Each one is visible in the reconstructed trace below.</p>
     </div>
     <ol class="decisions">
       <li>
         <span class="dnum" aria-hidden="true">5.1</span>
         <div>
           <h3>Read the account before the first word.</h3>
-          <p>The agent silently reads the subscription, the employee record, the schedules, and the recent runs, and matches what it finds against the known root causes. Most of the expert&rsquo;s interview is answered before the agent speaks.</p>
+          <p>The agent silently reads setup context, active jurisdictions, payment groups, liability reports, payment details, debit records, and audit history, then matches what it finds against the known root causes.</p>
         </div>
       </li>
       <li>
         <span class="dnum" aria-hidden="true">5.2</span>
         <div>
           <h3>Every question carries a written why.</h3>
-          <p>A question may be asked only when the answer cannot be inferred from the customer data, available tools, or conversation context. Each one ships with a written justification saying where the fact lives and why the system cannot see it. In the missing-employee territory, that usually means the customer&rsquo;s intent or what they are seeing on their screen.</p>
+          <p>A question may be asked only when the answer cannot be inferred from the customer data, available tools, or conversation context. Each one ships with a written justification saying where the fact lives and why the system cannot see it.</p>
         </div>
       </li>
       <li>
@@ -290,20 +288,18 @@
       </li>
     </ol>
 
-    <figure class="trace" aria-label="Reconstructed trace: the read-before-ask session, silent reads then a customer-held fact">
-      <figcaption class="trace-hd mono"><span>trace &middot; the read-before-ask session</span><span>reconstructed</span></figcaption>
+    <figure class="trace" aria-label="Reconstructed trace: the state payroll tax liability diagnostic">
+      <figcaption class="trace-hd mono"><span>trace &middot; state payroll tax liabilities</span><span>reconstructed</span></figcaption>
       <ol class="trace-rows">
-        <li><span class="t-time" aria-hidden="true">00.0</span><div>customer: &ldquo;I ran payroll, but my employee Maria is not on it.&rdquo;</div></li>
-        <li><span class="t-time" aria-hidden="true">00.4</span><div>known territory &middot; half a dozen root causes fit this sentence &middot; read before asking</div></li>
-        <li><span class="t-time" aria-hidden="true">00.9</span><div><code>read <b>payroll.subscription</b> &#8594; <span class="ok">ok</span> &middot; active &middot; no billing hold</code></div></li>
-        <li><span class="t-time" aria-hidden="true">01.3</span><div><code>read <b>employee("Maria")</b> &#8594; <span class="ok">ok</span> &middot; active &middot; added today, 2:04 pm</code></div></li>
-        <li><span class="t-time" aria-hidden="true">01.7</span><div><code>read <b>payroll.runs(current, next)</b> &#8594; <span class="ok">ok</span> &middot; this run built 9:12 am &middot; next run: Maria on it</code></div></li>
-        <li><span class="t-time" aria-hidden="true">02.1</span><div>cause found &middot; added after the run was built &middot; one fact left: intent</div></li>
-        <li><span class="t-time" aria-hidden="true">02.4</span><div>agent: &ldquo;Maria was added after this run was built, so it skipped her. She is already on next week&rsquo;s run. Do you want her paid in this one instead, or is next week fine?&rdquo;</div></li>
-        <li><span class="t-time" aria-hidden="true">03.0</span><div>customer: &ldquo;This one, please.&rdquo;</div></li>
-        <li><span class="t-time" aria-hidden="true">03.3</span><div>resolved &middot; no known-fact questions asked of the customer</div></li>
+        <li><span class="t-time" aria-hidden="true">00.0</span><div>customer: &ldquo;What are my state payroll tax liabilities?&rdquo;</div></li>
+        <li><span class="t-time" aria-hidden="true">00.3</span><div>broad liability question &middot; discover active jurisdictions before answering</div></li>
+        <li><span class="t-time" aria-hidden="true">00.8</span><div><code>read <b>tax_setup_context</b> &#8594; <span class="ok">ok</span> &middot; federal + active state jurisdictions</code></div></li>
+        <li><span class="t-time" aria-hidden="true">01.2</span><div><code>read <b>payment_groups</b> for each active jurisdiction &#8594; <span class="ok">ok</span></code></div></li>
+        <li><span class="t-time" aria-hidden="true">01.8</span><div><code>read <b>liability_report</b> + <b>payment_details</b> &#8594; <span class="ok">ok</span> &middot; compare owed vs paid</code></div></li>
+        <li><span class="t-time" aria-hidden="true">02.2</span><div>gate &middot; if federal-only, stale, or hedged, the diagnostic is incomplete</div></li>
+        <li><span class="t-time" aria-hidden="true">02.7</span><div>agent: state-specific breakdown, current-data caveat only if returned by a tool, expert handoff if action is needed</div></li>
       </ol>
-      <p class="trace-foot">reconstructed from the shipped behavior spec &middot; invented account data &middot; pre-rendered, no live model</p>
+      <p class="trace-foot">reconstructed from payroll-tax skill rules and eval notes &middot; private tool names simplified &middot; pre-rendered, no live model</p>
     </figure>
   </section>
 
@@ -349,31 +345,30 @@ Data Not Retrievable (Must Ask User)
   <!-- ================= 07 · results ================= -->
   <section class="wrap part" id="results" aria-labelledby="p7-h">
     <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
-    <h2 id="p7-h">The same sentence, handled the shipped way.</h2>
+    <h2 id="p7-h">The same question, handled the shipped way.</h2>
     <div class="prose">
-      <p>Here is the behavior the ground truth teaches, recreated as the customer sees it. Part five showed the machinery; this is the conversation it produces. Same customer, same missing employee.</p>
+      <p>Here is the behavior the ground truth teaches, recreated as the customer sees it. Part five showed the machinery; this is the conversation it produces for a state payroll tax liability question.</p>
     </div>
 
     <div class="mockwrap">
-      <div class="mock" role="img" aria-label="Recreated chat: the same missing-employee question, answered after silent reads with customer-held context requested and an expert handoff offered">
-        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Payroll agent</span><span class="mtag">Recreation</span></div>
+      <div class="mock" role="img" aria-label="Recreated chat: state payroll tax liabilities answered after setup, payment group, and liability report lookups">
+        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Payroll tax agent</span><span class="mtag">Recreation</span></div>
         <div class="mock-body">
-          <div class="m-user">I just ran payroll and my employee Maria is not on it. What happened?</div>
+          <div class="m-user">What are my state payroll tax liabilities?</div>
           <div class="m-agent">
             <details class="m-work">
               <summary><span class="chev" aria-hidden="true">&#8250;</span>Work done</summary>
-              <p class="m-worknote">Checked the payroll subscription, Maria&rsquo;s employee record and pay schedule, and this pay run against the next one.</p>
+              <p class="m-worknote">Checked active tax jurisdictions, payment groups, liability report, and payment details.</p>
             </details>
-            <p>Maria was added this afternoon, after this pay run was built this morning, so the run skipped her. Her setup is correct, and she is already on next week&rsquo;s run. Do you want her paid in this run instead, or is next week fine?</p>
+            <p>Your California payroll tax liabilities total $26,586.74. Most of that is state income tax withholding, with disability insurance and unemployment insurance making up the remaining balance.</p>
           </div>
-          <div class="m-user">In this one, please. She is expecting her check on Friday.</div>
           <div class="m-agent">
-            <p>Then an additional payroll run for this period is the way to pay Maria now. You can start one yourself, or a payroll expert can take it from here with everything already checked, so you will not repeat a thing.</p>
+            <p>I checked state obligations instead of stopping at federal payroll taxes. If you want to act on this, I can compare the liabilities by month or bring in a payroll tax expert with the records already reviewed.</p>
             <div class="m-handoff">
-              <p class="hff-t">Pay Maria in this period</p>
-              <p class="hff-p">Run an additional payroll for Maria, or bring in a payroll expert who starts with the full picture.</p>
+              <p class="hff-t">Review state liabilities</p>
+              <p class="hff-p">Compare liabilities by period, or bring in an expert with setup and payment groups already checked.</p>
               <div class="m-actions">
-                <span class="m-btn primary">Start additional payroll</span>
+                <span class="m-btn primary">Show by month</span>
                 <span class="m-btn ghost">Bring in an expert</span>
               </div>
             </div>
@@ -382,11 +377,11 @@ Data Not Retrievable (Must Ask User)
         <div class="m-composer" aria-hidden="true">Ask anything</div>
         <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
       </div>
-      <p class="mock-cap">The shipped behavior, recreated from the framework&rsquo;s golden path. The agent reads first, diagnoses, and asks only for the fact it cannot retrieve here: what the customer wants. Interface simplified; names and details invented.</p>
+      <p class="mock-cap">The shipped behavior, recreated from the framework&rsquo;s golden path. The agent reads setup and payment data first, checks every active jurisdiction, and avoids a federal-only or stale-data answer. Interface simplified; company and account details removed.</p>
     </div>
 
     <div class="prose">
-      <p class="opens">The improvement, stated plainly. Before, the assistant asked four questions and every answer was already on the account; the customer supplied the data and still waited for a diagnosis. Now the agent reads those facts silently before its first word, names the cause, and asks only for customer-held context when it needs it. And when the fix is sensitive, the handoff carries the diagnosis with it, so a person starts from the middle of the case instead of the beginning.</p>
+      <p class="opens">The improvement, stated plainly. Before, the assistant could give a plausible payroll-tax answer while skipping the data path. Now the skill sequence forces the agent to read setup context, resolve payment groups, compare liabilities and payments, and ask only when the missing fact is not in customer data, tools, or conversation context. When action is sensitive, the handoff carries the records already checked.</p>
     </div>
 
     <div class="stats" role="list" aria-label="Measured outcomes and delivery receipts">
