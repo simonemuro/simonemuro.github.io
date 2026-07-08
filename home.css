@@ -502,10 +502,9 @@ body.home-lite .case-visual{
   text-decoration:none;
   position:relative;
   overflow:hidden;
-  padding:18px;
-  display:flex;
-  flex-direction:column;
-  gap:16px;
+  padding:0;
+  display:grid;
+  grid-template-rows:minmax(0,1fr) auto;
 }
 
 body.home-lite .case-visual:hover,
@@ -515,10 +514,38 @@ body.home-lite .case-visual:focus-visible{
 }
 
 body.home-lite .screen-title{
-  position:relative;
+  position:absolute;
+  top:16px;
+  left:16px;
   z-index:2;
   display:block;
+  padding:7px 9px;
+  background:rgba(255,250,241,.9);
+  border:1px solid rgba(224,207,176,.78);
   color:var(--accent);
+}
+
+body.home-lite .artifact-frame{
+  display:block;
+  min-height:300px;
+  height:100%;
+  overflow:hidden;
+}
+
+body.home-lite .artifact-frame img{
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:300px;
+  object-fit:cover;
+  object-position:center;
+  transition:transform .45s ease, filter .45s ease;
+}
+
+body.home-lite .case-visual:hover .artifact-frame img,
+body.home-lite .case-visual:focus-visible .artifact-frame img{
+  transform:scale(1.025);
+  filter:saturate(1.03);
 }
 
 body.home-lite .case-copy{
@@ -641,6 +668,10 @@ body.home-lite .decision-row{
 }
 
 body.home-lite .thumb-caption{
+  display:block;
+  padding:14px 16px;
+  border-top:1px solid var(--hair);
+  background:#fffaf1;
   color:var(--accent);
   font-size:.6rem;
   letter-spacing:.12em;
