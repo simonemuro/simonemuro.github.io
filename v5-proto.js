@@ -10,6 +10,7 @@
   var ctl = document.getElementById('proto-ctl');
   var btn = document.getElementById('proto-play');
   var lab = document.getElementById('proto-play-lab');
+  var proto = document.getElementById('proto');
   if (!body || !ctl || !btn || !lab) return;
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -72,9 +73,20 @@
     }
   }
 
-  var PLAN = 'Let me confirm a few things before I open your billing, trace why this cycle looks different, and check whether any of it can be eased for you.';
+  var explainOnly = proto && proto.getAttribute('data-proto-mode') === 'explain-only';
 
-  var WORK_STEPS = [
+  var PLAN = explainOnly ?
+    'Let me confirm a few things before I open your billing, trace why this cycle looks different, and verify whether it was a duplicate charge.' :
+    'Let me confirm a few things before I open your billing, trace why this cycle looks different, and check whether any of it can be eased for you.';
+
+  var WORK_STEPS = explainOnly ? [
+    { act: 'Verifying account access', res: 'account owner · verified', dwell: 720 },
+    { act: 'Reading your plan', res: 'Plus plan · Payroll · Payments', dwell: 780 },
+    { act: 'Counting your team', res: '16 active · 2 added this cycle', dwell: 800 },
+    { act: 'Pulling this cycle’s charges', res: '$288.00 · $60 more than last month', dwell: 880 },
+    { act: 'Finding what changed', res: 'welcome rate ended <span class="em">+$48</span> · 2 seats +$12', dwell: 900 },
+    { act: 'Verifying billing logic', res: 'base plan unchanged · not a duplicate charge', dwell: 920 }
+  ] : [
     { act: 'Verifying account access', res: 'account owner · verified', dwell: 720 },
     { act: 'Reading your plan', res: 'Plus plan · Payroll · Payments', dwell: 780 },
     { act: 'Counting your team', res: '16 active · 2 added this cycle', dwell: 800 },
@@ -84,7 +96,9 @@
   ];
 
   var LEAD = 'Here is what is behind the $288.00 this cycle.';
-  var SAY = 'Two things changed it. First, you added 2 team members at $6 each, which adds $12 and covers their payroll tax filings automatically. Second, your 6-month welcome rate finished this cycle, which had been taking $48 off your bill. Together those bring your monthly total from $228 to $288, an increase of $60. Everything else is the same plan you already had.';
+  var SAY = explainOnly ?
+    'Two things changed it. First, you added 2 team members at $6 each, which adds $12. Second, your 6-month welcome rate finished this cycle, which had been taking $48 off your bill. Together those bring your monthly total from $228 to $288, an increase of $60. Your base plan did not change.' :
+    'Two things changed it. First, you added 2 team members at $6 each, which adds $12 and covers their payroll tax filings automatically. Second, your 6-month welcome rate finished this cycle, which had been taking $48 off your bill. Together those bring your monthly total from $228 to $288, an increase of $60. Everything else is the same plan you already had.';
 
   var ROWS_HTML =
     '<div class="m-row" role="row"><span class="rlab" role="cell"><b>Plus plan</b><span class="rsub">base subscription, monthly</span></span><span class="ramt" role="cell">$99.00</span></div>' +
@@ -167,6 +181,20 @@
     agent1.appendChild(change);
     show(change);
     await wait(700);
+
+    if (explainOnly) {
+      var explainChips = el('div', 'proto-chips');
+      ['View billing history', 'Review invoice details'].forEach(function (t) {
+        explainChips.appendChild(el('span', 'proto-chip', t));
+      });
+      agent1.appendChild(explainChips);
+      show(explainChips);
+      await wait(720);
+      running = false;
+      btn.disabled = false;
+      lab.textContent = 'Replay the prototype';
+      return;
+    }
 
     var offer = el('p');
     agent1.appendChild(offer);

@@ -54,7 +54,7 @@
           <h2>Demo billing agent</h2>
         </div>
       </div>
-      <div class="mock proto" id="proto" aria-label="Working prototype of a billing agent explaining a $288 subscription charge and easing it after customer consent. Pre-scripted run on mock data.">
+      <div class="mock proto" id="proto" data-proto-mode="explain-only" aria-label="Working prototype of a billing agent explaining a $288 subscription charge. Pre-scripted run on mock data.">
         <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Subscription charge</span><span class="mtag mtag-proto">Target · prototype</span></div>
         <div class="mock-body" id="proto-body">
           <div class="m-user">I see a $288 charge on my card I do not recognize. Can you help me understand it?</div>
@@ -62,18 +62,18 @@
             <details class="m-work proto-work" open>
               <summary><span class="chev" aria-hidden="true">&#8250;</span><span class="wlab">Work done</span></summary>
               <div class="proto-workbody">
-                <p class="proto-plan">Checked account access, plan, add-ons, team members, recent charges, and whether the ended welcome rate could be extended.</p>
+                <p class="proto-plan">Checked account access, plan, add-ons, team members, recent charges, and prior-cycle discount.</p>
                 <div class="proto-steps">
                   <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Finding what changed</span><span class="pres">welcome rate ended <span class="em">+$48</span> · 2 seats +$12</span></div>
-                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Checking what could ease the increase</span><span class="pres">welcome rate may extend · annual billing available</span></div>
+                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Verifying billing logic</span><span class="pres">base plan unchanged · not a duplicate charge</span></div>
                 </div>
               </div>
             </details>
             <p class="proto-lead">Here is what is behind the $288.00 this cycle.</p>
-            <p>Two things changed it: your six-month welcome rate ended, and two team members were added. I can request an extension before I do anything else.</p>
+            <p>Two things changed it: your six-month welcome rate ended, and two team members were added. Your base plan did not change.</p>
             <div class="proto-chips" aria-hidden="true">
-              <span class="proto-chip">Extend welcome rate</span>
-              <span class="proto-chip">Other ways to save</span>
+              <span class="proto-chip">View billing history</span>
+              <span class="proto-chip">Review invoice details</span>
             </div>
           </div>
         </div>
@@ -81,7 +81,7 @@
       <div class="proto-ctl" id="proto-ctl" hidden>
         <button type="button" class="proto-play" id="proto-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg><span id="proto-play-lab">Play the prototype</span></button>
       </div>
-      <p class="mock-cap">Pre-scripted replay · no live model · mock data only. The full case explains the product strategy and the successor BillingSkill build.</p>
+      <p class="mock-cap">Pre-scripted replay · no live model · mock data only. The full case explains the product strategy and the successor billing skill build.</p>
     </div>
   </section>
 
@@ -112,8 +112,8 @@
 
     <div class="case-stack">
       <article class="case-feature io" style="--d:0">
-        <a class="case-visual agent-skill" href="billing-skill.html" aria-label="Open BillingSkill case study">
-          <span class="screen-title mono">BillingSkill</span>
+        <a class="case-visual agent-skill" href="billing-skill.html" aria-label="Open billing skill case study">
+          <span class="screen-title mono">billing skill</span>
           <span class="skill-line wide"></span>
           <span class="skill-line"></span>
           <span class="skill-chip">admin check</span>

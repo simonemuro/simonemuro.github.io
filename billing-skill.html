@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="How a high-volume QuickBooks billing problem became BillSkill: an internal hackathon prototype for account-aware billing answers, cancellation routing, and agent evals. Case 02.">
-<meta property="og:title" content="BillingSkill · Simone Muro">
+<meta name="description" content="How a high-volume QuickBooks billing problem became a billing skill: an internal hackathon prototype for account-aware billing answers, cancellation routing, and agent evals. Case 02.">
+<meta property="og:title" content="billing skill · Simone Muro">
 <meta property="og:description" content="An honest case study on turning Digital Assistant billing research into a hackathon-built, account-aware support agent prototype.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/billing-skill.html">
 <meta name="twitter:card" content="summary">
-<title>BillingSkill · Simone Muro</title>
+<title>billing skill · Simone Muro</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="v5.css">
 </head>
@@ -35,11 +35,11 @@
   <section class="wrap titleblock" aria-labelledby="case-h">
     <p class="kicker mono">
       <span class="knum">Case No. 02</span>
-      <span>BillingSkill</span>
+      <span>billing skill</span>
       <span>Agentic support platform</span>
     </p>
     <h1 id="case-h">Turning billing anxiety into an account-aware agent prototype.</h1>
-    <p class="lede">I knew the problem from building in QuickBooks Digital Assistant: customers were asking about charges they did not recognize, refunds, cancellations, and pricing, and the assistant could mostly send them to settings. When a company-wide challenge asked teams to increase build velocity and deliver customer value faster, I used that real problem space to build BillSkill: a working proof of concept that let the agent read billing context, explain what changed, and route safely when the moment became cancellation or refund risk.</p>
+    <p class="lede">I knew the problem from building in QuickBooks Digital Assistant: customers were asking about charges they did not recognize, refunds, cancellations, and pricing, and the assistant could mostly send them to settings. When a company-wide challenge asked teams to increase build velocity and deliver customer value faster, I used that real problem space to build a billing skill: a working proof of concept that let the agent read billing context, explain what changed, and route safely when the moment became cancellation or refund risk.</p>
 
     <dl class="factrow">
       <div><dt>Why this problem</dt><dd>1M+ annual billing, cancel, and refund contacts; low-satisfaction support cluster; clear cost-to-serve and churn risk</dd></div>
@@ -48,7 +48,7 @@
       <div><dt>Status</dt><dd>Hackathon proof of concept; local stack with controlled test-account billing data; not a shipped production skill</dd></div>
     </dl>
 
-    <div class="journey-map" aria-label="BillingSkill story journey">
+    <div class="journey-map" aria-label="billing skill story journey">
       <div><span class="jnum">01</span><b>Known problem</b><p>Billing questions created anxiety because customers could see money leaving, but not why.</p></div>
       <div><span class="jnum">02</span><b>Unhelpful answer</b><p>The assistant gave generic guidance when customers needed account-specific explanation.</p></div>
       <div><span class="jnum">03</span><b>Target state</b><p>Use account data to explain charges, then hand off safely for cancel, refund, or plan changes.</p></div>
@@ -56,7 +56,7 @@
       <div><span class="jnum">05</span><b>Proof</b><p>Working prototype, human-in-the-loop cancel widget, and 108 eval cases across billing scenarios.</p></div>
     </div>
 
-    <div class="lab-hero" aria-label="BillingSkill case snapshot">
+    <div class="lab-hero" aria-label="billing skill case snapshot">
       <div class="proof-copy">
         <span class="visual-label">Case snapshot</span>
         <h2>A hackathon POC with a product spine.</h2>
@@ -127,7 +127,7 @@
       <div class="ii-buttons" aria-hidden="true">
         <span>Show detailed billing charges breakdown</span>
         <span>Explain charges for additional services</span>
-        <span>Connect with an expert for further help</span>
+        <span>Compare subscription costs by month</span>
       </div>
       <div class="failure-stack" aria-label="Why the before-state answer failed">
         <span><b>Generic</b> Lists possible causes instead of using the customer&rsquo;s account.</span>
@@ -161,8 +161,8 @@
     <h2 id="p3-h">The hackathon was a way to prove the target state.</h2>
     <div class="prose">
       <p>The DA MVP had a pragmatic strategy: classify the customer&rsquo;s billing question better, respond with empathy, and deep-link to billing history while richer data access remained future work. That was the right near-term move, but it still left the customer doing the detective work.</p>
-      <p>BillSkill was the hackathon answer to the next question: what would it look like if the assistant could actually know the customer? Not in a vague personalization sense, but in a product-safe way: plan, add-ons, billing date, recent charge history, and admin boundaries.</p>
-      <p>The internal challenge was about build velocity: the classic path from idea to requirements, design, build, test, review, and release had too much translation work, coordination churn, and low-value execution. BillingSkill was the right kind of proof because I could turn a known roadmap problem into something people could run, inspect, and evaluate in days.</p>
+      <p>The billing skill was the hackathon answer to the next question: what would it look like if the assistant could actually know the customer? Not in a vague personalization sense, but in a product-safe way: plan, add-ons, billing date, recent charge history, and admin boundaries.</p>
+      <p>The internal challenge was about build velocity: the classic path from idea to requirements, design, build, test, review, and release had too much translation work, coordination churn, and low-value execution. The billing skill was the right kind of proof because I could turn a known roadmap problem into something people could run, inspect, and evaluate in days.</p>
       <p>The value of the POC was not that it shipped. It proved the shape of the experience, the tool contract, the handoff boundary, and the eval surface needed to make account-aware billing support real.</p>
     </div>
 
@@ -273,7 +273,7 @@ read plan + payroll + team members -> <span class="ok">ok</span>
 answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
     </div>
 
-    <div class="debug-grid" aria-label="Model behavior fixes from local BillingSkill testing">
+    <div class="debug-grid" aria-label="Model behavior fixes from local billing skill testing">
       <article class="debug-card">
         <span class="visual-label">Model behavior bug</span>
         <h3>Formula leak</h3>
@@ -302,14 +302,14 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
       <div class="artifact-copy">
         <span class="visual-label">Prototype evidence</span>
         <h2>I tested the build, not the deck.</h2>
-        <p>I used Cursor and the model as build partners, then treated every generated behavior as something to verify. I ran the local harness in Streamlit, pointed it at the agent stack, and tested the hard cases: unfamiliar charge, changed amount, cancel intent, no-thanks fallback, and expert handoff. The raw screenshots include private run metadata, so this is reconstructed with mock IDs.</p>
+        <p>I used Cursor and the model as build partners, then treated every generated behavior as something to verify. I ran the local harness in Streamlit, pointed it at the agent stack, and tested the hard cases: unfamiliar charge, changed amount, cancel intent, no-thanks fallback, and saves-expert handoff. The raw screenshots include private run metadata, so this is reconstructed with mock IDs.</p>
         <ul class="artifact-list">
           <li><b>Harness</b><span>Streamlit chat surface with endpoint selection, clear chat, and conversation export.</span></li>
           <li><b>Scenarios</b><span>Unrecognized charge, changed amount, cancel subscription, cancel account, show me the steps.</span></li>
-          <li><b>Signals</b><span>Run time, tool trace, handoff decision, widget state, and whether the answer stayed inside boundaries.</span></li>
+          <li><b>Signals</b><span>Run time, tool trace, answer grounding, escalation boundary, and whether the response stayed inside the right intent.</span></li>
         </ul>
       </div>
-      <figure class="streamlit-artifact" aria-label="Recreated Streamlit prototype run for BillingSkill">
+      <figure class="streamlit-artifact" aria-label="Recreated Streamlit prototype run for the billing skill">
         <figcaption class="mono"><span>local streamlit test harness</span><span>public-safe reconstruction</span></figcaption>
         <div class="streamlit-shell">
           <aside class="streamlit-side" aria-hidden="true">
@@ -335,12 +335,8 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
               <ul>
                 <li>Welcome rate ended, removing a $48 discount.</li>
                 <li>Two team members were added at $6 each.</li>
-                <li>The next step is human review if the customer did not make those changes.</li>
+                <li>If the customer still does not recognize the activity, the answer should invite follow-up review without switching into a cancel flow.</li>
               </ul>
-              <div class="streamlit-actions" aria-hidden="true">
-                <span>Connect with an expert</span>
-                <span>Show me the steps</span>
-              </div>
             </div>
             <div class="run-meta mono">total time 28.3s · run metadata redacted</div>
           </div>
@@ -373,9 +369,9 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
   <!-- ================= 07 · results ================= -->
   <section class="wrap part" id="results" aria-labelledby="p7-h">
     <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
-    <h2 id="p7-h">The target state, running.</h2>
+    <h2 id="p7-h">The billing agent, running.</h2>
     <div class="prose">
-      <p>The output below is a public reconstruction of the read-only build: it explains a charge from account-style data, shows the calculation in plain English, and hands anything further to a person. The actual hackathon run used a controlled test account; the business name and amounts here are invented.</p>
+      <p>The output below is a public reconstruction of the read-only build: it explains a charge from account-style data, shows the calculation in plain English, and stops short of cancel, refund, or plan-change behavior. The actual hackathon run used a controlled test account; the business name and amounts here are invented.</p>
     </div>
 
     <div class="agent-evidence" aria-label="Account data to answer behavior">
@@ -385,27 +381,34 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
           <div><b>Plan</b><span>Plus plan, Payroll, Payments processing.</span></div>
           <div><b>Change</b><span>Welcome rate ended and two team members were added.</span></div>
           <div><b>Total</b><span>$288 this cycle, $60 over the prior cycle.</span></div>
-          <div><b>Boundary</b><span>Explain and route; no cancellation or refund action.</span></div>
+          <div><b>Boundary</b><span>Explain first; do not switch into cancel, refund, or retention behavior.</span></div>
         </div>
       </div>
       <div class="artifact-copy">
         <span class="visual-label">Output behavior</span>
-        <h2>Answer the why, then offer the safe next step.</h2>
+        <h2>Answer the why. Do not jump to retention.</h2>
         <p>This is the craft: a financial answer has to be specific enough to build trust and constrained enough not to over-act.</p>
       </div>
     </div>
 
-    <div class="mockwrap">
-      <div class="mock" aria-label="Recreated chat: the same billing question answered with the specific charge, a breakdown, and a human handoff">
-        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Support assistant</span><span class="mtag">Recreation</span></div>
+    <div class="mockwrap case-demo">
+      <div class="mock proto" aria-label="Recreated billing agent prototype explaining a $288 subscription charge from mock account data">
+        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">billing skill</span><span class="mtag mtag-proto">Prototype</span></div>
         <div class="mock-body">
           <div class="m-user">I see a $288 charge on my card I do not recognize. Can you help me understand it?</div>
           <div class="m-agent">
-            <details class="m-work">
-              <summary><span class="chev" aria-hidden="true">&#8250;</span>Work done</summary>
-              <p class="m-worknote">Looked up the subscription, active add-ons, team members, and the last two charges for Harbor Lane Pottery.</p>
+            <details class="m-work proto-work" open>
+              <summary><span class="chev" aria-hidden="true">&#8250;</span><span class="wlab">Work done</span></summary>
+              <div class="proto-workbody">
+                <p class="proto-plan">Checked account access, plan, add-ons, team members, recent charges, and prior-cycle discount.</p>
+                <div class="proto-steps">
+                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Finding what changed</span><span class="pres">welcome rate ended <span class="em">+$48</span> &middot; 2 seats +$12</span></div>
+                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Verifying billing logic</span><span class="pres">base plan unchanged &middot; not a duplicate charge</span></div>
+                </div>
+              </div>
             </details>
-            <p>That $288.00 is this cycle&rsquo;s subscription charge. It is $60.00 more than your usual $228.00 for two reasons: 2 team members were added at $6.00 each, which adds $12.00, and your 6-month welcome rate ended, which had been taking $48.00 off. Your base plan price did not change.</p>
+            <p class="proto-lead">Here is what is behind the $288.00 this cycle.</p>
+            <p>That $288.00 is this cycle&rsquo;s subscription charge. It is $60.00 more than your usual $228.00 for two reasons: two team members were added at $6.00 each, which adds $12.00, and your six-month welcome rate ended, which had been taking $48.00 off. Your base plan price did not change.</p>
             <div class="m-rows" role="table" aria-label="Charge breakdown, this cycle">
               <div class="m-row" role="row"><span class="rlab" role="cell"><b>Plus plan</b><span class="rsub">base subscription, monthly</span></span><span class="ramt" role="cell">$99.00</span></div>
               <div class="m-row" role="row"><span class="rlab" role="cell"><b>Payroll</b><span class="rsub">monthly subscription</span></span><span class="ramt" role="cell">$50.00</span></div>
@@ -413,25 +416,26 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
               <div class="m-row" role="row"><span class="rlab" role="cell"><b>Payments processing</b><span class="rsub">card fees this month</span></span><span class="ramt" role="cell">$43.00</span></div>
               <div class="m-row total" role="row"><span class="rlab" role="cell">Total this cycle</span><span class="ramt" role="cell">$288.00</span></div>
             </div>
-            <p>If you did not add those team members, or this still does not look right, I can bring in a person.</p>
-            <div class="m-handoff">
-              <p class="hff-t">Review this charge with a specialist</p>
-              <p class="hff-p">A billing specialist can walk through this charge and the safest next step with you.</p>
-              <div class="m-actions">
-                <span class="m-btn primary">Talk to a specialist</span>
-                <span class="m-btn ghost">Keep my plan</span>
-              </div>
+            <div class="proto-change">
+              <div class="pch-head"><span>Changed this cycle</span><span class="pch-amt">+$60.00</span></div>
+              <div class="pch-row"><span>Two team members added</span><span class="pch-amt">+$12.00</span></div>
+              <div class="pch-row"><span>Six-month welcome rate ended</span><span class="pch-amt">+$48.00</span></div>
+            </div>
+            <p>If those changes do not look familiar, I can help review your billing history or invoice details.</p>
+            <div class="proto-chips" aria-hidden="true">
+              <span class="proto-chip">View billing history</span>
+              <span class="proto-chip">Review invoice details</span>
             </div>
           </div>
         </div>
         <div class="m-composer" aria-hidden="true">Ask anything</div>
         <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
       </div>
-      <p class="mock-cap">The skill&rsquo;s target answer, reconstructed from a working end-to-end run. Interface simplified. Business name and amounts are invented. Neither closing button is cancel.</p>
+      <p class="mock-cap">Pre-scripted replay &middot; no live model &middot; mock data only. The case explains the skill behavior, tool contract, and eval gate behind this answer.</p>
     </div>
 
     <div class="prose">
-      <p class="opens">The production impact belongs to the earlier DA billing work, not this hackathon POC. What BillSkill proved was different: the target state was buildable, testable, and strong enough to evaluate as an agent skill.</p>
+      <p class="opens">The production impact belongs to the earlier DA billing work, not this hackathon POC. What the billing skill proved was different: the target state was buildable, testable, and strong enough to evaluate as an agent skill.</p>
     </div>
 
     <div class="stats" role="list" aria-label="Projected impact model">
