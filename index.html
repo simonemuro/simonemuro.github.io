@@ -15,7 +15,6 @@
 <link rel="stylesheet" href="v4.css">
 <link rel="stylesheet" href="home.css">
 <script src="v4.js" defer></script>
-<script src="v5-proto.js" defer></script>
 </head>
 <body class="home-lite">
 
@@ -52,100 +51,64 @@
     </div>
   </section>
 
-  <section class="shell work work-simple" id="work" aria-label="Selected case studies">
-    <div class="case-stack">
-      <article class="case-feature io" style="--d:0">
-        <a class="case-visual case-thumb billing-thumb" href="billing-skill.html" aria-label="Open billing skill case study">
-          <span class="screen-title mono">billing skill</span>
-          <span class="artifact-frame">
-            <img src="assets/work/billing-artifact.jpg" alt="Redacted artifact preview of a billing assistant response">
-          </span>
-          <span class="thumb-caption mono">Redacted product artifact</span>
+  <section class="shell work work-simple" id="work" aria-labelledby="work-h">
+    <div class="work-heading io" style="--d:0">
+      <p class="eyebrow mono">Selected work</p>
+      <h2 id="work-h">Sample work</h2>
+    </div>
+    <div class="project-grid">
+      <article class="project-card io" style="--d:1">
+        <a class="project-image" href="billing-skill.html" aria-label="Open billing skill case study">
+          <img src="assets/work/billing-artifact.jpg" alt="Redacted artifact preview of a billing assistant moving from generic guidance to an account-aware answer">
         </a>
-        <div class="case-copy">
-          <p class="case-kicker mono">Flagship · builder proof · AI product</p>
+        <div class="project-body">
+          <p class="project-meta mono">Billing skill · AI product</p>
           <h3><a href="billing-skill.html">Built the agent skill that explains QuickBooks subscription charges.</a></h3>
-          <p>I moved the target state from concept to working build: skill spec, read-only lookup tool, mock/eval/dev modes, and a 108-case eval set. Built solo, AI-paired, in five days.</p>
-          <dl class="case-proof">
-            <div><dt>Owned</dt><dd>Skill behavior, tool contract, eval design, API blocker handling.</dd></div>
-            <div><dt>Proof</dt><dd>Working prototype, read-only lookup, and 108-case eval gate.</dd></div>
-          </dl>
+          <p>I turned a known billing-support problem into a working account-aware skill, with lookup tools, mock/eval modes, and a 108-case launch gate.</p>
         </div>
       </article>
 
-      <article class="case-feature io" style="--d:1">
-        <a class="case-visual case-thumb payroll-thumb" href="payroll-intelligence.html" aria-label="Open Payroll Intelligence case study">
-          <span class="screen-title mono">Payroll agent</span>
-          <span class="artifact-frame">
-            <img src="assets/work/payroll-artifact.jpg" alt="Redacted artifact preview of a payroll diagnostic assistant response">
-          </span>
-          <span class="thumb-caption mono">Redacted agent surface</span>
+      <article class="project-card io" style="--d:2">
+        <a class="project-image" href="payroll-intelligence.html" aria-label="Open Payroll Intelligence case study">
+          <img src="assets/work/payroll-artifact.jpg" alt="Redacted artifact preview of a payroll diagnostic response with evidence and handoff context">
         </a>
-        <div class="case-copy">
-          <p class="case-kicker mono">Agent behavior · high-stakes support</p>
+        <div class="project-body">
+          <p class="project-meta mono">Payroll agent · high-stakes support</p>
           <h3><a href="payroll-intelligence.html">Designed payroll diagnostic behavior: read first, ask only when needed, hand off with context.</a></h3>
-          <p>The work was not a better answer. It was a better sequence of action: what the agent should read, what it may ask only from the customer, and where it should stop.</p>
-          <dl class="case-proof">
-            <div><dt>Owned</dt><dd>Diagnostic framework, prompt structure, golden answers, handoff criteria.</dd></div>
-            <div><dt>Proof</dt><dd>Behavior rules, before/after examples, and handoff decision criteria.</dd></div>
-          </dl>
+          <p>The work defined what the agent should inspect silently, what only the customer could answer, and when a human needed the full diagnostic context.</p>
         </div>
       </article>
 
-      <article class="case-feature io" style="--d:2">
-        <a class="case-visual case-thumb quality-thumb" href="quality-program.html" aria-label="Open quality program case study">
-          <span class="screen-title mono">Quality system</span>
-          <span class="artifact-frame">
-            <img src="assets/work/quality-artifact.jpg" alt="Redacted artifact preview of an evaluation review matrix">
-          </span>
-          <span class="thumb-caption mono">Redacted eval artifact</span>
+      <article class="project-card io" style="--d:3">
+        <a class="project-image" href="quality-program.html" aria-label="Open quality program case study">
+          <img src="assets/work/quality-artifact.jpg" alt="Redacted spreadsheet artifact preview for human review of model quality">
         </a>
-        <div class="case-copy">
-          <p class="case-kicker mono">AI enablement · eval systems</p>
+        <div class="project-body">
+          <p class="project-meta mono">AI enablement · eval systems</p>
           <h3><a href="quality-program.html">Scaled evaluation from manual authoring to a faster human-in-the-loop pipeline.</a></h3>
-          <p>I owned the quality program and built the generator pattern that turned blank-row authoring into review. The program measured gains across Help, Payroll, and Insights.</p>
-          <dl class="case-proof">
-            <div><dt>Owned</dt><dd>Golden dataset process, judge criteria, pipeline behavior, quality gates.</dd></div>
-            <div><dt>Proof</dt><dd>3,000+ rows, LLM judge criteria, and human review workflow.</dd></div>
-          </dl>
+          <p>I built the generator pattern and review workflow that moved thousands of golden-data rows from blank-page authoring into structured review.</p>
         </div>
       </article>
 
-      <article class="case-feature io" style="--d:3">
-        <a class="case-visual case-thumb voice-thumb" href="voice.html" aria-label="Open voice case study">
-          <span class="screen-title mono">GenAI voice</span>
-          <span class="artifact-frame">
-            <img src="assets/work/voice-artifact.jpg" alt="Artifact preview derived from a voice response audio file">
-          </span>
-          <span class="thumb-caption mono">Audio behavior artifact</span>
+      <article class="project-card io" style="--d:4">
+        <a class="project-image" href="voice.html" aria-label="Open voice case study">
+          <img src="assets/work/voice-artifact.jpg" alt="Waveform artifact from a GenAI voice assistant response">
         </a>
-        <div class="case-copy">
-          <p class="case-kicker mono">Voice AI · launched experience</p>
+        <div class="project-body">
+          <p class="project-meta mono">Voice AI · launched experience</p>
           <h3><a href="voice.html">Co-designed one of Intuit's first GenAI phone experiences.</a></h3>
-          <p>Voice has no screen to rescue it. The work was deciding what the model could say in seconds, when to clarify, and when to bring in a person.</p>
-          <dl class="case-proof">
-            <div><dt>Owned</dt><dd>Voice-ready summaries, disambiguation logic, response criteria, escalation moments.</dd></div>
-            <div><dt>Proof</dt><dd>Launched experience with +3.9 pp containment lift.</dd></div>
-          </dl>
+          <p>Voice has no screen to rescue it, so the work was deciding what the model could say in seconds, when to clarify, and when to hand off.</p>
         </div>
       </article>
 
-      <article class="case-feature io" style="--d:4">
-        <a class="case-visual case-thumb classifier-thumb" href="cancellation-saves.html" aria-label="Open Cancellation Saves case study">
-          <span class="screen-title mono">Savability classifier</span>
-          <span class="artifact-frame">
-            <img src="assets/work/classifier-artifact.jpg" alt="Redacted artifact preview of a cancellation support flow">
-          </span>
-          <span class="thumb-caption mono">Redacted routing artifact</span>
+      <article class="project-card io" style="--d:5">
+        <a class="project-image" href="cancellation-saves.html" aria-label="Open Cancellation Saves case study">
+          <img src="assets/work/classifier-artifact.jpg" alt="Redacted local test artifact preview for cancellation and subscription-cost behavior">
         </a>
-        <div class="case-copy">
-          <p class="case-kicker mono">Classifier strategy · Responsible AI</p>
+        <div class="project-body">
+          <p class="project-meta mono">Classifier strategy · responsible AI</p>
           <h3><a href="cancellation-saves.html">Designed a saves flow and LLM classifier for cancellation intent.</a></h3>
-          <p>The model's job was not to persuade. It was to classify the reason, decide whether a save path existed, and route the customer without hallucinating.</p>
-          <dl class="case-proof">
-            <div><dt>Owned</dt><dd>Savability definition, prompt behavior, structured output, safety bar.</dd></div>
-            <div><dt>Proof</dt><dd>Structured classifier with 96.6% accuracy in evaluation.</dd></div>
-          </dl>
+          <p>The model's job was not to persuade. It was to classify the reason, decide whether a save path existed, and route without inventing a reason to retain.</p>
         </div>
       </article>
     </div>
