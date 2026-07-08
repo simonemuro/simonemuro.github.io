@@ -1834,9 +1834,108 @@ body.v5 .pa.in{
   opacity:1;transform:none;
   transition:opacity .45s ease,transform .45s cubic-bezier(.22,1,.36,1);
 }
+
+body.v5 .case-proto-showcase{
+  display:grid;
+  grid-template-columns:minmax(0,.78fr) minmax(320px,440px);
+  gap:clamp(28px,5vw,64px);
+  align-items:start;
+  margin:clamp(34px,6vh,58px) 0 0;
+}
+
+body.v5 .case-proto-copy{
+  position:sticky;
+  top:96px;
+}
+
+body.v5 .case-proto-copy h2{
+  margin:10px 0 0;
+  max-width:10ch;
+}
+
+body.v5 .case-proto-copy p{
+  margin:18px 0 0;
+  max-width:42ch;
+  color:var(--sub);
+  line-height:1.6;
+}
+
+body.v5 .case-proto-card{
+  background:var(--card);
+  border:1px solid var(--hair);
+  padding:18px;
+  box-shadow:0 24px 70px rgba(70,55,30,.08);
+}
+
+body.v5 .case-proto-card .proof-top{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--hair);
+}
+
+body.v5 .case-proto-card .proof-top p{
+  margin:0 0 4px;
+  color:var(--sub);
+  font-size:.62rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+body.v5 .case-proto-card .proof-top h2{
+  font-family:var(--serif);
+  font-size:1.55rem;
+  line-height:1;
+  margin:0;
+}
+
+body.v5 .case-proto-card .mock{
+  margin-top:16px;
+  max-width:none;
+  box-shadow:none;
+}
+
+body.v5 .case-proto-card .mock-body{
+  max-height:440px;
+  overflow:auto;
+  scrollbar-color:var(--hair-strong) transparent;
+}
+
+body.v5 .case-proto-card .proto-ctl,
+body.v5 .case-proto-card .mock-cap{
+  max-width:none;
+}
+
+body.v5 .case-proto-card .proto-play{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:var(--card);
+}
+
+body.v5 .case-proto-card .proto-play:hover{
+  background:var(--accent-deep);
+  border-color:var(--accent-deep);
+  color:var(--card);
+}
+
 @media (prefers-reduced-motion:reduce){
   body.v5 .pa{opacity:1;transform:none;}
   body.v5 .proto-step.busy .pnode,body.v5 .proto-caret{animation:none;}
+}
+
+@media (max-width:900px){
+  body.v5 .case-proto-showcase{
+    grid-template-columns:1fr;
+  }
+
+  body.v5 .case-proto-copy{
+    position:static;
+  }
+
+  body.v5 .case-proto-copy h2{
+    max-width:16ch;
+  }
 }
 
 /* ---------- trace figure (the config bug) ---------- */

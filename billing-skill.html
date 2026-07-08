@@ -13,6 +13,7 @@
 <title>billing skill · Simone Muro</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="v5.css">
+<script src="v5-proto.js" defer></script>
 </head>
 <body class="v5">
 
@@ -306,7 +307,7 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
         <ul class="artifact-list">
           <li><b>Harness</b><span>Streamlit chat surface with endpoint selection, clear chat, and conversation export.</span></li>
           <li><b>Scenarios</b><span>Unrecognized charge, changed amount, cancel subscription, cancel account, show me the steps.</span></li>
-          <li><b>Signals</b><span>Run time, tool trace, answer grounding, escalation boundary, and whether the response stayed inside the right intent.</span></li>
+          <li><b>Run evidence</b><span>Run time, tool trace, answer grounding, escalation boundary, and whether the response stayed inside the right intent.</span></li>
         </ul>
       </div>
       <figure class="streamlit-artifact" aria-label="Recreated Streamlit prototype run for the billing skill">
@@ -374,27 +375,22 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
       <p>The output below is a public reconstruction of the read-only build: it explains a charge from account-style data, shows the calculation in plain English, and stops short of cancel, refund, or plan-change behavior. The actual hackathon run used a controlled test account; the business name and amounts here are invented.</p>
     </div>
 
-    <div class="agent-evidence" aria-label="Account data to answer behavior">
-      <div class="spec-sheet">
-        <div class="board-title mono"><span>mock account readout</span><span>public data</span></div>
-        <div class="spec-grid">
-          <div><b>Plan</b><span>Plus plan, Payroll, Payments processing.</span></div>
-          <div><b>Change</b><span>Welcome rate ended and two team members were added.</span></div>
-          <div><b>Total</b><span>$288 this cycle, $60 over the prior cycle.</span></div>
-          <div><b>Boundary</b><span>Explain first; do not switch into cancel, refund, or retention behavior.</span></div>
+    <div class="case-proto-showcase" aria-label="Playable reconstructed target-state billing skill">
+      <div class="case-proto-copy">
+        <span class="visual-label">Target state built</span>
+        <h2>Demo billing agent</h2>
+        <p>This is the compact proof: the agent reads account-style data, explains an unrecognized charge, shows the math as plain language, and stays inside charge explainability instead of drifting into cancellation or retention behavior.</p>
+      </div>
+      <div class="case-proto-card">
+        <div class="proof-top">
+          <div>
+            <p class="mono">Playable prototype &middot; mock data</p>
+            <h2>billing skill</h2>
+          </div>
         </div>
-      </div>
-      <div class="artifact-copy">
-        <span class="visual-label">Output behavior</span>
-        <h2>Answer the why. Do not jump to retention.</h2>
-        <p>This is the craft: a financial answer has to be specific enough to build trust and constrained enough not to over-act.</p>
-      </div>
-    </div>
-
-    <div class="mockwrap case-demo">
-      <div class="mock proto" aria-label="Recreated billing agent prototype explaining a $288 subscription charge from mock account data">
-        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">billing skill</span><span class="mtag mtag-proto">Prototype</span></div>
-        <div class="mock-body">
+        <div class="mock proto" id="proto" data-proto-mode="explain-only" aria-label="Working prototype of a billing agent explaining a $288 subscription charge. Pre-scripted run on mock data.">
+          <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Subscription charge</span><span class="mtag mtag-proto">Target &middot; prototype</span></div>
+          <div class="mock-body" id="proto-body">
           <div class="m-user">I see a $288 charge on my card I do not recognize. Can you help me understand it?</div>
           <div class="m-agent">
             <details class="m-work proto-work" open>
@@ -428,10 +424,14 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
             </div>
           </div>
         </div>
-        <div class="m-composer" aria-hidden="true">Ask anything</div>
-        <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
+          <div class="m-composer" aria-hidden="true">Ask anything</div>
+          <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
+        </div>
+        <div class="proto-ctl" id="proto-ctl" hidden>
+          <button type="button" class="proto-play" id="proto-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg><span id="proto-play-lab">Play the prototype</span></button>
+        </div>
+        <p class="mock-cap">Pre-scripted replay &middot; no live model &middot; mock data only. The case explains the skill behavior, tool contract, and eval gate behind this answer.</p>
       </div>
-      <p class="mock-cap">Pre-scripted replay &middot; no live model &middot; mock data only. The case explains the skill behavior, tool contract, and eval gate behind this answer.</p>
     </div>
 
     <div class="prose">

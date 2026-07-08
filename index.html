@@ -36,90 +36,35 @@
 
 <main id="main">
 
-  <section class="hero-simple shell" aria-labelledby="hero-h">
+  <section class="hero-simple shell" id="about" aria-labelledby="hero-h">
     <div class="hero-copy">
-      <p class="eyebrow mono io" style="--d:0">Agentic AI design · product strategy · eval systems</p>
-      <h1 id="hero-h" class="io" style="--d:1">I design AI agents that know when to act, ask, stop, and hand off.</h1>
-      <p class="hero-lede io" style="--d:2">Then I build the prototype, write the evals, and turn the behavior into product decisions. Ten years across Meta, Apple Siri, Sam's Club, Intuit, and Credit Karma.</p>
+      <p class="eyebrow mono io" style="--d:0">About</p>
+      <h1 id="hero-h" class="io" style="--d:1">I work in the space where product intent becomes model behavior.</h1>
+      <p class="hero-lede io" style="--d:2">I design AI agents that know when to act, ask, stop, and hand off. Then I build the prototype, write the evals, and turn the behavior into product decisions.</p>
+      <p class="hero-lede io" style="--d:3">I started in language-model training and NLU, moved through production voice and chat assistants, then into LLM and agentic systems. My edge is translating messy customer problems into behaviors an AI system can execute, evaluate, and safely hand off.</p>
       <div class="hero-actions io" style="--d:3" aria-label="Primary actions">
         <a class="button primary" href="#work">View selected work</a>
         <a class="button" href="resume.html">Request resume</a>
       </div>
     </div>
-
-    <div class="hero-proof hero-proto io" style="--d:4" aria-label="Playable reconstructed billing agent prototype">
-      <div class="proof-top">
-        <div>
-          <p class="mono">Playable prototype · mock data</p>
-          <h2>Demo billing agent</h2>
-        </div>
-      </div>
-      <div class="mock proto" id="proto" data-proto-mode="explain-only" aria-label="Working prototype of a billing agent explaining a $288 subscription charge. Pre-scripted run on mock data.">
-        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Subscription charge</span><span class="mtag mtag-proto">Target · prototype</span></div>
-        <div class="mock-body" id="proto-body">
-          <div class="m-user">I see a $288 charge on my card I do not recognize. Can you help me understand it?</div>
-          <div class="m-agent">
-            <details class="m-work proto-work" open>
-              <summary><span class="chev" aria-hidden="true">&#8250;</span><span class="wlab">Work done</span></summary>
-              <div class="proto-workbody">
-                <p class="proto-plan">Checked account access, plan, add-ons, team members, recent charges, and prior-cycle discount.</p>
-                <div class="proto-steps">
-                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Finding what changed</span><span class="pres">welcome rate ended <span class="em">+$48</span> · 2 seats +$12</span></div>
-                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Verifying billing logic</span><span class="pres">base plan unchanged · not a duplicate charge</span></div>
-                </div>
-              </div>
-            </details>
-            <p class="proto-lead">Here is what is behind the $288.00 this cycle.</p>
-            <p>Two things changed it: your six-month welcome rate ended, and two team members were added. Your base plan did not change.</p>
-            <div class="proto-chips" aria-hidden="true">
-              <span class="proto-chip">View billing history</span>
-              <span class="proto-chip">Review invoice details</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="proto-ctl" id="proto-ctl" hidden>
-        <button type="button" class="proto-play" id="proto-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg><span id="proto-play-lab">Play the prototype</span></button>
-      </div>
-      <p class="mock-cap">Pre-scripted replay · no live model · mock data only. The full case explains the product strategy and the successor billing skill build.</p>
+    <div class="about-card hero-portrait io" style="--d:4">
+      <img src="assets/portrait.jpg" alt="Portrait of Simone Muro">
     </div>
   </section>
 
-  <section class="shell proof-strip" aria-label="Selected outcomes">
-    <a href="charge-lookup.html" class="proof-stat io" style="--d:0">
-      <span class="stat-num">~61%</span>
-      <span class="stat-copy">billing chat containment without a human expert</span>
-    </a>
-    <a href="quality-program.html" class="proof-stat io" style="--d:1">
-      <span class="stat-num">3,000+</span>
-      <span class="stat-copy">golden-dataset rows moved into a faster review pipeline</span>
-    </a>
-    <a href="voice.html" class="proof-stat io" style="--d:2">
-      <span class="stat-num">+3.9 pp</span>
-      <span class="stat-copy">GenAI voice containment lift at Bayesian significance</span>
-    </a>
-    <a href="cancellation-saves.html" class="proof-stat io" style="--d:3">
-      <span class="stat-num">96.6%</span>
-      <span class="stat-copy">savability classifier accuracy in evaluation</span>
-    </a>
-  </section>
-
-  <section class="shell work" id="work" aria-labelledby="work-h">
-    <div class="section-head">
-      <p class="eyebrow mono io" style="--d:0">Selected case studies</p>
-      <h2 id="work-h" class="io" style="--d:1">Five projects that show the full range: craft, product judgment, build, eval, launch.</h2>
-    </div>
-
+  <section class="shell work work-simple" id="work" aria-label="Selected case studies">
     <div class="case-stack">
       <article class="case-feature io" style="--d:0">
-        <a class="case-visual agent-skill" href="billing-skill.html" aria-label="Open billing skill case study">
+        <a class="case-visual case-thumb billing-thumb" href="billing-skill.html" aria-label="Open billing skill case study">
           <span class="screen-title mono">billing skill</span>
-          <span class="skill-line wide"></span>
-          <span class="skill-line"></span>
-          <span class="skill-chip">admin check</span>
-          <span class="skill-chip">charge lookup</span>
-          <span class="skill-chip">cancel intercept</span>
-          <span class="skill-score">108 evals · 13 intents</span>
+          <span class="thumb-shell agent-mini" aria-hidden="true">
+            <span class="thumb-top"><i></i><i></i><i></i></span>
+            <span class="thumb-user">I see a $288 charge I do not recognize.</span>
+            <span class="thumb-work">Work done · charge lookup</span>
+            <span class="thumb-answer"><b>What changed</b><em>Welcome rate ended +$48</em><em>2 team members +$12</em></span>
+            <span class="thumb-total"><b>Total this cycle</b><em>$288</em></span>
+          </span>
+          <span class="thumb-caption mono">Prototype · 108 evals</span>
         </a>
         <div class="case-copy">
           <p class="case-kicker mono">Flagship · builder proof · AI product</p>
@@ -127,19 +72,23 @@
           <p>I moved the target state from concept to working build: skill spec, read-only lookup tool, mock/eval/dev modes, and a 108-case eval set. Built solo, AI-paired, in five days.</p>
           <dl class="case-proof">
             <div><dt>Owned</dt><dd>Skill behavior, tool contract, eval design, API blocker handling.</dd></div>
-            <div><dt>Signals</dt><dd>PM tradeoffs, hands-on build, model behavior, testable launch gate.</dd></div>
+            <div><dt>Proof</dt><dd>Working prototype, read-only lookup, and 108-case eval gate.</dd></div>
           </dl>
         </div>
       </article>
 
       <article class="case-feature io" style="--d:1">
-        <a class="case-visual payroll-flow" href="payroll-intelligence.html" aria-label="Open Payroll Intelligence case study">
+        <a class="case-visual case-thumb payroll-thumb" href="payroll-intelligence.html" aria-label="Open Payroll Intelligence case study">
           <span class="screen-title mono">Payroll agent</span>
-          <span class="flow-node">read account</span>
-          <span class="flow-node">diagnose</span>
-          <span class="flow-node">ask if needed</span>
-          <span class="flow-node">handoff</span>
-          <span class="flow-result">customer-held facts only</span>
+          <span class="thumb-shell diag-mini" aria-hidden="true">
+            <span class="thumb-top"><i></i><i></i><i></i></span>
+            <span class="mini-row strong">Read account first</span>
+            <span class="mini-flow"><i>1</i><b>Tax setup</b><em>tool</em></span>
+            <span class="mini-flow"><i>2</i><b>Diagnosis</b><em>model</em></span>
+            <span class="mini-flow"><i>3</i><b>Ask if needed</b><em>customer-held facts</em></span>
+            <span class="mini-flow"><i>4</i><b>Handoff</b><em>context carried</em></span>
+          </span>
+          <span class="thumb-caption mono">Account facts before questions</span>
         </a>
         <div class="case-copy">
           <p class="case-kicker mono">Agent behavior · high-stakes support</p>
@@ -147,19 +96,23 @@
           <p>The work was not a better answer. It was a better sequence of action: what the agent should read, what it may ask only from the customer, and where it should stop.</p>
           <dl class="case-proof">
             <div><dt>Owned</dt><dd>Diagnostic framework, prompt structure, golden answers, handoff criteria.</dd></div>
-            <div><dt>Signals</dt><dd>Model behavior, AI experience design, risk boundaries, team direction.</dd></div>
+            <div><dt>Proof</dt><dd>Behavior rules, before/after examples, and handoff decision criteria.</dd></div>
           </dl>
         </div>
       </article>
 
       <article class="case-feature io" style="--d:2">
-        <a class="case-visual quality-loop" href="quality-program.html" aria-label="Open quality program case study">
+        <a class="case-visual case-thumb quality-thumb" href="quality-program.html" aria-label="Open quality program case study">
           <span class="screen-title mono">Quality system</span>
-          <span class="loop-step">golden data</span>
-          <span class="loop-step">LLM judge</span>
-          <span class="loop-step">human review</span>
-          <span class="loop-step">release gate</span>
-          <span class="loop-metric">3 weeks &rarr; 1</span>
+          <span class="thumb-shell table-mini" aria-hidden="true">
+            <span class="thumb-top"><i></i><i></i><i></i></span>
+            <span class="table-head"><b>case</b><b>judge</b><b>gate</b></span>
+            <span class="table-row"><b>GT-18</b><em>chart</em><i>pass</i></span>
+            <span class="table-row"><b>GT-22</b><em>reason</em><i>revise</i></span>
+            <span class="table-row"><b>GT-31</b><em>empty</em><i>pass</i></span>
+            <span class="thumb-total"><b>Cycle time</b><em>3 weeks &rarr; 1</em></span>
+          </span>
+          <span class="thumb-caption mono">3,000+ rows reviewed</span>
         </a>
         <div class="case-copy">
           <p class="case-kicker mono">AI enablement · eval systems</p>
@@ -167,17 +120,22 @@
           <p>I owned the quality program and built the generator pattern that turned blank-row authoring into review. The program measured gains across Help, Payroll, and Insights.</p>
           <dl class="case-proof">
             <div><dt>Owned</dt><dd>Golden dataset process, judge criteria, pipeline behavior, quality gates.</dd></div>
-            <div><dt>Signals</dt><dd>Enablement, leadership under ambiguity, operational judgment, eval rigor.</dd></div>
+            <div><dt>Proof</dt><dd>3,000+ rows, LLM judge criteria, and human review workflow.</dd></div>
           </dl>
         </div>
       </article>
 
       <article class="case-feature io" style="--d:3">
-        <a class="case-visual voice-wave" href="voice.html" aria-label="Open voice case study">
+        <a class="case-visual case-thumb voice-thumb" href="voice.html" aria-label="Open voice case study">
           <span class="screen-title mono">GenAI voice</span>
-          <span class="wave" aria-hidden="true"></span>
-          <span class="voice-card">summarize · clarify · escalate</span>
-          <span class="voice-metric">+3.9 pp containment</span>
+          <span class="thumb-shell voice-mini" aria-hidden="true">
+            <span class="thumb-top"><i></i><i></i><i></i></span>
+            <span class="call-pill">"I need help with payroll taxes."</span>
+            <span class="mini-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="summary-card">summarize · clarify · escalate</span>
+            <span class="thumb-total"><b>Containment lift</b><em>+3.9 pp</em></span>
+          </span>
+          <span class="thumb-caption mono">Voice-ready behavior</span>
         </a>
         <div class="case-copy">
           <p class="case-kicker mono">Voice AI · launched experience</p>
@@ -185,18 +143,22 @@
           <p>Voice has no screen to rescue it. The work was deciding what the model could say in seconds, when to clarify, and when to bring in a person.</p>
           <dl class="case-proof">
             <div><dt>Owned</dt><dd>Voice-ready summaries, disambiguation logic, response criteria, escalation moments.</dd></div>
-            <div><dt>Signals</dt><dd>Product launch, voice UX, eval framing, measurable business outcome.</dd></div>
+            <div><dt>Proof</dt><dd>Launched experience with +3.9 pp containment lift.</dd></div>
           </dl>
         </div>
       </article>
 
       <article class="case-feature io" style="--d:4">
-        <a class="case-visual classifier-card" href="cancellation-saves.html" aria-label="Open Cancellation Saves case study">
+        <a class="case-visual case-thumb classifier-thumb" href="cancellation-saves.html" aria-label="Open Cancellation Saves case study">
           <span class="screen-title mono">Savability classifier</span>
-          <span class="json-line">{ "reason": "price",</span>
-          <span class="json-line">"savable": true,</span>
-          <span class="json-line">"handoff": "retention" }</span>
-          <span class="class-score">96.6% accuracy</span>
+          <span class="thumb-shell classifier-mini" aria-hidden="true">
+            <span class="thumb-top"><i></i><i></i><i></i></span>
+            <span class="json-line">{ "reason": "price",</span>
+            <span class="json-line">"savable": true,</span>
+            <span class="json-line">"route": "specialist" }</span>
+            <span class="decision-row"><b>Boundary</b><em>classify, do not persuade</em></span>
+          </span>
+          <span class="thumb-caption mono">96.6% eval accuracy</span>
         </a>
         <div class="case-copy">
           <p class="case-kicker mono">Classifier strategy · Responsible AI</p>
@@ -204,43 +166,11 @@
           <p>The model's job was not to persuade. It was to classify the reason, decide whether a save path existed, and route the customer without hallucinating.</p>
           <dl class="case-proof">
             <div><dt>Owned</dt><dd>Savability definition, prompt behavior, structured output, safety bar.</dd></div>
-            <div><dt>Signals</dt><dd>Business framing, model behavior, ethical boundary setting, measurement.</dd></div>
+            <div><dt>Proof</dt><dd>Structured classifier with 96.6% accuracy in evaluation.</dd></div>
           </dl>
         </div>
       </article>
     </div>
-  </section>
-
-  <section class="shell about" id="about" aria-labelledby="about-h">
-    <div class="about-copy">
-      <p class="eyebrow mono io" style="--d:0">About</p>
-      <h2 id="about-h" class="io" style="--d:1">I work in the space where product intent becomes model behavior.</h2>
-      <p class="io" style="--d:2">I started in language-model training and NLU, moved through Siri and production voice/chat assistants, then into LLM and agentic systems at Intuit. My edge is translating messy customer problems into behaviors an AI system can execute, evaluate, and safely hand off.</p>
-      <p class="io" style="--d:3">I am comfortable as the product lead, the conversation designer, the eval owner, and the builder who opens the repo when the artifact needs to exist.</p>
-    </div>
-    <div class="about-card io" style="--d:4">
-      <img src="assets/portrait.jpg" alt="Portrait of Simone Muro">
-      <div class="timeline-mini">
-        <span>Meta</span>
-        <span>Apple Siri</span>
-        <span>Sam's Club</span>
-        <span>Intuit</span>
-        <span>Credit Karma</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="shell method" aria-labelledby="method-h">
-    <div class="section-head compact">
-      <p class="eyebrow mono io" style="--d:0">How I work</p>
-      <h2 id="method-h" class="io" style="--d:1">The operating system is simple.</h2>
-    </div>
-    <ol class="method-steps">
-      <li class="io" style="--d:0"><span class="mono">01</span><b>Define the job.</b> What outcome should this agent own, and what belongs to a human?</li>
-      <li class="io" style="--d:1"><span class="mono">02</span><b>Write the behavior.</b> Prompts, tools, states, failure paths, and handoff rules.</li>
-      <li class="io" style="--d:2"><span class="mono">03</span><b>Build the proof.</b> Prototypes, mock tools, scenario injection, and golden data.</li>
-      <li class="io" style="--d:3"><span class="mono">04</span><b>Gate the launch.</b> LLM judges, human review, regressions, and clear stop conditions.</li>
-    </ol>
   </section>
 
   <section class="shell contact-lite" id="contact" aria-labelledby="contact-h">
