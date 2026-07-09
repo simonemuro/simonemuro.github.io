@@ -276,14 +276,14 @@ answer gate: no guessed amounts -> <span class="ok">pass</span></pre>
       <article class="debug-card">
         <span class="visual-label">Boundary bug</span>
         <h3>Unsafe downgrade advice</h3>
-        <p>A price-pressure test turned into cost-reduction advice. The agent suggested a downgrade even though plan changes can remove features, break workflows, affect add-ons, and create business risk.</p>
+        <p>A price-pressure test turned into cost-reduction advice. The model suggested a downgrade even though the customer had not asked to change plans, and plan changes can remove features, break workflows, affect add-ons, and create business risk.</p>
         <div class="bad-output mono" aria-label="Example of unsafe downgrade behavior">
           Steps to lower your subscription cost<br>
           1. Review add-ons and user counts<br>
           2. Consider downgrading your plan<br>
           3. Remove unused add-ons
         </div>
-        <p class="prompt-quote">Design correction: informational billing questions should explain the bill. Cost-saving or plan-change paths belong to an explicit customer request or a specialist conversation.</p>
+        <p class="prompt-quote">Instruction fix: for price-pressure cancel tests, the eval rule became "must NOT suggest downgrading plan or reducing employee count to cut costs." The skill still handles downgrade requests, but only when the customer explicitly asks about downgrading, after surfacing current account data and feature tradeoffs.</p>
       </article>
     </div>
 
