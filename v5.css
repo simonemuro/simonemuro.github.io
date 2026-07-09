@@ -2440,37 +2440,6 @@ body.v5 .dataset-metrics span:not(.num){
   color:var(--sub);
 }
 
-body.v5 .payroll-principles{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:clamp(14px,2vw,22px);
-  margin:clamp(28px,5vh,46px) 0 0;
-  max-width:1100px;
-}
-
-body.v5 .payroll-principles > div{
-  background:#fff;
-  border-left:3px solid var(--accent);
-  padding:clamp(18px,2vw,24px) clamp(18px,2vw,26px);
-  box-shadow:0 14px 34px rgba(54,48,38,.05);
-}
-
-body.v5 .payroll-principles b{
-  display:block;
-  font-family:var(--sans);
-  font-size:1.02rem;
-  line-height:1.25;
-  color:var(--ink);
-}
-
-body.v5 .payroll-principles p{
-  margin:14px 0 0;
-  font-family:var(--sans);
-  font-size:.9rem;
-  line-height:1.55;
-  color:var(--sub);
-}
-
 body.v5 .payroll-wide-artifact{
   margin:clamp(30px,5vh,52px) 0 0;
   max-width:1100px;
@@ -2725,7 +2694,6 @@ body.v5 .payroll-results-pair .payroll-shot img{max-height:920px;}
   body.v5 .role-grid{grid-template-columns:1fr;}
 
   body.v5 .payroll-flowline,
-  body.v5 .payroll-principles,
   body.v5 .payroll-build-board,
   body.v5 .payroll-sample-row,
   body.v5 .payroll-generator-loop{grid-template-columns:repeat(2,minmax(0,1fr));}
@@ -2741,7 +2709,6 @@ body.v5 .payroll-results-pair .payroll-shot img{max-height:920px;}
   body.v5 .payroll-shot figcaption b{display:block;text-align:left;margin-top:6px;}
   body.v5 .payroll-shot img{max-height:none;}
   body.v5 .payroll-flowline,
-  body.v5 .payroll-principles,
   body.v5 .payroll-build-board,
   body.v5 .payroll-sample-row,
   body.v5 .payroll-generator-loop,
