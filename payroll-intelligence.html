@@ -42,7 +42,7 @@
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>QuickBooks Payroll help in Intuit Intelligence</dd></div>
-      <div><dt>My role</dt><dd>Product lead, conversational AI architect, payroll SME, Omni migration lead</dd></div>
+      <div><dt>My role</dt><dd>Product lead, conversational AI architect, payroll SME, Intuit Intelligence migration lead</dd></div>
       <div><dt>Owned</dt><dd>Framework, generator, expert validation loop, skill requirements, UAT synthesis</dd></div>
       <div><dt>Evidence</dt><dd>~900K annual DA questions, 75+ personalized flows, 21 diagnostic cases, 143 root causes</dd></div>
     </dl>
@@ -84,22 +84,15 @@
       <p>Early Intuit Intelligence behavior often routed payroll questions to the Help Agent. That agent summarized content, but it did not reliably inspect the customer&rsquo;s setup, payment status, employee locations, or jurisdiction-specific requirements before answering.</p>
     </div>
 
-    <div class="payroll-real-pair" aria-label="Before and after payroll Intuit Intelligence experience">
-      <figure class="payroll-shot">
-        <figcaption><span class="mono">Before</span><b>Summary based on help content</b></figcaption>
-        <img src="assets/work/payroll-before-tax-setup.png" alt="Before screenshot of Intuit Intelligence giving generic payroll tax setup guidance from help content">
-        <p>The answer gave broad payroll tax setup guidance without reading the customer&rsquo;s current setup status.</p>
-      </figure>
-      <figure class="payroll-shot">
-        <figcaption><span class="mono">After</span><b>Personalized setup diagnosis</b></figcaption>
-        <img src="assets/work/payroll-after-tax-setup.png" alt="After screenshot of Intuit Intelligence giving account-aware payroll tax setup guidance">
-        <p>The skill read setup status first, then named the specific federal and state actions required.</p>
-      </figure>
-    </div>
-
-    <figure class="payroll-wide-artifact">
+    <figure class="payroll-wide-artifact payroll-problem-artifact">
       <img src="assets/work/payroll-help-agent-risk.png" alt="Deck artifact showing payroll help questions routed to a Help Agent and the risk of generic how-to summaries">
       <figcaption class="mono">Research artifact, redacted: help questions were being routed to a summary agent, creating risk for high-anxiety transactional support.</figcaption>
+    </figure>
+
+    <figure class="payroll-shot payroll-single-shot">
+      <figcaption><span class="mono">Before</span><b>Summary based on help content</b></figcaption>
+      <img src="assets/work/payroll-before-tax-setup.png" alt="Before screenshot of Intuit Intelligence giving generic payroll tax setup guidance from help content">
+      <p>The answer gave broad payroll tax setup guidance without reading the customer&rsquo;s current setup status. The customer still had to inspect payroll settings and infer what applied to their company.</p>
     </figure>
   </section>
 
@@ -130,8 +123,33 @@
     <p class="kicker mono part-head"><span class="knum">04</span><span>Generator</span></p>
     <h2 id="generator-h">I built the generator so expert judgment could scale.</h2>
     <div class="prose">
-      <p>The payroll framework needed expert validation, but asking experts to author every case from scratch would have slowed the migration. I created a generator that produced structured first drafts of golden datasets from the diagnostic framework.</p>
-      <p>The output gave experts something precise to review: required facts, possible root causes, tool paths, ideal answer shape, and escalation criteria. Their corrections became stronger ground truth, which then became input for product design, PM planning, skill requirements, and UAT.</p>
+      <p>The payroll framework needed expert validation, but asking experts to author every case from scratch would have slowed the migration. I built the generator as a prompt-driven production aid: it turned diagnostic topics into structured, spreadsheet-ready golden-dataset drafts that experts could correct.</p>
+      <p>The generator did not replace judgment. It made judgment reviewable. Each draft had to declare the customer ask, the account facts the agent needed, the tool path, the likely root cause, the ideal answer shape, and the handoff boundary.</p>
+    </div>
+
+    <div class="payroll-build-board" aria-label="How the payroll golden dataset generator worked">
+      <div>
+        <span class="mono">01 source</span>
+        <b>Diagnostic framework</b>
+        <p>High-anxiety payroll topics, legacy DA flow logic, contact-driver research, and Payroll PD input.</p>
+      </div>
+      <div>
+        <span class="mono">02 prompt</span>
+        <b>Schema-first generation</b>
+        <p>I prompted the model to produce consistent fields instead of prose: facts to retrieve, root causes, tool path, expected behavior, and escalation rule.</p>
+      </div>
+      <div>
+        <span class="mono">03 review</span>
+        <b>Expert correction loop</b>
+        <p>Payroll experts validated the generated rows, corrected domain gaps, and turned drafts into ground truth.</p>
+      </div>
+    </div>
+
+    <div class="payroll-sample-row" aria-label="Public-safe sample generated row">
+      <div><span class="mono">customer ask</span><p>I need to set up payroll taxes.</p></div>
+      <div><span class="mono">data to read</span><p>Federal and state setup status, e-service enrollment, missing forms, tax IDs, and employee work locations.</p></div>
+      <div><span class="mono">expected behavior</span><p>Name the incomplete jurisdictions before giving navigation. Do not answer from help content alone.</p></div>
+      <div><span class="mono">review note</span><p>Remove stale disclaimer, add exact product path, and explain what is blocking automatic payments.</p></div>
     </div>
 
     <div class="payroll-generator-loop" aria-label="Generator workflow">
@@ -219,6 +237,12 @@
     <div class="prose">
       <p>The work helped preserve the quality of the legacy payroll support experience inside a new agentic surface. Instead of sending customers to inspect settings on their own, the agent could read setup state, identify missing authorizations, explain jurisdiction-specific gaps, and hand off with context when expert help was the right next step.</p>
     </div>
+
+    <figure class="payroll-shot payroll-single-shot payroll-outcome-shot">
+      <figcaption><span class="mono">After</span><b>Personalized setup diagnosis</b></figcaption>
+      <img src="assets/work/payroll-after-tax-setup.png" alt="After screenshot of Intuit Intelligence giving account-aware payroll tax setup guidance">
+      <p>The improved response starts from the customer&rsquo;s actual setup state, names the federal and state actions required, and gives a specific next step instead of a generic article summary.</p>
+    </figure>
 
     <div class="stats" role="list" aria-label="Payroll case study outcomes">
       <div role="listitem"><span class="num">75+</span><span class="lab">personalized payroll flows protected during the DA-to-Intuit-Intelligence migration</span></div>

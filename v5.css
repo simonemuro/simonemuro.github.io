@@ -2387,6 +2387,15 @@ body.v5 .payroll-shot p{
   color:#65737b;
 }
 
+body.v5 .payroll-single-shot{
+  max-width:620px;
+  margin:clamp(30px,5vh,52px) 0 0;
+}
+
+body.v5 .payroll-outcome-shot{
+  max-width:700px;
+}
+
 body.v5 .payroll-proof-strip,
 body.v5 .dataset-metrics,
 body.v5 .role-grid{
@@ -2485,6 +2494,10 @@ body.v5 .payroll-wide-artifact figcaption{
   text-transform:uppercase;
 }
 
+body.v5 .payroll-problem-artifact{
+  max-width:1180px;
+}
+
 body.v5 .payroll-flowline{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
@@ -2534,6 +2547,70 @@ body.v5 .payroll-flowline > div:not(:last-child)::after{
 }
 
 body.v5 .payroll-spec{max-width:980px;}
+
+body.v5 .payroll-build-board{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(14px,2vw,22px);
+  max-width:1080px;
+  margin:clamp(30px,5vh,52px) 0 0;
+}
+
+body.v5 .payroll-build-board > div{
+  background:#fff;
+  border:1px solid #d8e2e7;
+  padding:clamp(18px,2vw,26px);
+  box-shadow:0 14px 34px rgba(54,48,38,.05);
+}
+
+body.v5 .payroll-build-board span,
+body.v5 .payroll-sample-row span{
+  display:block;
+  font-size:.64rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+
+body.v5 .payroll-build-board b{
+  display:block;
+  margin-top:22px;
+  font-family:var(--sans);
+  font-size:1.02rem;
+  line-height:1.25;
+  color:var(--ink);
+}
+
+body.v5 .payroll-build-board p{
+  margin:14px 0 0;
+  font-family:var(--sans);
+  font-size:.92rem;
+  line-height:1.55;
+  color:var(--sub);
+}
+
+body.v5 .payroll-sample-row{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  max-width:1120px;
+  margin:clamp(18px,3vh,30px) 0 0;
+  background:var(--hair);
+  border:1px solid var(--hair);
+  gap:1px;
+}
+
+body.v5 .payroll-sample-row > div{
+  background:var(--card);
+  padding:clamp(18px,2vw,24px);
+}
+
+body.v5 .payroll-sample-row p{
+  margin:18px 0 0;
+  font-family:var(--sans);
+  font-size:.95rem;
+  line-height:1.55;
+  color:var(--sub);
+}
 
 body.v5 .payroll-generator-loop{
   display:grid;
@@ -2649,6 +2726,8 @@ body.v5 .payroll-results-pair .payroll-shot img{max-height:920px;}
 
   body.v5 .payroll-flowline,
   body.v5 .payroll-principles,
+  body.v5 .payroll-build-board,
+  body.v5 .payroll-sample-row,
   body.v5 .payroll-generator-loop{grid-template-columns:repeat(2,minmax(0,1fr));}
   body.v5 .payroll-flowline > div:nth-child(3){border-left:0;border-top:1px solid var(--hair);}
   body.v5 .payroll-flowline > div:nth-child(4){border-top:1px solid var(--hair);}
@@ -2663,6 +2742,8 @@ body.v5 .payroll-results-pair .payroll-shot img{max-height:920px;}
   body.v5 .payroll-shot img{max-height:none;}
   body.v5 .payroll-flowline,
   body.v5 .payroll-principles,
+  body.v5 .payroll-build-board,
+  body.v5 .payroll-sample-row,
   body.v5 .payroll-generator-loop,
   body.v5 .payroll-behavior-map{grid-template-columns:1fr;}
   body.v5 .payroll-flowline > div,
