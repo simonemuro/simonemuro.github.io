@@ -631,6 +631,145 @@ body.v5 .evidence-screen{
   margin:clamp(30px,5vh,46px) 0 0;
 }
 
+body.v5 .designer-board{
+  position:relative;
+  max-width:1040px;
+  margin:clamp(34px,6vh,62px) 0 0;
+  padding:clamp(20px,3vw,34px);
+  background:
+    linear-gradient(90deg, rgba(160,126,65,.08) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(160,126,65,.06) 1px, transparent 1px),
+    #fbfaf5;
+  background-size:36px 36px;
+  box-shadow:0 24px 64px rgba(50,38,20,.10);
+  border:1px solid rgba(194,176,136,.55);
+  overflow:visible;
+}
+
+body.v5 .designer-board::before{
+  content:"";
+  position:absolute;
+  top:-12px;
+  left:50%;
+  width:96px;
+  height:26px;
+  transform:translateX(-50%) rotate(-2deg);
+  background:rgba(230,213,168,.72);
+  box-shadow:0 4px 16px rgba(50,38,20,.08);
+}
+
+body.v5 .designer-board img{
+  display:block;
+  width:100%;
+  height:auto;
+  background:#fff;
+  border:1px solid rgba(55,70,78,.14);
+}
+
+body.v5 .designer-board.compact-shot{
+  max-width:800px;
+}
+
+body.v5 .designer-board.compact-shot img{
+  max-height:820px;
+  object-fit:contain;
+}
+
+body.v5 .sticky-note{
+  position:absolute;
+  z-index:2;
+  width:min(230px,28vw);
+  padding:14px 16px 15px;
+  background:#fff6bd;
+  border:1px solid rgba(150,108,36,.24);
+  box-shadow:0 14px 28px rgba(52,38,16,.14);
+  color:#343029;
+  font-family:var(--serif);
+  font-size:clamp(.96rem,1.14vw,1.1rem);
+  line-height:1.25;
+  transform:rotate(-2deg);
+}
+
+body.v5 .sticky-note::before{
+  content:"";
+  position:absolute;
+  top:-10px;
+  left:22px;
+  width:58px;
+  height:18px;
+  background:rgba(236,218,178,.72);
+  transform:rotate(4deg);
+}
+
+body.v5 .sticky-note b{
+  display:block;
+  margin-bottom:6px;
+  color:var(--accent);
+  font-family:var(--mono);
+  font-size:.58rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+
+body.v5 .sticky-note.one{top:10%;left:-22px;}
+body.v5 .sticky-note.two{top:34%;right:-28px;transform:rotate(2deg);}
+body.v5 .sticky-note.three{left:6%;bottom:88px;transform:rotate(1deg);}
+
+body.v5 .sketch-arrow{
+  position:absolute;
+  z-index:1;
+  pointer-events:none;
+  color:var(--accent);
+  opacity:.9;
+}
+
+body.v5 .sketch-arrow path,
+body.v5 .sketch-arrow line,
+body.v5 .sketch-arrow polyline{
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+body.v5 .sketch-arrow.one{top:17%;left:13%;width:170px;height:80px;transform:rotate(-7deg);}
+body.v5 .sketch-arrow.two{right:12%;top:48%;width:160px;height:88px;transform:rotate(10deg);}
+
+body.v5 .flow-strip{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+  margin-top:18px;
+}
+
+body.v5 .flow-strip span{
+  position:relative;
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 14px;
+  border:1px solid rgba(164,135,82,.38);
+  background:rgba(255,255,255,.68);
+  color:#3d382f;
+  font-family:var(--mono);
+  font-size:.62rem;
+  line-height:1.35;
+  letter-spacing:.1em;
+  text-align:center;
+  text-transform:uppercase;
+}
+
+body.v5 .flow-strip span + span::before{
+  content:"";
+  position:absolute;
+  left:-12px;
+  top:50%;
+  width:14px;
+  border-top:1px solid var(--accent);
+}
+
 body.v5 .phone-gallery{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -2053,6 +2192,18 @@ body.v5 .footer a:hover{color:var(--accent);}
   body.v5 .research-gallery{grid-template-columns:1fr;}
   body.v5 .flow-lane ol,
   body.v5 .roadmap-swimlane{grid-template-columns:repeat(2,minmax(0,1fr));}
+  body.v5 .sticky-note{
+    position:relative;
+    top:auto;
+    right:auto;
+    bottom:auto;
+    left:auto;
+    width:auto;
+    max-width:none;
+    margin:12px 0 0;
+    transform:none;
+  }
+  body.v5 .sketch-arrow{display:none;}
   body.v5 .case-arc,
   body.v5 .decision-board,
   body.v5 .mode-grid,
@@ -2082,6 +2233,9 @@ body.v5 .footer a:hover{color:var(--accent);}
   body.v5 .journey-map > div:nth-child(5){border-left:0;border-top:1px solid var(--hair);min-height:0;}
   body.v5 .journey-map > div:first-child{border-top:0;}
   body.v5 .product-screen{padding:12px;}
+  body.v5 .designer-board{padding:16px;}
+  body.v5 .flow-strip{grid-template-columns:1fr;}
+  body.v5 .flow-strip span + span::before{display:none;}
   body.v5 .ii-buttons{max-width:none;}
   body.v5 .streamlit-side{display:none;}
   body.v5 .streamlit-main{padding:12px;}

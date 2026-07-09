@@ -115,27 +115,26 @@
       <p>The design challenge was therefore not just conversation polish. It was agent capability: give the model a safe way to look up account facts, then constrain what it could do with them.</p>
     </div>
 
-    <figure class="product-screen evidence-screen" aria-label="Before-state Intuit Intelligence billing experience reconstruction">
-      <figcaption><span>before-state ui</span><b>Unhelpful answer to an unfamiliar charge</b></figcaption>
-      <div class="ii-top" aria-hidden="true"><span></span><span></span><span></span></div>
-      <div class="ii-msg user">I see a $288 charge I do not recognize. Why did my bill change?</div>
-      <div class="ii-answer">
-        <p><b>Work done</b></p>
-        <p>Unfamiliar charges can happen for several reasons: multiple subscriptions, add-on services, mid-cycle changes, or a promotion ending.</p>
-        <p>To see your current subscription fees, go to Settings &gt; Subscriptions and Billing. There, you can view billing and invoice information related to your subscription.</p>
-        <a href="#" aria-hidden="true">Billing and subscription</a>
+    <figure class="designer-board evidence-screen billing-before-board compact-shot" aria-label="Annotated real before-state Intuit Intelligence billing screenshot">
+      <img src="assets/work/billing-before-real-ui.jpg" alt="Real before-state Intuit Intelligence screenshot where an unrecognized charge question receives generic troubleshooting guidance">
+      <p class="sticky-note one"><b>problem</b>The customer is anxious about money leaving the account. The answer starts with general advice.</p>
+      <p class="sticky-note two"><b>missing data</b>No plan, add-ons, billing date, discount, or recent charge history is used.</p>
+      <p class="sticky-note three"><b>design gap</b>The assistant offers to help later, but the first response still makes the customer do the investigation.</p>
+      <svg class="sketch-arrow one" viewBox="0 0 180 90" aria-hidden="true">
+        <path d="M12 64 C54 12 98 18 142 36"></path>
+        <polyline points="132,24 145,38 126,43"></polyline>
+      </svg>
+      <svg class="sketch-arrow two" viewBox="0 0 180 90" aria-hidden="true">
+        <path d="M152 18 C108 28 72 44 34 72"></path>
+        <polyline points="47,74 28,76 38,58"></polyline>
+      </svg>
+      <div class="flow-strip" aria-label="Before-state failure flow">
+        <span>customer asks about an unfamiliar charge</span>
+        <span>assistant gives generic troubleshooting</span>
+        <span>customer is sent to inspect records manually</span>
+        <span>target: explain using account facts</span>
       </div>
-      <div class="ii-buttons" aria-hidden="true">
-        <span>Show detailed billing charges breakdown</span>
-        <span>Explain charges for additional services</span>
-        <span>Compare subscription costs by month</span>
-      </div>
-      <div class="failure-stack" aria-label="Why the before-state answer failed">
-        <span><b>Generic</b> Lists possible causes instead of using the customer&rsquo;s account.</span>
-        <span><b>Slow</b> Sends the customer to find the answer manually.</span>
-        <span><b>No context</b> Does not explain why the bill changed or what charge is driving concern.</span>
-      </div>
-      <p class="artifact-note">Screen-level reconstruction from real before-state testing. Customer and account details removed.</p>
+      <p class="artifact-note">Real Intuit Intelligence before-state screenshot. Cropped for privacy; annotations added for portfolio explanation.</p>
     </figure>
 
     <div class="failure-board" aria-label="Before-state assistant failures">
@@ -183,33 +182,22 @@
       <p>The cancel widget mattered because cancellation is not only an information request. It is a decision moment. The assistant should not trap the customer, but it should create a measurable save opportunity: connect to a billing specialist, or show self-serve steps if the customer wants to proceed alone.</p>
     </div>
 
-    <figure class="product-screen evidence-screen cancel-evidence" aria-label="Before-state cancel experience reconstruction">
-      <figcaption><span>cancel branch</span><b>Help content instead of account-aware triage</b></figcaption>
-      <div class="ii-top" aria-hidden="true"><span></span><span></span><span></span></div>
-      <div class="ii-msg user">I want to cancel my subscription</div>
-      <div class="ii-answer">
-        <p><b>Work done</b></p>
-        <p>To cancel your subscription, follow these steps within the software:</p>
-        <ol>
-          <li>Select the gear icon.</li>
-          <li>Choose Account and Settings.</li>
-          <li>Click Billing &amp; subscription.</li>
-          <li>Locate your subscription.</li>
-          <li>Select Cancel subscription.</li>
-        </ol>
-        <a href="#" aria-hidden="true">Billing and subscription</a>
+    <figure class="designer-board evidence-screen cancel-evidence" aria-label="Annotated real before-state cancellation screenshot">
+      <img src="assets/work/billing-cancel-help-real-ui.jpg" alt="Real Intuit Intelligence cancellation screenshot where the assistant returns help steps from internal content">
+      <p class="sticky-note one"><b>wrong first move</b>The assistant jumps to instructions before reading the account or renewal risk.</p>
+      <p class="sticky-note two"><b>not retention copy</b>The target was not persuasion. It was safe triage: account facts, options, then handoff when needed.</p>
+      <p class="sticky-note three"><b>separate branch</b>The specialist widget belongs here, not in charge explainability.</p>
+      <svg class="sketch-arrow one" viewBox="0 0 180 90" aria-hidden="true">
+        <path d="M16 70 C54 42 82 25 132 22"></path>
+        <polyline points="120,12 136,22 120,35"></polyline>
+      </svg>
+      <div class="flow-strip" aria-label="Cancel branch design flow">
+        <span>cancel intent</span>
+        <span>read plan + add-ons + renewal date</span>
+        <span>offer specialist or self-serve steps</span>
+        <span>never trap the customer</span>
       </div>
-      <div class="ii-buttons" aria-hidden="true">
-        <span>Download subscription invoices</span>
-        <span>Read-only access after cancellation</span>
-        <span>Reactivate subscription later</span>
-      </div>
-      <div class="failure-stack" aria-label="Why the cancel answer failed">
-        <span><b>Help-skill fallback</b> Fetches internal help content instead of checking the account.</span>
-        <span><b>No triage</b> Does not inspect plan, add-ons, renewal date, or multi-product risk.</span>
-        <span><b>No save moment</b> Gives steps before offering specialist review or plan options.</span>
-      </div>
-      <p class="artifact-note">Screen-level reconstruction from real cancel before-state testing. Interface simplified; internal help content and account details removed.</p>
+      <p class="artifact-note">Real Intuit Intelligence cancel before-state screenshot. Cropped for privacy; annotations added for portfolio explanation.</p>
     </figure>
 
     <div class="flow-lane" aria-label="Billing lookup tool modes">

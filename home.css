@@ -502,9 +502,9 @@ body.home-lite .project-card{
 
 body.home-lite .project-image{
   display:block;
-  aspect-ratio:1.34;
+  aspect-ratio:1.28;
   overflow:hidden;
-  background:#efe7d8;
+  background:#f8f7f2;
   border-bottom:1px solid var(--hair);
 }
 
@@ -516,6 +516,16 @@ body.home-lite .project-image img{
   object-position:center top;
   filter:saturate(.95);
   transition:transform .35s ease, filter .35s ease;
+}
+
+body.home-lite .project-image.real-ui{
+  background:#f8f7f2;
+}
+
+body.home-lite .project-image.real-ui img{
+  padding:0;
+  object-fit:cover;
+  object-position:center top;
 }
 
 body.home-lite .project-image:hover img,
