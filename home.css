@@ -528,6 +528,16 @@ body.home-lite .project-image.real-ui img{
   object-position:center top;
 }
 
+body.home-lite .project-image.portrait-ui{
+  background:#fff;
+}
+
+body.home-lite .project-image.portrait-ui img{
+  padding:10px;
+  object-fit:contain;
+  object-position:center center;
+}
+
 body.home-lite .project-image:hover img,
 body.home-lite .project-image:focus-visible img{
   transform:scale(1.018);

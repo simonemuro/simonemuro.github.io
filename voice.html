@@ -41,6 +41,29 @@
   body.v5 .clip-foot{margin-top:auto;border-top:1px solid var(--hair);padding-top:10px;color:var(--sub);font-size:.6rem;line-height:1.7;}
   @media(max-width:960px){body.v5 .clips{grid-template-columns:1fr;}}
 
+  /* real voice snippet artifact */
+  body.v5 .voice-snippet-artifact{
+    align-self:start;
+    max-width:430px;
+    margin:0;
+    background:#fff;
+    border:1px solid var(--hair);
+    box-shadow:0 20px 52px rgba(50,38,20,.10);
+  }
+  body.v5 .voice-snippet-artifact img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  body.v5 .voice-snippet-artifact figcaption{
+    margin:0;
+    padding:10px 14px 12px;
+    border-top:1px solid var(--hair);
+    color:var(--sub);
+    font-size:.58rem;
+    line-height:1.75;
+  }
+
   /* the snippet prompt artifact, folded */
   body.v5 .ex-details{margin:clamp(26px,4vh,40px) 0 0;max-width:760px;border:1px solid var(--hair);background:var(--card);}
   body.v5 .ex-details summary{cursor:pointer;padding:10px 16px;color:var(--sub);}
@@ -117,29 +140,13 @@
         <p>The design moved from blind link offers to spoken proof of understanding: a short answer, a clean offer, and exits that never trap the caller.</p>
         <ul class="snapshot-list">
           <li><b>My hands</b><span>Clarifying questions, behavior spec, prompt rules, rollout criteria.</span></li>
-          <li><b>Public proof</b><span>Playable synthetic clips and reconstructed call states below.</span></li>
+          <li><b>Public proof</b><span>Real transcript-style artifact, playable synthetic clips, and reconstructed call states below.</span></li>
         </ul>
       </div>
-      <div class="phone-gallery" aria-label="Three voice design states">
-        <div class="phone-shot alt-a">
-          <div class="phone-top"></div>
-          <span class="phone-kicker">Before</span>
-          <div class="phone-card"><b>Topic-only offer</b><p>&ldquo;I found an article. Want a link?&rdquo;</p></div>
-          <div class="mini-bars"><span></span><span></span><span></span></div>
-        </div>
-        <div class="phone-shot alt-b">
-          <div class="phone-top"></div>
-          <span class="phone-kicker">Repair</span>
-          <div class="phone-card"><b>One shaped question</b><p>Three likely meanings, one breath, then action.</p></div>
-          <div class="mini-bars"><span></span><span></span><span></span></div>
-        </div>
-        <div class="phone-shot alt-c">
-          <div class="phone-top"></div>
-          <span class="phone-kicker">Snippet</span>
-          <div class="phone-card"><b>Answer teaser</b><p>Enough proof to trust the link; the full steps move to a screen.</p></div>
-          <div class="mini-bars"><span></span><span></span><span></span></div>
-        </div>
-      </div>
+      <figure class="voice-snippet-artifact" aria-label="QuickBooks voice assistant transcript screenshot">
+        <img src="assets/work/voice-snippet-real-ui.png" alt="QuickBooks voice assistant transcript showing a customer clarifying a bank connection error before receiving a targeted answer snippet">
+        <figcaption class="mono">Voice snippet artifact &middot; real transcript-style UI screenshot provided for this portfolio &middot; customer details removed.</figcaption>
+      </figure>
     </div>
   </section>
 
