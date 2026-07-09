@@ -169,12 +169,11 @@
     var history = [];           // {role, content} turns for the worker
     var pending = false;
 
-    /* live mode announces itself in the widget header */
+    /* live mode announces itself in the widget header; the footer is
+       intentionally left as-is (no logging/endpoint copy, per Simone) */
     if (live) {
       var hd = w.querySelector(".refusal-hd span:last-child");
       if (hd) hd.textContent = "scope: Simone's work · live agent · grounded in her public pages";
-      var foot = w.querySelector(".refusal-foot");
-      if (foot) foot.textContent = "live mode: your question goes to her agent endpoint, is answered from her public pages, and is not logged";
     }
 
     function match(q) {
