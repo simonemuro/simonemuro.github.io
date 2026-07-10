@@ -141,27 +141,27 @@
       <p class="wf-label">Recreated; excerpts invented to protect customer transcripts. The method is real: transcripts in Sheets, themes drafted by the model, every cluster reviewed by hand.</p>
     </div>
 
-    <figure class="board6" aria-label="Research synthesis slide">
-      <h3>Key insights</h3>
+    <figure class="board6" aria-label="Billing research synthesis slide">
+      <h3>Key insights: billing questions</h3>
       <div class="cols">
         <div>
-          <p class="col-h want">WHAT CUSTOMERS WANT</p>
+          <p class="col-h want">WHAT THE TRANSCRIPTS AND EXPERTS SHOWED</p>
           <ul>
-            <li><b>Task guidance:</b> concise answers to &ldquo;How do I&hellip;&rdquo; questions where users know their goal but need help.</li>
-            <li><b>Troubleshooting:</b> something is broken, missing, or behaving unexpectedly. Users arrive already anxious, so speed is critical.</li>
-            <li><b>Decision help:</b> users ask about plan limits, feature availability, pricing consequences, and data implications before committing to an action.</li>
-            <li><b>Admin actions:</b> users want to make direct billing, plan, and account changes in the assistant.</li>
-            <li><b>Human access:</b> a frictionless path to human support.</li>
+            <li><b>Charge lookup was the top billing question:</b> the statement shows the amount; nothing the customer can reach shows the reason.</li>
+            <li><b>Price changes drove the anxiety:</b> a promo ending or a seat added changes the bill, and no surface explains what changed.</li>
+            <li><b>&ldquo;Duplicate&rdquo; charges usually weren&rsquo;t:</b> one subscription bill that read as two on a bank statement.</li>
+            <li><b>Billing history is a dead end:</b> dates and amounts, no explanation. That page is where self-help stopped.</li>
+            <li><b>Refunds and discounts needed a person:</b> and usually a transfer to a higher support tier.</li>
           </ul>
         </div>
         <div>
           <p class="col-h close">HOW WE CLOSE THE GAP</p>
           <ul>
-            <li><b>Better intent recognition:</b> quickly understand their needs.</li>
-            <li><b>Fix cognitive overload:</b> reduce steps and length per response.</li>
-            <li><b>More account awareness:</b> show account-specific context.</li>
-            <li><b>Fix session loss:</b> follow-up queries often reset the session.</li>
-            <li><b>Expert handoff:</b> make it easier to recognize a need for an expert.</li>
+            <li><b>Explain, don&rsquo;t navigate:</b> name the charge and what changed, in the answer itself.</li>
+            <li><b>Use the account:</b> plan, add-ons, seats, promo state, next billing date.</li>
+            <li><b>Do the math in plain language:</b> what experts did on calls, now in the first response.</li>
+            <li><b>Treat cancel as a decision moment:</b> understand the reason before steps or a specialist.</li>
+            <li><b>Keep the expert path obvious:</b> refunds and disputes reach a person fast, with context.</li>
           </ul>
         </div>
       </div>
@@ -234,7 +234,7 @@ Time Premium   $50   20base + 10 x 3 users</div>
       <div class="case-proto-copy">
         <span class="visual-label">The after state</span>
         <h3>Account-aware, in the product</h3>
-        <p>The agent reads the account, names what changed, and shows the math as plain language. It stays inside charge explainability: no cancel flow, no retention move, no guessing.</p>
+        <p>The agent reads the account, names what changed, and shows the math as plain language. It stays inside charge explainability: no cancel flow, no retention move, no guessing. And when the customer pushes back, it keeps working: checks the account again, answers, and offers both doors. No dead ends.</p>
       </div>
       <div class="case-proto-card">
         <div class="proof-top">
@@ -274,6 +274,14 @@ Time Premium   $50   20base + 10 x 3 users</div>
             <div class="proto-chips" aria-hidden="true">
               <span class="proto-chip">View billing history</span>
               <span class="proto-chip">Review invoice details</span>
+            </div>
+          </div>
+          <div class="m-user">I don&rsquo;t remember adding QuickBooks Time. Can you check who added it?</div>
+          <div class="m-agent">
+            <p>QuickBooks Time Premium was added on June 12 by an admin on this account, and three team members are active on it. If that still doesn&rsquo;t look right, I can bring in a billing specialist to review the account with you, or show you where to manage add-ons yourself.</p>
+            <div class="proto-chips" aria-hidden="true">
+              <span class="proto-chip">Connect with a specialist</span>
+              <span class="proto-chip">Manage add-ons</span>
             </div>
           </div>
         </div>
@@ -411,7 +419,7 @@ Time Premium   $50   20base + 10 x 3 users</div>
   <!-- ================= 07 · where it landed ================= -->
   <section class="wrap part" id="outcome" aria-labelledby="p7-h">
     <p class="kicker mono part-head"><span class="knum">07</span><span>Where it landed</span></p>
-    <h2 id="p7-h">Buy-in, 80% built, then I left.</h2>
+    <h2 id="p7-h">Buy-in, 80% built, ready for handoff.</h2>
 
     <div class="outcome-log" role="group" aria-label="What happened after the hackathon">
       <div>
@@ -427,8 +435,8 @@ Time Premium   $50   20base + 10 x 3 users</div>
         <p class="ol-what"><b>About 80% of the way to shippable, by the remaining-work list.</b> The skill definition, the lookup tool, and the golden dataset were built. What remained: wiring the server into the production stack and clearing API permissions.</p>
       </div>
       <div>
-        <span class="ol-when">the ending</span>
-        <p class="ol-what"><b>I left Intuit before implementation started.</b> The skill stayed where I handed it: a working prototype, an eval to hold it accountable, and a leadership decision to build it.</p>
+        <span class="ol-when">the handoff</span>
+        <p class="ol-what"><b>Handed off ready to build.</b> I left Intuit before implementation started. What stayed behind was everything a team needs to finish the job: a working prototype, an eval to hold it accountable, and a leadership decision to build it.</p>
       </div>
     </div>
 

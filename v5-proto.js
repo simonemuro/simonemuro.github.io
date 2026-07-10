@@ -198,7 +198,26 @@
       });
       agent1.appendChild(explainChips);
       show(explainChips);
-      await wait(720);
+      await wait(900);
+
+      var user2 = el('div', 'm-user', 'I don’t remember adding QuickBooks Time. Can you check who added it?');
+      body.appendChild(user2);
+      show(user2);
+      await wait(760);
+
+      var agent2 = el('div', 'm-agent');
+      body.appendChild(agent2);
+      var say2 = el('p');
+      agent2.appendChild(say2);
+      show(say2);
+      await stream(say2, 'QuickBooks Time Premium was added on June 12 by an admin on this account, and three team members are active on it. If that still doesn’t look right, I can bring in a billing specialist to review the account with you, or show you where to manage add-ons yourself.', 11);
+      var chips2 = el('div', 'proto-chips');
+      ['Connect with a specialist', 'Manage add-ons'].forEach(function (t) {
+        chips2.appendChild(el('span', 'proto-chip', t));
+      });
+      agent2.appendChild(chips2);
+      show(chips2);
+      await wait(620);
       running = false;
       btn.disabled = false;
       lab.textContent = 'Replay the prototype';
