@@ -76,15 +76,14 @@
   var explainOnly = proto && proto.getAttribute('data-proto-mode') === 'explain-only';
 
   var PLAN = explainOnly ?
-    'Let me confirm a few things before I open your billing, trace why this cycle looks different, and verify whether it was a duplicate charge.' :
+    'Let me confirm a few things before I open your billing, trace why this month looks different, and verify whether it was a duplicate charge.' :
     'Let me confirm a few things before I open your billing, trace why this cycle looks different, and check whether any of it can be eased for you.';
 
   var WORK_STEPS = explainOnly ? [
     { act: 'Verifying account access', res: 'account owner · verified', dwell: 720 },
-    { act: 'Reading your plan', res: 'Plus plan · Payroll · Payments', dwell: 780 },
-    { act: 'Counting your team', res: '16 active · 2 added this cycle', dwell: 800 },
-    { act: 'Pulling this cycle’s charges', res: '$288.00 · $60 more than last month', dwell: 880 },
-    { act: 'Finding what changed', res: 'welcome rate ended <span class="em">+$48</span> · 2 seats +$12', dwell: 900 },
+    { act: 'Reading your plan', res: 'QuickBooks Online Plus · Payroll Core', dwell: 780 },
+    { act: 'Pulling this month’s charges', res: '$224.00 · $50 more than last month', dwell: 880 },
+    { act: 'Finding what changed', res: 'QuickBooks Time added <span class="em">+$50</span> · 3 users', dwell: 900 },
     { act: 'Verifying billing logic', res: 'base plan unchanged · not a duplicate charge', dwell: 920 }
   ] : [
     { act: 'Verifying account access', res: 'account owner · verified', dwell: 720 },
@@ -95,19 +94,27 @@
     { act: 'Checking what could ease the increase', res: 'welcome rate may extend · annual billing available', dwell: 920 }
   ];
 
-  var LEAD = 'Here is what is behind the $288.00 this cycle.';
+  var LEAD = explainOnly ?
+    'That $224.00 is this month’s subscription charge. Here’s what’s behind it.' :
+    'Here is what is behind the $288.00 this cycle.';
   var SAY = explainOnly ?
-    'Two things changed it. First, you added 2 team members at $6 each, which adds $12. Second, your 6-month welcome rate finished this cycle, which had been taking $48 off your bill. Together those bring your monthly total from $228 to $288, an increase of $60. Your base plan did not change.' :
+    'It’s $50.00 more than last month’s $174.00 for one reason: QuickBooks Time was added to the account with three users. Your base plan price didn’t change, and you weren’t billed twice.' :
     'Two things changed it. First, you added 2 team members at $6 each, which adds $12 and covers their payroll tax filings automatically. Second, your 6-month welcome rate finished this cycle, which had been taking $48 off your bill. Together those bring your monthly total from $228 to $288, an increase of $60. Everything else is the same plan you already had.';
 
-  var ROWS_HTML =
+  var ROWS_HTML = explainOnly ?
+    '<div class="m-row" role="row"><span class="rlab" role="cell"><b>QuickBooks Online Plus</b><span class="rsub">base subscription, monthly</span></span><span class="ramt" role="cell">$99.00</span></div>' +
+    '<div class="m-row" role="row"><span class="rlab" role="cell"><b>Payroll Core</b><span class="rsub">$45.00 base, 5 employees at $6.00</span></span><span class="ramt" role="cell">$75.00</span></div>' +
+    '<div class="m-row" role="row"><span class="rlab" role="cell"><b>QuickBooks Time Premium</b><span class="rsub">$20.00 base, 3 users at $10.00</span></span><span class="ramt" role="cell">$50.00</span></div>' +
+    '<div class="m-row total" role="row"><span class="rlab" role="cell">Total this month</span><span class="ramt" role="cell">$224.00</span></div>' :
     '<div class="m-row" role="row"><span class="rlab" role="cell"><b>Plus plan</b><span class="rsub">base subscription, monthly</span></span><span class="ramt" role="cell">$99.00</span></div>' +
     '<div class="m-row" role="row"><span class="rlab" role="cell"><b>Payroll</b><span class="rsub">monthly subscription</span></span><span class="ramt" role="cell">$50.00</span></div>' +
     '<div class="m-row" role="row"><span class="rlab" role="cell"><b>Team members</b><span class="rsub">16 active, $6.00 each</span></span><span class="ramt" role="cell">$96.00</span></div>' +
     '<div class="m-row" role="row"><span class="rlab" role="cell"><b>Payments processing</b><span class="rsub">card fees this month</span></span><span class="ramt" role="cell">$43.00</span></div>' +
     '<div class="m-row total" role="row"><span class="rlab" role="cell">Total this cycle</span><span class="ramt" role="cell">$288.00</span></div>';
 
-  var CHANGE_HTML =
+  var CHANGE_HTML = explainOnly ?
+    '<div class="pch-head"><span>Changed this month</span><span class="pch-amt">+$50.00</span></div>' +
+    '<div class="pch-row"><span>QuickBooks Time added, 3 users</span><span class="pch-amt">+$50.00</span></div>' :
     '<div class="pch-head"><span>Changed this cycle</span><span class="pch-amt">+$60.00</span></div>' +
     '<div class="pch-row"><span>2 team members added</span><span class="pch-amt">+$12.00</span></div>' +
     '<div class="pch-row"><span>6-month welcome rate ended</span><span class="pch-amt">+$48.00</span></div>';
@@ -139,7 +146,9 @@
     lab.textContent = 'Playing';
     body.innerHTML = '';
 
-    var user1 = el('div', 'm-user', 'I see a $288 charge on my card I do not recognize. Can you help me understand it?');
+    var user1 = el('div', 'm-user', explainOnly ?
+      'I see a $224 charge from Intuit I don’t recognize. What is it?' :
+      'I see a $288 charge on my card I do not recognize. Can you help me understand it?');
     body.appendChild(user1);
     show(user1);
     await wait(800);
