@@ -46,8 +46,8 @@
     <p class="lede">A charge from Intuit lands on a bank statement. The customer doesn&rsquo;t recognize it, asks the assistant, and gets told to go check a settings page, where the billing history shows amounts and never reasons. The reason is what they came for. I built the billing skill for Intuit Intelligence that closes that gap: it reads the account, explains the charge in plain language, and knows when to bring in a person. Built solo during a five-day internal hackathon, grounded in years of billing-support research, and gated by a 108-case eval that it passed.</p>
 
     <dl class="factrow">
-      <div><dt>Surface</dt><dd>Billing and subscription questions: one of the top twenty drivers of a company-wide contact-reduction goal, hundreds of thousands of support contacts a year</dd></div>
-      <div><dt>My role</dt><dd>The whole build: research synthesis, behavior spec, lookup tool, test harness, and the eval. Conversation AI lead</dd></div>
+      <div><dt>Surface</dt><dd>Billing and subscription questions: a top-twenty contact driver, hundreds of thousands of support contacts a year</dd></div>
+      <div><dt>My role</dt><dd>The whole build: research synthesis, behavior spec, lookup tool, test harness, and the eval. Conversation AI Design Lead</dd></div>
       <div><dt>When</dt><dd>Five-day internal hackathon, May 2026, on billing research from my Digital Assistant years</dd></div>
       <div><dt>Results</dt><dd>Working prototype with a cancel-intercept widget; 108-case golden dataset, offline eval passed; leadership buy-in to implement</dd></div>
     </dl>
@@ -112,7 +112,7 @@
     <h2 id="p2-h">Every transcript pointed at the same word: why.</h2>
     <div class="prose">
       <p>I knew this problem before the skill existed, because I&rsquo;d spent years researching it. More than 200 expert call transcripts and 500 customer utterances, all about billing questions, plus interviews with the support experts who handled them. Billing questions came in many shapes: a price that changed, a charge they didn&rsquo;t recognize, a suspected duplicate, &ldquo;how much am I paying.&rdquo; Underneath, one theme kept winning: explainability. Customers could always find the amount. They called because nobody would tell them the reason.</p>
-      <p>The method matters as much as the finding. I loaded call transcripts into Google Sheets and used Gemini to draft themes and cluster the common issues, then read the clusters myself and kept, split, or killed them. The model did the first pass at scale; the judgment stayed mine. Experts, it turned out, never pointed at settings. They named the charge, explained what changed, and offered something concrete.</p>
+      <p>I loaded call transcripts into Google Sheets and used Gemini to draft themes and cluster the common issues, then read every cluster myself and kept, split, or killed them. Experts, it turned out, never pointed at settings. They named the charge, explained what changed, and offered something concrete.</p>
     </div>
 
     <div class="sheet">
@@ -132,7 +132,7 @@
               <tr><td class="rownum">1</td><td class="q">&ldquo;My bill jumped from $174 to $224 and nobody can tell me why.&rdquo;</td><td><span class="tag">price increase</span></td><td>explainability</td><td>kept</td></tr>
               <tr><td class="rownum">2</td><td class="q">&ldquo;There&rsquo;s a charge from Intuit on my card and I have no idea what it&rsquo;s for.&rdquo;</td><td><span class="tag">unrecognized charge</span></td><td>explainability</td><td>kept</td></tr>
               <tr><td class="rownum">3</td><td class="q">&ldquo;The billing history just shows amounts. What am I actually paying for?&rdquo;</td><td><span class="tag">billing history gap</span></td><td>explainability</td><td>kept</td></tr>
-              <tr><td class="rownum">4</td><td class="q">&ldquo;I think I was charged twice this month.&rdquo;</td><td><span class="tag">duplicate charge</span></td><td>billing error</td><td>split: most were single bills that looked doubled. Explainability again</td></tr>
+              <tr><td class="rownum">4</td><td class="q">&ldquo;I think I was charged twice this month.&rdquo;</td><td><span class="tag">duplicate charge</span></td><td>billing error</td><td>split: a single bill that looked doubled. Explainability again</td></tr>
               <tr><td class="rownum">5</td><td class="q">&ldquo;I cancelled last month and got billed again.&rdquo;</td><td><span class="tag">billed after cancel</span></td><td>trust / escalation</td><td>kept</td></tr>
             </tbody>
           </table>
