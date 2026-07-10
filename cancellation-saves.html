@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light">
 <meta name="description" content="QuickBooks customers cancel for a dozen different reasons, and the reason decides whether a specialist can save them. Case 05: the saves flow that asked why, and the LLM classifier that took reason coverage from 60 to 96 percent at $63 a month.">
 <meta property="og:title" content="Cancellation saves &middot; Simone Muro">
-<meta property="og:description" content="The saves flow that asked why customers cancel, and the LLM classifier that took reason coverage from 60 to 96 percent, with 96.6% savability accuracy, at $63 a month. The shipped prompt is on the page, redacted.">
+<meta property="og:description" content="The saves flow that asked why customers cancel, and the LLM classifier that took reason coverage from 60 to 96 percent, with 96.6% routing precision, at $63 a month. The shipped prompt is on the page, redacted.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/cancellation-saves.html">
 <meta name="twitter:card" content="summary">
@@ -49,7 +49,7 @@
       <div><dt>Surface</dt><dd>The QuickBooks support assistant, chat and voice, the subscription cancellation path</dd></div>
       <div><dt>Role</dt><dd>Conversation designer; I designed the saves flow and wrote the classifier prompt myself &middot; 2022 to 2023</dd></div>
       <div><dt>Context</dt><dd>8,814 cancellation calls over three months through the saves flow; savability rules from the saves teams</dd></div>
-      <div><dt>Results</dt><dd>Savability accuracy 96.6% across about 300 utterances at 90% confidence; reasons classified 60% to 96% in evaluation; Responsible AI approved with no hallucination, profanity, bias, or toxicity findings</dd></div>
+      <div><dt>Results</dt><dd>Routing precision 96.6%, measured across about 300 utterances at 90% confidence; reasons classified 60% to 96% in evaluation; Responsible AI approved with no hallucination, profanity, bias, or toxicity findings</dd></div>
     </dl>
 
     <div class="lab-hero" aria-label="Cancellation classifier overview">
@@ -86,7 +86,7 @@
     <div class="prose">
       <p>I was a conversation designer on the conversational AI team, working on the support assistant that QuickBooks customers reach in chat and on the phone. When a customer comes to cancel, the business has one honest chance to keep them: saves specialists, people trained to review a plan, fix a bad experience, or find a better price. Whether that chance exists at all depends on why the customer is leaving. Some reasons are winnable. Some are final.</p>
       <p>The work spans two eras. In 2022 I designed the saves flow itself on the intent platform: ask why before offering the cancel steps, then route the winnable reasons to specialists. In early 2023, when intent training stopped improving how well the system heard those reasons, I built a generative AI classifier to read them instead, at a time when the company had no sanctioned path for shipping generative AI to production.</p>
-      <p>Conversation designer was my title, and this was hands-on work. I designed the ask-why flow myself, wrote the classifier prompt myself, built the experience end to end in an internal low-code tool, and drove the classifier through the Responsible AI review. Two things were not mine alone, and I say so: the savability rules came from the saves teams, the people who knew which reasons their specialists could actually win, and onboarding the API that let a flow call a language model at all was a partnership with the platform team.</p>
+      <p>I designed the ask-why flow, wrote the classifier prompt, built the experience end to end in an internal low-code tool, and drove the classifier through the Responsible AI review. Two pieces were shared: the savability rules came from the saves teams, the people who knew which reasons their specialists could actually win, and onboarding the API that let a flow call a language model at all was a partnership with the platform team.</p>
     </div>
   </section>
 
@@ -184,7 +184,7 @@
     <p class="kicker mono part-head"><span class="knum">06</span><span>The build</span></p>
     <h2 id="p6-h">A hybrid, and the shipped prompt.</h2>
     <div class="prose">
-      <p>The build is a hybrid of the two eras. The intent model does what it was always good at: recognizing that a cancellation is happening. The classifier does what intents could not: reading why. And the low-code tool between them parses the JSON, applies the saves teams&rsquo; savability rules, and routes the call. Here is the classifier prompt, redacted, otherwise as shipped. Not a reconstruction, not a rewrite for this page.</p>
+      <p>The build is a hybrid of the two eras. The intent model does what it was always good at: recognizing that a cancellation is happening. The classifier does what intents could not: reading why. And the low-code tool between them parses the JSON, applies the saves teams&rsquo; savability rules, and routes the call. Here&rsquo;s the classifier prompt, redacted, otherwise as shipped.</p>
     </div>
 
     <figure class="trace" aria-label="Redacted excerpt of the production classifier prompt">
@@ -230,7 +230,7 @@ Customer feedback: ```${customer_feedback}```</pre>
     <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
     <h2 id="p7-h">What the flow moved, what the classifier measured, and the gate.</h2>
     <div class="prose">
-      <p>Here is the experience with the classifier in it, both ways, reconstructed: a savable reason and a final one, ten words apart.</p>
+      <p>Here&rsquo;s the experience with the classifier in it, both ways, reconstructed: a savable reason and a final one, ten words apart.</p>
     </div>
 
     <figure class="trace" aria-label="Reconstructed routing trace: a savable price reason routed to a specialist, and a final retirement reason given a clean goodbye">
@@ -238,7 +238,7 @@ Customer feedback: ```${customer_feedback}```</pre>
       <ol class="trace-rows">
         <li><span class="t-time" aria-hidden="true">01</span><div><span class="mono">customer</span> &middot; &ldquo;It has gotten too expensive.&rdquo;</div></li>
         <li><span class="t-time" aria-hidden="true">02</span><div><code>classify <b>reason(utterance)</b> &#8594; <span class="ok">ok</span> &middot; { "cancellation_reason": "too expensive", "is_savable": true }</code></div></li>
-        <li><span class="t-time" aria-hidden="true">03</span><div><span class="mono">agent</span> &middot; &ldquo;I hear you. I do not want cost to be the reason you go. Before anything changes, I can connect you with a specialist who can review your plan and pricing. Want me to do that?&rdquo;</div></li>
+        <li><span class="t-time" aria-hidden="true">03</span><div><span class="mono">agent</span> &middot; &ldquo;I hear you. I don&rsquo;t want cost to be the reason you go. Before anything changes, I can connect you with a specialist who can review your plan and pricing. Want me to do that?&rdquo;</div></li>
         <li><span class="t-time" aria-hidden="true">04</span><div>savable &middot; routed to a saves specialist, context attached</div></li>
         <li><span class="t-time" aria-hidden="true">05</span><div><span class="mono">customer</span> &middot; &ldquo;I am closing the business. I am retiring.&rdquo;</div></li>
         <li><span class="t-time" aria-hidden="true">06</span><div><code>classify <b>reason(utterance)</b> &#8594; <span class="ok">ok</span> &middot; { "cancellation_reason": "business closure", "is_savable": false }</code></div></li>
@@ -249,15 +249,15 @@ Customer feedback: ```${customer_feedback}```</pre>
     </figure>
 
     <div class="stats" role="list" aria-label="Measured outcomes">
-      <div role="listitem"><span class="num">96.6%</span><span class="lab">savability accuracy, measured on about 300 real customer utterances, a sample sized for 90 percent confidence</span></div>
+      <div role="listitem"><span class="num">96.6%</span><span class="lab">routing precision: the share of cancellations sent to the saves queue that were truly savable, measured on about 300 real customer utterances at 90 percent confidence</span></div>
       <div role="listitem"><span class="num">60% to 96%</span><span class="lab">cancellation reasons classified, in evaluation, where four months of intent tuning had stalled</span></div>
       <div role="listitem"><span class="num">$63 a month</span><span class="lab">run cost for the classifier, $756 a year, against six plus months of development per tuning cycle becoming days</span></div>
     </div>
 
     <div class="prose">
       <p class="opens">The saves flow itself, the ask-why-and-route design from 2022, moved real money before the classifier existed. Across 8,814 cancellation calls over three months, December 2022 to March 2023, the flow directionally saved 12 percent of customers against a 5 percent target, on expert-reported saves. Price calls saved at roughly 43 percent, about eight times the rate of calls where the business was simply closing. That gap is the whole argument: the reason decides how rescuable the call is, which is why hearing it was worth a methodology bet. The program exec summary put the value at about $500K in expert savings.</p>
-      <p>The saves and retention teams later built a retention case on this work and projected $2.9M in retention revenue. That projection is theirs, not mine, and it was never realized. My result on this work is the routing quality: cleaner cancellation reasons handed to the saves team, measured and gated before it went anywhere near a customer.</p>
-      <p>And the honest ending. The classifier cleared the Responsible AI review, but in early 2023 the platform had no sanctioned path for shipping generative AI to production. So the experience ran end to end in the internal low-code tool, designed, validated, measured, and gated from full deployment until the platform caught up. I proved the pattern before the platform could ship it. The hybrid shape it proved, an intent model for the topic and a language model for the nuance, is the same architecture the charge-lookup redesign shipped two years later.</p>
+      <p>My result on this work is the routing precision: 96.6 percent of the cancellations the classifier sent to the saves queue were truly savable. That number is the case-rate lever. The higher the share of truly savable cases landing on the queue, the more of the specialists&rsquo; time turns into saves instead of screening.</p>
+      <p>The classifier cleared the Responsible AI review, but in early 2023 the platform had no sanctioned path for shipping generative AI to production. So the experience ran end to end in the internal low-code tool, designed, validated, measured, and gated from full deployment until the platform caught up. I proved the pattern before the platform could ship it. The hybrid shape it proved, an intent model for the topic and a language model for the nuance, is the same architecture the charge-lookup redesign shipped two years later. And the savability thinking carried further still: the <a href="billing-skill.html">billing skill&rsquo;s</a> cancel-intercept widget is its agentic descendant.</p>
     </div>
   </section>
 
@@ -266,7 +266,7 @@ Customer feedback: ```${customer_feedback}```</pre>
     <p class="kicker mono part-head"><span class="knum">08</span><span>Learnings</span></p>
     <h2 id="p8-h">What I learned, and what I would do differently.</h2>
     <div class="prose">
-      <p>When the curve goes flat, question the tool before commissioning more effort. Four months of tuning taught me more about the intent platform&rsquo;s ceiling than about customers. The moment I named the bottleneck honestly, the answer stopped being another cycle.</p>
+      <p>When the curve goes flat, question the tool before commissioning more effort. Four months of tuning taught me more about the intent platform&rsquo;s ceiling than about customers. The moment I named the bottleneck, the answer stopped being another cycle.</p>
       <p>Boundaries are what make an unproven model shippable. The classifier earned its place by what it was forbidden to do: speak raw to a customer, improvise an offer, pitch a retirement. Strict output contracts and human-owned savability rules are how a new tool gets trusted with an old queue.</p>
       <p>Verify before you champion. The 300-utterance evaluation and the Responsible AI review were not compliance chores; they were the argument. A measured 96.6 percent is persuasive in a way a demo never is.</p>
       <p>Two things I would do differently. I would start the deployment-path conversation with the platform team on day one, alongside the prompt work, so the proof and the path to production land together instead of the proof waiting. And I would separate my result from the program&rsquo;s ambition sooner: the routing quality was mine to own and measure, and I would state it plainly rather than let a downstream revenue projection stand in for it.</p>
