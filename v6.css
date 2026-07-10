@@ -433,6 +433,28 @@ body.v5 .vid-tx .tx-role{
 }
 body.v5 .vid-tx li.tx-agent .tx-role{color:var(--accent);}
 
+/* ---------- workbook tab strip (credit karma revision log) ---------- */
+body.v5 .tabstrip{margin:34px 0 0;}
+body.v5 .tabstrip .ts-bar{
+  display:flex;flex-wrap:wrap;gap:3px;align-items:flex-end;
+  margin:0;padding:10px 10px 0;list-style:none;
+  background:#f1f3f4;border:1px solid #cfd3d8;border-radius:8px 8px 0 0;
+}
+body.v5 .tabstrip .ts-tab{
+  font-family:var(--sans);font-size:.72rem;color:#3c4043;
+  background:#e2e5e9;border:1px solid #cfd3d8;border-bottom:none;
+  border-radius:6px 6px 0 0;padding:5px 11px 4px;white-space:nowrap;
+}
+body.v5 .tabstrip .ts-tab.ts-active{
+  background:#fff;font-weight:600;color:#202124;
+  border-bottom:1px solid #fff;margin-bottom:-1px;
+}
+body.v5 .tabstrip .ts-foot{
+  border:1px solid #cfd3d8;border-top:none;border-radius:0 0 8px 8px;
+  background:#fff;padding:10px 14px;font-family:var(--sans);
+  font-size:.78rem;color:#5f6368;
+}
+
 /* ---------- working-board texture (stickies get human jitter) ---------- */
 body.v5 .sticky:nth-child(odd){transform:rotate(-.6deg);}
 body.v5 .sticky:nth-child(even){transform:rotate(.45deg) translateY(2px);}

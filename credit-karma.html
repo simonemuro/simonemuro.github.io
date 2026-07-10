@@ -6,13 +6,14 @@
 <meta name="color-scheme" content="light">
 <meta name="description" content="A prompt engineering rotation at Credit Karma: model-written explanations for card recommendations, in regulated finance. The model reads the member's approval odds, reasons over them, and never states them. Case 07.">
 <meta property="og:title" content="Credit Karma &middot; Simone Muro">
-<meta property="og:description" content="Model-written card recommendation explanations in regulated finance: reason over the approval odds, never state them. Nine synthetic profiles, about a dozen revisions, a rubric with automatic failures.">
+<meta property="og:description" content="Model-written card recommendation explanations in regulated finance: reason over the approval odds, never state them. Eleven prompt revisions in one workbook, nine synthetic profiles, zero strikes by revision two.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/credit-karma.html">
 <meta name="twitter:card" content="summary">
 <title>Credit Karma &middot; Simone Muro</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="v5.css">
+<link rel="stylesheet" href="v6.css">
 </head>
 <body class="v5">
 
@@ -26,6 +27,8 @@
       <a href="resume.html">Resume</a>
       <a href="index.html#contact">Contact</a>
     </nav>
+    <!-- agent widget mounts here in a later release -->
+    <div class="agent-slot" id="agent-slot" aria-hidden="true"></div>
   </div>
 </header>
 
@@ -38,14 +41,14 @@
       <span>Card recommendations</span>
       <span>Credit Karma</span>
     </p>
-    <h1 id="case-h">Helping Credit Karma members see why a card is recommended for them.</h1>
-    <p class="lede">At Credit Karma, I wrote prompts for AI-generated explanations of why a card fits a member&rsquo;s wallet. The hard part was the boundary: the model could reason over approval odds, but the member-facing copy could never state or imply them.</p>
+    <h1 id="case-h">The model knows your approval odds. It&rsquo;s never allowed to say them.</h1>
+    <p class="lede">At Credit Karma, &ldquo;see why&rdquo; puts a model-written explanation under a recommended card, built from the member&rsquo;s own credit profile. The member&rsquo;s real question is whether they&rsquo;ll be approved. The model holds that answer in its context, credit law forbids it in the response, and the craft was an explanation that reasons over the odds without ever leaking them. Eleven prompt revisions in one workbook, graded against nine synthetic member profiles. The workbook is on this page.</p>
 
     <dl class="factrow">
-      <div><dt>Surface</dt><dd>Credit Karma&rsquo;s card recommendation pages; a model-written explanation on a recommended offer</dd></div>
-      <div><dt>Role</dt><dd>Prompt engineer, a rotation from my conversational AI role at Intuit; all hands-on &middot; 2024</dd></div>
-      <div><dt>Build</dt><dd>About a dozen prompt revisions, graded against nine synthetic member profiles on a three-tier rubric with automatic failures</dd></div>
-      <div><dt>Status</dt><dd>Prompts shipped through reviewed, merged pull requests and product, legal, and trust and safety review; the rotation ended before an outcome number I can claim</dd></div>
+      <div><dt>Surface</dt><dd>Credit Karma&rsquo;s card recommendation pages: &ldquo;see why,&rdquo; a model-written explanation on a recommended offer</dd></div>
+      <div><dt>My role</dt><dd>Prompt engineer, a rotation from my Conversation AI role at Intuit; the prompts, the test profiles, and the grading runs were my hands &middot; 2024</dd></div>
+      <div><dt>Build</dt><dd>Eleven prompt revisions, graded against nine synthetic member profiles on a rubric with automatic strikes for legal and safety misses</dd></div>
+      <div><dt>Status</dt><dd>Shipped through reviewed, merged pull requests with product, legal, and quality engineering review</dd></div>
     </dl>
 
     <div class="evidence-split" aria-label="Credit Karma prompt engineering evidence">
@@ -54,42 +57,32 @@
         <h2>The strongest signal stayed silent.</h2>
         <p>The model could use approval-likelihood data to reason about fit, but the member-facing explanation could never state, hint, rank, or imply it.</p>
         <ul class="snapshot-list">
-          <li><b>Owned</b><span>Prompt revisions, synthetic profiles, grading rubric, release boundary.</span></li>
-          <li><b>Limit</b><span>No conversion metric claimed; the rotation ended before outcome readout.</span></li>
+          <li><b>Owned</b><span>Prompt revisions, synthetic profiles, grading runs, release boundary.</span></li>
+          <li><b>Shared</b><span>Grading criteria defined with the product manager and quality engineering.</span></li>
         </ul>
       </div>
-      <div class="deck-artifact" aria-label="Prompt boundary slide">
-        <div class="board-title"><span>release boundary</span><span>public-safe</span></div>
-        <div class="deck-slide">
-          <h3>Personal, truthful, silent about odds.</h3>
-          <div class="deck-strip" aria-hidden="true">
-            <span>profile facts</span>
-            <span>card terms</span>
-            <span>fee named</span>
-            <span>odds hidden</span>
-          </div>
-        </div>
+      <div class="run-console" aria-label="The output contract from the shipped prompt">
+        <div class="board-title"><span>output contract</span><span>verbatim from the prompt</span></div>
+<pre>JSON response schema:
+
+{
+  "overview": "string",
+  "details": ["string"]
+}
+
+// the boundary instruction sits here (part 02)
+
+Respond with valid JSON only.</pre>
       </div>
     </div>
   </section>
 
-  <!-- ================= 01 · background ================= -->
-  <section class="wrap part" id="background" aria-labelledby="p1-h">
-    <p class="kicker mono part-head"><span class="knum">01</span><span>Background</span></p>
-    <h2 id="p1-h">A rotation into regulated finance.</h2>
+  <!-- ================= 01 · the problem ================= -->
+  <section class="wrap part" id="problem" aria-labelledby="p1-h">
+    <p class="kicker mono part-head"><span class="knum">01</span><span>The problem</span></p>
+    <h2 id="p1-h">Fluent, accurate, and about nobody.</h2>
     <div class="prose">
-      <p>Credit Karma is part of Intuit, and in 2024 I rotated over from my conversational AI work in QuickBooks to a prompt engineering seat there. The surface: members browsing card offers see a line under a recommended card inviting them to see why it is their top suggested offer. Tapping it opens a panel where a language model explains the recommendation, written from that member&rsquo;s credit profile and the card&rsquo;s actual terms.</p>
-      <p>The feature existed in its first placement when I arrived, and it was growing into the pages where members actually shop for cards. My job was the language system behind it: the prompts, the synthetic member profiles they were tested against, and the grading that decided when a revision was good enough to ship. The grading criteria were defined with the product manager and quality engineering; the prompt writing and the revision work were mine. This was individual contributor work, all my own hands, inside a full team: product owned the feature and its experiments, designers owned the panel, engineers owned the pipeline that carried the model&rsquo;s output to the screen, and legal reviewed what the model was allowed to say.</p>
-      <p>One thing to keep honest about the era: this is 2024 work, before agents. One model call, one structured answer, no tools, no memory. The judgment lived entirely in the prompt and in the evaluation around it.</p>
-    </div>
-  </section>
-
-  <!-- ================= 02 · the problem ================= -->
-  <section class="wrap part" id="problem" aria-labelledby="p2-h">
-    <p class="kicker mono part-head"><span class="knum">02</span><span>The problem</span></p>
-    <h2 id="p2-h">Fluent, accurate, and about nobody.</h2>
-    <div class="prose">
-      <p>Ask a capable model why a card is recommended and it produces something like the panel below: fluent, accurate to the card, and generic. It reads like the card&rsquo;s own marketing page. It could be about anyone, which means it is about no one, and a member deciding whether to apply for credit deserves better than an advertisement restated politely.</p>
+      <p>Credit Karma is part of Intuit, and in 2024 I rotated over from my QuickBooks Conversation AI work into a prompt engineering seat there. The feature existed in its first placement when I arrived, headed for the pages where members actually shop for cards. Ask a capable model why a card is recommended, though, and you get something like this: fluent, accurate to the card, and generic. It reads like the card&rsquo;s own marketing page.</p>
     </div>
 
     <div class="mockwrap">
@@ -111,179 +104,213 @@
         </div>
         <p class="m-foot">Written by AI from your credit profile and the card&rsquo;s terms.</p>
       </div>
-      <p class="mock-cap">An early-draft output, recreated. Card invented. On the rubric this grades acceptable at best: nothing in it comes from the member, and the fee is missing entirely.</p>
+      <p class="mock-cap">An early-draft output, recreated; card invented. Nothing in it comes from the member, and the fee is missing entirely.</p>
     </div>
 
     <div class="prose">
-      <p class="opens">And underneath the writing problem sat the harder one. The member&rsquo;s real question on this panel is the one everybody would ask: am I actually going to get approved for this? The model holds the answer. Approval-likelihood data sits in its context, it is the most useful fact in the room, and credit law says it may never appear in the response. Credit Karma is legally bound not to misrepresent approval odds, so the safe surface area for that signal is zero.</p>
-      <p>The most useful fact in the room was the one the model could never say.</p>
+      <p class="opens">Underneath the writing problem sat the harder one. The member&rsquo;s real question on this panel is the one everybody would ask: am I actually going to get approved? Approval-likelihood data sits in the model&rsquo;s context. Credit Karma is legally bound not to misrepresent approval odds, so the safe surface area for that signal in the response is zero. In most products a hallucination is a bug. In this one it&rsquo;s a liability with a member attached.</p>
     </div>
   </section>
 
-  <!-- ================= 03 · why it mattered ================= -->
-  <section class="wrap part" id="why" aria-labelledby="p3-h">
-    <p class="kicker mono part-head"><span class="knum">03</span><span>Why it mattered</span></p>
-    <h2 id="p3-h">A wrong sentence here is not a typo.</h2>
+  <!-- ================= 02 · the boundary ================= -->
+  <section class="wrap part" id="boundary" aria-labelledby="p2-h">
+    <p class="kicker mono part-head"><span class="knum">02</span><span>The boundary</span></p>
+    <h2 id="p2-h">Reason over the odds. Never say them.</h2>
     <div class="prose">
-      <p>These panels sit exactly where members decide whether to apply for credit. An application is a hard pull on a credit report; a card is a multi-year financial relationship. A generated sentence that overstates a benefit, invents a fee, or hints at approval chances does real harm to a real person&rsquo;s finances, and it exposes the company legally. In most products a hallucination is a bug. In this one it is a liability with a member attached.</p>
-      <p>That is also why the work was worth a rotation. Anyone can prompt a model to sound personal. Getting a model to be personal, truthful, and silent about the one thing it knows best, on every profile, on every card, is a design problem worth learning from the inside.</p>
-    </div>
-  </section>
-
-  <!-- ================= 04 · exploring solutions ================= -->
-  <section class="wrap part" id="solutions" aria-labelledby="p4-h">
-    <p class="kicker mono part-head"><span class="knum">04</span><span>Exploring solutions</span></p>
-    <h2 id="p4-h">Three ways to handle the odds, and a test bed you can trust.</h2>
-    <div class="prose">
-      <p>For the approval-odds signal there were three honest options. Strip the data out of the context entirely, so the model cannot leak what it cannot see; the explanations get safer and worse, because the signal genuinely shapes which cards make sense. Refuse the topic, so any question near approval gets a canned deflection; safe, and the member learns nothing. Or let the model reason over the data and forbid it from ever surfacing it: not a percentage, not a range, not great chances, not a hedge that implies a number. I went with the third. It is the hardest one to hold, and it is the only one where the member gets the full benefit of the signal without ever being shown it.</p>
-      <p>Testing that boundary needed member data, and real member data was untouchable. So the prompts were tested against synthetic member profiles I could publish revisions against: nine of them, spanning credit bands and wallet situations, from a near-prime member with four category cards and higher utilization to a strong-credit member whose wallet already matched the recommendation. Every revision ran against all nine.</p>
-      <p>One more constraint shaped the writing. Production ran on two different models, and they did not take instructions the same way: the older one needed its reasoning spelled out step by step before it wrote a word, the newer one took direct instructions. So the prompt was not one artifact. It was a variant per model, kept in lockstep, with the same rules and the same boundary in both.</p>
-    </div>
-    <div class="eval-sheet" aria-label="Credit Karma prompt options">
-      <div class="board-title"><span>decision matrix</span><span>approval odds signal</span></div>
-      <table class="eval-table">
-        <thead><tr><th>Option</th><th>Product value</th><th>Risk</th><th>Decision</th></tr></thead>
-        <tbody>
-          <tr><td>Remove odds from context</td><td>Safer, but less personalized.</td><td>The explanation loses the strongest fit signal.</td><td>Rejected</td></tr>
-          <tr><td>Deflect approval questions</td><td>Clear compliance posture.</td><td>Reads evasive exactly where members need clarity.</td><td>Rejected</td></tr>
-          <tr><td>Reason over odds silently</td><td>Best personalization without exposing the protected signal.</td><td>Requires strict rubric and automatic failures.</td><td><span class="pass">Chosen</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- ================= 05 · design decisions ================= -->
-  <section class="wrap part" id="design" aria-labelledby="p5-h">
-    <p class="kicker mono part-head"><span class="knum">05</span><span>Design decisions</span></p>
-    <h2 id="p5-h">Four rules the language had to keep.</h2>
-    <div class="prose">
-      <p>Four decisions define the explanation. Each one is visible in the shipped shape in part seven.</p>
-    </div>
-    <ol class="decisions">
-      <li>
-        <span class="dnum" aria-hidden="true">5.1</span>
-        <div>
-          <h3>Reason over the odds. Never state them.</h3>
-          <p>Legal set the rule; the design question was what to do with it. The prompt holds the model to the strict version: use the approval-likelihood data in your reasoning, and never state, infer, or reference it in the response. The signal does its work in silence, and it is the last instruction the model reads before it answers.</p>
-        </div>
-      </li>
-      <li>
-        <span class="dnum" aria-hidden="true">5.2</span>
-        <div>
-          <h3>Explain head to head with the wallet.</h3>
-          <p>The rewrite that mattered most in the revision workbook: stop describing the card and start comparing it with the cards the member already carries. What their current cards earn, what this one adds, who it is actually for. That is the difference between a recommendation and an advertisement.</p>
-        </div>
-      </li>
-      <li>
-        <span class="dnum" aria-hidden="true">5.3</span>
-        <div>
-          <h3>The cost always shows.</h3>
-          <p>One bullet in every explanation states the annual fee, even when it is zero dollars. A recommendation that only lists upsides is a pitch. Naming the cost every time is what makes the rest of the explanation believable.</p>
-        </div>
-      </li>
-      <li>
-        <span class="dnum" aria-hidden="true">5.4</span>
-        <div>
-          <h3>No arithmetic in the copy.</h3>
-          <p>The model states terms from the card record and facts from the member&rsquo;s profile. It performs no calculations on the member&rsquo;s money. A model doing math on someone&rsquo;s balances is a wrong answer waiting to render, so any calculation in the output is an automatic failure on the rubric.</p>
-        </div>
-      </li>
-    </ol>
-  </section>
-
-  <!-- ================= 06 · the build ================= -->
-  <section class="wrap part" id="build" aria-labelledby="p6-h">
-    <p class="kicker mono part-head"><span class="knum">06</span><span>The build</span></p>
-    <h2 id="p6-h">The prompt&rsquo;s anatomy, and prompts treated like code.</h2>
-    <div class="prose">
-      <p>The prompt is a contract in five parts, and its output is not prose an engineer has to parse. The model answers in a fixed structure, valid JSON only: an overview and two to three detail bullets, and that structure renders straight into the panel the member sees. The overview becomes the paragraph, the details become the bullets. Downstream of the model, a guardrail layer validated the output before anything rendered.</p>
+      <p>The move that made the feature possible: let the model keep the approval-likelihood data in its reasoning, where it makes the explanation smarter about fit, and wall it out of the response completely. Here&rsquo;s that wall, as shipped. It sits at the bottom of the prompt, after every other instruction, and it appears word for word in all eleven revisions.</p>
     </div>
 
-    <figure class="trace" aria-label="The anatomy of the production prompt, paraphrased: member data, card record, writing rules, output schema, and the approval-odds boundary as the final instruction">
-      <figcaption class="trace-hd mono"><span>anatomy &middot; one prompt, five parts</span><span>paraphrased</span></figcaption>
-      <ol class="trace-rows">
-        <li><span class="t-time" aria-hidden="true">01</span><div><code>member &#8594; <b>profile</b></code> &middot; credit score, balances, utilization, the cards they already carry</div></li>
-        <li><span class="t-time" aria-hidden="true">02</span><div><code>card &#8594; <b>record</b></code> &middot; the recommended card&rsquo;s real terms: rewards, fees, bonus &middot; the model invents none of it</div></li>
-        <li><span class="t-time" aria-hidden="true">03</span><div><code>rules &#8594; <b>writing</b></code> &middot; explain the fit for this member &middot; two to three bullets &middot; the annual fee stated, even at $0 &middot; no calculations</div></li>
-        <li><span class="t-time" aria-hidden="true">04</span><div><code>schema &#8594; <b>{"overview", "details[]"}</b></code> &middot; valid JSON only &middot; renders straight into the panel</div></li>
-        <li><span class="t-time" aria-hidden="true">05</span><div><code>boundary &#8594; <b>approval odds</b></code> &middot; reason over, never state, infer, or reference &middot; the last thing the model reads</div></li>
-      </ol>
-      <p class="trace-foot">paraphrased from the production prompt &middot; structure real; verbatim text, model names, and data values withheld &middot; one prompt variant per model, same rules in both</p>
-    </figure>
-
-    <div class="prose">
-      <p class="opens">The prompts lived in git and moved through reviewed, merged pull requests, the same way the code around them did. A revision was not done when it read well; it was done when it passed review and held its grades. Release readiness ran through product, legal, and trust and safety review, not a merge button. As the feature spread to the category pages where members browse by goal, the prompt gained the page as context, so a travel page got a travel-shaped explanation of the same card.</p>
-    </div>
-  </section>
-
-  <!-- ================= 07 · results ================= -->
-  <section class="wrap part" id="results" aria-labelledby="p7-h">
-    <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
-    <h2 id="p7-h">The shipped shape, and the honest scoreboard.</h2>
-    <div class="prose">
-      <p>Here is the explanation as the final prompts produce it, recreated on an invented profile: a near-prime member with four cards that all earn by category. Grounded in the wallet, the fee named, and no odds anywhere.</p>
-    </div>
-
-    <div class="mockwrap">
-      <div class="mock" role="img" aria-label="Recreated recommendation panel: the shipped shape, grounded in the member's own cards, with the annual fee stated and no approval odds">
-        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Why this card?</span><span class="mtag">Recreation</span></div>
-        <div class="mock-body">
-          <div class="m-agent">
-            <p>Your four cards all earn their best rewards in categories: groceries, gas, and dining. The Horizon Cash Rewards card covers what they leave behind, earning its full flat rate on every purchase outside those categories, without adding a yearly cost to your wallet.</p>
-            <div class="m-rows" role="list" aria-label="Explanation bullets, shipped shape">
-              <div class="m-row" role="listitem"><span class="rlab">Head to head with your current cash back card, it earns the higher rate on purchases outside your bonus categories.</span></div>
-              <div class="m-row" role="listitem"><span class="rlab">A welcome bonus after qualifying purchases in your first months adds value up front.</span></div>
-              <div class="m-row" role="listitem"><span class="rlab">$0 annual fee: the rewards you earn are not offset by a yearly cost.</span></div>
-            </div>
-            <div class="m-actions">
-              <span class="m-btn primary">Continue</span>
-              <span class="m-btn ghost">See details</span>
-            </div>
-          </div>
-        </div>
-        <p class="m-foot">Written by AI from your credit profile and the card&rsquo;s terms.</p>
+    <div class="skillspec">
+      <div class="skillspec-head">
+        <span class="mono">the boundary instruction &middot; verbatim</span>
+        <span class="mono">in all eleven revisions</span>
       </div>
-      <p class="mock-cap">The shipped shape, recreated. Member profile and card invented; the pattern is real. Grounded in the member&rsquo;s own cards, the fee stated in its own bullet, no approval odds stated or implied.</p>
-    </div>
+      <pre><span class="c"># the last substantive instruction, every revision</span>
+Here is an additional and extremely critical
+instruction:
 
-    <div class="prose">
-      <p class="opens">What earned that shape was the grind, not a flash of taste. About a dozen prompt revisions, each graded against all nine synthetic profiles on a three-tier rubric: good, acceptable, unacceptable. Some failures were automatic, no matter how well the rest read: approval odds stated or implied, a hallucinated member or card fact, a missing annual fee, arithmetic in the copy. Early drafts collected automatic failures; revision by revision they drained out, until the release candidates held their grades across every profile. Here is one graded cell of that grid.</p>
-    </div>
+Always exclude any mention of approval odds in your
+final response, and exclude any guarantee about your
+certainty level when it comes to approval odds.
+Credit Karma is legally bound to not misrepresent
+approval odds, so while you may use this information
+in your reasoning, it is not to ever be shared
+directly in your response. Remember, do not include,
+infer or reference any information about approval
+odds in your response.
 
-    <figure class="goldrow" aria-label="One graded evaluation cell: a synthetic member profile, the prompt revision under test, and the rubric checks it passed">
-      <figcaption class="gr-hd mono"><span>graded run &middot; one profile of nine</span><span class="gr-mark">rubric: good</span></figcaption>
-      <dl class="gr-rows">
-        <div class="gr-row"><dt>profile</dt><dd>Near prime &middot; four cards, all category earners &middot; higher utilization &middot; synthetic</dd></div>
-        <div class="gr-row"><dt>revision</dt><dd>The head-to-head rewrite, late in the workbook of about a dozen</dd></div>
-        <div class="gr-row gate"><dt>check &middot; grounded</dt><dd><span>Every fact traces to the member profile or the card record.</span><b class="gr-res">pass</b></dd></div>
-        <div class="gr-row gate"><dt>check &middot; the fee</dt><dd><span>The annual fee is stated in its own bullet, even at $0.</span><b class="gr-res">pass</b></dd></div>
-        <div class="gr-row gate"><dt>check &middot; the boundary</dt><dd><span>No approval odds stated, inferred, or referenced. No arithmetic.</span><b class="gr-res">pass</b></dd></div>
-      </dl>
-      <p class="gr-foot">criteria real, from the shipped rubric &middot; profile and grades illustrative of a real revision &middot; three tiers plus automatic failures &middot; no percentages in the rubric</p>
-    </figure>
-
-    <div class="prose">
-      <p class="opens">The honest scoreboard: the prompts shipped through merged pull requests into a feature that was expanding across the product&rsquo;s card-shopping pages, and the rotation ended before an outcome number I can put my name on. The measurement stayed with the team, so this case claims the craft, not a conversion lift. What it can show is how a prompt earned release: not because it read well once, but because it held across nine member profiles, revision after revision, with the law inside it.</p>
-      <p>And the rule holds on this page too: no approval odds appear anywhere on it, including inside the recreations.</p>
+<span class="c"># then the only line below it:</span>
+Respond with valid JSON only.</pre>
+      <p class="wf-label">Verbatim from my revision workbook; the one runtime detail removed is which model received it. The rule holds on this page too: no approval odds appear anywhere on it.</p>
     </div>
   </section>
 
-  <!-- ================= 08 · learnings ================= -->
-  <section class="wrap part" id="learnings" aria-labelledby="p8-h">
-    <p class="kicker mono part-head"><span class="knum">08</span><span>Learnings</span></p>
-    <h2 id="p8-h">What I learned, and what I would do differently.</h2>
+  <!-- ================= 03 · the test bed ================= -->
+  <section class="wrap part" id="testbed" aria-labelledby="p3-h">
+    <p class="kicker mono part-head"><span class="knum">03</span><span>The test bed</span></p>
+    <h2 id="p3-h">Nine synthetic members, and automatic strikes.</h2>
     <div class="prose">
-      <p>The tightest constraint produced the best writing. Reason over, never state is a harder line to hold than a flat ban, and holding it forced explanations that were personal without ever gesturing at the forbidden number. Compliance was a design material here, not a limiter.</p>
-      <p>A rubric with automatic failures beats taste. Reading a draft, I would forgive a graceful sentence that brushed the boundary. The rubric would not, and the rubric was right. You cannot argue with a strike, which is exactly what makes it useful.</p>
-      <p>Write for the model you have, not the model in your head. The same rules had to be delivered two different ways for two models, and pretending one prompt fits all would have shipped the boundary loosely on one of them.</p>
-      <p>Two things I would do differently. I would build the graded rubric before the first draft instead of arriving at it through the early revisions, because the failures it caught were findable on day one. And I would have arranged to see the experiment readouts after the rotation ended; craft without its outcome number is a story I have to tell more carefully, as this page shows.</p>
+      <p>You can&rsquo;t test prompts like this on real members, so I built nine synthetic ones: a thin file with no cards, a high-utilization revolver, a premium member with a thick wallet, and the profiles between. Revisions were graded against the set. The criteria were defined with the product manager and quality engineering: quality rated ideal, acceptable, or below standard, with automatic strikes for legal and safety misses. A strike failed the run no matter how good the writing was. You can&rsquo;t argue with a strike, which is exactly what makes it useful.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-chrome">
+        <div class="sheet-titlebar" aria-hidden="true">
+          <span class="st-name">see_why_grading</span>
+          <span>nine profiles per run</span>
+          <span class="st-dim">graded, with automatic strikes</span>
+          <span class="st-scroll" aria-hidden="true">scroll &rarr;</span>
+        </div>
+        <div class="sheet-scroll">
+          <table class="grid" aria-label="Grading summary: the initial draft against revision two across the nine synthetic profiles">
+            <thead>
+              <tr><th class="rownum" scope="col" aria-label="row"></th><th scope="col">run</th><th scope="col">strikes</th><th scope="col">quality</th><th scope="col">what it meant</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rownum">1</td>
+                <td><span class="tag">initial draft</span></td>
+                <td><span class="tag fail">4 strikes</span></td>
+                <td>3 below standard &middot; 2 acceptable</td>
+                <td>Four of nine profiles broke a legal or safety rule. Not shippable at any quality level.</td>
+              </tr>
+              <tr>
+                <td class="rownum">2</td>
+                <td><span class="tag">revision two</span></td>
+                <td><span class="tag pass">0 strikes</span></td>
+                <td>7 ideal &middot; 2 acceptable</td>
+                <td>All nine profiles passed. The legal problem was solved; everything after this was craft.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="wf-label">Reconstructed from my notes; profile data synthetic by design.</p>
+    </div>
+
+    <div class="prose">
+      <p class="opens">That&rsquo;s the shape of the whole project in two rows. The strikes were gone by revision two. The next nine revisions were about something harder to grade: making the explanation actually about the member.</p>
+    </div>
+  </section>
+
+  <!-- ================= 04 · eleven revisions ================= -->
+  <section class="wrap part" id="revisions" aria-labelledby="p4-h">
+    <p class="kicker mono part-head"><span class="knum">04</span><span>Eleven revisions</span></p>
+    <h2 id="p4-h">The workbook is the case study.</h2>
+    <div class="prose">
+      <p>Every revision lived as a tab in one workbook, eleven full prompts under twelve names. The tab names are my working log, typos and all: what each revision was for, in the words I used at the time.</p>
+    </div>
+
+    <div class="tabstrip" role="group" aria-label="The twelve sheet tabs from the revision workbook, in order">
+      <ol class="ts-bar">
+        <li class="ts-tab">intial prompt</li>
+        <li class="ts-tab">adds data to intial prompt</li>
+        <li class="ts-tab">adds matched card data</li>
+        <li class="ts-tab">revises instruction section</li>
+        <li class="ts-tab">emphasis on cards I hold</li>
+        <li class="ts-tab">revises across</li>
+        <li class="ts-tab">references existing cards</li>
+        <li class="ts-tab">lack of card data</li>
+        <li class="ts-tab">strict on bullets</li>
+        <li class="ts-tab">Address QE issue</li>
+        <li class="ts-tab">annual fees language update</li>
+        <li class="ts-tab ts-active">FINAL- tames comparision Langua</li>
+      </ol>
+      <p class="ts-foot">Twelve tabs, eleven of them holding a full prompt version; the final tab was named and left empty. Half the log is one theme: making the model talk about the member&rsquo;s cards, not just the recommended one.</p>
+    </div>
+    <p class="wf-label">Real workbook structure; the tabs are reproduced exactly, spelling included.</p>
+
+    <div class="prose">
+      <p>Two of those revisions carried the most weight, and the before-and-after language is worth reading closely.</p>
+    </div>
+
+    <div class="fixlog" role="group" aria-label="Two prompt revisions with before and after instruction language">
+      <article>
+        <span class="fl-tag">revision &middot; emphasis on cards I hold</span>
+        <h3>From the card&rsquo;s features to the member&rsquo;s gaps</h3>
+        <p>The initial prompt asked the model to sell what the card does. This revision forces every claim through the member&rsquo;s actual wallet, and the workbook shows the theme being re-fought across later tabs.</p>
+        <div class="fl-bad">highlight unique features of the
+recommended card that would benefit me</div>
+        <p class="fl-fix"><b>The rewrite:</b> &ldquo;Provide a brief overview of the recommended credit card by connecting its benefits to the gaps identified in my financial profile. Ensure to call out the specific cards I currently hold and the gap you identified.&rdquo;</p>
+      </article>
+      <article>
+        <span class="fl-tag">revision &middot; Address QE issue</span>
+        <h3>The model stops doing math</h3>
+        <p>Quality engineering flagged outputs where the model worked numbers on its own. Sooner or later it would get someone&rsquo;s balance math wrong, so the revision took the calculator away.</p>
+        <p class="fl-fix"><b>The added rule:</b> &ldquo;Always rely on the pre-calculated data points from the member&rsquo;s profile, instead of calculating data points yourself.&rdquo; The same revision gave the prompt its shipped persona: &ldquo;You are &lsquo;Intuit Assist&rsquo;, an AI-powered personal Finance Analyst.&rdquo;</p>
+      </article>
+    </div>
+    <p class="wf-label">Instruction language quoted from the workbook: the before line from the initial prompt, the rewrites from the named tabs.</p>
+  </section>
+
+  <!-- ================= 05 · the prompt, assembled ================= -->
+  <section class="wrap part" id="anatomy" aria-labelledby="p5-h">
+    <p class="kicker mono part-head"><span class="knum">05</span><span>The prompt, assembled</span></p>
+    <h2 id="p5-h">What eleven revisions add up to.</h2>
+    <div class="prose">
+      <p>The late-revision prompt, reduced to its skeleton. Every part earned its place through a graded run, and the order matters: the member&rsquo;s data comes before the card&rsquo;s, the comparison rules come with the fee requirement attached, and the boundary comes last, closest to the response.</p>
+    </div>
+
+    <div class="skillspec">
+      <div class="skillspec-head">
+        <span class="mono">prompt anatomy &middot; late revision</span>
+        <span class="mono">structure verbatim, data invented</span>
+      </div>
+      <pre><span class="k">persona:</span> "Intuit Assist", a personal finance analyst
+  for Credit Karma members
+<span class="k">fallback:</span> if the member&rsquo;s card data is unavailable,
+  describe the card in general terms; never invent
+  the member&rsquo;s side
+<span class="k">data_rules:</span> rely on pre-calculated data points from
+  the member&rsquo;s profile; never calculate them yourself
+<span class="k">member_data:</span>
+  financial_profile   <span class="c"># score, balances, utilization</span>
+  current_cards       <span class="c"># full terms of what they hold</span>
+  recommended_card    <span class="c"># the offer being explained</span>
+<span class="k">assessment:</span> review the member&rsquo;s profile and cards,
+  then the recommended card, then compare
+<span class="k">response_rules:</span> an overview connecting the card to
+  this member&rsquo;s gaps, then three comparison bullets
+  naming the member&rsquo;s specific cards. always state
+  the annual fee and the amount
+<span class="k">schema:</span> {"overview": "string", "details": ["string"]}
+<span class="k">boundary:</span> reason over approval odds, never state,
+  infer, or reference them  <span class="c"># verbatim in part 02</span>
+<span class="k">final_line:</span> respond with valid JSON only</pre>
+      <p class="wf-label">Condensed from the late revisions of my workbook; card records and pipeline field names removed.</p>
+    </div>
+  </section>
+
+  <!-- ================= 06 · where it landed ================= -->
+  <section class="wrap part" id="outcome" aria-labelledby="p6-h">
+    <p class="kicker mono part-head"><span class="knum">06</span><span>Where it landed</span></p>
+    <h2 id="p6-h">Shipped like code, because it was code.</h2>
+
+    <div class="outcome-log" role="group" aria-label="What the rotation delivered">
+      <div>
+        <span class="ol-when">shipped</span>
+        <p class="ol-what"><b>Prompts went out through reviewed, merged pull requests,</b> with product, legal, and quality engineering review on the way. A revision wasn&rsquo;t done when it read well; it was done when the run held its grades and the review held up.</p>
+      </div>
+      <div>
+        <span class="ol-when">two surfaces</span>
+        <p class="ol-what"><b>The prompt system covered the card offer details page and the find-a-card and category pages,</b> tailoring its explanation to the category the member was shopping.</p>
+      </div>
+      <div>
+        <span class="ol-when">the boundary</span>
+        <p class="ol-what"><b>Product owned the feature and its experiments; design owned the panel; engineering owned the pipeline; legal wrote the rule.</b> The prompts, the synthetic profiles, and the grading runs were mine. The rotation ended with the prompts merged and readied for release; the outcome measurement stayed with the team.</p>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>This is 2024 work, from the era between chatbots and agents: one model call, one structured answer, no tools, no memory. The judgment lived entirely in the prompt and the evaluation around it, which is exactly why the workbook can carry this case. The agentic version of the same discipline is <a href="billing-skill.html">Case No. 01</a>.</p>
+      <p class="opens">What the rotation settled for me: the best writing in that workbook exists because the most useful fact in the room was off limits. The explanation had to earn its usefulness somewhere else: the member&rsquo;s own cards, the gaps in their wallet, the fee stated plainly.</p>
     </div>
   </section>
 
   <!-- ================= next case ================= -->
   <section class="wrap nextcase" aria-label="Next case">
-    <p class="kicker mono part-head"><span class="knum">Next</span><span>Case No. 08</span></p>
-    <p><a href="operate-with-ai.html">How I built this site</a>: the same discipline turned on itself. The build process, the honesty gates, and what an AI pair is actually for.</p>
+    <p class="kicker mono part-head"><span class="knum">Next</span><span>Case No. 01</span></p>
+    <p>The same discipline, three eras later: <a href="billing-skill.html">the billing skill</a>, where the prompt becomes an agent with tools, and the eval becomes the release gate.</p>
   </section>
 
 </main>
