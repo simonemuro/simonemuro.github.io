@@ -404,7 +404,8 @@ body.v5 .vid-shot video{
 }
 body.v5 .vid-shot .shot-head{
   display:flex;justify-content:space-between;gap:8px 14px;flex-wrap:wrap;
-  margin-bottom:10px;
+  margin-bottom:10px;align-content:flex-start;
+  min-height:2.6rem; /* two label lines, so paired videos top-align */
 }
 body.v5 .vid-shot .shot-head .mono{
   font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
