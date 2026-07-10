@@ -306,10 +306,23 @@ Time Premium   $50   20base + 10 x 3 users</div>
       <p>Price pressure or dissatisfaction means the situation might be fixable. There the skill surfaces the full account picture, makes one clear offer to connect with a billing specialist in its first response, and keeps self-serve steps available in the same breath. The customer always has both doors. What it never does is volunteer a downgrade to save money: that&rsquo;s a business decision with real tradeoffs, and it belongs to the customer and a human.</p>
     </div>
 
-    <figure class="shot dark">
-      <img src="assets/work/billing-skill-cancel-widget-run.png" alt="Real test-harness run: the customer says they want to cancel, the skill responds with the account picture and next billing date, then offers two buttons: connect with an expert, or no thanks, show me the steps" width="2070" height="627" loading="lazy">
-      <p class="wf-label">My local test run, May 2026: the cancel-intercept widget firing. Cropped; internal identifiers removed. The account is a test account with mock data.</p>
-    </figure>
+    <div class="prose">
+      <p>The widget itself went through a correction the same week. The first version made one offer: connect with a billing specialist. It sounded right and read wrong. Nothing told the customer they could still cancel on their own, and my customer interviews had shown that a large share of people prefer to self-serve. The second version puts both paths on screen: the specialist, and &ldquo;No thanks, show me the steps.&rdquo;</p>
+      <p>The offer&rsquo;s language was deliberate too. It leads with the value: multiple products on the account means multiple cancellation steps, and a specialist gets all of it right in one pass. Interviews had taught me customers say yes to a connection far more readily when the value comes first. If this had shipped, this flow is the first thing I&rsquo;d instrument, measure, and tune.</p>
+    </div>
+
+    <div class="duo">
+      <figure class="shot dark">
+        <div class="shot-head"><span class="mono">first version</span><span class="mono">one path</span></div>
+        <img src="assets/work/billing-skill-cancel-widget-v1.png" alt="Real test-harness run, first version: the cancel response offers only one option, a card reading connect with an expert" width="2330" height="1170" loading="lazy">
+        <p class="wf-label">First version, my local test run, May 2026. The specialist is the only visible path. Cropped; internal identifiers removed; test-account mock data.</p>
+      </figure>
+      <figure class="shot dark">
+        <div class="shot-head"><span class="mono">final version</span><span class="mono">both paths</span></div>
+        <img src="assets/work/billing-skill-cancel-widget-run.png" alt="Real test-harness run, final version: the cancel response offers two buttons, connect with an expert or no thanks, show me the steps" width="2070" height="627" loading="lazy">
+        <p class="wf-label">Final version, same day: the specialist offer and the self-serve steps, side by side. Cropped; internal identifiers removed; test-account mock data.</p>
+      </figure>
+    </div>
 
     <div class="skillspec">
       <div class="skillspec-head">
