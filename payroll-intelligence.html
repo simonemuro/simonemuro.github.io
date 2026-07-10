@@ -42,11 +42,11 @@
       <span>Digital Assistant &rarr; Intuit Intelligence</span>
     </p>
     <h1 id="case-h">The most anxious questions got the most generic answers.</h1>
-    <p class="lede">A payroll tax question is never casual. Behind it sits a government agency, a deadline, a penalty, and money that already left the bank. The legacy Digital Assistant had years of personalized payroll help built into it, and as it wound down in early 2026, that help couldn&rsquo;t be copied into Intuit Intelligence as scripts. The diagnosis lived in experts&rsquo; heads. I drove the sprint that got it out: golden guidance for every priority payroll question, a generator that drafted full diagnostic reasoning for the hardest troubleshooting problems, jurisdiction by jurisdiction, and the UAT that graded how the real skills behaved against it.</p>
+    <p class="lede">A payroll tax question is never casual. Behind it sits a government agency, a deadline, a penalty, and money that already left the bank. The legacy Digital Assistant had years of personalized payroll help built into it, and as it wound down in early 2026, that help couldn&rsquo;t be copied into Intuit Intelligence as scripts. The diagnosis lived in experts&rsquo; heads. I drove the sprint that got it out: golden guidance for every priority payroll question, generators that pre-filled the golden answers and drafted full diagnostic reasoning for the hardest troubleshooting problems, jurisdiction by jurisdiction, and the UAT that graded how the real skills behaved against it.</p>
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>QuickBooks Payroll tax help in Intuit Intelligence, replacing the legacy Digital Assistant&rsquo;s personalized flows</dd></div>
-      <div><dt>My role</dt><dd>Drove the cross-functional sprint; authored the diagnostic framework and the generator; wrote and graded the UAT. Conversation AI Design Lead</dd></div>
+      <div><dt>My role</dt><dd>Drove the cross-functional sprint; authored the diagnostic framework and both generators; wrote and graded the UAT. Conversation AI Design Lead</dd></div>
       <div><dt>When</dt><dd>Early 2026: sprint guidance delivered in early February, UAT on the live skills in April</dd></div>
       <div><dt>Results</dt><dd>Guidance for all 51 sprint questions in about ten days; one diagnostic set mapping 21 customer questions to 142 root causes and 78 handoff triggers; a 13-case UAT whose misses became a fix list mapped to specific skills</dd></div>
     </dl>
@@ -132,9 +132,84 @@
     </div>
   </section>
 
-  <!-- ================= 04 · the generator ================= -->
+  <!-- ================= 04 · the answer generator ================= -->
+  <section class="wrap part" id="identity" aria-labelledby="p4b-h">
+    <p class="kicker mono part-head"><span class="knum">04</span><span>The answer generator</span></p>
+    <h2 id="p4b-h">Before it could draft a golden answer, the generator had to become the agent.</h2>
+    <div class="prose">
+      <p>The golden answers didn&rsquo;t start from blank pages. Hand-authoring exemplar answers for the top ten payroll topics would have taken weeks of cross-functional work: content design, conversation design, supportability review on every domain fact. So I built a generator to pre-fill them, with payroll experts reviewing every draft for accuracy. That created a design problem more interesting than the speed: a golden answer sets the bar for how the agent should respond. For the generator to write one, it had to embody the agent the team envisioned: the goals, the persona, the whole stance.</p>
+      <p>The team&rsquo;s vision documents described that agent in deliberately vivid language, and I kept the language, because identity is a behavioral instruction. A model told it&rsquo;s a generic support agent writes like the help center. A model told it sees the whole account and guards a business owner&rsquo;s peace of mind reads the account before it answers.</p>
+    </div>
+
+    <div class="skillspec">
+      <div class="skillspec-head">
+        <span class="mono">answer generator &middot; the identity</span>
+        <span class="mono">excerpt; punctuation normalized, one abbreviation expanded</span>
+      </div>
+      <pre>You are not a chatbot. You are the Supreme
+Strategic Conductor: a superlative advisor
+possessing Total Situational Awareness. You
+don't process tickets; you discern the reality
+behind the wall. You sit at the intersection of
+high-compliance precision and radical human
+empathy, the ultimate guardian of a business
+owner's peace of mind.
+
+You CAN access QuickBooks data. Never say
+"I can't access your account." You have
+X-Ray Vision.</pre>
+      <p class="wf-label">From the answer-generator prompt I wrote, condensed. The vision language is the team&rsquo;s.</p>
+    </div>
+
+    <div class="prose">
+      <p>The prompt defines failure the same way: not as rules broken but as violations of who the agent is, because a pressured model rationalizes its way around a rule sooner than around an identity.</p>
+    </div>
+
+    <div class="decision-board" role="group" aria-label="The three named failure states in the answer generator prompt">
+      <div><span class="jnum">forbidden 01</span><b>The Cognitive Insult</b><p>Asking the customer for data the system can already see. The gap the before-screenshots at the top of this page fell into.</p></div>
+      <div><span class="jnum">forbidden 02</span><b>The Logic Gate Violation</b><p>Giving how-to steps before the customer answers a branching question: W-2 or contractor, existing state or new. The same must-ask boundary part 06 formalizes.</p></div>
+      <div><span class="jnum">forbidden 03</span><b>The Scripted Facade</b><p>Defaulting to robotic checklists that ignore what&rsquo;s actually happening to the person asking.</p></div>
+    </div>
+
+    <div class="prose">
+      <p>The difference is easiest to see side by side. Same question, two identities.</p>
+    </div>
+
+    <div class="fixlog" role="group" aria-label="The same question answered under a shallow identity and the shipped identity">
+      <article>
+        <span class="fl-tag">shallow identity &middot; &ldquo;a payroll support agent&rdquo;</span>
+        <h3>Correct, generic, about nobody</h3>
+        <div class="fl-bad">To add a new employee, go to Payroll,
+then Employees, then Add an Employee.
+Enter their information and click Save.
+Let me know if you have other questions.</div>
+        <p class="fl-fix"><b>Documentation, recited.</b> Nothing checks the account, nothing asks which path, nothing explains what&rsquo;s at stake.</p>
+      </article>
+      <article>
+        <span class="fl-tag">shipped identity &middot; holds the gate</span>
+        <h3>It asks the branching question, and says why</h3>
+        <div class="fl-bad">Exciting, growing the team! I can see
+you're an Admin on Premium Payroll with
+employees in CA and TX. One quick question
+before the steps: will this employee work
+in California, Texas, or a different state?
+I ask because if it's a new state, we need
+to register for state taxes there before
+running their first paycheck. Without that
+registration, tax payments will be rejected.</div>
+        <p class="fl-fix"><b>Context checked, gate held, stakes explained.</b> That behavior became the golden answers&rsquo; standard: never give steps before the path is known.</p>
+      </article>
+    </div>
+    <p class="wf-label">From the prompt-design work, condensed: the shallow-identity response and the shipped prompt&rsquo;s own exemplar. Account details are the worked scenario&rsquo;s, not a customer&rsquo;s.</p>
+
+    <div class="prose">
+      <p class="opens">Expert review proved its worth immediately: an early AI-drafted pass claimed QuickBooks Online Payroll caps how many employees you can add. It doesn&rsquo;t. A payroll expert caught the invented fact, and the correction became a permanent line in the prompt. Two quieter lessons shipped with it. The prompt is written in flowing prose, because instructions full of bullet lists produce answers that read like manuals. And when the prompt had to shrink to fit limits, the identity language was the last thing I&rsquo;d cut. A compressed version that opened with a plain payroll-expert identity made every response competent and generic again.</p>
+    </div>
+  </section>
+
+  <!-- ================= 05 · the diagnostic generator ================= -->
   <section class="wrap part" id="generator" aria-labelledby="p4-h">
-    <p class="kicker mono part-head"><span class="knum">04</span><span>The generator</span></p>
+    <p class="kicker mono part-head"><span class="knum">05</span><span>The diagnostic generator</span></p>
     <h2 id="p4-h">Troubleshooting was the hard part. I wrote the generator that drafted it.</h2>
     <div class="prose">
       <p>The sprint covered what customers ask. Troubleshooting territories, why a debit failed, why a state isn&rsquo;t being paid, why a filing sits unaccepted, needed something deeper: full diagnostic reasoning, jurisdiction by jurisdiction. Writing those by hand doesn&rsquo;t scale, and asking tax experts to author decision trees from blank pages is a bad use of scarce experts.</p>
@@ -197,9 +272,9 @@
     </div>
   </section>
 
-  <!-- ================= 05 · retrieve vs ask ================= -->
+  <!-- ================= 06 · retrieve vs ask ================= -->
   <section class="wrap part" id="boundary" aria-labelledby="p5-h">
-    <p class="kicker mono part-head"><span class="knum">05</span><span>Retrieve vs. ask</span></p>
+    <p class="kicker mono part-head"><span class="knum">06</span><span>Retrieve vs. ask</span></p>
     <h2 id="p5-h">The line that decides whether the agent feels smart or lazy.</h2>
     <div class="prose">
       <p>The structural decision that shapes the agent most: every diagnostic separates the data the system can retrieve from the information it must ask the customer. That split is the character of the agent. Ask a customer for something the system can plainly see, and trust drops; the agent feels like the settings page with extra steps. Guess at something only the customer knows, and the answer is dangerous. So the boundary is explicit, per question, and every must-ask carries a documented reason the system can&rsquo;t know it.</p>
@@ -237,9 +312,9 @@
     </div>
   </section>
 
-  <!-- ================= 06 · grading the real thing ================= -->
+  <!-- ================= 07 · grading the real thing ================= -->
   <section class="wrap part" id="uat" aria-labelledby="p6-h">
-    <p class="kicker mono part-head"><span class="knum">06</span><span>Grading the real thing</span></p>
+    <p class="kicker mono part-head"><span class="knum">07</span><span>Grading the real thing</span></p>
     <h2 id="p6-h">Then the skills were real, and I graded them against the ground truth.</h2>
     <div class="prose">
       <p>By April the payroll tax skills were up and answering in Intuit Intelligence, and I ran UAT against them: thirteen cases across four phases, discovery, cross-skill handoffs, bug validation, and guardrails. I graded eleven runs: three passed clean, five came back partial, three failed. Each miss got a diagnosis and the response I&rsquo;d have wanted instead. Polish wasn&rsquo;t the bar. The bar was whether the agent used the right data, brought in the adjacent skill when the question crossed domains, and answered like it knew what day it was.</p>
@@ -315,9 +390,9 @@
     </div>
   </section>
 
-  <!-- ================= 07 · where it landed ================= -->
+  <!-- ================= 08 · where it landed ================= -->
   <section class="wrap part" id="outcome" aria-labelledby="p7-h">
-    <p class="kicker mono part-head"><span class="knum">07</span><span>Where it landed</span></p>
+    <p class="kicker mono part-head"><span class="knum">08</span><span>Where it landed</span></p>
     <h2 id="p7-h">Ground truth the team could build against, and did.</h2>
 
     <div class="outcome-log" role="group" aria-label="What the work delivered">
