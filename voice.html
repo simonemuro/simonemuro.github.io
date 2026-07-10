@@ -6,13 +6,14 @@
 <meta name="color-scheme" content="light">
 <meta name="description" content="No screen, no links, a caller mid-problem. The behavior spec and release plan behind one of the first generated answers on the QuickBooks phone line, and the clarifying-question redesign that moved acceptance from 32% to 56%. Case 06.">
 <meta property="og:title" content="Voice &middot; Simone Muro">
-<meta property="og:description" content="A generated answer spoken in the caller&rsquo;s ear: the behavior spec, the prompt rules, the throttled release plan, and the clarifying-question redesign that moved the receipted numbers.">
+<meta property="og:description" content="A generated answer spoken in the caller&rsquo;s ear: the behavior spec, the prompt rules, the throttled release plan, and the clarifying-question redesign behind the measured lifts.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/voice.html">
 <meta name="twitter:card" content="summary">
 <title>Voice &middot; Simone Muro</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="v5.css">
+<link rel="stylesheet" href="v6.css">
 <style>
   /* page-scoped: ported voice exhibits, restyled on the v5 tokens only. */
 
@@ -111,6 +112,8 @@
       <a href="resume.html">Resume</a>
       <a href="index.html#contact">Contact</a>
     </nav>
+    <!-- agent widget mounts here in a later release -->
+    <div class="agent-slot" id="agent-slot" aria-hidden="true"></div>
   </div>
 </header>
 
@@ -124,11 +127,11 @@
       <span>QuickBooks phone support</span>
     </p>
     <h1 id="case-h">Designing spoken answers for QuickBooks customers who call support.</h1>
-    <p class="lede">On the phone, help has to work when heard once: no screen, no links, no second read. I designed the assistant&rsquo;s side of those calls, from clarifying-question repairs to the GenAI voice snippet that proved the assistant understood before offering help.</p>
+    <p class="lede">On the phone, help has to work when heard once: no screen, no links, no second read. I designed the assistant&rsquo;s side of those calls, from clarifying-question repairs to the generated voice snippet that proved the assistant understood before offering help.</p>
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>The voice support assistant on the QuickBooks phone line</dd></div>
-      <div><dt>Role</dt><dd>Conversation designer; owner of the voice snippet experience design and prototypes, partnered with the voice platform team to build it &middot; 2022 to 2024</dd></div>
+      <div><dt>My role</dt><dd>Conversation designer; owner of the voice snippet experience design and prototypes, partnered with the voice platform team to build it &middot; 2022 to 2024</dd></div>
       <div><dt>Context</dt><dd>The assistant answered before any person; when the snippet work began, about 30% of callers offered self-help accepted it, the baseline the project wrote down</dd></div>
       <div><dt>Results</dt><dd>Voice snippet: shipped, a measured +3.9 point containment lift at the December 2024 experiment, then full production. Login redesign: acceptance 32% to 56%, containment 20% to 32%, $135,160 realized</dd></div>
     </dl>
@@ -144,8 +147,8 @@
         </ul>
       </div>
       <figure class="voice-snippet-artifact" aria-label="QuickBooks voice assistant transcript screenshot">
-        <img src="assets/work/voice-snippet-real-ui.png" alt="QuickBooks voice assistant transcript showing a customer clarifying a bank connection error before receiving a targeted answer snippet">
-        <figcaption class="mono">Voice snippet artifact &middot; real transcript-style UI screenshot provided for this portfolio &middot; customer details removed.</figcaption>
+        <img src="assets/work/voice-snippet-real-ui.png" alt="QuickBooks voice assistant transcript showing a customer clarifying a bank connection error before receiving a targeted answer snippet" width="488" height="1162">
+        <figcaption class="mono">Voice snippet artifact &middot; real transcript UI screenshot, cropped &middot; customer and session details removed.</figcaption>
       </figure>
     </div>
   </section>
@@ -156,7 +159,7 @@
     <h2 id="p1-h">The phone line, and where my hands were.</h2>
     <div class="prose">
       <p>I was a conversation designer on the conversational AI team that owned the support assistant. On the phone line, the assistant picks up first: it hears the caller in their own words, works out the problem, and either helps or brings in an expert. Everything it says is spoken by a synthesized voice and heard exactly once. Help on this surface traveled as self-help, a link sent by text or email, because instructions belong on a screen.</p>
-      <p>Two threads of work run through this case, and my hands were in different places on each. The clarifying question redesigns, payroll taxes in 2022 and login and password reset in 2024, were my own flows: I wrote the questions, the branches, and the fallbacks myself. The voice snippet design and prototypes were mine too: I owned the experience requirements, the content bar, and the prompt rules that shape what the caller hears. Later, I partnered with the voice platform team on the build, including triggering, disclaimers, telephony, and analytics. Where the line between my design ownership and implementation partnership matters below, I say which is which.</p>
+      <p>Two threads of work run through this case, and my hands were in different places on each. The clarifying question redesigns, payroll taxes in 2022 and login and password reset in 2024, were my own flows: I wrote the questions, the branches, and the fallbacks myself. The voice snippet design and prototypes were mine too: I owned the experience requirements, the content bar, and the prompt rules that shape what the caller hears. Later, I partnered with the voice platform team on the build, including triggering, disclaimers, telephony, and analytics.</p>
     </div>
   </section>
 
@@ -165,13 +168,13 @@
     <p class="kicker mono part-head"><span class="knum">02</span><span>The problem</span></p>
     <h2 id="p2-h">A link, sight unseen.</h2>
     <div class="prose">
-      <p>Customers calling for product support often felt the assistant did not understand their problem and lacked confidence in the answer it gave. The assistant could not respond with anything specific or relevant before making its offer, so accepting the self-help link felt like wasting time that a person would not waste. Here is the shape of that call, recreated.</p>
+      <p>Customers calling for product support often felt the assistant didn&rsquo;t understand their problem and lacked confidence in the answer it gave. The assistant couldn&rsquo;t respond with anything specific or relevant before making its offer, so accepting the self-help link felt like wasting time that a person wouldn&rsquo;t waste. Here&rsquo;s the shape of that call, recreated.</p>
     </div>
 
     <figure class="trace" aria-label="Recreated call: the caller asks an invoicing question and the assistant offers a link with no evidence it understood">
       <figcaption class="trace-hd mono"><span>call &middot; the before experience</span><span>recreation</span></figcaption>
       <ol class="trace-rows callrows">
-        <li><span class="t-time mono" aria-hidden="true">caller</span><div>My invoices are not reaching my customers.</div></li>
+        <li><span class="t-time mono" aria-hidden="true">caller</span><div>My invoices aren&rsquo;t reaching my customers.</div></li>
         <li class="cr-agent"><span class="t-time mono" aria-hidden="true">agent</span><div>I found an article that can help with invoices. Would you like me to text you a link?</div></li>
         <li><span class="t-time mono" aria-hidden="true">caller</span><div>No. Get me a person.</div></li>
       </ol>
@@ -179,7 +182,7 @@
     </figure>
 
     <div class="prose">
-      <p class="opens">The offer names the topic and proves nothing. The caller is asked to trust a link they cannot see, from a voice that has not shown it understood the problem. Most said no.</p>
+      <p class="opens">The offer names the topic and proves nothing. The caller is asked to trust a link they can&rsquo;t see, from a voice that hasn&rsquo;t shown it understood the problem. Most said no.</p>
     </div>
   </section>
 
@@ -188,7 +191,7 @@
     <p class="kicker mono part-head"><span class="knum">03</span><span>Why it mattered</span></p>
     <h2 id="p3-h">Every refused offer became an expert call.</h2>
     <div class="prose">
-      <p>On this line there is no quiet exit. A caller who refuses the self-help offer does not close a tab; they wait for an expert, and the call costs what expert calls cost. The dials the work is scored on say the same thing: acceptance, the share of offered help that callers take, and containment, the share of calls that end with no expert on the line.</p>
+      <p>On this line there&rsquo;s no quiet exit. A caller who refuses the self-help offer doesn&rsquo;t close a tab; they wait for an expert, and the call costs what expert calls cost. The dials the work is scored on say the same thing: acceptance, the share of offered help that callers take, and containment, the share of calls that end with no expert on the line.</p>
       <p>Before the snippet work started, the project wrote its baselines down: of the callers offered self-help, about 30 percent accepted it, and about 20 percent of those who received it resolved without reaching an expert. That was the starting position, not a result. The clarifying question work had already shown the dials could move; the question was whether a generated answer, spoken aloud, could move them further.</p>
     </div>
   </section>
@@ -198,9 +201,9 @@
     <p class="kicker mono part-head"><span class="knum">04</span><span>Exploring solutions</span></p>
     <h2 id="p4-h">The clarifying question had already proved itself.</h2>
     <div class="prose">
-      <p>The first thread of this work was repair design: the behavior for the moment the assistant half understands. Four different problems can share the sentence &ldquo;I am locked out of my account,&rdquo; and reading the wrong fix aloud costs the whole call. The pattern I designed spends one turn on a shaped clarifying question, then acts on the answer. On payroll tax calls in 2022, that redesign moved containment from 12.5 to 18.3 percent and acceptance from 23 to 32.</p>
+      <p>The first thread of this work was repair design: the behavior for the moment the assistant half understands. Four different problems can share the sentence &ldquo;I&rsquo;m locked out of my account,&rdquo; and reading the wrong fix aloud costs the whole call. The pattern I designed spends one turn on a shaped clarifying question, then acts on the answer. On payroll tax calls in 2022, that redesign moved containment from 12.5 to 18.3 percent and acceptance from 23 to 32.</p>
       <p>When language models arrived, I tested whether they could carry the same judgment. In a proof of concept on the disambiguation prompt, the existing approach disambiguated correctly 53.3 percent of the time; the treatment prompt I wrote reached 76.7. In 2023 I wrote and presented three generative AI use cases for the phone line: cancellation saves, auto disambiguation, and the answer summary, which became the voice snippet. Hearing why a customer cancels became its own case, <a href="cancellation-saves.html">No. 05</a>. This case is the snippet.</p>
-      <p>The insight the snippet is built on, stated plainly: the problem was not that the answer existed somewhere. It was that the offer carried no proof of understanding. Put a short piece of the answer in the caller&rsquo;s ear, and accepting help no longer means trusting a link sight unseen.</p>
+      <p>The insight the snippet is built on: the problem wasn&rsquo;t that the answer existed somewhere. It was that the offer carried no proof of understanding. Put a short piece of the answer in the caller&rsquo;s ear, and accepting help no longer means trusting a link sight unseen.</p>
     </div>
   </section>
 
@@ -209,7 +212,7 @@
     <p class="kicker mono part-head"><span class="knum">05</span><span>Design decisions</span></p>
     <h2 id="p5-h">The behavior spec.</h2>
     <div class="prose">
-      <p>I wrote the snippet&rsquo;s behavior as a spec before any prompt: what the assistant says, when it asks, and the exits that are never allowed to fail. The deliberate choice at the center of it: the snippet is roughly three short sentences, a teaser of the full answer, and it will likely not fully answer the caller&rsquo;s question. That is on purpose. Its job is to prove the assistant understood and to make the offer worth accepting; the full steps belong on a screen, sent by text or email.</p>
+      <p>I wrote the snippet&rsquo;s behavior as a spec before any prompt: what the assistant says, when it asks, and the exits that are never allowed to fail. The deliberate choice at the center of it: the snippet is roughly three short sentences, a teaser of the full answer, and it likely won&rsquo;t fully answer the caller&rsquo;s question. That&rsquo;s on purpose. Its job is to prove the assistant understood and to make the offer worth accepting; the full steps belong on a screen, sent by text or email.</p>
     </div>
 
     <figure class="goldrow" aria-label="The behavior spec for the voice snippet: answer, ask, stop, repair, and hand off rules as designed">
@@ -218,14 +221,14 @@
         <div class="gr-row"><dt>answer &middot; the teaser</dt><dd>Roughly three short sentences: the core of the fix, only the most important information, deliberately not the whole answer. The full steps travel by text or email, with a short line on what the instructions include.</dd></div>
         <div class="gr-row"><dt>ask &middot; disambiguation</dt><dd>Open-ended follow-up questions, as many as needed as long as the conversation progresses. Never repetitive, never artificial. When the caller conveys frustration, the assistant acknowledges it before it asks again.</dd></div>
         <div class="gr-row"><dt>stop &middot; the agent escape</dt><dd>Always available. A caller who asks for a person transfers on the spot; so does a caller who starts pressing digits. The customer can always get out of the experience.</dd></div>
-        <div class="gr-row"><dt>repair &middot; fallbacks</dt><dd>Every failure has a landing. A timeout falls back to default routing so the line stays fast. Hitting the conversation turn limit transfers. A question the model cannot answer transfers.</dd></div>
+        <div class="gr-row"><dt>repair &middot; fallbacks</dt><dd>Every failure has a landing. A timeout falls back to default routing so the line stays fast. Hitting the conversation turn limit transfers. A question the model can&rsquo;t answer transfers.</dd></div>
         <div class="gr-row"><dt>hand off &middot; routing parity</dt><dd>The intent mapped at the top of the call stays with the call, so a transfer lands exactly where it would have landed without the new experience.</dd></div>
       </dl>
       <p class="gr-foot">condensed from the experience requirements I authored &middot; vocabulary generalized &middot; internal system names removed</p>
     </figure>
 
     <div class="prose">
-      <p class="opens">Reading a dialog is not hearing one. Three of the behaviors on this page, the shaped question, the owned mishear, and the handoff that keeps its context, reconstructed as short calls you can press play on. Every voice is synthetic and every name and value is mock; the label under each player says exactly what you are hearing.</p>
+      <p class="opens">Reading a dialog is not hearing one. Three of the behaviors on this page, the shaped question, the owned mishear, and the handoff that keeps its context, reconstructed as short calls you can press play on. Every voice is synthetic and every name and value is mock.</p>
     </div>
 
     <div class="clips">
@@ -302,7 +305,7 @@
     <p class="kicker mono part-head"><span class="knum">06</span><span>The build</span></p>
     <h2 id="p6-h">Two spec sheets, a prompt, and a throttle.</h2>
     <div class="prose">
-      <p>The requirements split cleanly in two, and being precise about whose hands wrote which is the point of this paragraph. Mine were the experience and content requirements: the teaser shape, the disambiguation behavior, the escapes, the fallbacks, and the routing parity in part five, plus the prompt rules below. The platform fundamentals belonged to the partner team: trigger the generated experience for one specific intent only, play a disclaimer to exactly the customers who receive it, carry the conversation to the model and back, and track every generated response.</p>
+      <p>The requirements split cleanly in two. Mine were the experience and content requirements: the teaser shape, the disambiguation behavior, the escapes, the fallbacks, and the routing parity in part five, plus the prompt rules below. The platform fundamentals belonged to the partner team: trigger the generated experience for one specific intent only, play a disclaimer to exactly the customers who receive it, carry the conversation to the model and back, and track every generated response.</p>
       <p>The prompt is where the content bar becomes enforceable. Steps that work on a screen are noise in the ear, so the rules ban lists, URLs, and numbered instructions outright, and make sequence ride on spoken connectives instead. A bare noun never gets an answer; it gets one clarifying question, with no apology padding the turn.</p>
     </div>
 
@@ -332,7 +335,7 @@ gerunds, and passive sentence constructions.</code></pre>
     </details>
 
     <div class="prose">
-      <p class="opens">Then the part of the plan I would show any team shipping a first generative experience on a phone line: how it was released. The release did not go straight to the full line. I recommended the invoicing intent on purpose: tenth by call volume, about 2 percent of it, most questions straightforward, no special expert tools required, and containment sitting at about 24 percent against an assistant average of 29. Low risk, with room to move.</p>
+      <p class="opens">Then the part of the plan I&rsquo;d show any team shipping a first generative experience on a phone line: how it was released. The release didn&rsquo;t go straight to the full line. I recommended the invoicing intent on purpose: tenth by call volume, about 2 percent of it, most questions straightforward, no special expert tools required, and containment sitting at about 24 percent against an assistant average of 29. Low risk, with room to move.</p>
     </div>
 
     <figure class="trace" aria-label="The release plan: one low-risk intent, 50 customers first, a risk threshold, then a percentage throttle">
@@ -347,7 +350,7 @@ gerunds, and passive sentence constructions.</code></pre>
     </figure>
 
     <div class="prose">
-      <p>That plan is what carried the snippet from a prototype the platform could not yet support in 2023 all the way to production. I authored and prototyped the experience, then partnered with the platform and analytics teams to build it on the sanctioned path and measure it through launch. The experiment launched on December 10, 2024, reached Bayesian significance, and the experience moved to full production shortly after.</p>
+      <p>That plan is what carried the snippet from a prototype the platform couldn&rsquo;t yet support in 2023 all the way to production. I authored and prototyped the experience, then partnered with the platform and analytics teams to build and measure it through launch. The experiment launched on December 10, 2024, reached Bayesian significance, and the experience moved to full production shortly after.</p>
     </div>
   </section>
 
@@ -356,7 +359,7 @@ gerunds, and passive sentence constructions.</code></pre>
     <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
     <h2 id="p7-h">What shipped, and what it moved.</h2>
     <div class="prose">
-      <p>Here is the call the spec and the prompt produce, recreated: a teaser that proves the assistant understood, then the offer.</p>
+      <p>Here&rsquo;s the call the spec and the prompt produce, recreated: a teaser that proves the assistant understood, then the offer.</p>
     </div>
 
     <figure class="trace" aria-label="Recreated call: the voice snippet answers an invoicing question with a three sentence teaser, then offers the full steps by text or email">
@@ -365,13 +368,13 @@ gerunds, and passive sentence constructions.</code></pre>
         <li><span class="t-time mono" aria-hidden="true">caller</span><div>How do I add a logo to my invoices?</div></li>
         <li class="cr-agent"><span class="t-time mono" aria-hidden="true">agent</span><div>You can add your logo once in your invoice settings, and it appears on every invoice you send after that. Upload the image there, then pick where it sits on the page. I can text or email you the full steps, including how to preview the result. Would you like that?</div></li>
         <li><span class="t-time mono" aria-hidden="true">caller</span><div>Yes, text it to me.</div></li>
-        <li class="cr-agent"><span class="t-time mono" aria-hidden="true">agent</span><div>Done, it is on its way to your messages. Is there anything else I can help with?</div></li>
+        <li class="cr-agent"><span class="t-time mono" aria-hidden="true">agent</span><div>Done, it&rsquo;s on its way to your messages. Is there anything else I can help with?</div></li>
       </ol>
       <p class="trace-foot">recreated from the designed experience &middot; wording follows the shipped prompt rules: a teaser, no lists, no URLs, then the offer &middot; mock data</p>
     </figure>
 
     <div class="prose">
-      <p class="opens">What I claim about the snippet, I claim exactly. The hypothesis going in was six points or more of containment. The experiment measured a lift of 3.9 points and reached Bayesian significance, so the effect was real, if smaller than the bet. That is the measured outcome of the experiment, not a separate long-run production readout, and I keep it at that. The platform teams owned the runtime; the prototype, the behavior spec, the prompt, the evaluation, and the release strategy were mine, and I carried the experience through to the shipped version with platform and analytics partners.</p>
+      <p class="opens">The hypothesis going in was six points or more of containment. The experiment measured a lift of 3.9 points at Bayesian significance: a real effect, smaller than the bet. That&rsquo;s the experiment&rsquo;s readout, not a long-run production number.</p>
       <p>The rest of the receipted numbers come from the clarifying question thread of this same voice program. The payroll redesign in 2022 proved the pattern. The login and password reset redesign in 2024 carried it furthest.</p>
     </div>
 
@@ -383,7 +386,7 @@ gerunds, and passive sentence constructions.</code></pre>
     </div>
 
     <div class="prose">
-      <p class="opens">That login and password flow, drawn as its states. Every fallback lands somewhere; nothing lands at a dead end.</p>
+      <p class="opens">That login and password flow, drawn as its states. Every fallback lands somewhere.</p>
     </div>
 
     <figure class="flow" aria-label="Call flow diagram of the login and password reset redesign: entry, intent gate, repair question, identity check, self-help shaped for the ear, and a handoff that carries context">
@@ -395,7 +398,7 @@ gerunds, and passive sentence constructions.</code></pre>
         <div class="fl-row">
           <div class="fl-node">
             <span class="fl-tag mono">state &middot; entry</span>
-            <p>&ldquo;I am locked out of my account.&rdquo; The caller opens in their own words, not a menu.</p>
+            <p>&ldquo;I&rsquo;m locked out of my account.&rdquo; The caller opens in their own words, not a menu.</p>
           </div>
         </div>
         <p class="fl-link mono">speech becomes transcript, one pass, at talking speed</p>
@@ -420,7 +423,7 @@ gerunds, and passive sentence constructions.</code></pre>
           <div class="fl-side">
             <div class="fl-node">
               <span class="fl-tag mono">fallback &middot; cannot verify</span>
-              <p>No match, or no number on file: straight to the handoff below, carrying what is known so far.</p>
+              <p>No match, or no number on file: straight to the handoff below, carrying what&rsquo;s known so far.</p>
             </div>
           </div>
         </div>
@@ -459,12 +462,12 @@ gerunds, and passive sentence constructions.</code></pre>
   <!-- ================= 08 · learnings ================= -->
   <section class="wrap part" id="learnings" aria-labelledby="p8-h">
     <p class="kicker mono part-head"><span class="knum">08</span><span>Learnings</span></p>
-    <h2 id="p8-h">What I learned, and what I would do differently.</h2>
+    <h2 id="p8-h">What I learned, and what I&rsquo;d do differently.</h2>
     <div class="prose">
-      <p>Write for the ear, not the eye. Steps that work on a screen are noise in the ear. Every rule in the prompt excerpt came from hearing what written help sounds like when a machine reads it aloud.</p>
-      <p>The offer is the product. Callers were not refusing help; they were refusing an offer that carried no proof of understanding. Three sentences of the actual answer change the offer without changing the answer.</p>
-      <p>De-risk in the release plan, not in the copy. A low risk intent with headroom, 50 customers first, a risk threshold before any throttle. That plan is what let a generated voice go out on a support line at all, and I would reuse it anywhere.</p>
-      <p>Two things I would do differently. I would push past article links sooner. The post launch list already pointed there: bespoke spoken answers instead of links, and proactive help, so an invoicing question also surfaces the reminders and automation the caller will want next. And I would carry the results readout the same way I carried the prototype, all the way through, so the measured lift and the full production story arrive together instead of the number trailing the ship by a year.</p>
+      <p>Write for the ear, not the eye. Every rule in the prompt excerpt came from hearing what written help sounds like when a machine reads it aloud.</p>
+      <p>The offer is the product. Callers weren&rsquo;t refusing help; they were refusing an offer that carried no proof of understanding. Three sentences of the actual answer change the offer without changing the answer.</p>
+      <p>The release plan is where the risk got managed. A low risk intent with headroom, 50 customers first, a risk threshold before any throttle. That plan is what let a generated voice go out on a support line at all, and I&rsquo;d reuse it anywhere.</p>
+      <p>Two things I&rsquo;d do differently. I&rsquo;d push past article links sooner. The post launch list already pointed there: bespoke spoken answers instead of links, and proactive help, so an invoicing question also surfaces the reminders and automation the caller will want next. And I&rsquo;d carry the results readout the same way I carried the prototype, all the way through, so the measured lift and the full production story arrive together instead of the number trailing the ship by a year.</p>
     </div>
   </section>
 
