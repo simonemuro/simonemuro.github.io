@@ -335,6 +335,7 @@ Time Premium   $50   20base + 10 x 3 users</div>
     <div class="prose">
       <p>I wrote the eval alongside the skill. Each case pairs a customer message with expectations written as checkable statements: what the agent must do, and what it must not. The cases came from the same place as the research: real customer language, including 55 production conversations rewritten onto the mock account. The set grew to 108 cases across 13 intent categories, and I ran an overlap analysis against the seven existing skills so the new one wouldn&rsquo;t collide with behavior already in production.</p>
       <p>Running it earned its keep quickly. Beyond the two prompt fixes above, testing against the cases caught the agent calling tools in the wrong order and mishandling the moment a customer declines the specialist and still wants the steps. Both became rules, then rows, so they can&rsquo;t quietly come back.</p>
+      <p>The cases are written in the production golden-dataset format, the same format skill teams contribute for release gating: LLM judges score each row across six dimensions, correctness weighted heaviest, and a run needs at least 80% to pass, with correctness, completeness, and compliance thresholds that can block a skill on their own. I ran the offline eval against the agent with the billing skill loaded. It passed.</p>
       <p>Five rows from the cancel-flow portion of the dataset.</p>
     </div>
 
