@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="How a QuickBooks subscription-billing problem got solved twice: a production Digital Assistant redesign that lifted voice self-help acceptance from 25% to 39%, then a working agent skill built in a five-day hackathon and gated by a 108-case eval. Conversational AI case study.">
-<meta property="og:title" content="Subscription billing · Simone Muro">
-<meta property="og:description" content="The production redesign, then the agent skill: account-aware billing answers, a cancel-intercept widget, and the eval that judged the behavior.">
+<meta name="description" content="A working QuickBooks billing skill built solo in a five-day hackathon: account-aware charge explanations, a cancel-intercept widget, and the 108-case eval it passed. Conversational AI case study.">
+<meta property="og:title" content="Billing skill · Simone Muro">
+<meta property="og:description" content="From NLU routing to an agent that explains the charge: the billing skill, the lookup tool, the cancel widget, and the eval that gated it.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/billing-skill.html">
 <meta name="twitter:card" content="summary">
-<title>Subscription billing · Simone Muro</title>
+<title>Billing skill · Simone Muro</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="v5.css">
 <link rel="stylesheet" href="v6.css">
@@ -43,49 +43,102 @@
       <span>Digital Assistant &rarr; Intuit Intelligence</span>
     </p>
     <h1 id="case-h">The charge customers didn&rsquo;t recognize.</h1>
-    <p class="lede">I took two runs at one of QuickBooks support&rsquo;s biggest problems: the assistant&rsquo;s answer to &ldquo;what is this charge?&rdquo; First a production redesign that moved the numbers. Then a working agent skill with a 108-case eval. The problem behind both is the same. A charge from Intuit lands on a bank statement, the customer doesn&rsquo;t recognize it, opens the assistant, and gets told to go check a settings page. When Intuit Intelligence replaced the Digital Assistant, I built the billing skill that reads the account and explains the charge itself: the skill definition, the lookup tool, the test harness, and the eval that judged whether it behaved.</p>
+    <p class="lede">A charge from Intuit lands on a bank statement. The customer doesn&rsquo;t recognize it, asks the assistant, and gets told to go check a settings page, where the billing history shows amounts and never reasons. The reason is what they came for. I built the billing skill for Intuit Intelligence that closes that gap: it reads the account, explains the charge in plain language, and knows when to bring in a person. Built solo during a five-day internal hackathon, grounded in years of billing-support research, and gated by a 108-case eval that it passed.</p>
 
     <dl class="factrow">
-      <div><dt>Surface</dt><dd>About 800K annual billing and subscription support contacts; one of the top twenty drivers of a company-wide contact-reduction goal</dd></div>
-      <div><dt>My role</dt><dd>Conversation AI lead. Research and conversation design on the production redesign; on the skill, the whole build: behavior spec, tool, harness, and eval</dd></div>
-      <div><dt>When</dt><dd>Digital Assistant redesign shipped to production; billing skill built during a five-day internal hackathon, May 2026</dd></div>
-      <div><dt>Results</dt><dd><b>Production redesign:</b> voice self-help acceptance 25% to 39%; chat self-help resolution up 12 points; chat containment near 61%. <b>Hackathon skill:</b> working prototype, 108-case eval, leadership buy-in to implement</dd></div>
+      <div><dt>Surface</dt><dd>Billing and subscription questions: one of the top twenty drivers of a company-wide contact-reduction goal, hundreds of thousands of support contacts a year</dd></div>
+      <div><dt>My role</dt><dd>The whole build: research synthesis, behavior spec, lookup tool, test harness, and the eval. Conversation AI lead</dd></div>
+      <div><dt>When</dt><dd>Five-day internal hackathon, May 2026, on billing research from my Digital Assistant years</dd></div>
+      <div><dt>Results</dt><dd>Working prototype with a cancel-intercept widget; 108-case golden dataset, offline eval passed; leadership buy-in to implement</dd></div>
     </dl>
   </section>
 
   <!-- ================= 01 · the problem ================= -->
   <section class="wrap part" id="problem" aria-labelledby="p1-h">
     <p class="kicker mono part-head"><span class="knum">01</span><span>The problem</span></p>
-    <h2 id="p1-h">A money question, answered with directions.</h2>
+    <h2 id="p1-h">The statement shows the amount. Nothing shows the why.</h2>
     <div class="prose">
-      <p>Billing questions aren&rsquo;t like other support questions. The customer can see money leaving their account and can&rsquo;t see why, so they arrive worried and a little suspicious. What they got back was navigation: go to Settings, open Billing and Subscription, read your account history.</p>
-      <p>The answer wasn&rsquo;t wrong. It just handed the investigation back to the person who came for help. And when self-help failed, these contacts were expensive ones: billing calls moved between expert tiers more than almost any other topic, because discount extensions and refunds needed a higher tier than the person who picked up.</p>
+      <p>Billing questions aren&rsquo;t like other support questions. The customer can see money leaving their account and can&rsquo;t see why, so they arrive worried and a little suspicious. Here&rsquo;s what asking the assistant got them.</p>
     </div>
 
-    <div class="mockwrap">
-      <div class="mock" role="img" aria-label="Recreated chat: the customer asks about a charge they do not recognize and the assistant replies with directions to a settings page">
-        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Support assistant</span><span class="mtag">Before</span></div>
-        <div class="mock-body">
-          <div class="m-user">I see a $288 charge on my card I don&rsquo;t recognize. Can you help me understand it?</div>
-          <div class="m-agent">
-            <p>You can view the subscriptions charged to your account in your account settings. Go to Settings, select Billing and Subscription, and open your account history to see your subscription charges.</p>
-            <p>If you still need help, you can browse articles in our support center.</p>
-          </div>
-        </div>
-        <div class="m-composer" aria-hidden="true">Ask anything</div>
-        <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
+    <div class="shot-annotated">
+      <figure class="shot">
+        <img src="assets/work/billing-before-generic-answer-ui.png" alt="Real Intuit Intelligence screenshot: asked how much they are paying, the customer gets an answer that their cost depends on their plan and add-ons, with a pointer to QuickBooks.com for pricing" width="584" height="1842" loading="lazy">
+        <p class="wf-label">Real Intuit Intelligence screenshot, cropped to protect account and session details.</p>
+      </figure>
+      <div class="note-rail" role="group" aria-label="Annotations">
+        <p class="note"><b>the tell</b>&ldquo;Depends on your plan and any add-ons you use.&rdquo; The system knows the plan. The answer doesn&rsquo;t use it.</p>
+        <p class="note"><b>missing data</b>Plan, add-ons, team size, promo state, next billing date: none of it appears.</p>
+        <p class="note"><b>same ending</b>The customer gets sent to a pricing page and a settings link to do the investigation themselves.</p>
       </div>
-      <p class="wf-label">Recreated to protect customer data: interface simplified, business details invented. The conversation shape is real.</p>
+    </div>
+
+    <div class="prose">
+      <p>And here&rsquo;s what the customer found when they followed that settings link. The billing history answers one question, how much, three ways. The question they brought, why, isn&rsquo;t on the page.</p>
+    </div>
+
+    <div class="shot-annotated">
+      <figure class="qbo-card" aria-label="Recreated QuickBooks billing and payment history screen">
+        <div class="qbo-head">
+          <span class="qbo-crumb">Settings &rsaquo; Account and settings &rsaquo; Billing &amp; subscription</span>
+          <h3>Billing and payment history</h3>
+        </div>
+        <table class="qbo-table">
+          <thead>
+            <tr><th>Date</th><th>Description</th><th>Payment method</th><th class="amt">Amount</th></tr>
+          </thead>
+          <tbody>
+            <tr class="qbo-hot"><td>07/05/2026</td><td>QuickBooks Online Plus, monthly</td><td>Visa &bull;&bull;&bull;&bull;3082</td><td class="amt">$224.00</td></tr>
+            <tr><td>06/05/2026</td><td>QuickBooks Online Plus, monthly</td><td>Visa &bull;&bull;&bull;&bull;3082</td><td class="amt">$174.00</td></tr>
+            <tr><td>05/05/2026</td><td>QuickBooks Online Plus, monthly</td><td>Visa &bull;&bull;&bull;&bull;3082</td><td class="amt">$174.00</td></tr>
+          </tbody>
+        </table>
+        <p class="wf-label">Recreated screen to protect account data; amounts invented.</p>
+      </figure>
+      <div class="note-rail" role="group" aria-label="Annotations">
+        <p class="note"><b>the jump</b>$50 higher this month. The page confirms it and doesn&rsquo;t explain it.</p>
+        <p class="note"><b>the dead end</b>This is where self-help ends and a phone call begins.</p>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p class="opens">That gap carried real weight: billing and subscription questions were one of the top twenty drivers of a company-wide contact-reduction goal, hundreds of thousands of support contacts a year. And the calls were expensive ones. Billing moved between expert tiers more than almost any other topic, because discount extensions and refunds needed a higher tier than the person who picked up.</p>
     </div>
   </section>
 
-  <!-- ================= 02 · the redesign that shipped ================= -->
-  <section class="wrap part" id="redesign" aria-labelledby="p2-h">
-    <p class="kicker mono part-head"><span class="knum">02</span><span>The redesign that shipped</span></p>
-    <h2 id="p2-h">Learn from the experts, then stop sending people away.</h2>
+  <!-- ================= 02 · the research ================= -->
+  <section class="wrap part" id="research" aria-labelledby="p2-h">
+    <p class="kicker mono part-head"><span class="knum">02</span><span>The research</span></p>
+    <h2 id="p2-h">Every transcript pointed at the same word: why.</h2>
     <div class="prose">
-      <p>I started where the good answers already lived: expert calls. I analyzed more than 200 expert transcripts and 500 customer utterances to learn what experts checked, what they explained, and what next step they offered. Experts didn&rsquo;t point at settings. They named the charge, explained what changed, and offered something concrete.</p>
-      <p>The synthesis became the design brief for the Digital Assistant redesign.</p>
+      <p>I knew this problem before the skill existed, because I&rsquo;d spent years researching it. More than 200 expert call transcripts and 500 customer utterances, all about billing questions, plus interviews with the support experts who handled them. Billing questions came in many shapes: a price that changed, a charge they didn&rsquo;t recognize, a suspected duplicate, &ldquo;how much am I paying.&rdquo; Underneath, one theme kept winning: explainability. Customers could always find the amount. They called because nobody would tell them the reason.</p>
+      <p>The method matters as much as the finding. I loaded call transcripts into Google Sheets and used Gemini to draft themes and cluster the common issues, then read the clusters myself and kept, split, or killed them. The model did the first pass at scale; the judgment stayed mine. Experts, it turned out, never pointed at settings. They named the charge, explained what changed, and offered something concrete.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-chrome">
+        <div class="sheet-titlebar" aria-hidden="true">
+          <span class="st-name">billing_transcripts_analysis</span>
+          <span>themes: LLM draft, human review</span>
+          <span class="st-dim">200+ expert transcripts &middot; 500+ utterances</span>
+          <span class="st-scroll" aria-hidden="true">scroll &rarr;</span>
+        </div>
+        <div class="sheet-scroll">
+          <table class="grid" aria-label="Transcript analysis sample: customer excerpt, issue, and drafted theme">
+            <thead>
+              <tr><th class="rownum" aria-label="row"></th><th>transcript excerpt</th><th>issue</th><th>theme &middot; LLM draft</th><th>review</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="rownum">1</td><td class="q">&ldquo;My bill jumped from $174 to $224 and nobody can tell me why.&rdquo;</td><td><span class="tag">price increase</span></td><td>explainability</td><td>kept</td></tr>
+              <tr><td class="rownum">2</td><td class="q">&ldquo;There&rsquo;s a charge from Intuit on my card and I have no idea what it&rsquo;s for.&rdquo;</td><td><span class="tag">unrecognized charge</span></td><td>explainability</td><td>kept</td></tr>
+              <tr><td class="rownum">3</td><td class="q">&ldquo;The billing history just shows amounts. What am I actually paying for?&rdquo;</td><td><span class="tag">billing history gap</span></td><td>explainability</td><td>kept</td></tr>
+              <tr><td class="rownum">4</td><td class="q">&ldquo;I think I was charged twice this month.&rdquo;</td><td><span class="tag">duplicate charge</span></td><td>billing error</td><td>split: most were single bills that looked doubled. Explainability again</td></tr>
+              <tr><td class="rownum">5</td><td class="q">&ldquo;I cancelled last month and got billed again.&rdquo;</td><td><span class="tag">billed after cancel</span></td><td>trust / escalation</td><td>kept</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="wf-label">Recreated; excerpts invented to protect customer transcripts. The method is real: transcripts in Sheets, themes drafted by the model, every cluster reviewed by hand.</p>
     </div>
 
     <figure class="board6" aria-label="Research synthesis slide">
@@ -113,68 +166,23 @@
         </div>
       </div>
     </figure>
-    <p class="wf-label">Recreated from my research synthesis; internal system names removed.</p>
-
-    <div class="prose">
-      <p>The product decision followed from the research. One billing topic isn&rsquo;t one customer question: a price increase, a duplicate charge, a charge they don&rsquo;t understand, and &ldquo;how much am I paying&rdquo; each deserve different treatment. The full answer needed billing APIs the assistant didn&rsquo;t have yet, so I scoped a phased plan: classify the actual question first, stop linking articles, and offer the existing charge lookup tool inside the conversation, with language that made it worth accepting.</p>
-    </div>
-
-    <div class="mockwrap">
-      <div class="mock" role="img" aria-label="Recreated chat: the same question, now understood, with the charge lookup tool offered inside the conversation">
-        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Support assistant</span><span class="mtag">Shipped MVP</span></div>
-        <div class="mock-body">
-          <div class="m-user">I see a $288 charge on my card I don&rsquo;t recognize. Can you help me understand it?</div>
-          <div class="m-agent">
-            <p>A charge you weren&rsquo;t expecting is never fun. Let&rsquo;s find out what&rsquo;s behind that $288.00. The charge lookup tool shows you every charge on your statement and exactly what each one covers.</p>
-            <div class="m-handoff">
-              <p class="hff-t">Look up this charge</p>
-              <p class="hff-p">Grab your statement, enter the amount and the date, and see what makes up that $288.00, item by item.</p>
-              <div class="m-actions">
-                <span class="m-btn primary">Open charge lookup</span>
-                <span class="m-btn ghost">That&rsquo;s not my question</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="m-composer" aria-hidden="true">Ask anything</div>
-        <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
-      </div>
-      <p class="wf-label">Recreated to protect customer data: interface simplified, business details invented. The conversation shape is real.</p>
-    </div>
-
-    <div class="prose">
-      <p class="opens">Those changes moved both channels, measured on the billing intents before and after the MVP shipped. Acceptance means callers said yes when the assistant offered to send the lookup tool by text or email. Containment means the question got resolved without a human expert.</p>
-    </div>
-
-    <div class="stats" role="list" aria-label="Production results of the Digital Assistant billing redesign">
-      <div role="listitem"><span class="num">25% &rarr; 39%</span><span class="lab">self-help acceptance: voice callers saying yes to the offered lookup tool</span></div>
-      <div role="listitem"><span class="num">+12 pts</span><span class="lab">self-help resolution: billing questions resolved by the chat assistant&rsquo;s answer</span></div>
-      <div role="listitem"><span class="num">~61%</span><span class="lab">containment: billing chats resolved without an expert, up from roughly 50%</span></div>
-    </div>
+    <p class="wf-label">Recreated from my billing research synthesis; internal system names removed.</p>
   </section>
 
-  <!-- ================= 03 · new platform, same gap ================= -->
-  <section class="wrap part" id="gap" aria-labelledby="p3-h">
-    <p class="kicker mono part-head"><span class="knum">03</span><span>New platform, same gap</span></p>
-    <h2 id="p3-h">Intuit Intelligence arrived. The billing answer didn&rsquo;t.</h2>
+  <!-- ================= 03 · why now ================= -->
+  <section class="wrap part" id="whynow" aria-labelledby="p3-h">
+    <p class="kicker mono part-head"><span class="knum">03</span><span>Why now</span></p>
+    <h2 id="p3-h">NLU could route the question. It could never answer it.</h2>
     <div class="prose">
-      <p>In 2026, Intuit Intelligence replaced the Digital Assistant as the support surface. It was a stronger platform in almost every way, and it still answered billing questions generically, because it had the same missing piece: no access to the customer&rsquo;s account.</p>
+      <p>I&rsquo;d worked this exact surface in the Digital Assistant years, and the technology set the ceiling. An NLU system matches an utterance to an intent: it can recognize &ldquo;this is a billing question,&rdquo; classify which kind, and route to the least-bad destination. I shipped real improvements inside that ceiling, and that work is <a href="charge-lookup.html">its own case</a>. But no amount of intent tuning lets a system read this customer&rsquo;s account, reason over what changed, and compose the explanation. The why stayed out of reach.</p>
+      <p>Agentic systems removed the ceiling. A model that can plan, call a tool for account facts, and reason over what it finds can do the thing every transcript asked for: explain the charge. That&rsquo;s a different design problem, less about scripting responses, more about deciding what the agent may know, do, and refuse.</p>
+      <p>When a five-day internal hackathon asked what we could prove quickly, I brought this problem and built the answer: a skill, a tool, and the eval that checks them.</p>
     </div>
 
-    <div class="shot-annotated">
-      <figure class="shot">
-        <img src="assets/work/billing-before-generic-answer-ui.png" alt="Real Intuit Intelligence screenshot: asked how much they are paying, the customer gets an answer that their cost depends on their plan and add-ons, with a pointer to QuickBooks.com for pricing" width="584" height="1842" loading="lazy">
-        <p class="wf-label">Real Intuit Intelligence screenshot, cropped to protect account and session details.</p>
-      </figure>
-      <div class="note-rail" role="group" aria-label="Annotations">
-        <p class="note"><b>the tell</b>&ldquo;Depends on your plan and any add-ons you use.&rdquo; The system knows the plan. The answer doesn&rsquo;t use it.</p>
-        <p class="note"><b>missing data</b>Plan, add-ons, team size, promo state, next billing date: none of it appears.</p>
-        <p class="note"><b>same ending</b>The customer gets sent to a pricing page and a settings link to do the investigation themselves.</p>
-      </div>
-    </div>
-
-    <div class="prose">
-      <p>Conversation polish couldn&rsquo;t close this gap. The assistant needed a safe way to read billing facts, and rules for what it could do with them. When a five-day internal hackathon asked what we could prove quickly, I brought this problem and built the answer: a skill, a tool, and the eval that checks them.</p>
+    <div class="decision-board" aria-label="What each technology generation could do with a billing question">
+      <div><span class="jnum">NLU era</span><b>Classify and route</b><p>Match the utterance to an intent, pick the best destination. The answer itself stays generic.</p></div>
+      <div><span class="jnum">Agentic era</span><b>Read, reason, explain</b><p>Call a billing tool, compare cycles, compose the why. The answer is the customer&rsquo;s.</p></div>
+      <div><span class="jnum">The design job</span><b>Set the boundaries</b><p>What the agent may know, when it must hand off, what it must never volunteer.</p></div>
     </div>
   </section>
 
@@ -185,7 +193,7 @@
     <div class="prose">
       <p>I built the billing skill solo during the hackathon week: a skill definition in the production format, a read-only billing lookup tool that returns plan, add-ons, team members, recent charges, and promo state, and a local chat harness to run the agent end to end. I learned MCP, the protocol connecting the tool to the agent, from scratch that week.</p>
       <p>The live billing API needed permissions that sat in another team&rsquo;s queue, so the tool ran in three modes: LIVE for the real APIs, stubbed until permissions cleared; EVAL for scenario injection; DEV for mock data. That let me test the behavior end to end while the integration waited.</p>
-      <p>Here it is running. Same question type the Digital Assistant used to deflect, now answered from account data, with the math done for the customer.</p>
+      <p>Here it is running, on the suspected-duplicate question from the research: answered from account data, with the math done for the customer instead of a trip to settings.</p>
     </div>
 
     <figure class="shot dark">
