@@ -4,11 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="Simone Muro designs and builds agentic AI experiences: model behavior, AI product strategy, experience design, and eval systems.">
+<meta name="description" content="Simone Muro designs and builds agentic AI experiences: model behavior, AI product strategy, experience design, and eval systems. Seven case studies across the NLU, LLM, and agentic eras.">
 <meta property="og:title" content="Simone Muro · Agentic AI design and product craft">
 <meta property="og:description" content="Agent behavior design, AI product ownership, experience strategy, and eval systems across Meta, Apple Siri, Sam's Club, Intuit, and Credit Karma.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://simonemuro.github.io/">
+<meta property="og:image" content="https://simonemuro.github.io/assets/portrait.jpg">
+<link rel="canonical" href="https://simonemuro.github.io/">
 <meta name="twitter:card" content="summary">
 <title>Simone Muro · Agentic AI design and product craft</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
@@ -54,76 +56,91 @@
   <section class="shell work work-simple" id="work" aria-labelledby="work-h">
     <div class="work-heading io" style="--d:0">
       <p class="eyebrow mono">Selected work</p>
-      <h2 id="work-h">Sample work</h2>
+      <h2 id="work-h">Seven cases across three eras of AI.</h2>
     </div>
     <div class="project-grid">
-      <article class="project-card io" style="--d:1">
+      <article class="project-card featured io" style="--d:1">
         <a class="project-image real-ui" href="billing-skill.html" aria-label="Open billing skill case study">
           <img src="assets/work/billing-home-intuit-ui.png" alt="QuickBooks home screen with the Intuit Intelligence panel open for a subscription-cost question">
         </a>
         <div class="project-body">
-          <p class="project-meta mono">Billing skill · AI product</p>
+          <p class="project-meta mono">Billing skill · agentic era</p>
           <h3><a href="billing-skill.html">Built the agent skill that explains QuickBooks subscription charges.</a></h3>
-          <p>I turned a known billing-support problem into a working account-aware skill, with lookup tools, mock/eval modes, and a 108-case launch gate.</p>
+          <p>A solo build in a five-day internal hackathon, on years of billing research: account-aware answers, a cancel-intercept widget, and the 108-case eval it passed. Leadership buy-in at 80% built.</p>
         </div>
       </article>
 
       <article class="project-card io" style="--d:2">
-        <a class="project-image real-ui" href="payroll-intelligence.html" aria-label="Open Payroll Intelligence case study">
-          <img src="assets/work/payroll-after-tax-setup.png" alt="Intuit Intelligence payroll tax setup response with account-aware guidance">
+        <a class="project-image real-ui portrait-ui" href="charge-lookup.html" aria-label="Open charge lookup case study">
+          <img src="assets/work/charge-lookup-mvp-mock.png" alt="Recreated support assistant chat classifying a charge question and offering the charge lookup tool inside the conversation">
         </a>
         <div class="project-body">
-          <p class="project-meta mono">Payroll agent · Intuit Intelligence</p>
-          <h3><a href="payroll-intelligence.html">Migrated 75+ payroll help flows into Intuit Intelligence without losing the diagnosis.</a></h3>
-          <p>I turned legacy DA flows, payroll expertise, and customer-data dependencies into diagnostic ground truth, skill requirements, and UAT feedback.</p>
+          <p class="project-meta mono">Charge lookup · NLU era</p>
+          <h3><a href="charge-lookup.html">Redesigned how the assistant answers &ldquo;what is this charge?&rdquo;</a></h3>
+          <p>Customers could see the amount anywhere and the reason nowhere. I redesigned the assistant to tell one billing question from another and answer in the flow. Voice self-help acceptance 25% to 39%; chat self-help resolution up 12 points.</p>
         </div>
       </article>
 
       <article class="project-card io" style="--d:3">
-        <a class="project-image" href="quality-program.html" aria-label="Open quality program case study">
-          <img src="assets/work/quality-artifact.jpg" alt="Redacted spreadsheet artifact preview for human review of model quality">
+        <a class="project-image real-ui" href="cancellation-saves.html" aria-label="Open Cancellation Saves case study">
+          <img src="assets/video/cancel-flow-savable-poster.png" alt="Screen recording poster: the cancellation flow hearing a customer's reason before routing">
         </a>
         <div class="project-body">
-          <p class="project-meta mono">AI enablement · eval systems</p>
-          <h3><a href="quality-program.html">Scaled evaluation from manual authoring to a faster human-in-the-loop pipeline.</a></h3>
-          <p>I built the generator pattern and review workflow that moved thousands of golden-data rows from blank-page authoring into structured review.</p>
+          <p class="project-meta mono">Cancellation saves · LLM era</p>
+          <h3><a href="cancellation-saves.html">Designed a saves flow and LLM classifier for cancellation intent.</a></h3>
+          <p>An LLM classifier reading why customers cancel, routing truly savable reasons to a specialist, and giving everyone else a clean goodbye. It ran end to end in 2023; both routes are on the page as screen recordings.</p>
         </div>
       </article>
 
       <article class="project-card io" style="--d:4">
         <a class="project-image real-ui portrait-ui" href="voice.html" aria-label="Open voice case study">
-          <img src="assets/work/voice-snippet-real-ui.png" alt="QuickBooks voice assistant transcript showing a caller clarifying a bank connection error">
+          <img src="assets/work/voice-snippet-card.png" alt="QuickBooks voice assistant transcript showing a caller clarifying a bank connection error">
         </a>
         <div class="project-body">
-          <p class="project-meta mono">Voice AI · launched experience</p>
-          <h3><a href="voice.html">Designed one of Intuit's first GenAI phone experiences.</a></h3>
-          <p>Voice has no screen to rescue it, so the work was deciding what the model could say in seconds, when to clarify, and when to hand off.</p>
+          <p class="project-meta mono">Voice · LLM era</p>
+          <h3><a href="voice.html">Designed the assistant&rsquo;s spoken answers on the QuickBooks phone line.</a></h3>
+          <p>Voice has no screen to rescue it, so the work was deciding what the model could say in seconds, when to clarify, and when to hand off. Shipped, with a measured +3.9-point containment lift, then full production.</p>
         </div>
       </article>
 
       <article class="project-card io" style="--d:5">
-        <a class="project-image real-ui" href="cancellation-saves.html" aria-label="Open Cancellation Saves case study">
-          <img src="assets/work/billing-cancel-help-real-ui.jpg" alt="Real Intuit Intelligence cancellation screenshot showing help content before account-aware triage">
-        </a>
-        <div class="project-body">
-          <p class="project-meta mono">Classifier strategy · responsible AI</p>
-          <h3><a href="cancellation-saves.html">Designed a saves flow and LLM classifier for cancellation intent.</a></h3>
-          <p>The model's job was not to persuade. It was to classify the reason, decide whether a save path existed, and route without inventing a reason to retain.</p>
-        </div>
-      </article>
-
-      <article class="project-card io" style="--d:6">
         <a class="project-image real-ui" href="credit-karma.html" aria-label="Open Credit Karma case study">
           <img src="assets/work/credit-karma-real-ui.jpg" alt="Credit Karma mobile card marketplace screenshot showing a financial assistant entry point">
         </a>
         <div class="project-body">
-          <p class="project-meta mono">Credit Karma · product AI</p>
-          <h3><a href="credit-karma.html">Designed model-written card explanations where the strongest signal stayed silent.</a></h3>
-          <p>The work turned approval-likelihood data into useful product copy without stating, implying, or leaking the member's odds.</p>
+          <p class="project-meta mono">Credit Karma · LLM era, 2024</p>
+          <h3><a href="credit-karma.html">The model knows your approval odds. It&rsquo;s never allowed to say them.</a></h3>
+          <p>One workbook, eleven revisions, nine synthetic members to grade against, and a rubric where a single legal or safety miss fails the run. It&rsquo;s all on the page.</p>
+        </div>
+      </article>
+
+      <article class="project-card io" style="--d:6">
+        <a class="project-image real-ui portrait-ui" href="payroll-intelligence.html" aria-label="Open payroll tax skill case study">
+          <img src="assets/work/payroll-card.png" alt="Intuit Intelligence payroll tax setup response with account-aware guidance">
+        </a>
+        <div class="project-body">
+          <p class="project-meta mono">Payroll tax skill · agentic era</p>
+          <h3><a href="payroll-intelligence.html">Got the payroll tax diagnosis out of experts&rsquo; heads and into Intuit Intelligence.</a></h3>
+          <p>Golden guidance for every priority payroll question in about ten days, a generator that drafted diagnostic reasoning jurisdiction by jurisdiction, and the UAT that graded the live skills against it.</p>
+        </div>
+      </article>
+
+      <article class="project-card io" style="--d:7">
+        <a class="project-image" href="quality-program.html" aria-label="Open quality program case study">
+          <img src="assets/work/quality-qa-report.png" alt="QA report artifact from the golden-dataset pipeline: twelve automated checks, all passing">
+        </a>
+        <div class="project-body">
+          <p class="project-meta mono">Quality program · agentic era</p>
+          <h3><a href="quality-program.html">Every agent answer is graded against an answer key. I built the practice that writes it.</a></h3>
+          <p>Generator prompts do the first draft, twelve QA checks screen every batch, and experts keep the final say. Turnaround from about three weeks to about one.</p>
         </div>
       </article>
     </div>
   </section>
+
+  <!-- "Ask about the work" agent-widget slot: reserved between #work and #contact.
+       Do NOT add live widget markup here until the curated Q&A box is approved;
+       v4.js activates on markup presence. See colophon.html for the policy. -->
 
   <section class="shell contact-lite" id="contact" aria-labelledby="contact-h">
     <p class="eyebrow mono io" style="--d:0">Handoff</p>
@@ -133,7 +150,7 @@
       <a class="button" href="https://linkedin.com/in/simonemuro">LinkedIn</a>
       <a class="button" href="resume.html">Request resume</a>
     </div>
-    <p class="artifact-note io" style="--d:3">Note: selected artifacts are reconstructed or redacted to protect confidential systems and customer data.</p>
+    <p class="artifact-note io" style="--d:3">About the artifacts and how this site was made: <a href="colophon.html">colophon</a>.</p>
   </section>
 
 </main>
@@ -141,7 +158,7 @@
 <footer class="footer" role="contentinfo">
   <div class="shell footer-inner mono">
     <span>Simone Muro · Portfolio · 2026</span>
-    <span><a href="#work">Work</a> · <a href="resume.html">Resume</a> · <a href="#contact">Contact</a></span>
+    <span><a href="#work">Work</a> · <a href="resume.html">Resume</a> · <a href="#contact">Contact</a> · <a href="colophon.html">Colophon</a></span>
   </div>
 </footer>
 
