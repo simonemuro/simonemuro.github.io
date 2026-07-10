@@ -60,6 +60,7 @@ body.v5 .shot-annotated{
   gap:22px;align-items:start;margin:34px 0;
 }
 body.v5 .shot-annotated .shot{margin:0;}
+body.v5 .shot-annotated .shot img{display:block;width:100%;height:auto;max-width:480px;}
 body.v5 .shot-annotated > *{min-width:0;}
 body.v5 .note-rail{display:flex;flex-direction:column;gap:14px;}
 body.v5 .note{
@@ -399,11 +400,16 @@ body.v5 .qba-agent{
 
 /* ---------- screen-recording frames ---------- */
 body.v5 .vid-shot{margin:0;}
-body.v5 .vid-shot video{
+body.v5 .vid-shot video,
+body.v5 .vid-shot img{
   display:block;width:100%;height:auto;
   border:1px solid var(--hair-strong);border-radius:10px;
   background:#fff;
 }
+body.v5 .vid-shot.shot-solo{max-width:430px;margin-top:clamp(26px,4vh,44px);}
+body.v5 .titleblock > .shot-solo{order:4;}
+body.v5 .vid-shot.shot-solo.shot-solo-wide{max-width:640px;}
+body.v5 .vid-shot.shot-solo .shot-head{min-height:0;}
 body.v5 .vid-shot .shot-head{
   display:flex;justify-content:space-between;gap:8px 14px;flex-wrap:wrap;
   margin-bottom:10px;align-content:flex-start;

@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light">
 <meta name="description" content="QuickBooks customers cancel for a dozen different reasons, and the reason determines whether a specialist can save them. Case 05: the saves flow that asked why, the LLM classifier behind the routing, and screen recordings of both paths.">
 <meta property="og:title" content="Cancellation saves &middot; Simone Muro">
-<meta property="og:description" content="The saves flow that asked why customers cancel, and the LLM classifier that took reason coverage from 60 to 96 percent, with 96.6% routing precision, at $63 a month. The shipped prompt and both routes on the page.">
+<meta property="og:description" content="The saves flow that asked why customers cancel, and the LLM classifier that took reason coverage from 60 to 96 percent, with 96.6% routing precision. The shape of the classifier prompt and both routes on the page.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/cancellation-saves.html">
 <meta name="twitter:card" content="summary">
@@ -55,6 +55,12 @@
       <div><dt>Context</dt><dd>Thousands of cancellation calls over three months through the saves flow; savability rules from the saves and retention teams</dd></div>
       <div><dt>Results</dt><dd>Routing precision 96.6%, measured across about 300 utterances at 90% confidence; reasons classified 60% to 96% in evaluation; Responsible AI approved with no hallucination, profanity, bias, or toxicity findings</dd></div>
     </dl>
+
+    <figure class="vid-shot shot-solo">
+      <div class="shot-head"><span class="mono">the ask-why moment</span><span class="mono">frame from my screen recording</span></div>
+      <img src="assets/work/cancel-ask-why-frame.png" alt="Chat frame: the assistant confirms the customer wants to cancel, asks why they are cancelling, and the customer answers they have not used the product yet" width="720" height="786" loading="lazy">
+      <p class="wf-label">From my July 2023 screen recording of the working flow, test account. Both full recordings are in the results section.</p>
+    </figure>
 
     <div class="lab-hero" aria-label="Cancellation classifier overview">
       <div class="proof-copy">
@@ -214,47 +220,36 @@
     <p class="kicker mono part-head"><span class="knum">06</span><span>The prompt</span></p>
     <h2 id="p6-h">The guidelines, compiled into instructions.</h2>
     <div class="prose">
-      <p>The build is a hybrid of the two eras. The intent model does what it was always good at: recognizing that a cancellation is happening. The classifier does what intents couldn&rsquo;t: reading why. The low-code tool between them parses the JSON, applies the savability rules, and routes the call. Here&rsquo;s the classifier prompt, redacted, otherwise as shipped, with the guidelines marked where they became instructions.</p>
+      <p>The build is a hybrid of the two eras. The intent model does what it was always good at: recognizing that a cancellation is happening. The classifier does what intents couldn&rsquo;t: reading why. The low-code tool between them parses the JSON, applies the savability rules, and routes the call. Here&rsquo;s the shape of the classifier prompt, with the guidelines marked where they became instructions.</p>
     </div>
 
     <div class="shot-annotated">
-      <figure class="trace" aria-label="Redacted excerpt of the production classifier prompt">
+      <figure class="trace" aria-label="Condensed mock of the classifier prompt structure">
         <figcaption class="trace-hd mono">
           <span>artifact &middot; the classifier prompt</span>
-          <span>redacted excerpt &middot; as built, 2023</span>
+          <span>mock &middot; condensed for privacy</span>
         </figcaption>
-<pre class="prompt-pre">You are a classification assistant. Your only task is to
-evaluate a customer's provided reason for canceling a
-subscription and return a structured JSON object.
+<pre class="prompt-pre">You are a classification assistant. Evaluate a
+customer's reason for canceling and return a
+structured JSON object.  &hellip;
 
-- "cancellation_reason": a short label summarizing the
-  reason, such as: "too expensive" &middot; "switching products"
-  &middot; "not using it" &middot; "duplicate accounts" &middot; "business
-  closure" &middot; "retiring" &middot; "bad customer experience"
-  &middot; "missing features" &middot; "support issues" &middot; or another
-  concise, accurate label.
+- "cancellation_reason": a short label
+  summarizing the reason  &hellip;
 
-- "is_savable":
-  false if the reason is final and unlikely to be saved
-        (e.g., retirement, business closure, duplicate
-        accounts).
-  true  for all other reasons.
+- "is_savable": false if the reason is final
+  and unlikely to be saved  &hellip;
+  true for all other reasons.
 
-- "reason_acknowledgment": a short, neutral message that
-  acknowledges the customer's reason. Be respectful and
-  professional. Do not show emotion or make assumptions.
-  Do not offer help or take action in this field.
+- "reason_acknowledgment": a short, neutral
+  message  &hellip;  Do not offer help or take
+  action in this field.
 
-- "connect_to_expert_message": if "is_savable" is true,
-  a brief, contextual message offering to connect the
-  customer with an expert who may be able to help with
-  the issue they mentioned. Do not make promises or
-  assess the situation. If the reason is not savable,
-  set this field to an empty string.
+- "connect_to_expert_message": if "is_savable"
+  is true, a brief message offering to connect
+  the customer with an expert  &hellip;
 
-Return valid JSON output only.
-Customer feedback: ```${customer_feedback}```</pre>
-        <p class="trace-foot">excerpt of the production prompt &middot; one runtime variable renamed, branded terms generalized, one field and a worked example omitted &middot; categories, defaults, and the output contract unchanged</p>
+Return valid JSON output only.</pre>
+        <p class="trace-foot">modified to protect confidential work &middot; the fields and rules shown are faithful to the shipped behavior</p>
       </figure>
       <div class="note-rail" role="group" aria-label="Annotations mapping the guidelines to prompt instructions">
         <p class="note"><b>their rules, encoded</b>The final-reasons list in &ldquo;is_savable&rdquo; is the retention team&rsquo;s guideline, verbatim in spirit: retirement, closure, duplicates.</p>
@@ -325,7 +320,6 @@ Customer feedback: ```${customer_feedback}```</pre>
     <div class="stats" role="list" aria-label="Measured outcomes">
       <div role="listitem"><span class="num">96.6%</span><span class="lab">routing precision: the share of cancellations sent to the saves queue that were truly savable, measured on about 300 real customer utterances at 90 percent confidence</span></div>
       <div role="listitem"><span class="num">60% to 96%</span><span class="lab">cancellation reasons classified, in evaluation, where four months of intent tuning had stalled</span></div>
-      <div role="listitem"><span class="num">$63 a month</span><span class="lab">run cost for the classifier, $756 a year; the intent-tuning cycles it replaced took six plus months of development each</span></div>
       <div role="listitem"><span class="num">12% saved</span><span class="lab">by the 2022 ask-why flow against a 5 percent target, directional and expert-reported, across thousands of cancellation calls over three months</span></div>
     </div>
 
