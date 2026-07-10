@@ -6,3 +6,7 @@
 *.key
 secrets*
 .dev.vars
+
+# local working files
+CLAUDE.md
+RECONCILE_NOTES.md
