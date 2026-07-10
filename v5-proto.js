@@ -96,7 +96,7 @@
 
   var LEAD = explainOnly ?
     'That $224.00 is this month’s subscription charge. Here’s what’s behind it.' :
-    'Here is what is behind the $288.00 this cycle.';
+    'Here’s what’s behind the $288.00 this cycle.';
   var SAY = explainOnly ?
     'It’s $50.00 more than last month’s $174.00 for one reason: QuickBooks Time was added to the account with three users. Your base plan price didn’t change, and you weren’t billed twice.' :
     'Two things changed it. First, you added 2 team members at $6 each, which adds $12 and covers their payroll tax filings automatically. Second, your 6-month welcome rate finished this cycle, which had been taking $48 off your bill. Together those bring your monthly total from $228 to $288, an increase of $60. Everything else is the same plan you already had.';
@@ -137,7 +137,7 @@
     '<div class="prow"><span>Payments processing</span><span class="pv">varies · was $43.00</span></div></div>' +
     '<p class="pfoot">Mock data</p>';
 
-  var NOTE = 'So about $240 a month while the discount holds, a little more or less with your payments. The extra $12 is your two new team members. I will email you before the rate returns in October.';
+  var NOTE = 'So about $240 a month while the discount holds, a little more or less with your payments. The extra $12 is your two new team members. I’ll email you before the rate returns in October.';
 
   async function run() {
     if (running) return;
@@ -148,7 +148,7 @@
 
     var user1 = el('div', 'm-user', explainOnly ?
       'I see a $224 charge from Intuit I don’t recognize. What is it?' :
-      'I see a $288 charge on my card I do not recognize. Can you help me understand it?');
+      'I see a $288 charge on my card I don’t recognize. Can you help me understand it?');
     body.appendChild(user1);
     show(user1);
     await wait(800);
@@ -254,7 +254,7 @@
     var conf = el('p');
     agent2.appendChild(conf);
     show(conf);
-    await stream(conf, 'Done. Here is what I changed and what to expect.', 13);
+    await stream(conf, 'Done. Here’s what I changed and what to expect.', 13);
 
     var summary = el('div', 'proto-summary', SUMMARY_HTML);
     agent2.appendChild(summary);
@@ -267,7 +267,7 @@
     await stream(note, NOTE, 11);
     await wait(720);
 
-    var user3 = el('div', 'm-user', 'That is exactly what I was hoping for. Thank you.');
+    var user3 = el('div', 'm-user', 'That’s exactly what I was hoping for. Thank you.');
     body.appendChild(user3);
     show(user3);
     await wait(620);
@@ -277,7 +277,7 @@
     var bye = el('p');
     agent3.appendChild(bye);
     show(bye);
-    await stream(bye, 'Happy to help. You are all set.', 13);
+    await stream(bye, 'Happy to help. You’re all set.', 13);
 
     running = false;
     btn.disabled = false;

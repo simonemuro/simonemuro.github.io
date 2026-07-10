@@ -277,5 +277,10 @@ body.v5 .da-chips span{
   padding:7px 18px;font-weight:600;font-size:.88rem;
 }
 
+/* ---------- working-board texture (stickies get human jitter) ---------- */
+body.v5 .sticky:nth-child(odd){transform:rotate(-.6deg);}
+body.v5 .sticky:nth-child(even){transform:rotate(.45deg) translateY(2px);}
+body.v5 .sticky:nth-child(3){transform:rotate(-.2deg) translateY(-1px);}
+
 /* ---------- reserved agent widget slot (inert) ---------- */
 body.v5 .agent-slot{display:none;}
