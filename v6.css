@@ -60,6 +60,7 @@ body.v5 .shot-annotated{
   gap:22px;align-items:start;margin:34px 0;
 }
 body.v5 .shot-annotated .shot{margin:0;}
+body.v5 .shot-annotated > *{min-width:0;}
 body.v5 .note-rail{display:flex;flex-direction:column;gap:14px;}
 body.v5 .note{
   font-family:var(--display);font-style:italic;
@@ -366,6 +367,70 @@ body.v5 .splitmap .wf-label{
   body.v5 .splitmap{grid-template-columns:1fr;}
   body.v5 .splitmap .sm-check{border-right:none;border-bottom:1px dashed var(--hair-strong);}
 }
+
+/* ---------- recreated QuickBooks assistant chat (cancellation saves) ---------- */
+body.v5 .qba-mock{margin:0;}
+body.v5 .qba-head{
+  display:flex;justify-content:space-between;gap:10px 14px;flex-wrap:wrap;
+  margin-bottom:10px;
+}
+body.v5 .qba-head .mono{
+  font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--sub);
+}
+body.v5 .qba-head .mono:first-child{color:var(--accent);}
+body.v5 .qba-body{
+  background:#fff;border:1px solid #d4d7dc;border-radius:10px;
+  padding:20px 22px;font-family:var(--sans);color:#393a3d;
+  font-size:.92rem;line-height:1.55;
+  box-shadow:0 1px 2px rgba(40,32,18,.08),0 8px 22px rgba(40,32,18,.07);
+}
+body.v5 .qba-user{
+  background:#248317;color:#fff;border-radius:22px;
+  padding:9px 18px;margin:0 0 16px auto;max-width:88%;width:fit-content;
+  font-weight:600;
+}
+body.v5 .qba-agent{
+  background:#f0f2f4;border-radius:12px;
+  padding:12px 16px;max-width:92%;width:fit-content;
+}
+
+/* ---------- screen-recording frames ---------- */
+body.v5 .vid-shot{margin:0;}
+body.v5 .vid-shot video{
+  display:block;width:100%;height:auto;
+  border:1px solid var(--hair-strong);border-radius:10px;
+  background:#fff;
+}
+body.v5 .vid-shot .shot-head{
+  display:flex;justify-content:space-between;gap:8px 14px;flex-wrap:wrap;
+  margin-bottom:10px;
+}
+body.v5 .vid-shot .shot-head .mono{
+  font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--sub);
+}
+body.v5 .vid-shot .shot-head .mono:first-child{color:var(--accent);}
+body.v5 .vid-tx{border-top:1px solid var(--hair);margin-top:10px;padding-top:8px;}
+body.v5 .vid-tx summary{
+  cursor:pointer;color:var(--sub);font-family:var(--mono);font-size:.66rem;
+  letter-spacing:.06em;
+}
+body.v5 .vid-tx summary:hover{color:var(--accent);}
+body.v5 .vid-tx[open] summary{color:var(--ink);}
+body.v5 .vid-tx ol{
+  list-style:none;margin:0;padding:12px 0 2px;display:grid;gap:10px;
+}
+body.v5 .vid-tx li{
+  display:grid;grid-template-columns:56px minmax(0,1fr);gap:10px;
+  font-family:var(--sans);font-size:.85rem;line-height:1.5;
+}
+body.v5 .vid-tx li p{margin:0;}
+body.v5 .vid-tx .tx-role{
+  color:var(--sub);padding-top:2px;font-family:var(--mono);font-size:.66rem;
+  letter-spacing:.06em;
+}
+body.v5 .vid-tx li.tx-agent .tx-role{color:var(--accent);}
 
 /* ---------- working-board texture (stickies get human jitter) ---------- */
 body.v5 .sticky:nth-child(odd){transform:rotate(-.6deg);}

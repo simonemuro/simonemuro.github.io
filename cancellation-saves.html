@@ -4,18 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="QuickBooks customers cancel for a dozen different reasons, and the reason decides whether a specialist can save them. Case 05: the saves flow that asked why, and the LLM classifier that took reason coverage from 60 to 96 percent at $63 a month.">
+<meta name="description" content="QuickBooks customers cancel for a dozen different reasons, and the reason determines whether a specialist can save them. Case 05: the saves flow that asked why, the LLM classifier behind the routing, and screen recordings of both paths.">
 <meta property="og:title" content="Cancellation saves &middot; Simone Muro">
-<meta property="og:description" content="The saves flow that asked why customers cancel, and the LLM classifier that took reason coverage from 60 to 96 percent, with 96.6% routing precision, at $63 a month. The shipped prompt is on the page, redacted.">
+<meta property="og:description" content="The saves flow that asked why customers cancel, and the LLM classifier that took reason coverage from 60 to 96 percent, with 96.6% routing precision, at $63 a month. The shipped prompt and both routes on the page.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/cancellation-saves.html">
 <meta name="twitter:card" content="summary">
 <title>Cancellation saves &middot; Simone Muro</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="v5.css">
+<link rel="stylesheet" href="v6.css">
 <style>
   /* page-local, structural only: shared v5 tokens, no new colors or radii */
   body.v5 .prompt-pre{margin:0;padding:18px 20px;font-family:var(--mono);font-size:.74rem;line-height:1.8;color:var(--ink);overflow-x:auto;}
+  body.v5 .shot-annotated .trace{margin:0;}
 </style>
 </head>
 <body class="v5">
@@ -30,6 +32,8 @@
       <a href="resume.html">Resume</a>
       <a href="index.html#contact">Contact</a>
     </nav>
+    <!-- agent widget mounts here in a later release -->
+    <div class="agent-slot" id="agent-slot" aria-hidden="true"></div>
   </div>
 </header>
 
@@ -43,12 +47,12 @@
       <span>QuickBooks support</span>
     </p>
     <h1 id="case-h">Hearing why QuickBooks customers cancel, and routing the savable ones to a specialist.</h1>
-    <p class="lede">Before a QuickBooks subscription cancels, the customer says why. I designed the ask-why flow and the LLM classifier that reads the reason, then routes savable problems to a specialist without ever blocking someone who wants to leave.</p>
+    <p class="lede">Before a QuickBooks subscription cancels, the customer says why. I designed the ask-why flow and the LLM classifier that reads the reason, then routes savable problems to a specialist and gives everyone else a clean goodbye. It ran end to end in 2023, before the platform could ship generative AI to production at all, and both routes are on this page as screen recordings of the working flow.</p>
 
     <dl class="factrow">
       <div><dt>Surface</dt><dd>The QuickBooks support assistant, chat and voice, the subscription cancellation path</dd></div>
-      <div><dt>Role</dt><dd>Conversation designer; I designed the saves flow and wrote the classifier prompt myself &middot; 2022 to 2023</dd></div>
-      <div><dt>Context</dt><dd>8,814 cancellation calls over three months through the saves flow; savability rules from the saves teams</dd></div>
+      <div><dt>My role</dt><dd>Conversation designer; I designed the saves flow and wrote the classifier prompt myself &middot; 2022 to 2023</dd></div>
+      <div><dt>Context</dt><dd>Thousands of cancellation calls over three months through the saves flow; savability rules from the saves and retention teams</dd></div>
       <div><dt>Results</dt><dd>Routing precision 96.6%, measured across about 300 utterances at 90% confidence; reasons classified 60% to 96% in evaluation; Responsible AI approved with no hallucination, profanity, bias, or toxicity findings</dd></div>
     </dl>
 
@@ -63,17 +67,24 @@
         </ul>
       </div>
       <div class="run-console" aria-label="Classifier output examples">
-        <div class="board-title"><span>strict output</span><span>mock values</span></div>
+        <div class="board-title"><span>output contract</span><span>field values from my test runs, reconstructed</span></div>
 <pre>{
-  "reason": "too expensive",
-  "savable": true,
-  "next_step": "offer_specialist"
+  "cancellation_reason": "too expensive",
+  "is_savable": true,
+  "reason_acknowledgment": "I understand that
+    cost is an important factor. Thank you
+    for your feedback.",
+  "connect_to_expert_message": "I'm connecting
+    you to a customer success expert to help
+    with your cancellation."
 }
 
 {
-  "reason": "retiring",
-  "savable": false,
-  "next_step": "close_cleanly"
+  "cancellation_reason": "business closure",
+  "is_savable": false,
+  "reason_acknowledgment": "I'm sorry to hear
+    about the passing of the business owner.",
+  "connect_to_expert_message": ""
 }</pre>
       </div>
     </div>
@@ -84,25 +95,23 @@
     <p class="kicker mono part-head"><span class="knum">01</span><span>Background</span></p>
     <h2 id="p1-h">The cancel path, and who fights for it.</h2>
     <div class="prose">
-      <p>I was a conversation designer on the Conversation AI team, working on the support assistant that QuickBooks customers reach in chat and on the phone. When a customer comes to cancel, the business has one honest chance to keep them: saves specialists, people trained to review a plan, fix a bad experience, or find a better price. Whether that chance exists at all depends on why the customer is leaving. Some reasons are winnable. Some are final.</p>
-      <p>The work spans two eras. In 2022 I designed the saves flow itself on the intent platform: ask why before offering the cancel steps, then route the winnable reasons to specialists. In early 2023, when intent training stopped improving how well the system heard those reasons, I built a generative AI classifier to read them instead, at a time when the company had no sanctioned path for shipping generative AI to production.</p>
-      <p>I designed the ask-why flow, wrote the classifier prompt, built the experience end to end in an internal low-code tool, and drove the classifier through the Responsible AI review. Two pieces were shared: the savability rules came from the saves teams, the people who knew which reasons their specialists could actually win, and onboarding the API that let a flow call a language model at all was a partnership with the platform team.</p>
+      <p>I was a conversation designer on the Conversation AI team, working on the support assistant that QuickBooks customers reach in chat and on the phone. When a customer comes to cancel, the business has one real chance to keep them: saves specialists, people trained to review a plan, fix a bad experience, or find a better price. Whether that chance exists at all depends on why the customer is leaving. Some reasons are winnable. Some are final.</p>
+      <p>The work spans two eras. In 2022 I designed the saves flow itself on the intent platform: ask why before offering the cancel steps, then route the winnable reasons to specialists. In early 2023, when intent training stopped improving how well the system heard those reasons, I built a generative AI classifier to read them instead.</p>
     </div>
   </section>
 
   <!-- ================= 02 · the problem ================= -->
   <section class="wrap part" id="problem" aria-labelledby="p2-h">
     <p class="kicker mono part-head"><span class="knum">02</span><span>The problem</span></p>
-    <h2 id="p2-h">One sentence, a dozen problems.</h2>
+    <h2 id="p2-h">What the intent model couldn&rsquo;t hear.</h2>
     <div class="prose">
-      <p>&ldquo;I want to cancel&rdquo; is a dozen problems wearing one sentence. Too expensive, not using it, switching products, a bad support experience, duplicate accounts, closing the business, retiring. The intent model could hear the topic, a cancellation is happening, without much trouble. Hearing the reason was the hard part.</p>
-      <p>Reading reasons on the intent platform meant training intents: label utterances, tune, wait, repeat, months per cycle. By early 2023 I had spent four months in that loop and the curve had gone flat. The system resolved about 60 percent of the reasons customers gave. Two in five came back unknown, and every unknown routed like every other cancellation, straight toward the cancel steps.</p>
+      <p>&ldquo;I want to cancel&rdquo; is a dozen problems wearing one sentence. Too expensive, not using it, switching products, a bad support experience, duplicate accounts, closing the business, retiring. The intent model could hear the topic, a cancellation is happening, without much trouble. Hearing the reason was where the system stalled. By early 2023 I&rsquo;d spent four months tuning intents, and the curve had gone flat: about 60 percent of reasons resolved, two in five coming back unknown, and every unknown routed like every other cancellation, straight toward the cancel steps.</p>
     </div>
 
     <figure class="trace" aria-label="Illustrative trace: a paraphrased cancellation reason missing the trained intents and coming back unknown">
       <figcaption class="trace-hd mono"><span>trace &middot; the same sentence, before the classifier</span><span>illustrative</span></figcaption>
       <ol class="trace-rows">
-        <li><span class="t-time" aria-hidden="true">01</span><div><span class="mono">customer</span> &middot; &ldquo;It has gotten too expensive.&rdquo;</div></li>
+        <li><span class="t-time" aria-hidden="true">01</span><div><span class="mono">customer</span> &middot; &ldquo;It&rsquo;s gotten too expensive.&rdquo;</div></li>
         <li><span class="t-time" aria-hidden="true">02</span><div><code>match &#8594; <b>trained intents</b></code> &middot; a paraphrase the training set never saw</div></li>
         <li><span class="t-time" aria-hidden="true">03</span><div><code>reason &#8594; <b>unknown</b></code> &middot; the call routes like every other cancellation</div></li>
       </ol>
@@ -115,14 +124,12 @@
     <p class="kicker mono part-head"><span class="knum">03</span><span>Why it mattered</span></p>
     <h2 id="p3-h">Every unknown reason was a lost save.</h2>
     <div class="prose">
-      <p>The saves specialists could only fight for a customer when they knew what the fight was about. A price complaint that reaches a specialist with context is a conversation about the plan. A price complaint that reaches nobody is a lost subscription. Every reason the system could not hear was money left on the table.</p>
-      <p>The queue cut the other way too. A specialist spending time on a call that was never savable, a business closing, a retirement, is a specialist not saving a call that was. The bar I set for the classifier was simple: if I send ten people to that queue, the ten should be truly savable. Not two.</p>
-      <p>And the final reasons deserved better than a pitch. A customer retiring after thirty years does not want to hear an offer. They want their account closed out properly, with some grace.</p>
+      <p>A price complaint that reaches a specialist with context is a conversation about the plan. A price complaint that reaches nobody is a lost subscription. The queue cut the other way too: a specialist spending time on a call that was never savable, a business closing, a retirement, is a specialist not saving a call that was. The bar I set for the classifier: if I send ten people to that queue, the ten should be truly savable. Not two.</p>
     </div>
     <div class="flow-lane" aria-label="Cancellation routing model">
       <ol>
         <li><b>Ask why</b><span>The customer names the reason in their own words.</span></li>
-        <li><b>Classify</b><span>The model writes JSON only; no raw model prose reaches the customer.</span></li>
+        <li><b>Classify</b><span>The model writes JSON only; the flow decides what the customer hears.</span></li>
         <li><b>Route</b><span>Savable reasons get a specialist with context attached.</span></li>
         <li><b>Exit</b><span>Final reasons get a respectful close, no pitch and no trap.</span></li>
       </ol>
@@ -134,142 +141,208 @@
     <p class="kicker mono part-head"><span class="knum">04</span><span>Exploring solutions</span></p>
     <h2 id="p4-h">Keep tuning, or change the tool.</h2>
     <div class="prose">
-      <p>Three options were on the table. Commission another tuning cycle: months more labeling, and the last cycle had barely moved the unknowns. Hand the problem to a modeling team: the same method with more hands on it. Or let a large language model read the reason directly, no trained intents at all: a model built to read natural language does not need a training cycle to recognize that &ldquo;it has gotten too expensive&rdquo; is about price.</p>
-      <p>The third option did not officially exist. In early 2023 no sanctioned path shipped generative AI to production at the company. My read was that the bottleneck was the tool, not the tuning, and I championed the swap: I partnered with the platform team to onboard the API that let a flow call a language model at all, and wrote the classifier prompt. What had been six plus months of development per training cycle became days of prompt work.</p>
-      <p>The constraint shaped the design. Because the model was unproven in this channel, it would never speak to a customer directly, never decide anything a human rule had not defined, and never ship past what I could verify. The next two parts are those boundaries and how I verified them.</p>
+      <p>My read was that the bottleneck was the tool, not the tuning, and I championed the swap at a time when the third option officially didn&rsquo;t exist: in early 2023, no sanctioned path shipped generative AI to production at the company. I partnered with the platform team to onboard the API that let a flow call a language model at all, and wrote the classifier prompt. Six plus months of development per training cycle became days of prompt work.</p>
+    </div>
+
+    <div class="decision-board" role="group" aria-label="The three options on the table in early 2023">
+      <div><span class="jnum">option 01</span><b>Another tuning cycle</b><p>Months more labeling, and the last cycle had barely moved the unknowns. The curve had answered this one already.</p></div>
+      <div><span class="jnum">option 02</span><b>Hand it to a modeling team</b><p>The same method with more hands on it. More effort against the same ceiling.</p></div>
+      <div><span class="jnum">option 03</span><b>Let a language model read the reason</b><p>No trained intents at all. A model built for natural language doesn&rsquo;t need a training cycle to hear that &ldquo;it&rsquo;s gotten too expensive&rdquo; is about price.</p></div>
     </div>
   </section>
 
-  <!-- ================= 05 · design decisions ================= -->
-  <section class="wrap part" id="design" aria-labelledby="p5-h">
-    <p class="kicker mono part-head"><span class="knum">05</span><span>Design decisions</span></p>
-    <h2 id="p5-h">Boundaries first, then the prompt.</h2>
+  <!-- ================= 05 · savability, defined with the saves teams ================= -->
+  <section class="wrap part" id="savability" aria-labelledby="p5-h">
+    <p class="kicker mono part-head"><span class="knum">05</span><span>Defining savability</span></p>
+    <h2 id="p5-h">Savable wasn&rsquo;t my call to make. Encoding it was.</h2>
     <div class="prose">
-      <p>Four decisions define the experience. Each one is visible in the shipped prompt in part six or in the routing trace in part seven.</p>
+      <p>The word doing all the work in this case is savable, and I didn&rsquo;t define it. The Growth and Retention team did, with the saves specialists who win these calls every day. They knew which reasons a specialist can actually turn around and which ones deserve a graceful exit instead of a pitch. I worked with them to get those guidelines out of their heads and into a form a model could follow, then structured them into the prompt instructions that power the classifier.</p>
     </div>
-    <ol class="decisions">
-      <li>
-        <span class="dnum" aria-hidden="true">5.1</span>
+
+    <figure class="board6" aria-label="The savability guidelines from the retention and saves teams">
+      <h3>Savability guidelines: which cancellations can a specialist win?</h3>
+      <div class="cols">
         <div>
-          <h3>Ask why before the cancel steps, and never block the exit.</h3>
-          <p>The flow asks the reason first, because the reason decides the route. But the cancellation itself stays one step away the whole time. A saves experience that traps people is a churn experience with extra steps.</p>
+          <p class="col-h want">SAVABLE &middot; ROUTE TO A SPECIALIST</p>
+          <ul>
+            <li><b>Too expensive:</b> a plan review or a better price can change the math.</li>
+            <li><b>Not using it:</b> often an onboarding gap; usage can be rebuilt.</li>
+            <li><b>Switching products:</b> a feature conversation before the move is made.</li>
+            <li><b>Bad experience or support issue:</b> fixable, and worth fixing.</li>
+            <li><b>Missing features:</b> sometimes the feature exists and wasn&rsquo;t found.</li>
+          </ul>
         </div>
-      </li>
-      <li>
-        <span class="dnum" aria-hidden="true">5.2</span>
         <div>
-          <h3>Never pitch a final reason.</h3>
-          <p>Retirement, business closure, duplicate accounts: these are not saves, and treating them like saves is disrespectful. A final reason gets a clean, warm goodbye and a properly closed account. No offer, no queue.</p>
+          <p class="col-h close">FINAL &middot; NEVER PITCH</p>
+          <ul>
+            <li><b>Closing or selling the business:</b> the subscription&rsquo;s job is over.</li>
+            <li><b>Retiring:</b> nothing to win back; close the account well.</li>
+            <li><b>Duplicate accounts:</b> cancelling is the correct fix.</li>
+            <li><b>The default:</b> when unsure whether a reason can be won, the customer gets the specialist, not the door.</li>
+          </ul>
         </div>
-      </li>
-      <li>
-        <span class="dnum" aria-hidden="true">5.3</span>
-        <div>
-          <h3>The model returns strict JSON no customer ever reads raw.</h3>
-          <p>The classifier writes a structured object, and the flow composes the turn from it deterministically. The acknowledgment field is forbidden from offering help or taking action; the offer to connect lives in its own field, present only when the reason is savable. The voice never improvises.</p>
+      </div>
+    </figure>
+    <p class="wf-label">Recreated from the savability guidelines defined with the Growth and Retention team and the saves specialists; their rules, my structuring.</p>
+
+    <div class="prose">
+      <p>The acknowledgment itself went through the same discipline. An early version answered every reason with the same line: &ldquo;Thanks for the feedback,&rdquo; followed by the cancel link, even when the reason was a death. I rewrote the instructions so the acknowledgment reflects the reason with plain human empathy, while still never pitching a final one.</p>
+    </div>
+
+    <div class="duo">
+      <figure class="qba-mock" aria-label="Recreated early version: a customer says the business owner died and gets a generic thanks-for-the-feedback response">
+        <div class="qba-head"><span class="mono">early version</span><span class="mono">one voice for every reason</span></div>
+        <div class="qba-body">
+          <div class="qba-user">the owner of the business died</div>
+          <div class="qba-agent">Thanks for the feedback. I have a link you can use to cancel your subscription directly within QuickBooks Online. Can I send it to you?</div>
         </div>
-      </li>
-      <li>
-        <span class="dnum" aria-hidden="true">5.4</span>
-        <div>
-          <h3>Savability is a default, not a list.</h3>
-          <p>False only for terminal reasons; true for everything else. When the classifier is unsure whether a reason can be won, the customer gets the specialist, not the door. The category set stays open too, so the model is never forced into a wrong bucket.</p>
+        <p class="wf-label">Recreated from my test runs; interface simplified to protect internal tooling.</p>
+      </figure>
+      <figure class="qba-mock" aria-label="Recreated shipped version: the same message gets an acknowledgment of the loss before the same respectful cancel path">
+        <div class="qba-head"><span class="mono">after the rewrite</span><span class="mono">the reason shapes the acknowledgment</span></div>
+        <div class="qba-body">
+          <div class="qba-user">the owner of the business died</div>
+          <div class="qba-agent">I&rsquo;m sorry to hear about the passing of the business owner. I have a link you can use to cancel your subscription directly within QuickBooks Online. Can I send it to you?</div>
         </div>
-      </li>
-    </ol>
+        <p class="wf-label">Recreated from my test runs; same route, same link, different first sentence.</p>
+      </figure>
+    </div>
   </section>
 
-  <!-- ================= 06 · the build ================= -->
+  <!-- ================= 06 · the prompt ================= -->
   <section class="wrap part" id="build" aria-labelledby="p6-h">
-    <p class="kicker mono part-head"><span class="knum">06</span><span>The build</span></p>
-    <h2 id="p6-h">A hybrid, and the shipped prompt.</h2>
+    <p class="kicker mono part-head"><span class="knum">06</span><span>The prompt</span></p>
+    <h2 id="p6-h">The guidelines, compiled into instructions.</h2>
     <div class="prose">
-      <p>The build is a hybrid of the two eras. The intent model does what it was always good at: recognizing that a cancellation is happening. The classifier does what intents could not: reading why. And the low-code tool between them parses the JSON, applies the saves teams&rsquo; savability rules, and routes the call. Here&rsquo;s the classifier prompt, redacted, otherwise as shipped.</p>
+      <p>The build is a hybrid of the two eras. The intent model does what it was always good at: recognizing that a cancellation is happening. The classifier does what intents couldn&rsquo;t: reading why. The low-code tool between them parses the JSON, applies the savability rules, and routes the call. Here&rsquo;s the classifier prompt, redacted, otherwise as shipped, with the guidelines marked where they became instructions.</p>
     </div>
 
-    <figure class="trace" aria-label="Redacted excerpt of the production classifier prompt">
-      <figcaption class="trace-hd mono">
-        <span>artifact &middot; the classifier prompt</span>
-        <span>redacted excerpt &middot; shipped 2023</span>
-      </figcaption>
-<pre class="prompt-pre">You are a classification assistant. Your only task is to evaluate a customer's
-provided reason for canceling a subscription and return a structured JSON object.
+    <div class="shot-annotated">
+      <figure class="trace" aria-label="Redacted excerpt of the production classifier prompt">
+        <figcaption class="trace-hd mono">
+          <span>artifact &middot; the classifier prompt</span>
+          <span>redacted excerpt &middot; as built, 2023</span>
+        </figcaption>
+<pre class="prompt-pre">You are a classification assistant. Your only task is to
+evaluate a customer's provided reason for canceling a
+subscription and return a structured JSON object.
 
-- "cancellation_reason": a short label summarizing the reason, such as:
-  "too expensive" &middot; "switching products" &middot; "not using it" &middot; "duplicate accounts"
-  &middot; "business closure" &middot; "retiring" &middot; "bad customer experience"
-  &middot; "missing features" &middot; "support issues" &middot; or another concise, accurate label.
+- "cancellation_reason": a short label summarizing the
+  reason, such as: "too expensive" &middot; "switching products"
+  &middot; "not using it" &middot; "duplicate accounts" &middot; "business
+  closure" &middot; "retiring" &middot; "bad customer experience"
+  &middot; "missing features" &middot; "support issues" &middot; or another
+  concise, accurate label.
 
 - "is_savable":
   false if the reason is final and unlikely to be saved
-        (e.g., retirement, business closure, duplicate accounts).
+        (e.g., retirement, business closure, duplicate
+        accounts).
   true  for all other reasons.
 
-- "reason_acknowledgment": a short, neutral message that acknowledges the
-  customer's reason. Be respectful and professional. Do not show emotion or
-  make assumptions. Do not offer help or take action in this field.
+- "reason_acknowledgment": a short, neutral message that
+  acknowledges the customer's reason. Be respectful and
+  professional. Do not show emotion or make assumptions.
+  Do not offer help or take action in this field.
 
-- "connect_to_expert_message": if "is_savable" is true, a brief, contextual
-  message offering to connect the customer with an expert who may be able to
-  help with the issue they mentioned. Do not make promises or assess the
-  situation. If the reason is not savable, set this field to an empty string.
+- "connect_to_expert_message": if "is_savable" is true,
+  a brief, contextual message offering to connect the
+  customer with an expert who may be able to help with
+  the issue they mentioned. Do not make promises or
+  assess the situation. If the reason is not savable,
+  set this field to an empty string.
 
 Return valid JSON output only.
 Customer feedback: ```${customer_feedback}```</pre>
-      <p class="trace-foot">excerpt of the production prompt &middot; one runtime variable renamed, branded terms generalized, one field and a worked example omitted &middot; categories, defaults, and the output contract unchanged</p>
-    </figure>
+        <p class="trace-foot">excerpt of the production prompt &middot; one runtime variable renamed, branded terms generalized, one field and a worked example omitted &middot; categories, defaults, and the output contract unchanged</p>
+      </figure>
+      <div class="note-rail" role="group" aria-label="Annotations mapping the guidelines to prompt instructions">
+        <p class="note"><b>their rules, encoded</b>The final-reasons list in &ldquo;is_savable&rdquo; is the retention team&rsquo;s guideline, verbatim in spirit: retirement, closure, duplicates.</p>
+        <p class="note"><b>the safe default</b>True for everything else. When the model is unsure, the call goes to a person, never straight to the cancel steps.</p>
+        <p class="note"><b>never pitch a goodbye</b>The acknowledgment field is forbidden from offering help. The offer lives in its own field, present only when the reason is savable.</p>
+        <p class="note"><b>no improvising</b>JSON only. Nothing reaches the customer outside the two contract fields, and the flow composes the turn deterministically.</p>
+      </div>
+    </div>
 
     <div class="prose">
-      <p class="opens">The decisions from part five are all in the excerpt. The open category set, nine anchored labels plus room for another accurate one. The savability default, false only for terminal reasons. And the two message fields separated on purpose, the acknowledgment forbidden from offering help, the offer in its own field, so the flow composes the turn the same way every time.</p>
-      <p>Verification came before trust. I tested the classifier on about 300 real customer utterances, a sample sized for 90 percent confidence, and drove it through the Responsible AI review, the gate that mattered most for output read by machines and never shown raw. It cleared: free of hallucination and toxicity findings across the evaluation set.</p>
+      <p>Verification came before trust. I tested the classifier on about 300 real customer utterances, a sample sized for 90 percent confidence, and drove it through the Responsible AI review. It cleared: free of hallucination, profanity, bias, and toxicity findings across the evaluation set.</p>
     </div>
   </section>
 
   <!-- ================= 07 · results ================= -->
   <section class="wrap part" id="results" aria-labelledby="p7-h">
     <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
-    <h2 id="p7-h">What the flow moved, what the classifier measured, and the gate.</h2>
+    <h2 id="p7-h">Watch the classifier route two reasons.</h2>
     <div class="prose">
-      <p>Here&rsquo;s the experience with the classifier in it, both ways, reconstructed: a savable reason and a final one, ten words apart.</p>
+      <p>Same question, two reasons, two routes, recorded July 2023. The classifier reads each one, and the flow acts on what it returns.</p>
     </div>
 
-    <figure class="trace" aria-label="Reconstructed routing trace: a savable price reason routed to a specialist, and a final retirement reason given a clean goodbye">
-      <figcaption class="trace-hd mono"><span>trace &middot; the routing, both ways</span><span>reconstructed</span></figcaption>
-      <ol class="trace-rows">
-        <li><span class="t-time" aria-hidden="true">01</span><div><span class="mono">customer</span> &middot; &ldquo;It has gotten too expensive.&rdquo;</div></li>
-        <li><span class="t-time" aria-hidden="true">02</span><div><code>classify <b>reason(utterance)</b> &#8594; <span class="ok">ok</span> &middot; { "cancellation_reason": "too expensive", "is_savable": true }</code></div></li>
-        <li><span class="t-time" aria-hidden="true">03</span><div><span class="mono">agent</span> &middot; &ldquo;I hear you. I don&rsquo;t want cost to be the reason you go. Before anything changes, I can connect you with a specialist who can review your plan and pricing. Want me to do that?&rdquo;</div></li>
-        <li><span class="t-time" aria-hidden="true">04</span><div>savable &middot; routed to a saves specialist, context attached</div></li>
-        <li><span class="t-time" aria-hidden="true">05</span><div><span class="mono">customer</span> &middot; &ldquo;I&rsquo;m closing the business. I&rsquo;m retiring.&rdquo;</div></li>
-        <li><span class="t-time" aria-hidden="true">06</span><div><code>classify <b>reason(utterance)</b> &#8594; <span class="ok">ok</span> &middot; { "cancellation_reason": "business closure", "is_savable": false }</code></div></li>
-        <li><span class="t-time" aria-hidden="true">07</span><div><span class="mono">agent</span> &middot; &ldquo;Congratulations on the retirement. Let me get your account closed out properly. It only takes a minute.&rdquo;</div></li>
-        <li><span class="t-time" aria-hidden="true">08</span><div>final reason &middot; a clean goodbye, no pitch, no queue</div></li>
-      </ol>
-      <p class="trace-foot">dialogue reconstructed from the working flow &middot; pre-rendered, no live model</p>
-    </figure>
+    <div class="duo">
+      <figure class="vid-shot">
+        <div class="shot-head"><span class="mono">savable &middot; &ldquo;I haven&rsquo;t used the product yet&rdquo;</span><span class="mono">routed to an expert</span></div>
+        <video controls muted playsinline preload="none" width="720" height="816" poster="assets/video/cancel-flow-savable-poster.png" aria-label="Screen recording: a customer cancelling because they have not used the product is acknowledged and connected to a customer success expert">
+          <source src="assets/video/cancel-flow-savable.mp4" type="video/mp4">
+        </video>
+        <p class="wf-label">My screen recording of the working flow, July 2023, test account. Internal debug messages removed.</p>
+        <details class="vid-tx">
+          <summary>transcript</summary>
+          <ol>
+            <li class="tx-agent"><span class="tx-role">agent</span><p>Welcome to QuickBooks! This call may be recorded. Hi there! I&rsquo;m a digital assistant for QuickBooks and here to help! I was able to find an account with your phone number. Can I use this for our conversation today?</p></li>
+            <li><span class="tx-role">customer</span><p>yes</p></li>
+            <li class="tx-agent"><span class="tx-role">agent</span><p>Thanks! In a few words, please tell me why you&rsquo;re calling today.</p></li>
+            <li><span class="tx-role">customer</span><p>cancel subscription</p></li>
+            <li class="tx-agent"><span class="tx-role">agent</span><p>To confirm, Are you looking to cancel your Quickbooks subscription?</p></li>
+            <li><span class="tx-role">customer</span><p>yes</p></li>
+            <li class="tx-agent"><span class="tx-role">agent</span><p>We&rsquo;re sad to see you go, and we really value your feedback. Can you tell me why you&rsquo;re cancelling your account today?</p></li>
+            <li><span class="tx-role">customer</span><p>I haven&rsquo;t used the product yet</p></li>
+            <li class="tx-agent"><span class="tx-role">agent</span><p>I understand your decision to cancel due to not using the product. I&rsquo;m connecting you with an expert who can help. One moment please.</p></li>
+          </ol>
+        </details>
+      </figure>
+      <figure class="vid-shot">
+        <div class="shot-head"><span class="mono">final &middot; &ldquo;the owner of the business died&rdquo;</span><span class="mono">a clean goodbye</span></div>
+        <video controls muted playsinline preload="none" width="720" height="816" poster="assets/video/cancel-flow-notsavable-poster.png" aria-label="Screen recording: a customer cancelling because the business owner died receives condolences and the direct cancellation link, with no pitch">
+          <source src="assets/video/cancel-flow-notsavable.mp4" type="video/mp4">
+        </video>
+        <p class="wf-label">My screen recording of the working flow, July 2023, test account.</p>
+        <details class="vid-tx">
+          <summary>transcript</summary>
+          <ol>
+            <li class="tx-agent"><span class="tx-role">agent</span><p>Welcome to QuickBooks! This call may be recorded. Hi there! I&rsquo;m a digital assistant for QuickBooks and here to help! I was able to find an account with your phone number. Can I use this for our conversation today?</p></li>
+            <li><span class="tx-role">customer</span><p>yes</p></li>
+            <li class="tx-agent"><span class="tx-role">agent</span><p>Thanks! In a few words, please tell me why you&rsquo;re calling today.</p></li>
+            <li><span class="tx-role">customer</span><p>cancel subscription</p></li>
+            <li class="tx-agent"><span class="tx-role">agent</span><p>To confirm, Are you looking to cancel your Quickbooks subscription?</p></li>
+            <li><span class="tx-role">customer</span><p>yes</p></li>
+            <li class="tx-agent"><span class="tx-role">agent</span><p>We&rsquo;re sad to see you go, and we really value your feedback. Can you tell me why you&rsquo;re cancelling your account today?</p></li>
+            <li><span class="tx-role">customer</span><p>the owner of the business died</p></li>
+            <li class="tx-agent"><span class="tx-role">agent</span><p>I&rsquo;m sorry to hear about the passing of the business owner. I have a link you can use to cancel your subscription directly within QuickBooks Online. Can I send it to you?</p></li>
+          </ol>
+        </details>
+      </figure>
+    </div>
 
     <div class="stats" role="list" aria-label="Measured outcomes">
       <div role="listitem"><span class="num">96.6%</span><span class="lab">routing precision: the share of cancellations sent to the saves queue that were truly savable, measured on about 300 real customer utterances at 90 percent confidence</span></div>
       <div role="listitem"><span class="num">60% to 96%</span><span class="lab">cancellation reasons classified, in evaluation, where four months of intent tuning had stalled</span></div>
-      <div role="listitem"><span class="num">$63 a month</span><span class="lab">run cost for the classifier, $756 a year, against six plus months of development per tuning cycle becoming days</span></div>
+      <div role="listitem"><span class="num">$63 a month</span><span class="lab">run cost for the classifier, $756 a year; the intent-tuning cycles it replaced took six plus months of development each</span></div>
+      <div role="listitem"><span class="num">12% saved</span><span class="lab">by the 2022 ask-why flow against a 5 percent target, directional and expert-reported, across thousands of cancellation calls over three months</span></div>
     </div>
 
     <div class="prose">
-      <p class="opens">The saves flow itself, the ask-why-and-route design from 2022, moved real money before the classifier existed. Across 8,814 cancellation calls over three months, December 2022 to March 2023, the flow directionally saved 12 percent of customers against a 5 percent target, on expert-reported saves. Price calls saved at roughly 43 percent, about eight times the rate of calls where the business was simply closing. That gap is the whole argument: the reason decides how rescuable the call is, which is why hearing it was worth a methodology bet. The program exec summary put the value at about $500K in expert savings.</p>
-      <p>My result on this work is the routing precision: 96.6 percent of the cancellations the classifier sent to the saves queue were truly savable. That number is the case-rate lever. The higher the share of truly savable cases landing on the queue, the more of the specialists&rsquo; time turns into saves instead of screening.</p>
-      <p>The classifier cleared the Responsible AI review, but in early 2023 the platform had no sanctioned path for shipping generative AI to production. So the experience ran end to end in the internal low-code tool, designed, validated, measured, and gated from full deployment until the platform caught up. I proved the pattern before the platform could ship it. The hybrid shape it proved, an intent model for the topic and a language model for the nuance, is the same architecture the charge-lookup redesign shipped two years later. And the savability thinking carried further still: the <a href="billing-skill.html">billing skill&rsquo;s</a> cancel-intercept widget is its agentic descendant.</p>
+      <p class="opens">The saves flow itself, the ask-why-and-route design from 2022, moved real results before the classifier existed: it directionally saved 12 percent of customers against a 5 percent target, on expert-reported saves. My result on the classifier is the routing precision: 96.6 percent of the cancellations it sent to the saves queue were truly savable. That number is the case-rate lever. The higher the share of truly savable cases landing on the queue, the more of the specialists&rsquo; time turns into saves instead of screening.</p>
+      <p>The classifier cleared the Responsible AI review, but the platform&rsquo;s production path for generative AI didn&rsquo;t exist yet in early 2023, so the experience ran end to end in the internal low-code tool: designed, validated, measured, and gated from full deployment until the platform caught up. The hybrid shape it proved, an intent model for the topic and a language model for the nuance, is the same architecture the <a href="charge-lookup.html">charge-lookup redesign</a> shipped two years later. And the savability thinking carried further still: the <a href="billing-skill.html">billing skill&rsquo;s</a> cancel-intercept widget is its agentic descendant.</p>
     </div>
   </section>
 
   <!-- ================= 08 · learnings ================= -->
   <section class="wrap part" id="learnings" aria-labelledby="p8-h">
     <p class="kicker mono part-head"><span class="knum">08</span><span>Learnings</span></p>
-    <h2 id="p8-h">What I learned, and what I would do differently.</h2>
+    <h2 id="p8-h">What I learned, and what I&rsquo;d do differently.</h2>
     <div class="prose">
       <p>When the curve goes flat, question the tool before commissioning more effort. Four months of tuning taught me more about the intent platform&rsquo;s ceiling than about customers. The moment I named the bottleneck, the answer stopped being another cycle.</p>
-      <p>Boundaries are what make an unproven model shippable. The classifier earned its place by what it was forbidden to do: speak raw to a customer, improvise an offer, pitch a retirement. Strict output contracts and human-owned savability rules are how a new tool gets trusted with an old queue.</p>
-      <p>Verify before you champion. The 300-utterance evaluation and the Responsible AI review were not compliance chores; they were the argument. A measured 96.6 percent is persuasive in a way a demo never is.</p>
-      <p>Two things I would do differently. I would start the deployment-path conversation with the platform team on day one, alongside the prompt work, so the proof and the path to production land together instead of the proof waiting. And I would separate my result from the program&rsquo;s ambition sooner: the routing quality was mine to own and measure, and I would state it plainly rather than let a downstream revenue projection stand in for it.</p>
+      <p>The boundaries are what made an unproven model shippable here. The classifier earned its place by what it was forbidden to do: speak raw to a customer, improvise an offer, pitch a retirement. Strict output contracts and human-owned savability rules are how a new tool gets trusted with an old queue.</p>
+      <p>Two things I&rsquo;d do differently. I&rsquo;d start the deployment-path conversation with the platform team on day one, alongside the prompt work, so the proof and the path to production land together instead of the proof waiting. And I&rsquo;d separate my result from the program&rsquo;s ambition sooner: the routing quality was mine to own and measure, and I&rsquo;d state it plainly rather than let the program&rsquo;s downstream revenue projection stand in for it.</p>
     </div>
   </section>
 
