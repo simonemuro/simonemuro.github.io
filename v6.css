@@ -252,5 +252,30 @@ body.v5 .duo{
 }
 @media (max-width:820px){body.v5 .duo{grid-template-columns:1fr;}}
 
+/* ---------- recreated Digital Assistant exchange (NLU era) ---------- */
+body.v5 .da-mock{
+  margin:34px 0;max-width:560px;
+}
+body.v5 .da-body{
+  background:#fff;border:1px solid #d4d7dc;border-radius:10px;
+  padding:20px 22px;font-family:var(--sans);color:#393a3d;
+  font-size:.92rem;line-height:1.55;
+  box-shadow:0 1px 2px rgba(40,32,18,.08),0 8px 22px rgba(40,32,18,.07);
+}
+body.v5 .da-user{
+  background:#eceef1;border-radius:14px 14px 2px 14px;
+  padding:10px 16px;margin:0 0 18px auto;max-width:85%;width:fit-content;
+}
+body.v5 .da-agent p{margin:0 0 12px;}
+body.v5 .da-link{color:#0f7bcd;font-weight:600;}
+body.v5 .da-agent b{font-weight:700;}
+body.v5 .da-chips{
+  display:flex;flex-direction:column;align-items:flex-end;gap:10px;margin-top:18px;
+}
+body.v5 .da-chips span{
+  border:2px solid #2ca01c;color:#2ca01c;border-radius:22px;
+  padding:7px 18px;font-weight:600;font-size:.88rem;
+}
+
 /* ---------- reserved agent widget slot (inert) ---------- */
 body.v5 .agent-slot{display:none;}

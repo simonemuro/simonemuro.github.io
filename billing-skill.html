@@ -174,7 +174,23 @@
     <p class="kicker mono part-head"><span class="knum">03</span><span>Why now</span></p>
     <h2 id="p3-h">NLU could route the question. It could never answer it.</h2>
     <div class="prose">
-      <p>I&rsquo;d worked this exact surface in the Digital Assistant years, and the technology set the ceiling. An NLU system matches an utterance to an intent: it can recognize &ldquo;this is a billing question,&rdquo; classify which kind, and route to the least-bad destination. I shipped real improvements inside that ceiling, and that work is <a href="charge-lookup.html">its own case</a>. But no amount of intent tuning lets a system read this customer&rsquo;s account, reason over what changed, and compose the explanation. The why stayed out of reach.</p>
+      <p>I&rsquo;d worked this exact surface in the Digital Assistant years, and the technology set the ceiling. An NLU system matches an utterance to an intent: it can recognize &ldquo;this is a billing question,&rdquo; classify which kind, and route to the least-bad destination. Here&rsquo;s the Digital Assistant doing that job, and doing it well by NLU-era standards: intent recognized, the right page linked, an escape hatch offered.</p>
+    </div>
+
+    <figure class="da-mock" aria-label="Recreated Digital Assistant exchange: a charge question answered with navigation steps and two quick-reply buttons">
+      <div class="da-body">
+        <div class="da-user">what is this 25 dollar charge on my account</div>
+        <div class="da-agent">
+          <p>Sure, I can help. Let&rsquo;s take a look at your billing history. Go to <span class="da-link">Subscriptions and billing</span>.</p>
+          <p>Then, select <b>View Payment History</b>.</p>
+        </div>
+        <div class="da-chips" aria-hidden="true"><span>Next</span><span>I can&rsquo;t see billing history</span></div>
+      </div>
+      <p class="wf-label">Recreated from a real Digital Assistant exchange; interface simplified to protect account data.</p>
+    </figure>
+
+    <div class="prose">
+      <p>It&rsquo;s still navigation. The customer still does the investigation. I shipped real improvements inside that ceiling, and that work is <a href="charge-lookup.html">its own case</a>. But no amount of intent tuning lets a system read this customer&rsquo;s account, reason over what changed, and compose the explanation. The why stayed out of reach.</p>
       <p>Agentic systems removed the ceiling. A model that can plan, call a tool for account facts, and reason over what it finds can do the thing every transcript asked for: explain the charge. That&rsquo;s a different design problem, less about scripting responses, more about deciding what the agent may know, do, and refuse.</p>
       <p>When a five-day internal hackathon asked what we could prove quickly, I brought this problem and built the answer: a skill, a tool, and the eval that checks them.</p>
     </div>
