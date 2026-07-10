@@ -4,17 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="How Simone Muro led the migration of personalized payroll help flows into Intuit Intelligence with diagnostic ground truth, golden datasets, and UAT feedback.">
-<meta property="og:title" content="Payroll Intelligence &middot; Simone Muro">
-<meta property="og:description" content="Migrating high-anxiety payroll help from legacy DA flows into Intuit Intelligence without losing account-aware diagnosis.">
+<meta name="description" content="How Simone Muro turned expert payroll-tax diagnosis into agent behavior: a diagnostic golden-dataset generator, a retrieve-vs-ask boundary, and the UAT that graded the real thing. Conversational AI case study.">
+<meta property="og:title" content="Payroll tax skill &middot; Simone Muro">
+<meta property="og:description" content="High-anxiety payroll tax questions, answered like a manual. The diagnostic ground truth, the generator, and the UAT that changed it.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/payroll-intelligence.html">
 <meta name="twitter:card" content="summary">
-<title>Payroll Intelligence &middot; Simone Muro</title>
+<title>Payroll tax skill &middot; Simone Muro</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="v5.css">
+<link rel="stylesheet" href="v6.css">
 </head>
-<body class="v5 payroll-case">
+<body class="v5">
 
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -26,238 +27,343 @@
       <a href="resume.html">Resume</a>
       <a href="index.html#contact">Contact</a>
     </nav>
+    <!-- agent widget mounts here in a later release -->
+    <div class="agent-slot" id="agent-slot" aria-hidden="true"></div>
   </div>
 </header>
 
 <main id="main">
 
-  <section class="wrap titleblock payroll-hero" aria-labelledby="case-h">
+  <!-- ================= title block ================= -->
+  <section class="wrap titleblock" aria-labelledby="case-h">
     <p class="kicker mono">
       <span class="knum">Case No. 03</span>
-      <span>Payroll Intelligence</span>
-      <span>Agent migration</span>
+      <span>Payroll taxes</span>
+      <span>Digital Assistant &rarr; Intuit Intelligence</span>
     </p>
-    <h1 id="case-h">Keeping payroll help personal while moving 75+ flows into Intuit Intelligence.</h1>
-    <p class="lede">Payroll help is high-anxiety, high-complexity work: taxes, filings, setup status, debits, deadlines, compliance, and money movement. As Intuit Intelligence replaced the legacy Digital Assistant, I led the framework that preserved customer-specific payroll guidance and translated it into agent behavior.</p>
+    <h1 id="case-h">The most anxious questions got the most generic answers.</h1>
+    <p class="lede">A payroll tax question is never casual. Behind it sits a government agency, a deadline, a penalty, and money that already left the bank. The legacy Digital Assistant had years of personalized payroll help built into it, and as it wound down in early 2026, that help couldn&rsquo;t be copied into Intuit Intelligence as scripts. The diagnosis lived in experts&rsquo; heads. I drove the sprint that got it out: golden guidance for every priority payroll question, a generator that drafted full diagnostic reasoning for the hardest troubleshooting problems, jurisdiction by jurisdiction, and the UAT that graded how the real skills behaved against it.</p>
 
     <dl class="factrow">
-      <div><dt>Surface</dt><dd>QuickBooks Payroll help in Intuit Intelligence</dd></div>
-      <div><dt>My role</dt><dd>Product lead, conversational AI architect, payroll SME, Intuit Intelligence migration lead</dd></div>
-      <div><dt>Owned</dt><dd>Framework, generator, expert validation loop, skill requirements, UAT synthesis</dd></div>
-      <div><dt>Evidence</dt><dd>~900K annual DA questions, 75+ personalized flows, 21 diagnostic cases, 143 root causes</dd></div>
+      <div><dt>Surface</dt><dd>QuickBooks Payroll tax help in Intuit Intelligence, replacing the legacy Digital Assistant&rsquo;s personalized flows</dd></div>
+      <div><dt>My role</dt><dd>Drove the cross-functional sprint; authored the diagnostic framework and the generator; wrote and graded the UAT. Conversation AI Design Lead</dd></div>
+      <div><dt>When</dt><dd>Early 2026: sprint guidance delivered in early February, UAT on the live skills in April</dd></div>
+      <div><dt>Results</dt><dd>Guidance for all 51 sprint questions in about ten days; one diagnostic set mapping 21 customer questions to 142 root causes and 78 handoff triggers; a 13-case UAT whose misses became a fix list mapped to specific skills</dd></div>
     </dl>
-
-    <div class="payroll-case-map" aria-label="Payroll case study map">
-      <div><span class="mono">01</span><b>Legacy value</b><p>DA had years of payroll logic embedded in tailored done-for-you flows.</p></div>
-      <div><span class="mono">02</span><b>Migration risk</b><p>Intuit Intelligence initially answered high-stakes payroll issues like generic help articles.</p></div>
-      <div><span class="mono">03</span><b>Framework</b><p>I defined what the agent must know, retrieve, ask, and hand off.</p></div>
-      <div><span class="mono">04</span><b>Proof loop</b><p>Generator, expert review, golden data, skill requirements, and UAT closed the gap.</p></div>
-    </div>
   </section>
 
-  <section class="wrap part" id="overview" aria-labelledby="overview-h">
-    <p class="kicker mono part-head"><span class="knum">01</span><span>Overview</span></p>
-    <h2 id="overview-h">This was a migration problem, a quality problem, and a model-behavior problem.</h2>
-    <div class="payroll-story-grid">
-      <div class="prose">
-        <p>The Digital Assistant received roughly 900K high-complexity payroll help questions annually. Over time, DA and Payroll teams had built more than 75 high-value flows that gave tailored guidance for critical payroll issues.</p>
-        <p>When Intuit Intelligence became the unified conversational experience, those flows could not be copied over as scripts. They had to become agent behavior: tool calls, routing, diagnostic reasoning, response boundaries, and handoff rules.</p>
-      </div>
-      <div class="payroll-proof-strip compact" aria-label="Payroll project scale">
-        <div><span class="num">~900K</span><span>annual payroll help questions in DA</span></div>
-        <div><span class="num">75+</span><span>personalized payroll flows to preserve</span></div>
-        <div><span class="num">Top 10</span><span>high-anxiety topics prioritized for agent readiness</span></div>
+  <!-- ================= 01 · the problem ================= -->
+  <section class="wrap part" id="problem" aria-labelledby="p1-h">
+    <p class="kicker mono part-head"><span class="knum">01</span><span>The problem</span></p>
+    <h2 id="p1-h">Ask about your taxes, get a tour of the menus.</h2>
+    <div class="prose">
+      <p>Here&rsquo;s the early experience. A customer setting up payroll taxes asks for help, and the answer is a map of the settings, correct for every company and specific to none. Whether this customer&rsquo;s federal setup is done, which state forms are missing, what&rsquo;s blocking automatic payments: the system can read all of it, and the answer touches none of it.</p>
+    </div>
+
+    <div class="shot-annotated">
+      <figure class="shot">
+        <img src="assets/work/payroll-before-tax-setup.png" alt="Real Intuit Intelligence screenshot: asked to set up payroll taxes, the assistant answers with navigation to the Taxes tab, the Payroll Overview page, and Payroll Settings, without reading the account" width="474" height="1324" loading="lazy">
+        <p class="wf-label">Real Intuit Intelligence screenshot, cropped to protect account and session details.</p>
+      </figure>
+      <div class="note-rail" role="group" aria-label="Annotations">
+        <p class="note"><b>a map, not a diagnosis</b>Three destinations: the Taxes tab, the Payroll Overview page, Payroll Settings. The customer still does the investigating.</p>
+        <p class="note"><b>nothing read</b>Which tax groups are ready, which forms are missing, what&rsquo;s blocking automation: none of it appears, and all of it is on the account.</p>
+        <p class="note"><b>more of the same</b>The suggested follow-ups offer payment history and form filing. More places to look, still no answer.</p>
       </div>
     </div>
 
-    <figure class="payroll-wide-artifact">
-      <img src="assets/work/payroll-target-state.png" alt="Planning artifact defining personalized payroll help target state in Intuit Intelligence">
-      <figcaption class="mono">Planning artifact, redacted: the target state was personalized payroll help for the highest-anxiety topics inside Intuit Intelligence.</figcaption>
-    </figure>
+    <div class="prose">
+      <p>Payment questions fared no better. Six correct steps for paying any tax, and a disclaimer that quietly gives the game away.</p>
+    </div>
+
+    <div class="shot-annotated">
+      <figure class="shot">
+        <img src="assets/work/payroll-before-tax-payment.png" alt="Real Intuit Intelligence screenshot: asked for help with a tax payment, the assistant gives six generic e-pay steps and a disclaimer reading Based on information from 2024" width="510" height="1315" loading="lazy">
+        <p class="wf-label">Real Intuit Intelligence screenshot, cropped to protect account and session details.</p>
+      </figure>
+      <div class="note-rail" role="group" aria-label="Annotations">
+        <p class="note"><b>the giveaway</b>&ldquo;Based on information from 2024.&rdquo; A generic answer admitting it&rsquo;s a generic answer, on a question about this company&rsquo;s taxes now.</p>
+        <p class="note"><b>six steps, zero facts</b>The walkthrough is right for everyone. It never says what this customer owes, to which state, or by when.</p>
+        <p class="note"><b>the offer that can&rsquo;t deliver</b>&ldquo;Would you like help reviewing your upcoming tax payments?&rdquo; The right instinct, sitting under an answer that never looked.</p>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p class="opens">The Digital Assistant, for all its NLU-era limits, had something these answers didn&rsquo;t: years of hand-built flows that walked payroll customers through their specific situation, some of them doing the work for the customer outright. When that surface wound down, the flows couldn&rsquo;t move. What could move was what an expert checks before answering.</p>
+    </div>
   </section>
 
-  <section class="wrap part" id="problem" aria-labelledby="problem-h">
-    <p class="kicker mono part-head"><span class="knum">02</span><span>Problem</span></p>
-    <h2 id="problem-h">The early experience flattened payroll diagnosis into generic self-help.</h2>
+  <!-- ================= 02 · why scripts couldn't move ================= -->
+  <section class="wrap part" id="era" aria-labelledby="p2-h">
+    <p class="kicker mono part-head"><span class="knum">02</span><span>Why scripts couldn&rsquo;t move</span></p>
+    <h2 id="p2-h">You can&rsquo;t port a flowchart into a system that thinks.</h2>
     <div class="prose">
-      <p>Payroll questions are rarely just &ldquo;how do I navigate there?&rdquo; Customers need to know what is true for their company: which tax groups are ready, which forms are missing, whether a payment was sent, why money was debited, or what action is blocked.</p>
-      <p>Early Intuit Intelligence behavior often routed payroll questions to the Help Agent. That agent summarized content, but it did not reliably inspect the customer&rsquo;s setup, payment status, employee locations, or jurisdiction-specific requirements before answering.</p>
+      <p>I&rsquo;d spent years building NLU-era help like this, and I knew exactly what those flows were: pre-scripted paths, one per situation we&rsquo;d thought of, each hand-maintained as tax rules and product screens changed. That architecture can&rsquo;t just be pasted into an agentic system, and shouldn&rsquo;t be. An agent doesn&rsquo;t follow a path; it decides one. What it needs isn&rsquo;t the script but the judgment the script encoded: what to check, in what order, what the findings mean, and when to stop.</p>
     </div>
 
-    <figure class="payroll-wide-artifact payroll-problem-artifact">
-      <img src="assets/work/payroll-help-agent-risk.png" alt="Deck artifact showing payroll help questions routed to a Help Agent and the risk of generic how-to summaries">
-      <figcaption class="mono">Research artifact, redacted: help questions were being routed to a summary agent, creating risk for high-anxiety transactional support.</figcaption>
-    </figure>
-
-    <figure class="payroll-shot payroll-single-shot">
-      <figcaption><span class="mono">Before</span><b>Summary based on help content</b></figcaption>
-      <img src="assets/work/payroll-before-tax-setup.png" alt="Before screenshot of Intuit Intelligence giving generic payroll tax setup guidance from help content">
-      <p>The answer gave broad payroll tax setup guidance without reading the customer&rsquo;s current setup status. The customer still had to inspect payroll settings and infer what applied to their company.</p>
-    </figure>
+    <div class="decision-board" role="group" aria-label="What each technology generation needed from a designer">
+      <div><span class="jnum">NLU era</span><b>Design the path</b><p>Anticipate the situation, script the steps, maintain every branch by hand. The Digital Assistant&rsquo;s payroll flows worked this way for years. <a href="charge-lookup.html">That era is its own case.</a></p></div>
+      <div><span class="jnum">Agentic era</span><b>Design the judgment</b><p>The model plans its own path. The design material becomes ground truth: what to retrieve, how to reason over it, what a right answer contains.</p></div>
+      <div><span class="jnum">The design job</span><b>Write the ground truth</b><p>What the system checks before speaking, what it must ask instead of guess, and which findings mean a person takes over.</p></div>
+    </div>
   </section>
 
-  <section class="wrap part" id="research" aria-labelledby="research-h">
-    <p class="kicker mono part-head"><span class="knum">03</span><span>Research</span></p>
-    <h2 id="research-h">I reframed the work around what the agent must know before it speaks.</h2>
+  <!-- ================= 03 · the sprint ================= -->
+  <section class="wrap part" id="sprint" aria-labelledby="p3-h">
+    <p class="kicker mono part-head"><span class="knum">03</span><span>The sprint</span></p>
+    <h2 id="p3-h">The diagnosis lived in people. The sprint wrote it down.</h2>
     <div class="prose">
-      <p>I worked with Payroll product design teams, PMs, and experts to extract the diagnostic logic behind legacy DA flows. The research artifact was not a persona deck or a transcript summary. It was a practical framework for agent behavior.</p>
-      <p>For each high-anxiety topic, the framework defined the customer problem, required account facts, tool dependencies, expected reasoning path, stop conditions, and human handoff triggers.</p>
+      <p>Payroll troubleshooting depends on institutional knowledge the model can&rsquo;t safely infer: which of three settings silently blocks automatic payments, which state rejects which account-number format, what a stuck filing looks like versus a normal one. So I ran a sprint to extract it. My design team, Payroll product and agent partners, product and content designers, engineering, policy, support, and the domain experts themselves, all pulling the same direction. The experts brought the answers and the validation. I brought the structure that made their knowledge usable: the synthesis framework and the question-by-question format.</p>
+      <p>Every priority question got the same treatment, and we delivered guidance for all of them in about ten days, by early February.</p>
     </div>
 
-    <div class="payroll-flowline" aria-label="Payroll research and execution plan">
-      <div><b>Contact driver analysis</b><span>Pulled DA log utterances, used AI to cluster and rank payroll topics, then selected representative samples for each bucket.</span></div>
-      <div><b>Diagnostic ground truth</b><span>Mapped what an expert checks before answering: account state, tax setup, payment status, missing forms, tool paths, and stop conditions.</span></div>
-      <div><b>Agent behavior</b><span>Turned the diagnosis into skill requirements: what to read first, which tool to call, what not to infer, when to ask, and when to hand off.</span></div>
-      <div><b>Quality loop</b><span>Generated draft golden rows, had experts validate them, tested in Intuit Intelligence UAT, then sent bugs and prompt fixes back to engineering.</span></div>
+    <div class="skillspec">
+      <div class="skillspec-head">
+        <span class="mono">sprint framework &middot; per question</span>
+        <span class="mono">five fields</span>
+      </div>
+      <pre><span class="c"># what every sprint question had to leave with</span>
+<span class="k">golden_answer:</span>       <span class="c"># what good looks like, written with the experts</span>
+<span class="k">expected_behavior:</span>   <span class="c"># what the agent checks first</span>
+<span class="k">tool_requirements:</span>   <span class="c"># the account data the answer depends on</span>
+<span class="k">diagnostic_path:</span>     <span class="c"># how an expert narrows the cause</span>
+<span class="k">handoff_boundary:</span>    <span class="c"># the point where a person takes over</span></pre>
+      <p class="wf-label">The per-question fields from the sprint framework I authored; field names condensed.</p>
     </div>
-
   </section>
 
-  <section class="wrap part" id="generator" aria-labelledby="generator-h">
-    <p class="kicker mono part-head"><span class="knum">04</span><span>Generator</span></p>
-    <h2 id="generator-h">I built the generator so expert judgment could scale.</h2>
+  <!-- ================= 04 · the generator ================= -->
+  <section class="wrap part" id="generator" aria-labelledby="p4-h">
+    <p class="kicker mono part-head"><span class="knum">04</span><span>The generator</span></p>
+    <h2 id="p4-h">Troubleshooting was the hard part. I wrote the generator that drafted it.</h2>
     <div class="prose">
-      <p>The payroll framework needed expert validation, but asking experts to author every case from scratch would have slowed the migration. I built the generator as a prompt-driven production aid: it turned diagnostic topics into structured, spreadsheet-ready golden-dataset drafts that experts could correct.</p>
-      <p>The generator did not replace judgment. It made judgment reviewable. Each draft had to declare the customer ask, the account facts the agent needed, the tool path, the likely root cause, the ideal answer shape, and the handoff boundary.</p>
+      <p>The sprint covered what customers ask. Troubleshooting territories, why a debit failed, why a state isn&rsquo;t being paid, why a filing sits unaccepted, needed something deeper: full diagnostic reasoning, jurisdiction by jurisdiction. Writing those by hand doesn&rsquo;t scale, and asking tax experts to author decision trees from blank pages is a bad use of scarce experts.</p>
+      <p>So I wrote a generator: a prompt that turns one customer question into a complete diagnostic worksheet in twelve required sections, from scope and sub-variants through the decision tree down to root causes and handoff triggers. The instruction I cared most about is right at the top: these are not FAQ answers. Each output has to let an agent systematically find the root cause, decide what to retrieve versus what to ask, and resolve or escalate. Experts then corrected drafts instead of authoring from scratch, which is the difference between a review meeting and a research project.</p>
     </div>
 
-    <div class="payroll-build-board" aria-label="How the payroll golden dataset generator worked">
+    <div class="skillspec">
+      <div class="skillspec-head">
+        <span class="mono">generator prompt &middot; excerpt</span>
+        <span class="mono">output structure</span>
+      </div>
+      <pre><span class="c"># diagnostic golden dataset generator, payroll tax</span>
+<span class="k">purpose:</span> detailed diagnostic decision trees, NOT
+  simple FAQ answers. the agent must identify root
+  causes, decide what to retrieve vs. what to ask,
+  and resolve or escalate
+
+<span class="k">required_sections:</span> <span class="c"># all 12, in order, none omitted</span>
+  1  Header            <span class="c"># issue, customer question, experts</span>
+  2  Scope              <span class="c"># "specificity is critical for tax compliance"</span>
+  3  Sub-Variants Note  <span class="c"># same words, different root causes</span>
+  4  Critical Understanding
+  5  Diagnostic Decision Tree
+  6  Summary of Data Points to Pull
+  7  Data Retrievable from System
+  8  Data Not Retrievable (Must Ask User)
+  9  Reference Section(s)
+  10 Handoff Triggers
+  11 Root Cause Summary
+  12 Required Tools / Dependencies
+
+<span class="k">expert_validation:</span> drafts marked [TBD] until an SME
+  confirms</pre>
+      <p class="wf-label">Condensed from the generator prompt I wrote; internal system names removed.</p>
+    </div>
+
+    <div class="prose">
+      <p>Here&rsquo;s the generator&rsquo;s reasoning on one real question, condensed from the full worksheet. One casual customer sentence, eleven distinct root causes, and a tree that checks the silent blockers in order.</p>
+    </div>
+
+    <div class="diagtree" role="group" aria-label="Condensed diagnostic decision tree for one payroll tax question">
+      <div class="dt-head">
+        <span class="mono">diagnostic &middot; DIAG-TAX-A01</span>
+        <p class="dt-q">&ldquo;Why is QuickBooks not paying my CA taxes automatically?&rdquo;</p>
+        <p class="dt-crit"><b>Critical understanding:</b> automatic California payments need three things at once: the EDD account number entered, the power of attorney signed, and automated taxes switched on. Missing any one silently blocks all of it, with no obvious error anywhere.</p>
+      </div>
+      <ol class="dt-steps">
+        <li><span class="dt-n mono" aria-hidden="true">1</span><div><b>Confirm the payroll subscription is active.</b><span>Inactive &rarr; reactivate before anything else.</span></div></li>
+        <li><span class="dt-n mono" aria-hidden="true">2</span><div><b>Check the automated taxes and forms setting.</b><span>Off &rarr; that&rsquo;s the why. Enable it, and warn that past-due taxes still need manual payment.</span></div></li>
+        <li><span class="dt-n mono" aria-hidden="true">3</span><div><b>Check CA state registration: is the EDD account number on file?</b><span>Missing &rarr; the customer has to supply it; the system can see the field is empty but can&rsquo;t know the number.</span></div></li>
+        <li><span class="dt-n mono" aria-hidden="true">4</span><div><b>Verify the power of attorney for California.</b><span>Unsigned or pending &rarr; nothing can be paid on the customer&rsquo;s behalf.</span></div></li>
+        <li><span class="dt-n mono" aria-hidden="true">5</span><div><b>Check e-services enrollment.</b><span>Not enrolled &rarr; enrollment gap, another silent blocker.</span></div></li>
+        <li><span class="dt-n mono" aria-hidden="true">6</span><div><b>Verify employees are assigned to a CA work location.</b><span>None &rarr; there&rsquo;s nothing to pay; fix work locations or confirm CA is winding down.</span></div></li>
+      </ol>
+      <p class="wf-label">Condensed from one generated diagnostic; the full worksheet carries all twelve sections.</p>
+    </div>
+
+    <div class="prose">
+      <p class="opens">One troubleshooting set built this way covered 21 diagnostics, 142 catalogued root causes, and 78 handoff triggers, each trigger naming the condition that ends self-serve and what to gather before the handoff. That&rsquo;s the scale argument for the generator: judgment stays with experts, volume goes to the machine.</p>
+    </div>
+  </section>
+
+  <!-- ================= 05 · retrieve vs ask ================= -->
+  <section class="wrap part" id="boundary" aria-labelledby="p5-h">
+    <p class="kicker mono part-head"><span class="knum">05</span><span>Retrieve vs. ask</span></p>
+    <h2 id="p5-h">The line that decides whether the agent feels smart or lazy.</h2>
+    <div class="prose">
+      <p>The structural decision that shapes the agent most: every diagnostic separates the data the system can retrieve from the information it must ask the customer. That split is the character of the agent. Ask a customer for something the system can plainly see, and trust drops; the agent feels like the settings page with extra steps. Guess at something only the customer knows, and the answer is dangerous. So the boundary is explicit, per question, and every must-ask carries a documented reason the system can&rsquo;t know it.</p>
+    </div>
+
+    <div class="splitmap" role="group" aria-label="One diagnostic&rsquo;s split between retrievable data and questions the agent must ask">
+      <div class="sm-col sm-check">
+        <p class="sm-h mono">retrieve, never ask</p>
+        <ul>
+          <li>Payroll subscription status and tier</li>
+          <li>Automated-taxes setting, on or off, and its change history</li>
+          <li>CA EDD account number: populated or empty</li>
+          <li>Power-of-attorney status: signed, pending, not signed</li>
+          <li>E-services enrollment status</li>
+          <li>Employee work locations and tax exemptions</li>
+          <li>Bank connection status and CA payment history</li>
+        </ul>
+      </div>
+      <div class="sm-col sm-ask">
+        <p class="sm-h mono">ask, never guess</p>
+        <div class="sm-qa">
+          <p class="sm-q">&ldquo;Do you have your CA EDD account number?&rdquo;</p>
+          <p class="sm-why">Asked only if the field is empty. The system can see it&rsquo;s missing; it can&rsquo;t know the number. Only the EDD registration has it.</p>
+        </div>
+        <div class="sm-qa">
+          <p class="sm-q">&ldquo;Did someone recently change your payroll settings?&rdquo;</p>
+          <p class="sm-why">A previous admin or an accountant may have made changes that don&rsquo;t show in any audit trail the system can reach.</p>
+        </div>
+        <div class="sm-qa">
+          <p class="sm-q">&ldquo;Will you keep having employees work in California?&rdquo;</p>
+          <p class="sm-why">Asked only if no CA employees are found. Intent decides everything downstream: set CA up properly, or close the account, which has filing implications of its own.</p>
+        </div>
+      </div>
+      <p class="wf-label">From the same diagnostic; the split is a required section of every worksheet.</p>
+    </div>
+  </section>
+
+  <!-- ================= 06 · grading the real thing ================= -->
+  <section class="wrap part" id="uat" aria-labelledby="p6-h">
+    <p class="kicker mono part-head"><span class="knum">06</span><span>Grading the real thing</span></p>
+    <h2 id="p6-h">Then the skills were real, and I graded them against the ground truth.</h2>
+    <div class="prose">
+      <p>By April the payroll tax skills were up and answering in Intuit Intelligence, and I ran UAT against them: thirteen cases across four phases, discovery, cross-skill handoffs, bug validation, and guardrails. I graded eleven runs: three passed clean, five came back partial, three failed. Each miss got a diagnosis and the response I&rsquo;d have wanted instead. Polish wasn&rsquo;t the bar. The bar was whether the agent used the right data, brought in the adjacent skill when the question crossed domains, and answered like it knew what day it was.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-chrome">
+        <div class="sheet-titlebar" aria-hidden="true">
+          <span class="st-name">payroll_tax_uat_tracker</span>
+          <span>13 cases &middot; 4 phases</span>
+          <span class="st-dim">graded pass / partial / fail</span>
+          <span class="st-scroll" aria-hidden="true">scroll &rarr;</span>
+        </div>
+        <div class="sheet-scroll">
+          <table class="grid" aria-label="Four rows from the UAT tracker: question, expected skills, grade, what happened, and the ideal direction">
+            <thead>
+              <tr><th class="rownum" scope="col" aria-label="row"></th><th scope="col">customer asks</th><th scope="col">skills expected</th><th scope="col">grade</th><th scope="col">what happened</th><th scope="col">the ideal I wrote</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rownum">1</td>
+                <td class="q">&ldquo;Was my Q1 filing accepted, and did the payment go through?&rdquo;</td>
+                <td><span class="tag">filings + payments</span></td>
+                <td><span class="tag partial">partial</span></td>
+                <td>The cross-skill handoff worked: filings and payments in one combined table, the federal payment traced to its settlement date. But the Form 941 had sat &ldquo;Submitted&rdquo; for weeks and the agent called that common and reassuring, instead of flagging the elapsed time. And it answered federal-only for a customer with state obligations.</td>
+                <td>Time-aware and two-sided: submitted but not accepted for over two weeks, when acceptance usually takes 5 to 7 business days, may be a processing delay or a rejection worth checking. Then the state filings, offered unprompted.</td>
+              </tr>
+              <tr>
+                <td class="rownum">2</td>
+                <td class="q">&ldquo;I see a debit on my bank statement but no payment to the agency. What happened?&rdquo;</td>
+                <td><span class="tag">debits + payments</span></td>
+                <td><span class="tag partial">partial</span></td>
+                <td>Loaded the debits skill and pulled real data, but one-sided: it explained the debit and never cross-referenced the payment side the customer was actually worried about. And it pulled fifteen months of history for a question about one recent debit.</td>
+                <td>A narrow window, last 30 days, then each debit matched to its payment record, shown as pairs: here&rsquo;s what left your bank, here&rsquo;s where it went.</td>
+              </tr>
+              <tr>
+                <td class="rownum">3</td>
+                <td class="q">&ldquo;What are my state payroll tax liabilities?&rdquo;</td>
+                <td><span class="tag">payments</span></td>
+                <td><span class="tag fail">fail</span></td>
+                <td>A multi-state company asked an ambiguous question, and the agent silently answered for California only. It knew the other states existed from its own earlier tool calls; its follow-up chips even offered a by-state comparison. The stale 2024 disclaimer appeared again too, stamped on live account data.</td>
+                <td>Treat &ldquo;state&rdquo; as ambiguous: pull every state and summarize, or ask which one the customer means, naming the states it already knows the company operates in.</td>
+              </tr>
+              <tr>
+                <td class="rownum">4</td>
+                <td class="q">&ldquo;What were my 2023 payroll tax payments?&rdquo;</td>
+                <td><span class="tag">any &middot; guardrail test</span></td>
+                <td><span class="tag fail">fail</span></td>
+                <td>The skills carry a pre-2025 boundary, and the agent bypassed it: queried 2023 anyway, found nothing, and explained why. A failed guardrail and, awkwardly, a genuinely helpful answer. I flagged the bypass and raised the real question for the team: should this guardrail soften to allow no-data-found responses?</td>
+                <td>Enforce the boundary without losing the help: records here start in late 2024 when automated taxes came on, there&rsquo;s no 2023 data to show, and here&rsquo;s how to see 2025 onward.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="wf-label">Condensed from my UAT tracker. Reviewer fields, internal bug links, and trace identifiers removed.</p>
+    </div>
+
+    <div class="prose">
+      <p>The misses shared a pattern: the skills retrieved well and reasoned thinly. Time-blindness, one-sided cross-skill answers, disclaimers contradicting live data, date ranges wider than the question. Every one became a documented issue with the response I&rsquo;d have wanted attached, so the fix had a target. Here&rsquo;s a graded run in full.</p>
+    </div>
+
+    <div class="shot-annotated">
+      <figure class="shot">
+        <img src="assets/work/payroll-uat-debit-answer.png" alt="Real graded UAT run: asked about a debit with no matching agency payment, the agent explains debit timing in three sections but never checks the payment side" width="865" height="1037" loading="lazy">
+        <p class="wf-label">Real UAT run, April 2026, on a test account. Cropped; trace identifiers removed.</p>
+      </figure>
+      <div class="note-rail" role="group" aria-label="Annotations">
+        <p class="note"><b>reads well, checks little</b>Confident structure, real account data, and a clean explanation of the debit side.</p>
+        <p class="note"><b>fifteen months for one debit</b>&ldquo;from 01/01/2025 to 04/20/2026&rdquo; is the window it pulled to answer a question about a single recent charge.</p>
+        <p class="note"><b>one-sided</b>The customer asked where the payment went. The answer explains the debit and offers to check the payment side later, which was the question.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 07 · where it landed ================= -->
+  <section class="wrap part" id="outcome" aria-labelledby="p7-h">
+    <p class="kicker mono part-head"><span class="knum">07</span><span>Where it landed</span></p>
+    <h2 id="p7-h">Ground truth the team could build against, and did.</h2>
+
+    <div class="outcome-log" role="group" aria-label="What the work delivered">
       <div>
-        <span class="mono">01 source</span>
-        <b>Diagnostic framework</b>
-        <p>High-anxiety payroll topics, legacy DA flow logic, contact-driver research, and Payroll PD input.</p>
+        <span class="ol-when">delivered</span>
+        <p class="ol-what"><b>Guidance for every sprint question by early February,</b> plus the diagnostic layer for the troubleshooting territories: worksheets an agent can follow and an eval can check.</p>
       </div>
       <div>
-        <span class="mono">02 prompt</span>
-        <b>Schema-first generation</b>
-        <p>I prompted the model to produce consistent fields instead of prose: facts to retrieve, root causes, tool path, expected behavior, and escalation rule.</p>
+        <span class="ol-when">validated</span>
+        <p class="ol-what"><b>Nine troubleshooting territories carried expert validation.</b> The generator drafted; the tax experts confirmed and corrected.</p>
       </div>
       <div>
-        <span class="mono">03 review</span>
-        <b>Expert correction loop</b>
-        <p>Payroll experts validated the generated rows, corrected domain gaps, and turned drafts into ground truth.</p>
-      </div>
-    </div>
-
-    <div class="payroll-sample-row" aria-label="Public-safe sample generated row">
-      <div><span class="mono">customer ask</span><p>I need to set up payroll taxes.</p></div>
-      <div><span class="mono">data to read</span><p>Federal and state setup status, e-service enrollment, missing forms, tax IDs, and employee work locations.</p></div>
-      <div><span class="mono">expected behavior</span><p>Name the incomplete jurisdictions before giving navigation. Do not answer from help content alone.</p></div>
-      <div><span class="mono">review note</span><p>Remove stale disclaimer, add exact product path, and explain what is blocking automatic payments.</p></div>
-    </div>
-
-    <div class="payroll-generator-loop" aria-label="Generator workflow">
-      <div><span class="mono">Input</span><b>Legacy DA flows + contact drivers + expert logic</b><p>Source material from existing personalized payroll support and high-anxiety topic analysis.</p></div>
-      <div><span class="mono">Generator</span><b>Structured golden-dataset draft</b><p>Diagnostic cases, root causes, required data, handoff triggers, and expected response patterns.</p></div>
-      <div><span class="mono">Human review</span><b>Payroll experts validate and correct</b><p>Experts review generated logic and fill the gaps the model cannot know by itself.</p></div>
-      <div><span class="mono">Build input</span><b>Skill rules + UAT cases</b><p>PD, PM, and engineering get concrete requirements instead of vague intent.</p></div>
-    </div>
-
-    <div class="dataset-metrics" role="list" aria-label="Payroll golden dataset metrics">
-      <div role="listitem"><span class="num">21</span><span>diagnostic payroll tax cases in the sample set</span></div>
-      <div role="listitem"><span class="num">143</span><span>root causes captured across troubleshooting paths</span></div>
-      <div role="listitem"><span class="num">79</span><span>handoff triggers for expert support</span></div>
-    </div>
-  </section>
-
-  <section class="wrap part" id="behavior" aria-labelledby="behavior-h">
-    <p class="kicker mono part-head"><span class="knum">05</span><span>Skill behavior</span></p>
-    <h2 id="behavior-h">The dataset became the bridge from product decision to model behavior.</h2>
-    <div class="prose">
-      <p>The strongest artifact was the translation layer: what product teams wanted the experience to do, expressed as behavior the agent could follow. The payroll tax setup and payments skills needed to know when to retrieve setup context, when to inspect all active jurisdictions, when to call adjacent skills, and when a generic answer was not acceptable.</p>
-    </div>
-
-    <div class="payroll-behavior-map" aria-label="Product decisions translated into skill behavior">
-      <div><span>Product decision</span><span>Skill behavior</span></div>
-      <div><b>Payroll setup is customer-specific.</b><p>Load setup context before answering setup, tax group, e-service, exemption, state-account, or authorization questions.</p></div>
-      <div><b>Payment questions span jurisdictions.</b><p>Determine active federal, state, and local groups before explaining what is owed, paid, blocked, or pending.</p></div>
-      <div><b>Adjacent payroll domains interact.</b><p>Load the setup skill when a payment answer depends on setup status; load payments when setup questions involve money movement.</p></div>
-      <div><b>Generic copy can be unsafe.</b><p>Do not answer from memory when tool data can provide the actual customer state.</p></div>
-      <div><b>Missing context has a boundary.</b><p>Ask only when the answer lives outside available tools, customer data, and conversation context.</p></div>
-    </div>
-  </section>
-
-  <section class="wrap part" id="execution" aria-labelledby="execution-h">
-    <p class="kicker mono part-head"><span class="knum">06</span><span>Execution</span></p>
-    <h2 id="execution-h">My work sat across strategy, build input, and delivery quality.</h2>
-    <div class="prose">
-      <p>I did not hand the team a concept and leave. I created the framework, built the generator, shaped the validation process, translated findings into skill requirements, and drove UAT feedback back to engineering.</p>
-    </div>
-
-    <figure class="payroll-wide-artifact">
-      <img src="assets/work/payroll-plan-framework.png" alt="Planning artifact showing the process from contact driver analysis to quality evals and prompt refinement">
-      <figcaption class="mono">Planning artifact, redacted: research and golden data fed behavior guidelines, routing precision, evals, and prompt refinement.</figcaption>
-    </figure>
-
-    <div class="role-grid" aria-label="Simone contribution and delegation">
-      <div>
-        <span class="mono">I led</span>
-        <p>Migration framing, diagnostic strategy, generator design, ask boundaries, behavior requirements, and UAT synthesis.</p>
+        <span class="ol-when">fed back</span>
+        <p class="ol-what"><b>UAT closed with a recommendations sheet, each item mapped to the skill prompt that needed it:</b> a mandatory pre-answer checklist for the automation question, disambiguation rules for multi-state companies, a translation table for internal status codes, and a time-aware check for stuck filings.</p>
       </div>
       <div>
-        <span class="mono">I partnered</span>
-        <p>Payroll PD and PM teams on prioritization, expert review, skill requirements, and engineering follow-through.</p>
-      </div>
-      <div>
-        <span class="mono">I delegated</span>
-        <p>Domain-specific review once the generator, validation rubric, and structured dataset were ready for expert correction.</p>
+        <span class="ol-when">the boundary</span>
+        <p class="ol-what"><b>The agent team built and ran the skills; I contributed the ground truth they built against,</b> the UAT that graded the results, and the fix list that came out of it.</p>
       </div>
     </div>
-  </section>
 
-  <section class="wrap part" id="uat" aria-labelledby="uat-h">
-    <p class="kicker mono part-head"><span class="knum">07</span><span>UAT</span></p>
-    <h2 id="uat-h">UAT turned the framework into concrete fixes.</h2>
     <div class="prose">
-      <p>I drove UAT to check whether the skill actually behaved like the framework, not just whether the response sounded polished. I looked for evidence that the agent used the right data, called the right adjacent skill, avoided stale disclaimers, interpreted tables instead of restating them, and gave a specific next step.</p>
-      <p>The raw sheet included internal reviewer fields. This public version preserves the feedback pattern while removing people, account details, trace links, and private identifiers.</p>
+      <p>And the target behavior is real. Here&rsquo;s the setup question from the top of this page, answered the way the ground truth says it should be: from this company&rsquo;s account, naming exactly which federal and California steps remain.</p>
     </div>
 
-    <div class="eval-sheet payroll-uat" aria-label="Sanitized payroll UAT feedback">
-      <div class="eval-hd mono"><span>sanitized UAT sample</span><span>public-safe reconstruction</span></div>
-      <div class="eval-table">
-        <span>skill expected</span><span>result</span><span>what happened</span><span>issue found</span><span>ideal direction</span>
-        <b>payroll_tax_setup</b><b class="warn">partial</b><b>Found multiple federal and state setup deficiencies.</b><b>Included an outdated-data disclaimer and used generic navigation.</b><b>Open with the current setup gaps and exact product path for each jurisdiction.</b>
-        <b>payroll_tax_setup</b><b class="ok">pass</b><b>Separated ready, missing form, missing rate, and exempt groups.</b><b>Some missing-form rows needed deeper path detail.</b><b>Add the exact setup path and connect it to employee work locations.</b>
-        <b>payroll_tax_payments</b><b class="ok">pass</b><b>Retrieved payment status, settlement date, and notes across states.</b><b>Key insight repeated the table instead of explaining why a payment was blocked.</b><b>State the implication and the next diagnostic action.</b>
-        <b>setup + payments</b><b class="warn">partial</b><b>Routed the issue as setup-related instead of payment-related.</b><b>Response still sounded procedural, not personalized.</b><b>Start with the specific blocked states and why they are blocked.</b>
+    <div class="shot-annotated">
+      <figure class="shot">
+        <img src="assets/work/payroll-after-tax-setup.png" alt="Real Intuit Intelligence screenshot: asked about payroll tax setup, the skill reads the account and names the remaining federal and California steps, including the specific forms to e-sign" width="468" height="1330" loading="lazy">
+        <p class="wf-label">Real Intuit Intelligence screenshot, cropped to protect account and session details.</p>
+      </figure>
+      <div class="note-rail" role="group" aria-label="Annotations">
+        <p class="note"><b>it read the account</b>&ldquo;&hellip;finishing your payroll tax setup in QuickBooks for both federal and California taxes.&rdquo; The diagnosis the before-answer skipped.</p>
+        <p class="note"><b>the exact steps</b>The bank account, IRS Form 8655, the two California power-of-attorney forms. A to-do list, not a tour.</p>
+        <p class="note"><b>bounded</b>It says what happens after signing and when setup will show complete. No guessing past the account data.</p>
       </div>
     </div>
-  </section>
 
-  <section class="wrap part" id="outcome" aria-labelledby="outcome-h">
-    <p class="kicker mono part-head"><span class="knum">08</span><span>Outcome</span></p>
-    <h2 id="outcome-h">The payroll agent moved from article retrieval toward account-aware diagnosis.</h2>
     <div class="prose">
-      <p>The work helped preserve the quality of the legacy payroll support experience inside a new agentic surface. Instead of sending customers to inspect settings on their own, the agent could read setup state, identify missing authorizations, explain jurisdiction-specific gaps, and hand off with context when expert help was the right next step.</p>
-    </div>
-
-    <figure class="payroll-shot payroll-single-shot payroll-outcome-shot">
-      <figcaption><span class="mono">After</span><b>Personalized setup diagnosis</b></figcaption>
-      <img src="assets/work/payroll-after-tax-setup.png" alt="After screenshot of Intuit Intelligence giving account-aware payroll tax setup guidance">
-      <p>The improved response starts from the customer&rsquo;s actual setup state, names the federal and state actions required, and gives a specific next step instead of a generic article summary.</p>
-    </figure>
-
-    <div class="stats" role="list" aria-label="Payroll case study outcomes">
-      <div role="listitem"><span class="num">75+</span><span class="lab">personalized payroll flows protected during the DA-to-Intuit-Intelligence migration</span></div>
-      <div role="listitem"><span class="num">21 / 143 / 79</span><span class="lab">diagnostic cases, root causes, and handoff triggers in one payroll tax sample set</span></div>
-      <div role="listitem"><span class="num">Reusable</span><span class="lab">generator, validation, and UAT loop for future agent behavior work</span></div>
-    </div>
-
-  </section>
-
-  <section class="wrap part" id="learnings" aria-labelledby="learnings-h">
-    <p class="kicker mono part-head"><span class="knum">09</span><span>What changed in my practice</span></p>
-    <h2 id="learnings-h">Agent design is where product judgment becomes executable behavior.</h2>
-    <div class="prose">
-      <p>Payroll made the core agentic design problem concrete. Product teams had already made important decisions about what should be solved with data, what should be explained, what should be handed to a person, and what should never be guessed. My work was turning those decisions into behavior the model could reliably perform.</p>
-      <p>The operating system was repeatable: define the job, generate structured diagnostic ground truth, validate with humans, translate into skill rules, test, and refine.</p>
+      <p class="opens">Payroll changed what I think the design job is. The design surface isn&rsquo;t the dialog anymore. It&rsquo;s what the system checks before it speaks and what a right answer has to contain. Producing that at expert quality and machine volume is the job now.</p>
     </div>
   </section>
 
+  <!-- ================= next case ================= -->
   <section class="wrap nextcase" aria-label="Next case">
-    <p class="kicker mono part-head"><span class="knum">Next</span><span>Case No. 04</span></p>
-    <p><a href="quality-program.html">The Quality Program</a>: the generator pattern, human review loop, and eval systems behind trustworthy agent behavior.</p>
+    <p class="kicker mono part-head"><span class="knum">Next</span><span>The Quality Program</span></p>
+    <p>The grading discipline in this case didn&rsquo;t start here. <a href="quality-program.html">The Quality Program</a> is where the eval systems, review loops, and golden-dataset standards behind it were built.</p>
   </section>
 
 </main>
