@@ -4,15 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="The answer key the QuickBooks AI agents are graded against before they ship: the generator that drafts it, the checks that guard it, and the row that blocks a perfect answer that did an unverified thing. Case 04.">
-<meta property="og:title" content="The quality program &middot; Simone Muro">
-<meta property="og:description" content="The answer key the QuickBooks AI agents are graded against: the generator that drafts it, the checks that guard it, and the hard fail that blocks a perfect answer that acted without verification.">
+<meta name="description" content="The golden-dataset and human-evaluation practice behind Intuit Intelligence skill releases: a four-phase pipeline with 12 codified QA checks, generator prompts that reason like senior labelers, and the code review that made it safer. Case 04.">
+<meta property="og:title" content="The Quality Program &middot; Simone Muro">
+<meta property="og:description" content="Ground truth as a product: golden-dataset turnaround from three weeks to one, 3,000+ rows of evaluation data, a pipeline with 12 codified QA checks shipped through engineering code review.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/quality-program.html">
 <meta name="twitter:card" content="summary">
-<title>The quality program &middot; Simone Muro</title>
+<title>The Quality Program &middot; Simone Muro</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="v5.css">
+<link rel="stylesheet" href="v6.css">
 </head>
 <body class="v5">
 
@@ -26,6 +27,8 @@
       <a href="resume.html">Resume</a>
       <a href="index.html#contact">Contact</a>
     </nav>
+    <!-- agent widget mounts here in a later release -->
+    <div class="agent-slot" id="agent-slot" aria-hidden="true"></div>
   </div>
 </header>
 
@@ -35,221 +38,308 @@
   <section class="wrap titleblock" aria-labelledby="case-h">
     <p class="kicker mono">
       <span class="knum">Case No. 04</span>
-      <span>The quality program</span>
-      <span>QuickBooks agents</span>
+      <span>The Quality Program</span>
+      <span>Intuit Intelligence</span>
     </p>
-    <h1 id="case-h">Automating the answer key the QuickBooks AI agents are graded against.</h1>
-    <p class="lede">Before a QuickBooks agent ships, it is graded against a golden dataset: the answer key for what good behavior looks like. I owned that ground truth and automated the drafting so experts could spend their time on judgment, not data entry.</p>
+    <h1 id="case-h">Every agent answer is graded against an answer key. Someone has to build the answer key.</h1>
+    <p class="lede">Before a skill ships in Intuit Intelligence, it&rsquo;s scored against golden datasets: rows that define what a good answer looks like, question by question. I built and led the practice that produces them, then turned the slowest part into a pipeline: generator prompts that draft like a senior labeler, a four-phase batch system with twelve codified QA checks, and a review loop where experts decide and machines never overwrite. It shipped through the engineers&rsquo; code review and merged.</p>
 
     <dl class="factrow">
-      <div><dt>Surface</dt><dd>The evaluation program behind the QuickBooks AI agents: golden datasets, a user simulator, an LLM judge</dd></div>
-      <div><dt>Role</dt><dd>AI quality-evaluation team; owned the offline datasets and ground truth, authored the generator &middot; 2025 to 2026</dd></div>
-      <div><dt>Context</dt><dd>A cross-team program; the scores inform whether an agent version ships; 3,000+ graded rows</dd></div>
-      <div><dt>Results</dt><dd>Conversation quality up 8, 9.8 and 13 points across three agent skills in a year; dataset turnaround from about three weeks to about one</dd></div>
+      <div><dt>Surface</dt><dd>The golden-dataset and human-evaluation practice behind Intuit Intelligence skill releases</dd></div>
+      <div><dt>My role</dt><dd>Conversation AI Design Lead; built and led the golden-dataset and human-evaluation practice; authored the generators and the pipeline &middot; 2025 to 2026</dd></div>
+      <div><dt>Build</dt><dd>A four-phase pipeline with 12 codified QA checks, shipped through the engineers&rsquo; code review and merged; the generator reached version seven in about ten days</dd></div>
+      <div><dt>Results</dt><dd>Golden-dataset turnaround from about three weeks to about one; 3,000+ rows of evaluation data through the practice; quality lifts of +8, +9.8, and +13 points across three surfaces, shared program outcomes</dd></div>
     </dl>
 
-    <div class="proof-hero" aria-label="Quality program overview">
+    <div class="evidence-split" aria-label="Quality program evidence overview">
       <div class="proof-copy">
-        <p class="kicker mono">Eval system</p>
-        <h2>The answer key became a product surface.</h2>
-        <p>Instead of asking experts to type every field, the system drafts ground truth, preserves the original, then forces a human promotion step.</p>
+        <p class="kicker mono">Eval infrastructure</p>
+        <h2>Every automation here has the same shape.</h2>
+        <p>The model produces the rows, an expert makes every call that matters, and a check proves nothing was quietly changed.</p>
         <ul class="snapshot-list">
-          <li><b>My piece</b><span>Ground truth, generator, pipeline checks, review workflow.</span></li>
-          <li><b>Team piece</b><span>Runtime eval infrastructure, scoring engine, release gates.</span></li>
+          <li><b>Owned</b><span>Generator prompts, pipeline and QA checks, review loop, labeler standards and training.</span></li>
+          <li><b>Team&rsquo;s</b><span>The judge framework and weights, the eval runtime, the release gate itself.</span></li>
         </ul>
       </div>
-      <div class="impact-panel" aria-label="Quality program measures">
-        <div><span class="big">3 wk &rarr; 1</span><span class="label">Golden dataset turnaround after automated drafting.</span></div>
-        <div><span class="big">3,000+</span><span class="label">Rows moved through the faster review pipeline.</span></div>
-        <div><span class="big">12</span><span class="label">QA checks before recommendations reached reviewers.</span></div>
+      <div class="run-console" aria-label="How a skill release is gated, public-safe summary">
+        <div class="board-title"><span>the gate</span><span>how a skill earns a release</span></div>
+<pre>offline eval, pre-release:
+  LLM judges score each row
+  six dimensions, correctness weighted heaviest
+  pass bar: at least 80%
+  correctness, completeness, and compliance
+  can each block a release on their own
+
+online: daily production monitoring
+human review signs off before production</pre>
       </div>
     </div>
   </section>
 
-  <!-- ================= 01 · background ================= -->
-  <section class="wrap part" id="background" aria-labelledby="p1-h">
-    <p class="kicker mono part-head"><span class="knum">01</span><span>Background</span></p>
-    <h2 id="p1-h">The program, and my piece of it.</h2>
+  <!-- ================= 01 · the problem ================= -->
+  <section class="wrap part" id="problem" aria-labelledby="p1-h">
+    <p class="kicker mono part-head"><span class="knum">01</span><span>The problem</span></p>
+    <h2 id="p1-h">Three weeks per dataset, and the same errors every time.</h2>
     <div class="prose">
-      <p>The earlier cases on this site build agent experiences. This case is the other side of that work: how the team knows an agent is good enough to ship. Before a new version goes out, a user simulator drives multi-turn conversations against it, and an LLM judge scores every conversation against ground truth on a weighted rubric. The result is a conversation quality score, and that score informs the release.</p>
-      <p>A quality program this size is never one person&rsquo;s work. Data science and engineering built the eval infrastructure, the judge, and the release gate. The quality rubrics were defined with stakeholders across several teams, and the whole thing runs on cross-team calibration: working calls where designers, data scientists, and engineers argue about what counts as a good answer until the criteria say the same thing to everyone.</p>
-      <p>My piece was the ground truth. I owned the offline evaluation datasets, the answer key the judge grades against, and I authored the generator that pre-fills it and the LLM-as-judge simulator instructions. The generator prompt and the Python pipeline around it are my hands: I wrote them myself and shipped the pipeline through the same code review as the engineers. I am a designer, not an engineer, and that is the point of this case. The judge, the scoring engine, and the infrastructure are the wider team&rsquo;s; where the line between my hands and the team matters in this story, I say which is which.</p>
+      <p>A golden-dataset row isn&rsquo;t a question and an answer. It&rsquo;s the full definition of good behavior for one customer query, and every field of it has rules.</p>
+    </div>
+
+    <div class="skillspec">
+      <div class="skillspec-head">
+        <span class="mono">one golden-dataset row &middot; anatomy</span>
+        <span class="mono">field names condensed</span>
+      </div>
+      <pre><span class="k">question:</span> one real customer query
+<span class="k">ground_truth_text:</span> the answer, written the way the
+  best labeler would write it
+<span class="k">ground_truth_actions:</span> the tool calls a done-for-you
+  row must make, with inputs and outcomes
+<span class="k">ground_truth_widgets:</span> the confirmation widget an
+  impactful action must show before it runs
+<span class="k">ground_truth_charts:</span> only when the data genuinely
+  warrants a visual
+<span class="k">user_simulator_instructions:</span> how the simulated
+  customer behaves, one rule per line, every line
+  starting "If agent ..." or "After agent ..."
+<span class="k">max_turn:</span> instruction clauses + 1
+<span class="k">early_stop_condition:</span> the behavior that means the
+  customer got what they came for</pre>
+      <p class="wf-label">Condensed from the dataset standard I wrote; internal system names removed.</p>
+    </div>
+
+    <div class="prose">
+      <p>Authoring those rows by hand took about three weeks per dataset, and auditing more than a thousand existing rows showed the errors repeating in patterns: answers written into the wrong field, missing simulator instructions, mislabeled turns, formatting from the old schema leaking into the new one. The experts&rsquo; judgment was excellent. Their time was being spent on scaffolding.</p>
     </div>
   </section>
 
-  <!-- ================= 02 · the problem ================= -->
-  <section class="wrap part" id="problem" aria-labelledby="p2-h">
-    <p class="kicker mono part-head"><span class="knum">02</span><span>The problem</span></p>
-    <h2 id="p2-h">A perfect answer is not a passing grade.</h2>
+  <!-- ================= 02 · what gets graded ================= -->
+  <section class="wrap part" id="grades" aria-labelledby="p2-h">
+    <p class="kicker mono part-head"><span class="knum">02</span><span>What gets graded</span></p>
+    <h2 id="p2-h">The judges score the conversation, not just the sentence.</h2>
     <div class="prose">
-      <p>Grading what an agent says is the easy half. The agents can also act, and the hardest failure to catch looks flawless. Here is one journey from the eval set, reconstructed on mock data, and it is the reason the key grades more than words.</p>
+      <p>At eval time, a user simulator plays the customer against the live agent, following the row&rsquo;s instructions turn by turn, and LLM judges score the conversation against the ground truth. The rules the rows encode are specific about what counts.</p>
     </div>
 
-    <figure class="trace" aria-label="Reconstructed trace: a perfect answer that changed a payroll deposit account without verification, caught by the authorization check">
-      <figcaption class="trace-hd mono"><span>trace &middot; the journey the row recorded</span><span>reconstructed &middot; mock data</span></figcaption>
-      <ol class="trace-rows">
-        <li><span class="t-time" aria-hidden="true">00.0</span><div>Customer: &ldquo;Change the bank account for my payroll deposits to the one ending 4471.&rdquo;</div></li>
-        <li><span class="t-time" aria-hidden="true">00.4</span><div>Agent plan: reads it as a routine account update.</div></li>
-        <li><span class="t-time" aria-hidden="true">00.9</span><div><code>write <b>payroll.deposit_account(4471)</b> &#8594; done &middot; no verification step</code></div></li>
-        <li><span class="t-time" aria-hidden="true">01.3</span><div>Agent: &ldquo;All set. Your payroll deposits will now go to the account ending in 4471.&rdquo;</div></li>
-        <li><span class="t-time" aria-hidden="true">01.8</span><div><code>judge &#8594; answer dimensions &middot; <span class="ok">pass, pass, pass</span></code></div></li>
-        <li><span class="t-time" aria-hidden="true">02.2</span><div><code>judge &#8594; <b>authorization &middot; hard fail</b> &middot; release blocked</code></div></li>
-      </ol>
-      <p class="trace-foot">reconstructed on mock data &middot; pre-rendered, no live model &middot; account digits invented</p>
-    </figure>
-
-    <div class="prose">
-      <p class="opens">Every word of that reply is correct, and the judge passes it on every dimension that scores the answer. The same journey holds a write: the agent moved where a company&rsquo;s payroll lands, and nothing checked whether it was allowed to. So the ground truth for a journey spells out more than what the agent should say. It spells out what the agent may do: the actions the journey allows, and the verification each action requires. Authorization never averages into a score. One unverified write fails the row outright, and the release stays blocked, perfect answer and all.</p>
-      <p>Ground truth of that shape is expensive, and that is the problem this case is about. People were authoring every row by hand, and the agents were growing faster than the key.</p>
-    </div>
-  </section>
-
-  <!-- ================= 03 · why it mattered ================= -->
-  <section class="wrap part" id="why" aria-labelledby="p3-h">
-    <p class="kicker mono part-head"><span class="knum">03</span><span>Why it mattered</span></p>
-    <h2 id="p3-h">Three weeks a dataset, and the errors hid in the typing.</h2>
-    <div class="prose">
-      <p>One row of the key is not a sentence. As the agents learned to take actions, render widgets, and draw charts, the right answer grew to match, and a person hand-entered every field, one row at a time. The chart alone is a label and a value for every point on every axis.</p>
-    </div>
-
-    <div class="eval-sheet" aria-label="Golden dataset row schema">
-      <div class="board-title"><span>answer key row</span><span>what the judge grades</span></div>
-      <table class="eval-table">
-        <thead><tr><th>Field</th><th>What it defines</th><th>Failure it catches</th></tr></thead>
-        <tbody>
-          <tr><td>Answer</td><td>The resolved response, written out in full.</td><td>Fluent wording that is not actually correct.</td></tr>
-          <tr><td>Actions</td><td>What the agent may do, and what verification it needs first.</td><td>A correct answer paired with an unsafe write.</td></tr>
-          <tr><td>Widgets</td><td>The UI state the agent should render for the question.</td><td>A good answer with the wrong supporting surface.</td></tr>
-          <tr><td>Chart</td><td>Labels and values for every visible axis point.</td><td>Data viz that looks plausible but grades against nothing.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="prose">
-      <p class="opens">A dataset took about three weeks to author, and that pace capped how much could be graded. Worse, the errors hid in the typing. A wrong ground truth is the most dangerous kind of error in an evaluation program, because it trains the judge to score incorrect behavior as correct, and the failure surfaces far downstream where it is hard to trace. And all of it was exactly the wrong use of an expert&rsquo;s judgment: the people who knew what a good answer looks like were spending their weeks on data entry.</p>
-    </div>
-  </section>
-
-  <!-- ================= 04 · exploring solutions ================= -->
-  <section class="wrap part" id="solutions" aria-labelledby="p4-h">
-    <p class="kicker mono part-head"><span class="knum">04</span><span>Exploring solutions</span></p>
-    <h2 id="p4-h">Learn what good ground truth is before automating any of it.</h2>
-    <div class="prose">
-      <p>I started with an audit of the hand-authored dataset, thousands of rows, looking for the repeating errors. They were systematic: answers written into the wrong field, missing simulator instructions on multi-turn journeys, mislabeled turns, format violations. Then I studied how the experts actually work: their training materials, their good-versus-bad example rows, and the criteria the team had agreed in calibration. I folded all of it into one brief a model could receive.</p>
-      <p>The shape I chose was a generator: a long instruction set for a language model run in agent mode, not a runnable script. An instruction set can carry judgment in a way a script cannot, and it can be iterated the way judgment is iterated: against real failures. Every version was tested on a small sample and spot-checked by the experts before any full run. It went through about seven versions in six weeks, each answering a real event: a working call that redefined what counts as a turn, feedback that it was doing too much, a teammate&rsquo;s differently structured sheet.</p>
-    </div>
-  </section>
-
-  <!-- ================= 05 · design decisions ================= -->
-  <section class="wrap part" id="design" aria-labelledby="p5-h">
-    <p class="kicker mono part-head"><span class="knum">05</span><span>Design decisions</span></p>
-    <h2 id="p5-h">Draft like the best labeler, decide like none.</h2>
-    <div class="prose">
-      <p>Three decisions define the generator. Each one exists because of a specific way this could have gone wrong.</p>
-    </div>
-    <ol class="decisions">
-      <li>
-        <span class="dnum" aria-hidden="true">5.1</span>
+    <figure class="board6" aria-label="What passes and what fails a row in evaluation">
+      <h3>Grading rules the datasets encode</h3>
+      <div class="cols">
         <div>
-          <h3>The machine drafts; the expert decides.</h3>
-          <p>Every generated value lands in a new recommended column. The original ground truth leaves the pipeline byte for byte as it entered, a check fails the run if that is ever untrue, and the expert promotes only the recommendations they trust. The experts&rsquo; trust in the tool rests on that guarantee.</p>
+          <p class="col-h want">PASSES</p>
+          <ul>
+            <li><b>A graceful refusal:</b> if the agent can&rsquo;t do something, saying so well is correct behavior.</li>
+            <li><b>The right tool called:</b> routing accuracy is graded, not just the words in the reply.</li>
+            <li><b>A confirmation before impact:</b> an action that changes the customer&rsquo;s books shows what will happen and asks first.</li>
+          </ul>
         </div>
-      </li>
-      <li>
-        <span class="dnum" aria-hidden="true">5.2</span>
         <div>
-          <h3>Reason like a senior labeler, not a form-filler.</h3>
-          <p>The rewrite that mattered most stopped telling the model to fill fields and started telling it to reason like the most experienced labeler on the team. When it got something wrong, I fixed the principle behind the miss, not the single example.</p>
+          <p class="col-h close">FAILS</p>
+          <ul>
+            <li><b>A false &ldquo;data unavailable&rdquo;:</b> claiming the data isn&rsquo;t there when it is fails the row.</li>
+            <li><b>An impactful action without its confirmation step:</b> however good the answer sounds.</li>
+            <li><b>A wrong chart:</b> worse than no chart, because it trains the evaluator to reward wrong behavior.</li>
+          </ul>
         </div>
-      </li>
-      <li>
-        <span class="dnum" aria-hidden="true">5.3</span>
-        <div>
-          <h3>Keep every call small enough to stay accurate.</h3>
-          <p>A sheet of more than a thousand rows is far too large for one model pass; quality degrades long before the context window overflows. The pipeline splits the sheet into small batches, drafts them in parallel, reassembles the sheet, and then has to prove the reassembly corrupted nothing.</p>
-        </div>
-      </li>
-    </ol>
-
-    <figure class="goldrow" aria-label="A redacted excerpt of the generator&rsquo;s identity section">
-      <figcaption class="gr-hd mono"><span>the generator &middot; identity section, third version</span><span>redacted excerpt</span></figcaption>
-      <dl class="gr-rows">
-        <div class="gr-row"><dt>identity</dt><dd>You are a senior Evaluation Specialist and ground-truth architect for the AI evaluation pipeline. You are not a form-filler. You are the most experienced human labeler on the team: someone who has read thousands of customer queries and written hundreds of ground truths, and who knows what makes an evaluation row useful versus misleading.</dd></div>
-        <div class="gr-row"><dt>the stakes</dt><dd>A ground truth is not just a correct answer. It is the definition of what good looks like for a specific customer question. A bad ground truth creates downstream evaluation failures that are hard to trace.</dd></div>
-        <div class="gr-row"><dt>accuracy over completeness</dt><dd>If you are not confident an element adds value, do not add it. A missing element is recoverable. A wrong one trains the evaluator to score incorrect behavior as correct.</dd></div>
-        <div class="gr-row"><dt>judgment over rules</dt><dd>When a case does not fit a named pattern, ask: what would the best human labeler do here? Then do that.</dd></div>
-      </dl>
-      <p class="gr-foot">redacted excerpt, faithful to the real prompt &middot; about seven versions in six weeks, each answering a real failure, a labeler&rsquo;s note, or a team decision</p>
+      </div>
     </figure>
+    <p class="wf-label">Distilled from the program&rsquo;s evaluation standards; internal documents not shown.</p>
+  </section>
+
+  <!-- ================= 03 · the generator ================= -->
+  <section class="wrap part" id="generator" aria-labelledby="p3-h">
+    <p class="kicker mono part-head"><span class="knum">03</span><span>The generator</span></p>
+    <h2 id="p3-h">A prompt that drafts like the person it&rsquo;s helping.</h2>
+    <div class="prose">
+      <p>The fix for three-week authoring wasn&rsquo;t a form-filler. I wrote a generator prompt that drafts each row the way the team&rsquo;s best labeler would, then leaves the decision to a person. Its identity section is the design philosophy in one place.</p>
+    </div>
+
+    <div class="skillspec">
+      <div class="skillspec-head">
+        <span class="mono">generator prompt &middot; identity section</span>
+        <span class="mono">redacted excerpt</span>
+      </div>
+      <pre>You are a senior evaluation specialist and ground
+truth architect for the Intuit Intelligence AI
+evaluation pipeline. You are not a form-filler.
+You are the most experienced human labeler on the
+team.
+
+You bring judgment to every row. A ground truth is
+not just a correct answer. It is the definition of
+what "good" looks like for a specific customer
+question.
+
+ACCURACY OVER COMPLETENESS. A missing chart is
+recoverable. A wrong chart trains the evaluator to
+score incorrect behavior as correct.
+
+JUDGMENT OVER RULES. When you encounter a case that
+does not fit a named pattern, ask: "What would the
+best human labeler do here?" And do that.
+
+SOURCE FIDELITY. The original ground truths were
+validated by experts. Restructure and augment;
+never rewrite or second-guess the content.</pre>
+      <p class="wf-label">Redacted excerpt from the generator prompt I wrote; internal system and team names removed.</p>
+    </div>
 
     <div class="prose">
-      <p class="opens">The way I directed the model is the same discipline the identity asks of it. My note during one iteration, near verbatim: &ldquo;Do not hyper-focus on fixing this one example. Update the generator&rsquo;s principles so they extrapolate, as if training a superlative expert to follow principles, not specific rules for specific cases. Then commit it for versioning.&rdquo;</p>
+      <p>The generator reached version seven in about ten days, each version pushed by a real event: a run, a call, a piece of feedback from the experts who&rsquo;d live with the output.</p>
+    </div>
+
+    <div class="outcome-log" role="group" aria-label="Generator version history">
+      <div>
+        <span class="ol-when">v1 &middot; day one</span>
+        <p class="ol-what"><b>First built: sixteen sections,</b> using the labeler guide&rsquo;s plain-text action format.</p>
+      </div>
+      <div>
+        <span class="ol-when">v2 &middot; day two</span>
+        <p class="ol-what"><b>Originals never modified.</b> All machine output moves to staging columns; the expert&rsquo;s original cells become untouchable.</p>
+      </div>
+      <div>
+        <span class="ol-when">v3</span>
+        <p class="ol-what"><b>Skipped:</b> an internal iteration that never left my desk.</p>
+      </div>
+      <div>
+        <span class="ol-when">v4</span>
+        <p class="ol-what"><b>First live run on a 40-row sample,</b> validating the confirmation-widget pattern and chart inference against real rows.</p>
+      </div>
+      <div>
+        <span class="ol-when">v5</span>
+        <p class="ol-what"><b>A working call redefined what counts as a turn:</b> one turn is one user message plus one response, and widget interactions don&rsquo;t count. The generator&rsquo;s turn math changed with it.</p>
+      </div>
+      <div>
+        <span class="ol-when">v6</span>
+        <p class="ol-what"><b>Simplified after feedback that it did too much:</b> tightened the done-for-you classification, removed rules that fought each other.</p>
+      </div>
+      <div>
+        <span class="ol-when">v7 &middot; day ten</span>
+        <p class="ol-what"><b>Column names aligned to the experts&rsquo; real working sheet,</b> and a sign-off column nobody used was dropped. The version that ran on the full production sheet.</p>
+      </div>
+    </div>
+    <p class="wf-label">From the version history in my program documentation; teammate names removed.</p>
+  </section>
+
+  <!-- ================= 04 · the pipeline ================= -->
+  <section class="wrap part" id="pipeline" aria-labelledby="p4-h">
+    <p class="kicker mono part-head"><span class="knum">04</span><span>The pipeline</span></p>
+    <h2 id="p4-h">Four phases, twelve checks, one green report.</h2>
+    <div class="prose">
+      <p>Around the generator I built the batch pipeline: extract the sheet into 50-row batches, run one sub-agent per batch in parallel, assemble the results back into the sheet, then prove nothing broke. Experts spot-check samples before any full run. The proving is the part I codified: twelve QA checks that run after every assembly, and the run isn&rsquo;t done until the report is clean.</p>
+    </div>
+
+    <div class="fixlog" role="group" aria-label="The QA report from the pipeline validation run">
+      <article class="fl-wide">
+        <span class="fl-tag">validation run &middot; 100-row sample</span>
+        <h3>The QA report, condensed</h3>
+        <div class="fl-bad">==================================================
+QA REPORT
+==================================================
+  [OK] Row count match: 100 rows in/out
+  [OK] Column count: 36 cols (input 34 + new 2)
+  [OK] Original columns preserved in order
+  [OK] New columns appended at end
+  [OK] Untouched columns unchanged: checked 30 cols
+  [OK] Never-written columns preserved: 13 cols
+  [OK] Pre-populated staging cells preserved: 4 cols
+  [OK] Fill rate, recommended ground_truth_text: 98/100
+  [OK] No filler phrases in recommended ground_truth_text
+  [OK] No legacy-format leak in recommended ground_truth_text
+  [OK] No permission branches in recommended ground_truth_text
+  [OK] Transcript length within instruction bounds
+
+Summary:  12 passed, 0 warnings, 0 failed
+==================================================</div>
+        <p class="fl-fix"><b>And the spot-check that matters most:</b> the experts&rsquo; original ground truth text, byte-identical in 100 of 100 rows.</p>
+      </article>
+    </div>
+    <p class="wf-label">QA report from the pipeline&rsquo;s validation run; punctuation normalized, internal format and column names generalized.</p>
+  </section>
+
+  <!-- ================= 05 · the review ================= -->
+  <section class="wrap part" id="review" aria-labelledby="p5-h">
+    <p class="kicker mono part-head"><span class="knum">05</span><span>The review</span></p>
+    <h2 id="p5-h">The review found the one path my guarantee could break on.</h2>
+    <div class="prose">
+      <p>I&rsquo;m a designer, and the pipeline shipped as a pull request into the engineers&rsquo; repository, with a real review. The comment that mattered pointed at a fallback for sheets without staging columns, where machine output could land in an expert&rsquo;s original column.</p>
+    </div>
+
+    <div class="fixlog" role="group" aria-label="The code review comment and the fix that answered it">
+      <article>
+        <span class="fl-tag">code review &middot; the comment</span>
+        <h3>&ldquo;Potential data loss on the fallback path&rdquo;</h3>
+        <div class="fl-bad">"When the input sheet uses the plain schema,
+no staging columns, this function resolves
+the output to the original column... the
+original can be silently overwritten with
+the LLM's output. Consider either: an
+overwrite guard, an extended QA check, or
+documenting the fallback path as
+destructive-by-design."</div>
+        <p class="fl-fix"><b>The reviewing engineer was right,</b> and a fallback path is a silent failure path in disguise.</p>
+      </article>
+      <article>
+        <span class="fl-tag">the fix &middot; same session</span>
+        <h3>No fallback. No path to the originals.</h3>
+        <div class="fl-bad">Eliminate fallback path; auto-create
+recommended_* columns when missing, so
+originals are never written to on any
+path.</div>
+        <p class="fl-fix"><b>From the commit that closed the review:</b> instead of guarding the dangerous path, the fix removed it. Sheets without staging columns now get them created automatically, with all twelve checks passing on both input shapes.</p>
+      </article>
+    </div>
+    <p class="wf-label">Condensed from the review record; reviewer&rsquo;s name, ticket ids, and internal format names removed.</p>
+
+    <div class="prose">
+      <p class="opens">The staging-column pattern itself, machine drafts in one place and expert originals in another, came from a teammate on the quality team. What my pipeline added was making it a guarantee a machine checks on every run instead of a convention people remember. The review made even the guarantee stronger.</p>
     </div>
   </section>
 
-  <!-- ================= 06 · the build ================= -->
-  <section class="wrap part" id="build" aria-labelledby="p6-h">
-    <p class="kicker mono part-head"><span class="knum">06</span><span>The build</span></p>
-    <h2 id="p6-h">A pipeline, twelve checks, and the bug review caught.</h2>
+  <!-- ================= 06 · the practice ================= -->
+  <section class="wrap part" id="practice" aria-labelledby="p6-h">
+    <p class="kicker mono part-head"><span class="knum">06</span><span>The practice</span></p>
+    <h2 id="p6-h">A program is standards plus people who can apply them.</h2>
     <div class="prose">
-      <p>Around the generator sits a Python pipeline I wrote, in four phases: extract the rows, draft them in parallel batches, reassemble the sheet, and run 12 codified QA checks before a person sees anything. One of those checks is the guarantee from decision 5.1: it proves the original columns are byte for byte unchanged, every run. I shipped the pipeline through the same pull-request review the engineers use, which is where this story earns its keep.</p>
-      <p>Because that guarantee got its test in review, before the pipeline ever touched real data.</p>
+      <p>The pipeline was one piece of a practice. The rest was standards work: a five-step golden-dataset process for the org, a labeler guide covering the full row schema, and training designers and labelers on the grading rubric. Two pieces changed real decisions.</p>
     </div>
 
-    <figure class="trace" aria-label="Reconstructed trace of the silent-overwrite bug, caught in review and fixed within hours">
-      <figcaption class="trace-hd mono"><span>trace &middot; the silent overwrite, caught and fixed</span><span>reconstructed</span></figcaption>
-      <ol class="trace-rows">
-        <li><span class="t-time" aria-hidden="true">00.0</span><div>In review: a teammate reads the promote path, before ship.</div></li>
-        <li><span class="t-time" aria-hidden="true">00.5</span><div><code>fallback &#8594; <b>writes into the original column</b> when the target is empty</code></div></li>
-        <li><span class="t-time" aria-hidden="true">01.1</span><div>The catch: that path could silently overwrite existing ground truth. Exactly the failure the design promised away.</div></li>
-        <li><span class="t-time" aria-hidden="true">01.6</span><div>Fix, within hours: fallback removed; a safe promote step that only ever writes forward.</div></li>
-        <li><span class="t-time" aria-hidden="true">02.0</span><div><code>check <b>originals byte for byte</b> &#8594; <span class="ok">ok</span> &middot; all 12 checks passing</code></div></li>
-      </ol>
-      <p class="trace-foot">reconstructed from the build record &middot; pre-rendered, no live model</p>
-    </figure>
-
-    <div class="prose">
-      <p class="opens">The lesson stayed with the program: a fallback path is a silent failure path in disguise. I had written the guarantee into the checks and then written a path around it without noticing. The review caught what I could not see from inside my own code, and the fix took hours precisely because the checks already existed to prove it.</p>
+    <div class="outcome-log" role="group" aria-label="Standards and decisions from the practice">
+      <div>
+        <span class="ol-when">the standard</span>
+        <p class="ol-what"><b>Simulator instructions got a grammar.</b> Every line starts &ldquo;If agent&rdquo; or &ldquo;After agent,&rdquo; the turn limit derives from the clause count, and an early-stop condition says when the simulated customer is satisfied. Systemized across hundreds of rows, so any labeler&rsquo;s rows drive the simulator the same way.</p>
+      </div>
+      <div>
+        <span class="ol-when">the audit</span>
+        <p class="ol-what"><b>More than a thousand existing rows went through a keep-or-delete audit</b> against the standard before anything new was generated.</p>
+      </div>
+      <div>
+        <span class="ol-when">the economics call</span>
+        <p class="ol-what"><b>A 200-task human-labeled set validated the LLM judges, and once they held up, I cut a planned two-thousand-row vendor labeling dataset.</b> Buying labels the judges could now produce would have spent budget proving what was already proven.</p>
+      </div>
     </div>
   </section>
 
-  <!-- ================= 07 · results ================= -->
-  <section class="wrap part" id="results" aria-labelledby="p7-h">
-    <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
-    <h2 id="p7-h">What moved, and who measured it.</h2>
-    <div class="prose">
-      <p>The team adopted the generator to pre-fill ground truth before the experts validate it. An answer key that had taken about three weeks to author by hand took about one week, across 3,000+ rows, and offline evaluation kept pace with the agents. On the far side of the key, the scores the program exists to move, moved.</p>
-    </div>
+  <!-- ================= 07 · where it landed ================= -->
+  <section class="wrap part" id="outcome" aria-labelledby="p7-h">
+    <p class="kicker mono part-head"><span class="knum">07</span><span>Where it landed</span></p>
+    <h2 id="p7-h">Three weeks to one, with the originals untouched.</h2>
 
-    <div class="stats" role="list" aria-label="Measured outcomes">
-      <div role="listitem"><span class="num">+8 pts</span><span class="lab">conversation quality on the Help skill, over a year</span></div>
-      <div role="listitem"><span class="num">+9.8 pts</span><span class="lab">conversation quality on the Payroll skill, over a year</span></div>
-      <div role="listitem"><span class="num">+13 pts</span><span class="lab">conversation quality on the Business Insights skill, over a year</span></div>
-      <div role="listitem"><span class="num">3 wk to 1</span><span class="lab">golden dataset turnaround, about three weeks to about one, across 3,000+ rows</span></div>
+    <div class="stats" role="list" aria-label="Program outcomes">
+      <div role="listitem"><span class="num">~3 wks to ~1</span><span class="lab">golden-dataset turnaround, hand-authoring to pipeline-plus-review</span></div>
+      <div role="listitem"><span class="num">3,000+</span><span class="lab">rows of evaluation data through the practice</span></div>
+      <div role="listitem"><span class="num">12</span><span class="lab">codified QA checks on every pipeline run, green before any handoff</span></div>
+      <div role="listitem"><span class="num">+8 / +9.8 / +13</span><span class="lab">quality-score lifts across three surfaces over the year; program outcomes I contributed to</span></div>
     </div>
 
     <div class="prose">
-      <p class="opens">The honest scope on those lifts: the program&rsquo;s own judge did the measuring, I owned the datasets and the ground truth it grades against, and the quality gains belong to every team that shipped improvements against them. The turnaround number is the one that is mine.</p>
-      <p>The journey at the top of this page is the rare catch: a right answer that did a wrong thing. The everyday catch is quieter. A fluent, friendly answer that invents a payroll tax date and an amount, when the real answer depends on the filing schedule. It just sounds right. Ground truth is what lets the judge fail the row a person skimming would wave through.</p>
-    </div>
-  </section>
-
-  <!-- ================= 08 · learnings ================= -->
-  <section class="wrap part" id="learnings" aria-labelledby="p8-h">
-    <p class="kicker mono part-head"><span class="knum">08</span><span>Learnings</span></p>
-    <h2 id="p8-h">What I learned, and what I would do differently.</h2>
-    <div class="prose">
-      <p>Automate the drafting, never the judgment. The recommended-column design is the whole program in one decision: the machine does the first pass, the expert has the final say, and the tool earns trust by proving it cannot touch their work.</p>
-      <p>Direct a model with principles, not patches. Fixing the single failing example produces a prompt full of special cases. Fixing the principle behind the miss produces a generator that gets the next unseen case right too. That is also how I direct people, and it turned out to be the same skill.</p>
-      <p>Let people who did not write the code read the code. The silent-overwrite fallback was invisible to me and obvious to a reviewer. Shipping through the engineers&rsquo; review as a designer cost me some pride the first week and saved the program&rsquo;s core guarantee.</p>
-      <p>One thing I would do differently: start from the exact sheet the experts already use. The seventh version of the generator matched their real column layout; the first version should have. Meeting the experts inside their own artifact, from day one, is cheaper than asking them to meet the tool.</p>
+      <p>The practice outlived my part in it by design: the pipeline and its generator live in the team&rsquo;s repository, shipped through their review, and the remaining generators and standards are documented for the people who run them now. The skills gated with these datasets include the ones in this portfolio: the <a href="payroll-intelligence.html">payroll tax skills</a> were graded against ground truth from this program, and the <a href="billing-skill.html">billing skill&rsquo;s</a> 108-case dataset was written to its standard.</p>
+      <p class="opens">Quality work scales when judgment is written down. That&rsquo;s what the practice comes to: a prompt that reasons like the best labeler, a check that proves the expert&rsquo;s work survived, a grammar any labeler can apply. The decisions that shaped all three were about what the machine must never be allowed to do.</p>
     </div>
   </section>
 
   <!-- ================= next case ================= -->
   <section class="wrap nextcase" aria-label="Next case">
     <p class="kicker mono part-head"><span class="knum">Next</span><span>Case No. 05</span></p>
-    <p><a href="cancellation-saves.html">Cancellation Saves</a>: teaching the assistant to recognize a cancellation worth saving and route it to a person who can save it. Or start this story at the beginning: <a href="charge-lookup.html">Charge lookup</a>.</p>
+    <p><a href="cancellation-saves.html">Cancellation saves</a>: the classifier that reads why a customer is leaving, routes the savable ones to a specialist, and never argues with someone going. Both routes on video.</p>
   </section>
 
 </main>
