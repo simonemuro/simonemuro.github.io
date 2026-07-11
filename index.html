@@ -12,6 +12,10 @@
 <meta property="og:image" content="https://simonemuro.github.io/assets/portrait.jpg">
 <link rel="canonical" href="https://simonemuro.github.io/">
 <meta name="twitter:card" content="summary">
+<!-- Live agent endpoint: presence of this tag flips the "ask about the work"
+     box from curated replies to the live, grounded agent (v4.js agentEndpoint).
+     On any fetch failure the box degrades to curated mode on its own. -->
+<meta name="agent-endpoint" content="https://simone-portfolio-agent.simonemuro.workers.dev">
 <title>Simone Muro · Agentic AI design and product craft</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="v4.css">
@@ -127,9 +131,67 @@
     </div>
   </section>
 
-  <!-- "Ask about the work" agent-widget slot: reserved between #work and #contact.
-       Do NOT add live widget markup here until the curated Q&A box is approved;
-       v4.js activates on markup presence. See colophon.html for the policy. -->
+  <!-- "Ask about the work" agent box. Live when the agent-endpoint meta tag
+       is present (see head); degrades to curated replies on any fetch failure. -->
+  <section class="shell ask-lite" id="ask" aria-labelledby="ask-h">
+    <p class="eyebrow mono io" style="--d:0">Ask the agent</p>
+    <h2 id="ask-h" class="io" style="--d:1">Have a question about the work? Ask her agent.</h2>
+    <div class="refusal io" style="--d:2" data-refusal>
+      <script type="application/json" data-refusal-kb>
+      {
+        "handoff": "simonermuro@gmail.com",
+        "refusals": [
+          "out of scope, by design. that one belongs to a human: {email}",
+          "still out of scope. the handoff stands: {email}",
+          "third ask, same answer. a human is faster: {email}"
+        ],
+        "entries": [
+          { "match": ["who are you", "who is she", "who is simone", "about her", "about simone"],
+            "reply": "Simone Muro. She designs how agents behave, builds them, and runs the evals that prove them. Ten years: Meta, Apple Siri, Sam's Club, Intuit, Credit Karma." },
+          { "match": ["resume", "cv"],
+            "reply": "One page, on this same system:", "href": "resume.html", "link": "resume.html" },
+          { "match": ["hire", "hiring", "interview", "job"],
+            "reply": "That conversation belongs to a human. Write to her:", "href": "mailto:simonermuro@gmail.com", "link": "simonermuro@gmail.com" },
+          { "match": ["chatbot", "llm", "model", "gpt", "claude", "are you ai", "real ai", "real simone"],
+            "reply": "This is Simone's AI agent, running on rules she wrote and tested. The live agent is unreachable right now, so this box is answering from replies written ahead of time." },
+          { "match": ["built", "build", "this site", "how was", "stack", "made"],
+            "reply": "By hand, on its own design system, with an AI pair. The colophon tells the story:", "href": "colophon.html", "link": "colophon.html" },
+          { "match": ["case", "work", "portfolio", "project"],
+            "reply": "The cases are in the index above. Start with BillingSkill: a skill spec, a local MCP tool server, and a 108-case judge-scored eval:", "href": "billing-skill.html", "link": "billing-skill.html" },
+          { "match": ["eval", "golden", "dataset"],
+            "reply": "She writes them, runs them, and built the generator that drafts the answer key: about three weeks of grading became about one, across 3,000+ rows:", "href": "quality-program.html", "link": "quality-program.html" },
+          { "match": ["voice", "phone", "1-800", "ivr"],
+            "reply": "GenAI answers on the 1-800 line, and a login redesign that moved self-help acceptance from 32 to 56 percent:", "href": "voice.html", "link": "voice.html" },
+          { "match": ["linkedin"],
+            "reply": "Right here:", "href": "https://linkedin.com/in/simonemuro", "link": "linkedin.com/in/simonemuro" },
+          { "match": ["email", "contact", "reach"],
+            "reply": "The human channel:", "href": "mailto:simonermuro@gmail.com", "link": "simonermuro@gmail.com" }
+        ]
+      }
+      </script>
+      <div class="refusal-hd mono">
+        <span class="rf-title">ask about the work</span>
+        <span>scope: this site · curated replies · no live model</span>
+      </div>
+      <div class="refusal-log" data-refusal-log aria-live="polite">
+        <div class="rf-turn">
+          <p class="rf-page"><span class="rf-tag">the deal</span>ask about Simone's work, background, and how she thinks. a live agent answers, grounded only in her public pages. anything out of scope gets a handoff to a human.</p>
+        </div>
+        <noscript>
+          <div class="rf-turn">
+            <p class="rf-page"><span class="rf-tag rf-refused">refused: out of scope</span>scripts are off, so the agent can't run. a human is always reachable: <a href="mailto:simonermuro@gmail.com">simonermuro@gmail.com</a></p>
+          </div>
+        </noscript>
+      </div>
+      <form class="refusal-form">
+        <span class="prompt-ch" aria-hidden="true">&gt;</span>
+        <label class="visually-hidden" for="rf-q">Ask about Simone's work</label>
+        <input class="refusal-input" id="rf-q" type="text" autocomplete="off" maxlength="200" placeholder="try: will she relocate? what are her strongest eval results?">
+        <button class="refusal-send" type="submit">send</button>
+      </form>
+      <p class="refusal-foot mono">Simone's AI agent, not the real Simone. It runs on rules she wrote and tested.</p>
+    </div>
+  </section>
 
   <section class="shell contact-lite" id="contact" aria-labelledby="contact-h">
     <p class="eyebrow mono io" style="--d:0">Handoff</p>
