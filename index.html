@@ -49,7 +49,17 @@
       <h1 id="hero-h" class="io" style="--d:1">I work in the space where product intent becomes <span class="hero-accent">model behavior</span>.</h1>
       <p class="hero-lede io" style="--d:2">I design AI agents that know when to act, ask, stop, and hand off. Then I build the prototype, write the evals, and turn product decisions into model behavior teams can test.</p>
       <p class="hero-lede io" style="--d:3">I started in language-model training and NLU, moved through production voice and chat assistants, then into LLM and agentic systems. My edge is translating messy customer problems into behaviors an AI system can execute, evaluate, and safely hand off.</p>
-      <div class="hero-actions io" style="--d:3" aria-label="Primary actions">
+      <dl class="hero-proof mono io" style="--d:4">
+        <div class="proof-item">
+          <dt>Where</dt>
+          <dd>Meta · Apple Siri · Intuit · Credit Karma</dd>
+        </div>
+        <div class="proof-item">
+          <dt>Shipped</dt>
+          <dd>+3.9pt voice containment, in production</dd>
+        </div>
+      </dl>
+      <div class="hero-actions io" style="--d:5" aria-label="Primary actions">
         <a class="button primary" href="#work">View selected work</a>
         <button class="button" type="button" data-chat-open>Ask my agent</button>
         <a class="hero-tertiary" href="resume.html">or request my resume</a>
@@ -78,39 +88,17 @@
       </article>
 
       <article class="project-card io" style="--d:2">
-        <a class="project-image real-ui" href="cancellation-saves.html" aria-label="Open Cancellation Saves case study">
-          <img src="assets/work/cancel-ask-why-card.png" alt="Screen recording frame: the flow confirms the cancellation, asks why, and the customer answers they have not used the product yet">
+        <a class="project-image" href="quality-program.html" aria-label="Open quality program case study">
+          <img src="assets/work/quality-row-anatomy.png" alt="Golden-dataset row anatomy: the fields that define good agent behavior for one customer query, from the question to the early-stop condition">
         </a>
         <div class="project-body">
-          <p class="project-meta mono">Cancellation saves · LLM era</p>
-          <h3><a href="cancellation-saves.html">Designed a saves flow and LLM classifier for cancellation intent.</a></h3>
-          <p>An LLM classifier reading why customers cancel, routing truly savable reasons to a specialist, and giving everyone else a clean goodbye. It ran end to end in 2023; both routes are on the page as screen recordings.</p>
+          <p class="project-meta mono">Quality program · agentic era</p>
+          <h3><a href="quality-program.html">Every agent answer is graded against an answer key. I built the practice that writes it.</a></h3>
+          <p>Generator prompts do the first draft, twelve QA checks screen every batch, and experts keep the final say. Turnaround from about three weeks to about one.</p>
         </div>
       </article>
 
       <article class="project-card io" style="--d:3">
-        <a class="project-image real-ui portrait-ui" href="voice.html" aria-label="Open voice case study">
-          <img src="assets/work/voice-snippet-card.png" alt="QuickBooks voice assistant transcript showing a caller clarifying a bank connection error">
-        </a>
-        <div class="project-body">
-          <p class="project-meta mono">Voice · LLM era</p>
-          <h3><a href="voice.html">Designed the assistant&rsquo;s spoken answers on the QuickBooks phone line.</a></h3>
-          <p>Voice has no screen to rescue it, so the work was deciding what the model could say in seconds, when to clarify, and when to hand off. Shipped, with a measured +3.9-point containment lift, then full production.</p>
-        </div>
-      </article>
-
-      <article class="project-card io" style="--d:4">
-        <a class="project-image real-ui" href="credit-karma.html" aria-label="Open Credit Karma case study">
-          <img src="assets/work/credit-karma-real-ui.jpg" alt="Credit Karma mobile card marketplace screenshot showing a financial assistant entry point">
-        </a>
-        <div class="project-body">
-          <p class="project-meta mono">Credit Karma · LLM era, 2024</p>
-          <h3><a href="credit-karma.html">The model knows your approval odds. It&rsquo;s never allowed to say them.</a></h3>
-          <p>One workbook, eleven revisions, nine synthetic members to grade against, and a rubric where a single legal or safety miss fails the run. It&rsquo;s all on the page.</p>
-        </div>
-      </article>
-
-      <article class="project-card io" style="--d:5">
         <a class="project-image real-ui portrait-ui" href="payroll-intelligence.html" aria-label="Open payroll tax skill case study">
           <img src="assets/work/payroll-card.png" alt="Intuit Intelligence payroll tax setup response with account-aware guidance">
         </a>
@@ -121,14 +109,36 @@
         </div>
       </article>
 
-      <article class="project-card io" style="--d:6">
-        <a class="project-image" href="quality-program.html" aria-label="Open quality program case study">
-          <img src="assets/work/quality-row-anatomy.png" alt="Golden-dataset row anatomy: the fields that define good agent behavior for one customer query, from the question to the early-stop condition">
+      <article class="project-card io" style="--d:4">
+        <a class="project-image real-ui portrait-ui" href="voice.html" aria-label="Open voice case study">
+          <img src="assets/work/voice-snippet-card.png" alt="QuickBooks voice assistant transcript showing a caller clarifying a bank connection error">
         </a>
         <div class="project-body">
-          <p class="project-meta mono">Quality program · agentic era</p>
-          <h3><a href="quality-program.html">Every agent answer is graded against an answer key. I built the practice that writes it.</a></h3>
-          <p>Generator prompts do the first draft, twelve QA checks screen every batch, and experts keep the final say. Turnaround from about three weeks to about one.</p>
+          <p class="project-meta mono">Voice · LLM era</p>
+          <h3><a href="voice.html">Designed the assistant&rsquo;s spoken answers on the QuickBooks phone line.</a></h3>
+          <p>Voice has no screen to rescue it, so the work was deciding what the model could say in seconds, when to clarify, and when to hand off. Shipped, with a measured +3.9-point containment lift, then full production.</p>
+        </div>
+      </article>
+
+      <article class="project-card io" style="--d:5">
+        <a class="project-image real-ui" href="cancellation-saves.html" aria-label="Open Cancellation Saves case study">
+          <img src="assets/work/cancel-ask-why-card.png" alt="Screen recording frame: the flow confirms the cancellation, asks why, and the customer answers they have not used the product yet">
+        </a>
+        <div class="project-body">
+          <p class="project-meta mono">Cancellation saves · LLM era</p>
+          <h3><a href="cancellation-saves.html">Designed a saves flow and LLM classifier for cancellation intent.</a></h3>
+          <p>An LLM classifier reading why customers cancel, routing truly savable reasons to a specialist, and giving everyone else a clean goodbye. It ran end to end in 2023; both routes are on the page as screen recordings.</p>
+        </div>
+      </article>
+
+      <article class="project-card io" style="--d:6">
+        <a class="project-image real-ui" href="credit-karma.html" aria-label="Open Credit Karma case study">
+          <img src="assets/work/credit-karma-real-ui.jpg" alt="Credit Karma mobile card marketplace screenshot showing a financial assistant entry point">
+        </a>
+        <div class="project-body">
+          <p class="project-meta mono">Credit Karma · LLM era, 2024</p>
+          <h3><a href="credit-karma.html">The model knows your approval odds. It&rsquo;s never allowed to say them.</a></h3>
+          <p>One workbook, eleven revisions, nine synthetic members to grade against, and a rubric where a single legal or safety miss fails the run. It&rsquo;s all on the page.</p>
         </div>
       </article>
     </div>

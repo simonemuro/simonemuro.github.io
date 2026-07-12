@@ -128,6 +128,30 @@ body.home-lite .contact-actions{
   gap:12px;
   margin-top:28px;
 }
+body.home-lite .hero-proof{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px 44px;
+  margin:26px 0 2px;
+  padding-top:22px;
+  border-top:1px solid var(--hair);
+}
+body.home-lite .hero-proof .proof-item{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+body.home-lite .hero-proof dt{
+  font-size:.6rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--sub);
+}
+body.home-lite .hero-proof dd{
+  margin:0;
+  font-size:.94rem;
+  color:var(--ink);
+}
 body.home-lite .hero-tertiary{
   color:var(--sub);
   font-size:.92rem;
@@ -555,14 +579,16 @@ body.home-lite .project-image.real-ui img{
   object-position:center top;
 }
 
+/* portrait sources share the same matte and cover-crop as the rest,
+   so mixed aspect ratios read as one gallery */
 body.home-lite .project-image.portrait-ui{
-  background:#fff;
+  background:#f8f7f2;
 }
 
 body.home-lite .project-image.portrait-ui img{
-  padding:10px;
-  object-fit:contain;
-  object-position:center center;
+  padding:0;
+  object-fit:cover;
+  object-position:center top;
 }
 
 body.home-lite .project-image:hover img,
@@ -608,6 +634,12 @@ body.home-lite .project-card p:not(.project-meta){
   margin:22px 0 0;
   padding-top:22px;
   border-top:1px solid var(--hair);
+}
+
+/* bottom-align the blurb on non-featured cards so the divider and blurb
+   baselines line up across each row, regardless of headline length */
+body.home-lite .project-card:not(.featured) p:not(.project-meta){
+  margin-top:auto;
 }
 
 body.home-lite .about{
