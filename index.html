@@ -21,6 +21,10 @@
 <link rel="stylesheet" href="v4.css">
 <link rel="stylesheet" href="home.css">
 <link rel="stylesheet" href="chat.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&family=Newsreader:ital,opsz@0,6..72;1,6..72&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="covers.css">
 <script src="v4.js" defer></script>
 <script src="chat.js" defer></script>
 </head>
@@ -69,79 +73,114 @@
     </div>
   </section>
 
-  <section class="shell work work-simple" id="work" aria-labelledby="work-h">
-    <div class="work-heading io" style="--d:0">
-      <p class="eyebrow mono">Selected work</p>
-      <h2 id="work-h">Six cases, from LLM classifiers to agent skills.</h2>
+  <section class="selwork" id="work" aria-labelledby="work-h">
+    <div class="work__head">
+      <div class="work__eyebrow">Selected work</div>
+      <h2 class="work__title" id="work-h">Six cases, from LLM classifiers to agent skills.</h2>
+      <p class="work__sub">Every cover is a designed receipt. The real artifact lives inside each case.</p>
     </div>
-    <div class="project-grid">
-      <article class="project-card featured io" style="--d:1">
-        <a class="project-image real-ui" href="billing-skill.html" aria-label="Open billing skill case study">
-          <img src="assets/work/billing-home-intuit-ui.png?v=2" alt="QuickBooks home screen with the Intuit Intelligence panel open for a subscription-cost question">
+
+    <!-- FEATURED -->
+    <article class="feature">
+      <a class="feature__cover" href="billing-skill.html" aria-label="Open billing skill case study">
+        <div class="feature__kicker">Intuit Intelligence &middot; Billing skill</div>
+        <div class="feature__ghost" aria-hidden="true">$</div>
+        <div>
+          <div class="feature__fig">Every charge,<br>explained.</div>
+          <div class="feature__figsub">grounded in the customer&rsquo;s own data</div>
+          <div class="feature__chips">
+            <span class="chip">personalized responses</span>
+            <span class="chip">explainability first</span>
+          </div>
+        </div>
+      </a>
+      <div class="feature__body">
+        <div class="feature__tag">Featured &middot; Agentic era</div>
+        <h3 class="feature__h"><a href="billing-skill.html">&ldquo;What is this charge?&rdquo; is the most common billing question, and the hardest to answer well.</a></h3>
+        <p class="feature__p">A skill that grounds every answer in the customer&rsquo;s own account: personalized, explainable, and honest enough to intercept a cancel before it happens.</p>
+      </div>
+    </article>
+
+    <!-- GRID -->
+    <div class="work__grid">
+
+      <article class="card">
+        <a class="card__cover" style="--h:300; --fig:68px" href="quality-program.html" aria-label="Open quality program case study">
+          <div class="card__kicker">Intuit Intelligence &middot; Quality program</div>
+          <div>
+            <div class="card__fig">3&times;</div>
+            <div class="card__figsub">faster to golden guidance</div>
+          </div>
         </a>
-        <div class="project-body">
-          <p class="project-meta mono">Billing skill · agentic era</p>
-          <h3><a href="billing-skill.html">Built the agent skill that explains QuickBooks subscription charges.</a></h3>
-          <p>A solo build in a five-day internal hackathon, on years of billing research: account-aware answers, a cancel-intercept widget, and the 108-case eval it passed. Leadership buy-in at 80% built.</p>
+        <div class="card__body">
+          <div class="card__tag">Quality program &middot; Agentic era</div>
+          <h3 class="card__h"><a href="quality-program.html">How do you grade an agent when there&rsquo;s no answer key?</a></h3>
+          <p class="card__p">You write one, at scale: generator prompts draft, twelve QA checks screen every batch, and experts keep the final say.</p>
         </div>
       </article>
 
-      <article class="project-card io" style="--d:2">
-        <a class="project-image thumb-mock" style="--tint:#e6e2d4" href="quality-program.html" aria-label="Open quality program case study">
-          <img src="assets/work/quality-row-anatomy.png" alt="Golden-dataset row anatomy: the fields that define good agent behavior for one customer query, from the question to the early-stop condition">
+      <article class="card">
+        <a class="card__cover" style="--h:258; --fig:38px" href="payroll-intelligence.html" aria-label="Open payroll tax skill case study">
+          <div class="card__kicker">Intuit Intelligence &middot; Payroll tax skill</div>
+          <div>
+            <div class="card__fig">what good
+looks like</div>
+            <div class="card__figsub">personalized, jurisdiction by jurisdiction</div>
+          </div>
         </a>
-        <div class="project-body">
-          <p class="project-meta mono">Quality program · agentic era</p>
-          <h3><a href="quality-program.html">Every agent answer is graded against an answer key. I built the practice that writes it.</a></h3>
-          <p>Generator prompts do the first draft, twelve QA checks screen every batch, and experts keep the final say. Turnaround from about three weeks to about one.</p>
+        <div class="card__body">
+          <div class="card__tag">Payroll tax skill &middot; Agentic era</div>
+          <h3 class="card__h"><a href="payroll-intelligence.html">Payroll tax guidance lived in a few experts&rsquo; heads. That doesn&rsquo;t scale.</a></h3>
+          <p class="card__p">So define what a good diagnosis looks like, personalize it jurisdiction by jurisdiction, and grade the live skill against it.</p>
         </div>
       </article>
 
-      <article class="project-card io" style="--d:3">
-        <a class="project-image thumb-type" style="--tint:#41533f" data-motif="10" href="payroll-intelligence.html" aria-label="Open payroll tax skill case study">
-          <span class="tt-kicker">Payroll tax skill</span>
-          <span class="tt-metric">~10 days</span>
-          <span class="tt-sub">to golden diagnostic guidance for every priority payroll question</span>
+      <article class="card">
+        <a class="card__cover" style="--h:150; --fig:60px" href="voice.html" aria-label="Open voice case study">
+          <div class="card__kicker">QuickBooks Voice Assistant</div>
+          <div>
+            <div class="card__fig">+3.9pt</div>
+            <div class="card__figsub">containment lift, shipped</div>
+          </div>
         </a>
-        <div class="project-body">
-          <p class="project-meta mono">Payroll tax skill · agentic era</p>
-          <h3><a href="payroll-intelligence.html">Got the payroll tax diagnosis out of experts&rsquo; heads and into Intuit Intelligence.</a></h3>
-          <p>Golden guidance for every priority payroll question in about ten days, a generator that drafted diagnostic reasoning jurisdiction by jurisdiction, and the UAT that graded the live skills against it.</p>
+        <div class="card__body">
+          <div class="card__tag">Voice &middot; LLM era</div>
+          <h3 class="card__h"><a href="voice.html">On a phone line, there&rsquo;s no screen to fall back on.</a></h3>
+          <p class="card__p">Every word is the interface: what the model can say in seconds, when to clarify, when to hand off. Shipped a +3.9pt containment lift.</p>
         </div>
       </article>
 
-      <article class="project-card io" style="--d:4">
-        <a class="project-image real-ui portrait-ui" href="voice.html" aria-label="Open voice case study">
-          <img src="assets/work/voice-snippet-card.png" alt="QuickBooks voice assistant transcript showing a caller clarifying a bank connection error">
+      <article class="card">
+        <a class="card__cover" style="--h:30; --fig:60px" href="cancellation-saves.html" aria-label="Open cancellation saves case study">
+          <div class="card__kicker">Intuit &middot; Cancellation saves</div>
+          <div>
+            <div class="card__fig">96.6%</div>
+            <div class="card__figsub">routing precision, in evaluation</div>
+          </div>
         </a>
-        <div class="project-body">
-          <p class="project-meta mono">Voice · LLM era</p>
-          <h3><a href="voice.html">Designed the assistant&rsquo;s spoken answers on the QuickBooks phone line.</a></h3>
-          <p>Voice has no screen to rescue it, so the work was deciding what the model could say in seconds, when to clarify, and when to hand off. Shipped, with a measured +3.9-point containment lift, then full production.</p>
+        <div class="card__body">
+          <div class="card__tag">Cancellation saves &middot; LLM era</div>
+          <h3 class="card__h"><a href="cancellation-saves.html">Not everyone who clicks &ldquo;cancel&rdquo; actually wants to leave.</a></h3>
+          <p class="card__p">A classifier accurate enough to route the truly savable to a specialist, and give everyone else a clean goodbye.</p>
         </div>
       </article>
 
-      <article class="project-card io" style="--d:5">
-        <a class="project-image real-ui" href="cancellation-saves.html" aria-label="Open Cancellation Saves case study">
-          <img src="assets/work/cancel-ask-why-card.png" alt="Screen recording frame: the flow confirms the cancellation, asks why, and the customer answers they have not used the product yet">
+      <article class="card">
+        <a class="card__cover" style="--h:200; --fig:34px" href="credit-karma.html" aria-label="Open Credit Karma case study">
+          <div class="card__kicker">Credit Karma &middot; Card recommendations</div>
+          <div>
+            <div class="card__fig">personal +
+compliant</div>
+            <div class="card__figsub">advice that never crosses the line</div>
+          </div>
         </a>
-        <div class="project-body">
-          <p class="project-meta mono">Cancellation saves · LLM era</p>
-          <h3><a href="cancellation-saves.html">Designed a saves flow and LLM classifier for cancellation intent.</a></h3>
-          <p>An LLM classifier reading why customers cancel, routing truly savable reasons to a specialist, and giving everyone else a clean goodbye. It ran end to end in 2023; both routes are on the page as screen recordings.</p>
+        <div class="card__body">
+          <div class="card__tag">Credit Karma &middot; LLM era, 2024</div>
+          <h3 class="card__h"><a href="credit-karma.html">The model knows your approval odds. It&rsquo;s never allowed to say them.</a></h3>
+          <p class="card__p">Advice personal enough to help and strict enough to never overstep. A single legal or safety miss fails the whole run.</p>
         </div>
       </article>
 
-      <article class="project-card io" style="--d:6">
-        <a class="project-image real-ui" href="credit-karma.html" aria-label="Open Credit Karma case study">
-          <img src="assets/work/credit-karma-real-ui.jpg" alt="Credit Karma mobile card marketplace screenshot showing a financial assistant entry point">
-        </a>
-        <div class="project-body">
-          <p class="project-meta mono">Credit Karma · LLM era, 2024</p>
-          <h3><a href="credit-karma.html">The model knows your approval odds. It&rsquo;s never allowed to say them.</a></h3>
-          <p>One workbook, eleven revisions, nine synthetic members to grade against, and a rubric where a single legal or safety miss fails the run. It&rsquo;s all on the page.</p>
-        </div>
-      </article>
     </div>
   </section>
 
