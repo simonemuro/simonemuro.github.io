@@ -597,6 +597,54 @@ body.home-lite .project-image:focus-visible img{
   filter:saturate(1);
 }
 
+/* ===== PROTOTYPE A: device mockup (real screen on a tinted ground) ===== */
+body.home-lite .project-image.thumb-mock{
+  background:var(--tint,#e8e4d8);
+  padding:30px 22px 0;
+  position:relative;
+}
+body.home-lite .project-image.thumb-mock::before{
+  content:"";
+  position:absolute; top:15px; left:26px; z-index:2;
+  width:7px; height:7px; border-radius:50%;
+  background:#d98c7a;
+  box-shadow:13px 0 0 #e3c07a, 26px 0 0 #86ad86;
+}
+body.home-lite .project-image.thumb-mock img{
+  border-radius:7px 7px 0 0;
+  box-shadow:0 12px 30px rgba(60,45,30,.22);
+  object-position:top center;
+}
+
+/* ===== PROTOTYPE B: typographic cover (no photo, colored tile) ===== */
+body.home-lite .project-image.thumb-type{
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  gap:7px;
+  padding:24px;
+  background:var(--tint,#41533f);
+  color:#f7f2e8;
+  position:relative;
+  overflow:hidden;
+}
+body.home-lite .project-image.thumb-type::after{
+  content:attr(data-motif);
+  position:absolute; top:-14px; right:10px;
+  font-family:var(--serif); font-size:6rem; line-height:1;
+  color:rgba(255,255,255,.08); pointer-events:none;
+}
+body.home-lite .thumb-type .tt-kicker{
+  font-family:var(--mono); font-size:.58rem; letter-spacing:.15em;
+  text-transform:uppercase; opacity:.85;
+}
+body.home-lite .thumb-type .tt-metric{
+  font-family:var(--serif); font-size:clamp(2.2rem,3.4vw,2.8rem); line-height:.95;
+}
+body.home-lite .thumb-type .tt-sub{
+  font-size:.86rem; line-height:1.35; opacity:.9; max-width:26ch;
+}
+
 body.home-lite .project-body{
   display:flex;
   flex:1;
