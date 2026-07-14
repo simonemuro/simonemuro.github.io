@@ -41,7 +41,7 @@
       <div class="verdict__cell"><div class="verdict__k">Problem</div><p>Fluent answers that are confidently wrong, and still read as right.</p></div>
       <div class="verdict__cell"><div class="verdict__k">My scope</div><p>The offline ground truth, human-validated, that measured conversation quality across every skill.</p></div>
       <div class="verdict__cell"><div class="verdict__k">The build</div><p>Generators that pre-fill ground truth to spec, so experts validate and correct instead of authoring from blank rows.</p></div>
-      <div class="verdict__cell"><div class="verdict__k">Contributed to</div><p>Quality rose +8 to 13 points across three skills, measured against the ground truth I owned.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">Outcome</div><p>Conversation quality rose +8 to 13 points across three skills, on the ground truth I built.</p></div>
     </div>
   </section>
 
@@ -147,24 +147,24 @@
       <section class="section" id="s04">
         <div class="spread">
           <div class="spread__num">04</div>
-          <div><div class="spread__label">How it ran</div><h2>Then I handed it off.</h2></div>
+          <div><div class="spread__label">The pipeline</div><h2>It runs every day, on every skill.</h2></div>
         </div>
-        <p>Beyond pre-filling the ground truth, I automated the script that feeds the simulator bot. When the pipeline runs, the bot follows my script to trigger a flow and play the customer; an LLM-as-judge then compares the answer against the ground truth and rates it. I handed the validated ground truth and the simulator scripts to the data-science teams. The daily pipeline, the drift-catching across every release, and the reporting out were theirs, not mine.</p>
+        <p>I also automated the script that feeds the simulator. When the pipeline runs, the bot follows my script to trigger a flow and play the customer, and an LLM-as-judge rates the answer against the ground truth. Every skill, every release.</p>
         <div class="loop">
-          <div class="loop__step"><div class="loop__n">01</div><div class="loop__head">Ground truth</div><div class="loop__sub">the answer key &middot; mine</div></div>
-          <div class="loop__step"><div class="loop__n">02</div><div class="loop__head">Simulator script</div><div class="loop__sub">triggers each flow &middot; mine</div></div>
+          <div class="loop__step"><div class="loop__n">01</div><div class="loop__head">Ground truth</div><div class="loop__sub">the checked answer</div></div>
+          <div class="loop__step"><div class="loop__n">02</div><div class="loop__head">Simulator script</div><div class="loop__sub">triggers each flow</div></div>
           <div class="loop__step"><div class="loop__n">03</div><div class="loop__head">Simulator bot</div><div class="loop__sub">plays the customer, a few turns deep</div></div>
           <div class="loop__step"><div class="loop__n">04</div><div class="loop__head">LLM judge</div><div class="loop__sub">rates the answer against the ground truth</div></div>
-          <div class="loop__step"><div class="loop__n">05</div><div class="loop__head">Daily pipeline</div><div class="loop__sub">run by the quality team, every skill</div></div>
+          <div class="loop__step"><div class="loop__n">05</div><div class="loop__head">Daily run</div><div class="loop__sub">every skill, every release</div></div>
         </div>
-        <div class="loop__caption">&#8635; run daily by the quality team; the reporting was theirs</div>
+        <div class="loop__caption">&#8635; every skill, every day</div>
       </section>
 
       <!-- 05 -->
       <section class="section" id="s05">
         <div class="spread">
           <div class="spread__num">05</div>
-          <div><div class="spread__label">Keeping it honest</div><h2>I tested the judge, and re-audited the truth.</h2></div>
+          <div><div class="spread__label">The rigor</div><h2>I tested the judge, and re-audited the truth.</h2></div>
         </div>
         <p>Two things can rot underneath a quality number: a judge you never checked, and a ground truth you stopped questioning. I validated the LLM judges against 200 human-labeled tasks before trusting them. Once they cleared the bar, the planned 2,000-row vendor labeling wasn't justified, so it didn't happen. And I re-audited the ground truth blind, a fresh KEEP-or-DELETE call on every row with the original label hidden, so no one could anchor on the first answer.</p>
         <div class="judge">
@@ -196,32 +196,22 @@
       <section class="section" id="s06">
         <div class="spread spread--tight">
           <div class="spread__num">06</div>
-          <div><div class="spread__label">The record</div><h2>What I owned, and what I didn't.</h2></div>
+          <div><div class="spread__label">The record</div><h2>What I built.</h2></div>
         </div>
         <div class="metrics">
-          <div class="metric"><div class="metric__v">+8&ndash;13</div><div class="metric__k">pts quality across three skills, measured against my ground truth</div></div>
+          <div class="metric"><div class="metric__v">+8&ndash;13</div><div class="metric__k">points conversation quality rose across three skills</div></div>
           <div class="metric"><div class="metric__v">3&rarr;1 wk</div><div class="metric__k">batch turnaround once the generators ran</div></div>
           <div class="metric"><div class="metric__v">3,000+</div><div class="metric__k">ground-truth rows produced for review, no added headcount</div></div>
           <div class="metric"><div class="metric__v">+1,590</div><div class="metric__k">lines shipped as reviewed platform code</div></div>
         </div>
-        <div class="cols2">
-          <div class="panel list-panel">
-            <div class="panel__label">Mine, end to end</div>
-            <ul>
-              <li>The offline ground truth that measured conversation quality across every skill</li>
-              <li>The generators that pre-fill it to spec, shipped as reviewed platform code</li>
-              <li>The simulator scripts the pipeline's bot follows</li>
-              <li>Validating the judges against human labels, and the blind re-audit</li>
-            </ul>
-          </div>
-          <div class="panel panel--tint list-panel">
-            <div class="panel__label">The team's, not mine</div>
-            <ul>
-              <li>The quality program itself, across PMs, designers, and data scientists</li>
-              <li>The daily pipeline that scored every skill and caught drift</li>
-              <li>Reporting the quality numbers out to the org</li>
-            </ul>
-          </div>
+        <div class="panel list-panel">
+          <div class="panel__label">The work</div>
+          <ul>
+            <li>The offline ground truth that measured conversation quality across every skill</li>
+            <li>The generators that pre-fill it to spec, shipped as reviewed platform code</li>
+            <li>The simulator scripts the pipeline runs</li>
+            <li>Validating the judges against human labels, and the blind re-audit</li>
+          </ul>
         </div>
         <div class="closer"><p>I spent a year defining what a good answer looks like, at the scale of a whole platform. That's why I now build to that bar myself.</p></div>
       </section>
