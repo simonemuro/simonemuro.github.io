@@ -32,7 +32,7 @@
   <header class="wrap hero">
     <div class="kicker">Case No. 03 &nbsp;&middot;&nbsp; Ground truth &nbsp;&middot;&nbsp; Intuit Intelligence &middot; quality team</div>
     <h1>The answer key behind the gate <em>took three kinds of expert.</em></h1>
-    <p class="hero__lede">No skill shipped until it cleared the quality gate, and the gate ran on offline evals that scored every answer against ground truth: the ideal answer for a given scenario. Writing one row was hard, not slow. A single row could need a conversation designer, a domain expert, and a data scientist, each for a different part of the answer. Finding all three for every row, across a platform of dozens of skills, is what couldn't scale.</p>
+    <p class="hero__lede">No skill shipped until it cleared the quality gate, and the gate ran on offline evals that scored every answer against ground truth: the ideal answer for a given scenario. Producing that ground truth was the upstream the whole program depended on, and it was hard, not slow. A single row could need a conversation designer, a domain expert, and a data scientist, each for a different part of the answer. Finding all three for every row, across a platform of dozens of skills, is what couldn't scale.</p>
   </header>
 
   <!-- VERDICT -->
@@ -101,7 +101,7 @@
           <div class="spread__num">03</div>
           <div><div class="spread__label">The solution</div><h2>A generator that drafts like the best labeler.</h2></div>
         </div>
-        <p>The generator distills how the team's most experienced labeler actually works, the rules for the text, the actions, and the chart and widget specs, into one prompt built on judgment over rules: when a row doesn't fit a pattern, do what the best labeler would do. Running a whole dataset through one model would be slow and lossy, so the pipeline splits the sheet into fifty-row chunks, drafts each with a parallel agent, and glues the results back into one sheet. The draft, about seventy percent complete, goes to the team for a coordinated final review, where experts validate and correct.</p>
+        <p>The generator distills how the team's most experienced labeler actually works, the rules for the text, the actions, and the chart and widget specs, into one prompt built on judgment over rules: when a row doesn't fit a pattern, do what the best labeler would do. Running a whole dataset through one model would be slow and lossy, so the pipeline splits the sheet into fifty-row chunks, drafts each with a parallel agent, and glues the results back into one sheet. The draft, about seventy percent complete, goes to the team for a coordinated final review, where experts validate and correct. The pipeline shipped as platform code, reviewed like any other engineering work on the team.</p>
         <div class="loop">
           <div class="loop__step"><div class="loop__n">01</div><div class="loop__head">Split</div><div class="loop__sub">the sheet into fifty-row chunks</div></div>
           <div class="loop__step"><div class="loop__n">02</div><div class="loop__head">Draft in parallel</div><div class="loop__sub">one agent per chunk, to spec</div></div>
@@ -127,7 +127,7 @@
           <div class="metric"><div class="metric__v">3&rarr;1 wk</div><div class="metric__k">turnaround on a large batch, once the pipeline ran</div></div>
           <div class="metric"><div class="metric__v">+8&ndash;13</div><div class="metric__k">points quality rose across three skills</div></div>
         </div>
-        <div class="closer"><p>A gate is only as good as the answer key behind it. This is the system that kept the answer key honest and current as fast as the platform could grow.</p></div>
+        <div class="closer"><p>A quality program is only as good as the answer key upstream of it. This is the system that produced that answer key, honest and current, as fast as the platform could grow.</p></div>
       </section>
 
     </div>
