@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="color-scheme" content="light">
-<meta name="description" content="I owned the offline ground truth an agentic support platform measured its quality against: the answer key every skill was scored on, the system that scaled it, and the rigor that kept it honest.">
-<meta property="og:title" content="Ground truth &middot; Simone Muro">
-<meta property="og:description" content="I owned the answer key an agentic platform measured its quality against, expanded what it measured, and built the system that let it scale across every skill.">
+<meta name="description" content="How I codified ground-truth creation into a production system for an agentic platform's quality program: the answer key every skill is measured against, built to scale.">
+<meta property="og:title" content="Ground truth, productionized &middot; Simone Muro">
+<meta property="og:description" content="I owned the ground truth an AI platform's quality program ran on, and I built the system that produced it at scale across every skill.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/quality-program.html">
 <meta name="twitter:card" content="summary">
@@ -31,21 +31,21 @@
   <!-- HERO -->
   <header class="wrap hero">
     <div class="kicker">Case No. 03 &nbsp;&middot;&nbsp; Ground truth &nbsp;&middot;&nbsp; Intuit Intelligence &middot; quality team</div>
-    <h1>The answer <em>sounded right.</em></h1>
-    <p class="hero__lede">A fluent, confident answer invented a date about a customer's payroll taxes. At the scale of a whole platform, the only way to catch that is a checked answer to measure against. I owned that ground truth: the answer key every skill's quality was scored on. I created it, expanded what it measured, kept it honest, and built the system that let it scale across every skill.</p>
+    <h1>The answer key was manual. <em>I made it a system.</em></h1>
+    <p class="hero__lede">An agentic platform's quality program scores every skill against ground truth: the answer each skill should have given. I owned that ground truth. As the platform grew, authoring it by hand stopped scaling, so I codified the work into a production system, generators and a pre-fill pipeline shipped as platform code, so experts validate answers instead of writing every one from scratch. That is what lets the program measure quality across every skill.</p>
   </header>
 
   <!-- VERDICT -->
   <section class="wrap verdict">
     <div class="verdict__grid">
-      <div class="verdict__cell"><div class="verdict__k">Problem</div><p>Fluent answers that are confidently wrong, and still read as right.</p></div>
-      <div class="verdict__cell"><div class="verdict__k">My scope</div><p>The offline ground truth: the answer key every skill's quality was measured on.</p></div>
-      <div class="verdict__cell"><div class="verdict__k">What I did</div><p>Created it, expanded what quality measured, kept it current, and trained designers to the standard.</p></div>
-      <div class="verdict__cell"><div class="verdict__k">Outcome</div><p>Quality rose +8 to 13 points across three skills, measured on the ground truth I owned.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">Problem</div><p>The quality program needs a checked answer for every skill. Authoring them by hand couldn't scale.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">My scope</div><p>The offline ground truth: the answer key, its standard, and the system that produces it.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">What I built</div><p>A codified, repeatable production process: generators and a pre-fill pipeline, shipped as platform code.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">Outcome</div><p>The program measures quality across every skill; quality rose +8 to 13 points across three.</p></div>
     </div>
   </section>
 
-  <!-- BODY : numbered spreads, no rail -->
+  <!-- BODY -->
   <div class="body">
     <div class="body__inner">
 
@@ -53,41 +53,9 @@
       <section class="section" id="s01">
         <div class="spread">
           <div class="spread__num">01</div>
-          <div><div class="spread__label">The catch</div><h2>Sounds right. Fails the bar.</h2></div>
+          <div><div class="spread__label">What I owned</div><h2>The answer key every skill is scored against.</h2></div>
         </div>
-        <p>Grade an answer on how it <em>reads</em>, and a customer gets told their taxes were filed on a day that never happened. What catches the invented date is not a better reader. It is a checked answer to compare against: the ground truth.</p>
-        <div class="art">
-          <div class="art__cap"><span class="mono">The answer vs the ground truth</span><span class="tag tag--neutral">Mock data</span></div>
-          <div class="compare">
-            <div class="compare__pane">
-              <div class="compare__label compare__label--bad">What the agent said</div>
-              <div class="compare__said">&ldquo;Your 941 federal deposit was filed <span class="mark-bad">on March 3</span>, so you're all set. You can download the dated confirmation from your tax records.&rdquo;</div>
-            </div>
-            <div class="compare__pane">
-              <div class="compare__label compare__label--rec">What the ground truth held</div>
-              <div class="kv">
-                <div class="kv__row"><span class="kv__k">filing</span><span class="kv__v">941 federal deposit</span></div>
-                <div class="kv__row"><span class="kv__k">status</span><span class="kv__v kv__v--ok">filed</span></div>
-                <div class="kv__row"><span class="kv__k">filed on</span><span class="kv__v kv__v--bad">not in the record</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="gates">
-            <div class="gate"><span class="gate__mark gate__mark--ok">&check;</span><span class="txt"><strong class="ok">correctness</strong> &middot; reports the filing and its status exactly as the ground truth shows</span></div>
-            <div class="gate"><span class="gate__mark gate__mark--ok">&check;</span><span class="txt"><strong class="ok">completeness</strong> &middot; tells the customer how to get the formal confirmation</span></div>
-            <div class="gate"><span class="gate__mark gate__mark--ok">&check;</span><span class="txt"><strong class="ok">actions</strong> &middot; checked the filing record before answering</span></div>
-            <div class="gate"><span class="gate__mark gate__mark--bad">&times;</span><span class="txt"><strong class="bad">no hallucination</strong> &middot; the answer invented &ldquo;March 3&rdquo;; the ground truth holds no date</span></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 02 -->
-      <section class="section" id="s02">
-        <div class="spread">
-          <div class="spread__num">02</div>
-          <div><div class="spread__label">What I owned</div><h2>The answer key every skill was scored on.</h2></div>
-        </div>
-        <p>Ground truth is the answer key: for each scenario, the answer a skill should give and the actions it should take. I owned it. I created the answers, verified them with the experts, and kept them from going stale as the platform grew. I expanded what &ldquo;quality&rdquo; even measured, from accuracy, completeness, and relevance out to personalization, the right tool calls, and the right actions. And I trained the designers who authored against it, so the standard held as the team scaled.</p>
+        <p>Ground truth is the answer key: for each scenario, the answer a skill should give and the actions it should take. I owned it. I created the answers, verified them with the experts, and kept them current as the platform grew. It has to be exact, because a skill graded on how its answer <em>reads</em> can tell a customer their taxes were filed on a day that never happened, and sound completely right doing it. I also expanded what &ldquo;quality&rdquo; measured, from accuracy, completeness, and relevance out to personalization, the right tool calls, and the right actions, and I trained the designers who authored against the standard.</p>
         <div class="art">
           <div class="art__cap"><span class="mono">One ground-truth row</span><span class="tag tag--neutral">Mock data</span></div>
           <div class="compare">
@@ -107,13 +75,13 @@
         </div>
       </section>
 
-      <!-- 03 -->
-      <section class="section" id="s03">
+      <!-- 02 -->
+      <section class="section" id="s02">
         <div class="spread">
-          <div class="spread__num">03</div>
-          <div><div class="spread__label">How it scaled</div><h2>I made the slow step a review, not a rewrite.</h2></div>
+          <div class="spread__num">02</div>
+          <div><div class="spread__label">The build</div><h2>Manual authoring didn't scale. So I codified it.</h2></div>
         </div>
-        <p>As the platform grew, authoring the answer key by hand stopped scaling. Experts spent their time filling fields instead of making judgment calls. So I built the system that flips it: the answers get pre-filled to spec, and the expert's job becomes review and correct, not start from a blank row. Their judgment goes where it belongs, to how each answer should be graded.</p>
+        <p>As the platform grew past a handful of skills, hand-authoring the answer key broke down. Experts spent their hours filling fields instead of making judgment calls, and every new skill started from a blank sheet. I turned it into a production system: the answers get pre-filled to spec, and the expert's job becomes review and correct. I codified the standard into generators and a pre-fill pipeline, shipped as reviewed platform code, so the same process runs for any skill, not just the one in front of me. Their judgment goes where it belongs, to how each answer should be graded.</p>
         <div class="cols2" style="margin-bottom:24px;">
           <div class="panel">
             <div class="panel__label panel__label--bad">Before &middot; blank-page authoring</div>
@@ -130,28 +98,28 @@
               <li><span class="c">&check;</span>The answers arrive pre-filled to spec</li>
               <li><span class="c">&check;</span>An expert reviews and corrects</li>
               <li><span class="c">&check;</span>Judgment goes to how it should be graded</li>
-              <li><span class="c">&check;</span>The same answer key feeds new-skill work</li>
+              <li><span class="c">&check;</span>The same system runs for any skill</li>
             </ul>
           </div>
         </div>
-        <p>I didn't get the rules right in one pass. I refined them again and again, testing each version on a sample before it touched the real set.</p>
+        <p>I didn't get the rules right in one pass. I refined them again and again, testing each version on a sample before it touched the real set. That iteration is what turned a one-off script into something the whole program could rely on.</p>
         <div class="loop">
           <div class="loop__step"><div class="loop__n">01</div><div class="loop__head">Draft the rules</div><div class="loop__sub">how each answer should be built</div></div>
           <div class="loop__step"><div class="loop__n">02</div><div class="loop__head">Run on a sample</div><div class="loop__sub">a small batch, not the full set</div></div>
           <div class="loop__step"><div class="loop__n">03</div><div class="loop__head">Correct what broke</div><div class="loop__sub">read every miss by hand</div></div>
           <div class="loop__step"><div class="loop__n">04</div><div class="loop__head">Tighten the edges</div><div class="loop__sub">cut the rules that conflicted</div></div>
-          <div class="loop__step"><div class="loop__n">05</div><div class="loop__head">Ship to the set</div><div class="loop__sub">run it on the full batch</div></div>
+          <div class="loop__step"><div class="loop__n">05</div><div class="loop__head">Ship the process</div><div class="loop__sub">run it for every skill</div></div>
         </div>
         <div class="loop__caption">&#8635; refined over many passes</div>
       </section>
 
-      <!-- 04 -->
-      <section class="section" id="s04">
+      <!-- 03 -->
+      <section class="section" id="s03">
         <div class="spread">
-          <div class="spread__num">04</div>
-          <div><div class="spread__label">Keeping it honest</div><h2>An answer key is only as good as its upkeep.</h2></div>
+          <div class="spread__num">03</div>
+          <div><div class="spread__label">Keeping it honest</div><h2>A production system needs guardrails.</h2></div>
         </div>
-        <p>I re-checked the ground truth in waves, a fresh keep-or-cut call on each row with the original label hidden, so no one anchored on the first answer. I built the guardrail that keeps a validated answer from ever being overwritten by a model's draft: a reviewer caught the risk, I closed the path, and added a check that fails the run if it is ever tried. And because the judges that scored every skill ran against my ground truth, I gave the eval team the human labels that helped them validate those judges before they were trusted.</p>
+        <p>Scale is only worth it if the output stays trustworthy. I re-checked the ground truth in waves, a fresh keep-or-cut call on each row with the original label hidden, so no one anchored on the first answer. I built the guardrail that keeps a validated answer from ever being overwritten by a model's draft: a reviewer caught the risk, I closed the path, and added a check that fails the run if it's ever tried. And because the judges that scored every skill ran against my ground truth, I gave the eval team the human labels that helped them validate those judges before they were trusted.</p>
         <div class="art">
           <div class="art__cap"><span class="mono">The check that runs on every batch</span><span class="tag tag--neutral">Mock data</span></div>
           <div class="gates">
@@ -163,10 +131,10 @@
         </div>
       </section>
 
-      <!-- 05 -->
-      <section class="section" id="s05">
+      <!-- 04 -->
+      <section class="section" id="s04">
         <div class="spread spread--tight">
-          <div class="spread__num">05</div>
+          <div class="spread__num">04</div>
           <div><div class="spread__label">The record</div><h2>What I built.</h2></div>
         </div>
         <div class="metrics" style="grid-template-columns:repeat(2,1fr);">
@@ -178,11 +146,11 @@
           <ul>
             <li>The offline ground truth every skill's quality was measured on</li>
             <li>Expanding what quality measured, and training designers to the standard</li>
-            <li>The system that pre-fills it to spec, shipped as reviewed platform code</li>
+            <li>The production system that creates it: generators and a pre-fill pipeline, shipped as reviewed platform code</li>
             <li>Keeping it honest: the re-checks, the originals-safe guardrail, and the labels that helped validate the judges</li>
           </ul>
         </div>
-        <div class="closer"><p>I spent a year defining what a good answer looks like, at the scale of a whole platform. That's why I now build to that bar myself.</p></div>
+        <div class="closer"><p>I spent a year turning &ldquo;what does a good answer look like&rdquo; into a system a whole platform runs on. That's the bar I build to now.</p></div>
       </section>
 
     </div>
