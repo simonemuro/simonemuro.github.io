@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="color-scheme" content="light">
-<meta name="description" content="A case study: an AI quality gate ran on ground truth, and a single row could take three kinds of expert to write. How I made that scale with a generator that drafts like the best labeler and a pipeline that runs it in parallel.">
+<meta name="description" content="A case study: an AI quality gate ran on ground truth, and a single row could take three kinds of expert to write. How that scaled, with a generator that drafts like the best labeler and a pipeline that runs it in parallel.">
 <meta property="og:title" content="Ground truth at scale &middot; Simone Muro">
 <meta property="og:description" content="The quality gate ran on ground truth, and one row could need three kinds of expert. Here is the system that let it scale across every skill.">
 <meta property="og:type" content="article">
@@ -72,7 +72,7 @@
           <div class="spread__num">02</div>
           <div><div class="spread__label">The insight</div><h2>The rare work is the correction, not the blank page.</h2></div>
         </div>
-        <p>Experts weren't slow because judgment is slow. They were slow because every row started empty, and the hardest, rarest work, the cross-disciplinary judgment, was trapped behind hours of drafting and formatting. So I moved the effort. If a system could produce a first draft to spec, roughly seventy percent of the row, the experts' job would flip from authoring to correcting, and their judgment would land only on the part that needed it.</p>
+        <p>Experts weren't slow because judgment is slow. They were slow because every row started empty, and the hardest, rarest work, the cross-disciplinary judgment, was trapped behind hours of drafting and formatting. The effort had to move. If a system could produce a first draft to spec, roughly seventy percent of the row, the expert's job would flip from authoring to correcting, and judgment would land only on the part that needed it.</p>
         <div class="cols2">
           <div class="panel">
             <div class="panel__label panel__label--bad">Before &middot; author every row from empty</div>
@@ -101,7 +101,7 @@
           <div class="spread__num">03</div>
           <div><div class="spread__label">The solution</div><h2>A generator that drafts like the best labeler.</h2></div>
         </div>
-        <p>I wrote the generator by distilling how the team's most experienced labeler actually works, the rules for the text, the actions, and the chart and widget specs, into one prompt built on judgment over rules: when a row doesn't fit a pattern, do what the best labeler would do. Running a whole dataset through one model would be slow and lossy, so a script splits the sheet into fifty-row chunks, a parallel agent drafts each chunk, and the results are glued back into one sheet. That draft, about seventy percent complete, went to a team I coordinated for the final review, where experts validate and correct.</p>
+        <p>The generator distills how the team's most experienced labeler actually works, the rules for the text, the actions, and the chart and widget specs, into one prompt built on judgment over rules: when a row doesn't fit a pattern, do what the best labeler would do. Running a whole dataset through one model would be slow and lossy, so the pipeline splits the sheet into fifty-row chunks, drafts each with a parallel agent, and glues the results back into one sheet. The draft, about seventy percent complete, goes to the team for a coordinated final review, where experts validate and correct.</p>
         <div class="loop">
           <div class="loop__step"><div class="loop__n">01</div><div class="loop__head">Split</div><div class="loop__sub">the sheet into fifty-row chunks</div></div>
           <div class="loop__step"><div class="loop__n">02</div><div class="loop__head">Draft in parallel</div><div class="loop__sub">one agent per chunk, to spec</div></div>
@@ -111,7 +111,7 @@
         </div>
         <div class="callout" style="margin-top:22px;">
           <div class="callout__label">The safeguard that mattered at scale</div>
-          <p>In review, I caught a path that could quietly overwrite a validated answer with a model's draft, no trace left behind. I closed it, deleting the path and adding a check that fails the run if it is ever attempted. Every original answer stays intact, on every code path.</p>
+          <p>In review, a path surfaced that could quietly overwrite a validated answer with a model's draft, no trace left behind. Closing it meant deleting the path and adding a check that fails the run if it is ever attempted. Every original answer stays intact, on every code path.</p>
         </div>
       </section>
 
