@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="color-scheme" content="light">
-<meta name="description" content="How I scaled the ground truth an agentic platform's quality gate ran on: I owned its creation, validation, and maintenance, and built the approach that let offline evals run across every skill.">
+<meta name="description" content="A case study: the quality gate that decided every skill launch ran on ground truth, and as the platform grew, that ground truth had to scale. The problem, the insight, and the system that solved it.">
 <meta property="og:title" content="Ground truth at scale &middot; Simone Muro">
-<meta property="og:description" content="A quality gate decided every launch; it ran on ground truth I owned. I built the approach that let offline evals scale across every skill.">
+<meta property="og:description" content="The quality gate ran on ground truth. As the platform grew to dozens of skills, making it by hand couldn't keep up. How that got solved.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/quality-program.html">
 <meta name="twitter:card" content="summary">
@@ -31,16 +31,16 @@
   <!-- HERO -->
   <header class="wrap hero">
     <div class="kicker">Case No. 03 &nbsp;&middot;&nbsp; Ground truth &nbsp;&middot;&nbsp; Intuit Intelligence &middot; quality team</div>
-    <h1>Quality gated every launch. <em>I scaled the ground truth under it.</em></h1>
-    <p class="hero__lede">No skill on the platform shipped until it cleared the quality gate, and that gate ran on offline evaluations against ground truth: the exact answer each skill should give. I owned that ground truth end to end. The hard problem was scale, so I built the approach that let offline evals run across every skill: pre-fill generators, human-in-the-loop validation, and the simulator instructions that drive each eval.</p>
+    <h1>Quality gated every launch. <em>The ground truth behind it had to scale.</em></h1>
+    <p class="hero__lede">No skill on the platform shipped until it cleared the quality gate, and the gate ran on offline evals that scored every answer against ground truth: the ideal answer for a given scenario. As the platform grew to dozens of skills, making that ground truth by hand fell behind, one answer at a time. A gate is only as good as the answer key behind it, so the answer key had to keep up.</p>
   </header>
 
   <!-- VERDICT -->
   <section class="wrap verdict">
     <div class="verdict__grid">
-      <div class="verdict__cell"><div class="verdict__k">Problem</div><p>Every launch was gated on offline evals against ground truth. Authoring that ground truth by hand couldn't scale.</p></div>
-      <div class="verdict__cell"><div class="verdict__k">My scope</div><p>The ground truth end to end: creation, validation, maintenance, and scale.</p></div>
-      <div class="verdict__cell"><div class="verdict__k">What I built</div><p>The approach that made offline evals scale: pre-fill generators, human-in-the-loop validation, and simulator instructions.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">Problem</div><p>The quality gate ran on ground truth. As the platform grew, authoring it by hand couldn't keep up.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">Insight</div><p>The bottleneck was authoring, not expert judgment. Move the effort to validation.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">What shipped</div><p>Generators that pre-fill each answer to spec, human-in-the-loop validation, and the simulator instructions that drive each eval.</p></div>
       <div class="verdict__cell"><div class="verdict__k">Outcome</div><p>Offline evals ran across every skill; quality rose +8 to 13 points across three.</p></div>
     </div>
   </section>
@@ -53,9 +53,9 @@
       <section class="section" id="s01">
         <div class="spread">
           <div class="spread__num">01</div>
-          <div><div class="spread__label">The gate</div><h2>No skill shipped without clearing it.</h2></div>
+          <div><div class="spread__label">The problem</div><h2>The gate was only as good as its answer key.</h2></div>
         </div>
-        <p>Quality was the gate. A skill went live, got blocked, or rolled back based on offline evaluations, and those evals ran against ground truth: the exact answer each skill should give and the actions it should take. A wrong tax answer or a hallucinated balance costs real money and trust, so the program measured answers against that checked ground truth, not on how fluent they sounded. I owned the ground truth end to end. I created the answers, validated them with the experts, and kept them current as the platform grew. I also expanded what quality measured, from accuracy, completeness, and relevance out to personalization, the right tool calls, and the right actions, and I trained the designers who authored to the standard.</p>
+        <p>Quality was the gate. A skill went live, got blocked, or rolled back on its offline eval score, and every eval compared the skill's answer to ground truth: the ideal answer for a scenario, the actions it should take, and how it should be judged, on correctness, completeness, relevance, personalization, tool calls, and actions. Ground truth was the foundation the whole program stood on, and it was falling behind. Each new skill needed its own, and every answer was written from a blank sheet, one at a time. That put domain experts on data entry instead of judgment, and it left the gate unable to keep pace with the skills shipping around it.</p>
         <div class="art">
           <div class="art__cap"><span class="mono">What one ground-truth row holds</span><span class="tag tag--neutral">Schematic</span></div>
           <div class="kv" style="padding:20px 18px;">
@@ -71,20 +71,12 @@
       <section class="section" id="s02">
         <div class="spread">
           <div class="spread__num">02</div>
-          <div><div class="spread__label">The build</div><h2>Hand-authoring couldn't scale. So I built the system.</h2></div>
+          <div><div class="spread__label">The insight</div><h2>Stop starting from a blank page.</h2></div>
         </div>
-        <p>As the platform grew to dozens of skills, authoring ground truth by hand fell behind. Experts spent their hours filling fields instead of making judgment calls, and every new skill started from a blank sheet. I built the approach that let offline evals run at scale, in three parts: pre-fill generators that draft each answer to spec, human-in-the-loop validation where experts review and correct instead of writing from scratch, and the simulator instructions I generated to drive each eval. I codified it so the same process runs for any skill, not just the one in front of me.</p>
-        <div class="judge" style="margin-bottom:24px;">
-          <div class="panel__label">The approach, in three parts</div>
-          <div class="judge__row">
-            <div class="jchip"><div class="jchip__head">Pre-fill generators</div><div class="jchip__sub">draft each answer to spec, so no row starts blank</div></div>
-            <div class="jchip"><div class="jchip__head">Human-in-the-loop</div><div class="jchip__sub">experts review and correct, not author from scratch</div></div>
-            <div class="jchip"><div class="jchip__head">Simulator instructions</div><div class="jchip__sub">drive each eval, replaying the conversation to score</div></div>
-          </div>
-        </div>
+        <p>The bottleneck wasn't expert judgment; it was everything wrapped around it. Experts were writing boilerplate and filling structured fields before they ever reached the part that needed them, deciding what a good answer actually was. So I moved the effort. If each answer arrived pre-drafted to spec, review and correction would replace authoring, and expert time would land where it mattered. Running the eval needed the same treatment: a dependable way to replay each conversation so the answer could be scored against ground truth.</p>
         <div class="cols2">
           <div class="panel">
-            <div class="panel__label panel__label--bad">Before &middot; blank-page authoring</div>
+            <div class="panel__label panel__label--bad">Where the hours went &middot; before</div>
             <ul class="checklist">
               <li><span class="x">&times;</span>Open an empty row</li>
               <li><span class="x">&times;</span>Write the answer, by hand</li>
@@ -93,33 +85,35 @@
             </ul>
           </div>
           <div class="panel panel--tint">
-            <div class="panel__label">After &middot; pre-fill, then validate</div>
+            <div class="panel__label">Where they should go &middot; after</div>
             <ul class="checklist">
               <li><span class="c">&check;</span>The answer arrives pre-filled to spec</li>
               <li><span class="c">&check;</span>An expert reviews and corrects</li>
-              <li><span class="c">&check;</span>Judgment goes to how it should be graded</li>
-              <li><span class="c">&check;</span>The same system runs for any skill</li>
+              <li><span class="c">&check;</span>Judgment goes to what a good answer is</li>
+              <li><span class="c">&check;</span>The same process runs for any skill</li>
             </ul>
           </div>
         </div>
-        <p class="note">I refined the generators over many passes, testing each version on a sample before it touched the real set. That iteration is what turned a one-off script into something the whole program could rely on.</p>
       </section>
 
       <!-- 03 -->
       <section class="section" id="s03">
         <div class="spread">
           <div class="spread__num">03</div>
-          <div><div class="spread__label">Keeping it honest</div><h2>Scale is only worth it if the output stays trustworthy.</h2></div>
+          <div><div class="spread__label">The solution</div><h2>A system any skill could run through.</h2></div>
         </div>
-        <p>I re-checked the ground truth in waves, a fresh keep-or-cut call on each row with the original label hidden, so no one anchored on the first answer. I built the guardrail that keeps a validated answer from ever being overwritten by a model's draft: a reviewer caught the risk, I closed the path, and added a check that fails the run if it's ever tried. And because the judges that scored every skill ran against my ground truth, I gave the eval team the human labels that helped them validate those judges.</p>
-        <div class="art">
-          <div class="art__cap"><span class="mono">The check that runs on every batch</span><span class="tag tag--neutral">Schematic</span></div>
-          <div class="gates">
-            <div class="gate"><span class="gate__mark gate__mark--ok">&check;</span><span class="txt"><strong class="ok">originals preserved</strong> &middot; every validated answer is left exactly as it was</span></div>
-            <div class="gate"><span class="gate__mark gate__mark--ok">&check;</span><span class="txt"><strong class="ok">no legacy leak</strong> &middot; old-format text never bleeds into the new rows</span></div>
-            <div class="gate"><span class="gate__mark gate__mark--ok">&check;</span><span class="txt"><strong class="ok">counts match</strong> &middot; row count and fill rate line up with the source</span></div>
-            <div class="gate"><span class="gate__mark gate__mark--ok">&check;</span><span class="txt"><strong class="ok">flags surface</strong> &middot; anything uncertain is raised for a human to resolve</span></div>
+        <p>It came together in three parts: generators that pre-fill each answer to spec, human-in-the-loop validation that puts an expert on every draft to review and correct, and simulator instructions that drive each eval by replaying the conversation to be scored. I refined the generators over many passes, each version tested on a sample before it touched the real set, until the same process could run for any skill rather than the one in front of it.</p>
+        <div class="judge" style="margin-bottom:22px;">
+          <div class="panel__label">The system, in three parts</div>
+          <div class="judge__row">
+            <div class="jchip"><div class="jchip__head">Pre-fill generators</div><div class="jchip__sub">draft each answer to spec, so no row starts blank</div></div>
+            <div class="jchip"><div class="jchip__head">Human-in-the-loop</div><div class="jchip__sub">an expert reviews and corrects every draft</div></div>
+            <div class="jchip"><div class="jchip__head">Simulator instructions</div><div class="jchip__sub">replay each conversation so the answer can be scored</div></div>
           </div>
+        </div>
+        <div class="callout">
+          <div class="callout__label">The safeguard that mattered at scale</div>
+          <p>In review, I caught a path that could quietly overwrite a validated answer with a model's draft, no trace left behind. I closed it, deleting the path and adding a check that fails the run if it is ever attempted. Every original answer stays intact, on every code path.</p>
         </div>
       </section>
 
@@ -127,22 +121,14 @@
       <section class="section" id="s04">
         <div class="spread spread--tight">
           <div class="spread__num">04</div>
-          <div><div class="spread__label">The record</div><h2>What I built.</h2></div>
+          <div><div class="spread__label">The outcome</div><h2>The gate kept pace with the platform.</h2></div>
         </div>
+        <p>Offline evals ran across every skill instead of stalling behind manual authoring. A large batch that had taken about three weeks came down to about one. And on the three skills measured through this work, quality rose 8 to 13 points.</p>
         <div class="metrics" style="grid-template-columns:repeat(2,1fr);">
-          <div class="metric"><div class="metric__v">+8&ndash;13</div><div class="metric__k">points quality rose across three skills, on the ground truth I owned</div></div>
+          <div class="metric"><div class="metric__v">+8&ndash;13</div><div class="metric__k">points quality rose across three skills</div></div>
           <div class="metric"><div class="metric__v">3&rarr;1 wk</div><div class="metric__k">turnaround on a large batch, once the system ran</div></div>
         </div>
-        <div class="panel list-panel">
-          <div class="panel__label">The work</div>
-          <ul>
-            <li>The offline ground truth every skill's quality was measured on: creation, validation, and maintenance</li>
-            <li>Expanding what quality measured, and training designers to the standard</li>
-            <li>The system that scaled it: pre-fill generators, human-in-the-loop validation, and simulator instructions</li>
-            <li>Keeping it honest: the re-checks, the originals-safe guardrail, and the labels that helped validate the judges</li>
-          </ul>
-        </div>
-        <div class="closer"><p>A gate is only as good as the answer key behind it. I owned that answer key, and I built the system that let it keep up with the platform.</p></div>
+        <div class="closer"><p>A gate is only as good as the answer key behind it. This is the system that kept the answer key honest and current as fast as the platform could grow.</p></div>
       </section>
 
     </div>
