@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="color-scheme" content="light">
-<meta name="description" content="The eval system behind an agentic support platform: golden datasets, LLM-judge validation, a pre-fill pipeline, and blind ground-truth audits that turned quality into a release gate.">
-<meta property="og:title" content="The Quality Program · Simone Muro">
-<meta property="og:description" content="How I made quality a release gate: golden datasets, validated LLM judges, a pre-fill pipeline shipped as platform code, and blind audits. +8 to 13 points across three skills.">
+<meta name="description" content="I owned the offline ground truth an agentic support platform measured its quality against, and built the generators that let it scale across every skill: golden datasets, validated LLM judges, and blind ground-truth audits.">
+<meta property="og:title" content="Ground truth &middot; Simone Muro">
+<meta property="og:description" content="I owned the ground truth an entire agentic platform measured its quality against, and built the generators that let it scale across every skill.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/quality-program.html">
 <meta name="twitter:card" content="summary">
-<title>The Quality Program · Simone Muro</title>
+<title>Ground truth &middot; Simone Muro</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -30,18 +30,18 @@
 
   <!-- HERO -->
   <header class="wrap hero">
-    <div class="kicker">Case No. 03 &nbsp;&middot;&nbsp; The Quality Program &nbsp;&middot;&nbsp; Agentic platform &middot; quality team</div>
+    <div class="kicker">Case No. 03 &nbsp;&middot;&nbsp; Ground truth &nbsp;&middot;&nbsp; Intuit Intelligence &middot; quality team</div>
     <h1>The answer <em>sounded right.</em></h1>
-    <p class="hero__lede">A fluent, confident answer invented a date about a customer's payroll taxes. I built the eval system that catches that before it ships &mdash; and turned quality into a gate every release has to pass.</p>
+    <p class="hero__lede">A fluent, confident answer invented a date about a customer's payroll taxes. Catching that takes one thing: a checked answer to compare against. I owned the ground truth that an entire agentic platform measured its quality against, and built the generators that let it scale across every skill.</p>
   </header>
 
   <!-- VERDICT -->
   <section class="wrap verdict">
     <div class="verdict__grid">
-      <div class="verdict__cell"><div class="verdict__k">Problem</div><p>Fluent answers that are confidently wrong &mdash; and read as right.</p></div>
-      <div class="verdict__cell"><div class="verdict__k">Goal</div><p>Make quality a release gate, not a subjective judgment call.</p></div>
-      <div class="verdict__cell"><div class="verdict__k">My scope</div><p>Golden datasets, LLM-judge validation, the pre-fill pipeline, and the blind audits.</p></div>
-      <div class="verdict__cell"><div class="verdict__k">Outcome</div><p>Quality became a gate every release has to clear; +8&ndash;13 pts across three skills.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">Problem</div><p>Fluent answers that are confidently wrong, and still read as right.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">My scope</div><p>The offline ground truth, human-validated, that measured conversation quality across every skill.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">The build</div><p>Generators that pre-fill ground truth to spec, so experts validate and correct instead of authoring from blank rows.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">Contributed to</div><p>Quality rose +8 to 13 points across three skills, measured against the ground truth I owned.</p></div>
     </div>
   </section>
 
@@ -55,16 +55,16 @@
           <div class="spread__num">01</div>
           <div><div class="spread__label">The catch</div><h2>Sounds right. Fails the bar.</h2></div>
         </div>
-        <p>Grade an answer on how it <em>reads</em>, and a customer gets told their taxes were filed on a day that never happened. Three gates pass; the one that matters catches the invented date.</p>
+        <p>Grade an answer on how it <em>reads</em>, and a customer gets told their taxes were filed on a day that never happened. Three gates pass. The one that matters catches the invented date, and it can only catch it because there is a checked answer to compare against: the ground truth.</p>
         <div class="art">
-          <div class="art__cap"><span class="mono">The answer vs the record</span><span class="tag tag--neutral">Mock data</span></div>
+          <div class="art__cap"><span class="mono">The answer vs the ground truth</span><span class="tag tag--neutral">Mock data</span></div>
           <div class="compare">
             <div class="compare__pane">
               <div class="compare__label compare__label--bad">What the agent said</div>
               <div class="compare__said">&ldquo;Your 941 federal deposit was filed <span class="mark-bad">on March 3</span>, so you're all set. You can download the dated confirmation from your tax records.&rdquo;</div>
             </div>
             <div class="compare__pane">
-              <div class="compare__label compare__label--rec">What the record held</div>
+              <div class="compare__label compare__label--rec">What the ground truth held</div>
               <div class="kv">
                 <div class="kv__row"><span class="kv__k">filing</span><span class="kv__v">941 federal deposit</span></div>
                 <div class="kv__row"><span class="kv__k">status</span><span class="kv__v kv__v--ok">filed</span></div>
@@ -73,10 +73,10 @@
             </div>
           </div>
           <div class="gates">
-            <div class="gate"><span class="gate__mark gate__mark--ok">&check;</span><span class="txt"><strong class="ok">correctness</strong> &middot; reports the filing and its status exactly as the record shows</span></div>
+            <div class="gate"><span class="gate__mark gate__mark--ok">&check;</span><span class="txt"><strong class="ok">correctness</strong> &middot; reports the filing and its status exactly as the ground truth shows</span></div>
             <div class="gate"><span class="gate__mark gate__mark--ok">&check;</span><span class="txt"><strong class="ok">completeness</strong> &middot; tells the customer how to get the formal confirmation</span></div>
-            <div class="gate"><span class="gate__mark gate__mark--ok">&check;</span><span class="txt"><strong class="ok">behavior</strong> &middot; checked the filing record before answering</span></div>
-            <div class="gate"><span class="gate__mark gate__mark--bad">&times;</span><span class="txt"><strong class="bad">no hallucination</strong> &middot; the answer invented &ldquo;March 3&rdquo;; the record holds no date</span></div>
+            <div class="gate"><span class="gate__mark gate__mark--ok">&check;</span><span class="txt"><strong class="ok">actions</strong> &middot; checked the filing record before answering</span></div>
+            <div class="gate"><span class="gate__mark gate__mark--bad">&times;</span><span class="txt"><strong class="bad">no hallucination</strong> &middot; the answer invented &ldquo;March 3&rdquo;; the ground truth holds no date</span></div>
           </div>
         </div>
       </section>
@@ -85,51 +85,61 @@
       <section class="section" id="s02">
         <div class="spread">
           <div class="spread__num">02</div>
-          <div><div class="spread__label">Move one</div><h2>I tested the judge before I trusted it.</h2></div>
+          <div><div class="spread__label">What I owned</div><h2>The answer key everything was scored against.</h2></div>
         </div>
-        <p>LLM judges are cheap, fast, and unproven. I validated them against 200 human-labeled tasks first. Once they cleared the bar, the planned 2,000-row vendor labeling wasn't justified &mdash; an eval program should tell you where quality is, and where your money isn't required.</p>
-        <div class="judge">
-          <div class="panel__label">Validating the judge, before scaling it</div>
-          <div class="judge__row">
-            <div class="jchip"><div class="jchip__head">LLM judge</div><div class="jchip__sub">cheap, fast, unproven</div></div>
-            <div class="jchip"><div class="jchip__head">200 tasks</div><div class="jchip__sub">human-labeled check</div></div>
-            <div class="jchip jchip--ok"><div class="jchip__head">Cleared the bar</div><div class="jchip__sub">judge vs. humans &check;</div></div>
-            <div class="jchip jchip--vio"><div class="jchip__head">2,000 rows</div><div class="jchip__sub">vendor labeling, now unnecessary</div></div>
+        <p>Ground truth is the north-star answer each model is graded against: the scenario, the answer it should give, and the actions it should take. I created it, validated it human-in-the-loop, verified it with the experts, kept it from going stale, and added rows as the platform grew. I also expanded what &ldquo;quality&rdquo; even measured, from accuracy, completeness, and relevance out to personalization, the right tool calls, and the right actions.</p>
+        <div class="art">
+          <div class="art__cap"><span class="mono">One ground-truth row</span><span class="tag tag--neutral">Mock data</span></div>
+          <div class="compare">
+            <div class="compare__pane">
+              <div class="compare__label compare__label--rec">The scenario</div>
+              <div class="compare__said">A customer asks whether their 941 federal deposit was filed, and when.</div>
+            </div>
+            <div class="compare__pane">
+              <div class="compare__label compare__label--rec">The answer it should give</div>
+              <div class="compare__said">State the filing and its status exactly as the record holds. Do not assert a date the record doesn't carry; offer where the dated confirmation lives.</div>
+            </div>
+          </div>
+          <div class="gates">
+            <div class="gate"><span class="gate__mark gate__mark--ok">&rarr;</span><span class="txt"><strong>Expected actions</strong> &middot; look up the filing record before answering</span></div>
+            <div class="gate"><span class="gate__mark gate__mark--ok">&rarr;</span><span class="txt"><strong>Graded on</strong> &middot; <span class="mono">correctness &middot; completeness &middot; relevance &middot; personalization &middot; tool calls &middot; actions</span></span></div>
           </div>
         </div>
+        <p class="note">What &ldquo;good&rdquo; meant grew over time. Early rows scored accuracy, completeness, and relevance. As skills started acting on a customer's account, the ground truth had to grade personalization, whether the right tool was called, and whether the right action was taken.</p>
       </section>
 
       <!-- 03 -->
       <section class="section" id="s03">
         <div class="spread">
           <div class="spread__num">03</div>
-          <div><div class="spread__label">Move two</div><h2>I made the slowest step a review, not a rewrite.</h2></div>
+          <div><div class="spread__label">The build</div><h2>I made the slowest step a review, not a rewrite.</h2></div>
         </div>
-        <p>Blank-page authoring became review-and-correct across 3,000+ rows, with no added headcount. An LLM pre-fills every field; a designer reviews and corrects. The same data feeds new-skill development too.</p>
+        <p>As the program grew, hand-authoring didn't scale. Experts burned their time on error-prone data entry, filling chart, widget, and graph evaluation formats by hand, instead of on judgment. So I codified it. I gathered the ground-truth guidelines, the expert-training docs, the meeting notes, the Slack threads, and the team's decisions about how each output should be graded, and turned them into a generator prompt that pre-fills every row to spec. Blank-page authoring became review-and-correct, and the experts got their judgment back.</p>
         <div class="cols2" style="margin-bottom:20px;">
           <div class="panel">
             <div class="panel__label panel__label--bad">Before &middot; blank-page authoring</div>
             <ul class="checklist">
               <li><span class="x">&times;</span>Open an empty row</li>
               <li><span class="x">&times;</span>Write the scenario, by hand</li>
-              <li><span class="x">&times;</span>Write the ground truth, by hand</li>
-              <li><span class="x">&times;</span>Write the expected actions + gates, by hand</li>
+              <li><span class="x">&times;</span>Write the ground-truth answer, by hand</li>
+              <li><span class="x">&times;</span>Fill the chart, widget, and graph formats, by hand</li>
             </ul>
           </div>
           <div class="panel panel--tint">
-            <div class="panel__label">After &middot; pre-fill, then review</div>
+            <div class="panel__label">After &middot; pre-fill, then validate</div>
             <ul class="checklist">
-              <li><span class="c">&check;</span>An LLM pre-fills every field first</li>
-              <li><span class="c">&check;</span>A designer reviews and corrects</li>
-              <li><span class="c">&check;</span>The slow step becomes a fast one</li>
-              <li><span class="c">&check;</span>The same data feeds new-skill dev too</li>
+              <li><span class="c">&check;</span>The generator pre-fills every field to spec</li>
+              <li><span class="c">&check;</span>An expert reviews and corrects</li>
+              <li><span class="c">&check;</span>Judgment goes to how the output should be graded</li>
+              <li><span class="c">&check;</span>The same data feeds new-skill development too</li>
             </ul>
           </div>
         </div>
+        <div class="stat-line"><span class="stat-badge">3 wk &rarr; 1 wk</span> turnaround on a large golden-dataset batch, once the generators ran, across 3,000+ rows with no added headcount.</div>
         <div class="stat-line"><span class="stat-badge">+1,590 lines</span> shipped as platform code, reviewed and merged.</div>
         <div class="callout">
           <div class="callout__label">The bug that mattered</div>
-          <p>A path could silently overwrite a human's original ground truth with model output &mdash; no audit trail, quietly poisoning every downstream judge. I caught it in review, deleted the path so originals are never touched, added a check that fails the run if it's ever violated, and shipped the fix in about four hours.</p>
+          <p>One path could silently overwrite a human's validated ground truth with model output, no audit trail, quietly poisoning every judge built on it. I caught it in review, deleted the path so originals are never touched, added a check that fails the run if it's ever violated, and shipped the fix in about four hours.</p>
         </div>
       </section>
 
@@ -137,10 +147,36 @@
       <section class="section" id="s04">
         <div class="spread">
           <div class="spread__num">04</div>
-          <div><div class="spread__label">Move three</div><h2>I made the audit blind.</h2></div>
+          <div><div class="spread__label">How it ran</div><h2>Then I handed it off.</h2></div>
         </div>
-        <p>Every row got a fresh KEEP-or-DELETE call with the original label hidden, so nobody could anchor on the expert's first answer. If the ground truth is wrong, everything built on it inherits the error.</p>
-        <div class="art">
+        <p>Beyond pre-filling the ground truth, I automated the script that feeds the simulator bot. When the pipeline runs, the bot follows my script to trigger a flow and play the customer; an LLM-as-judge then compares the answer against the ground truth and rates it. I handed the validated ground truth and the simulator scripts to the data-science teams. The daily pipeline, the drift-catching across every release, and the reporting out were theirs, not mine.</p>
+        <div class="loop">
+          <div class="loop__step"><div class="loop__n">01</div><div class="loop__head">Ground truth</div><div class="loop__sub">the answer key &middot; mine</div></div>
+          <div class="loop__step"><div class="loop__n">02</div><div class="loop__head">Simulator script</div><div class="loop__sub">triggers each flow &middot; mine</div></div>
+          <div class="loop__step"><div class="loop__n">03</div><div class="loop__head">Simulator bot</div><div class="loop__sub">plays the customer, a few turns deep</div></div>
+          <div class="loop__step"><div class="loop__n">04</div><div class="loop__head">LLM judge</div><div class="loop__sub">rates the answer against the ground truth</div></div>
+          <div class="loop__step"><div class="loop__n">05</div><div class="loop__head">Daily pipeline</div><div class="loop__sub">run by the quality team, every skill</div></div>
+        </div>
+        <div class="loop__caption">&#8635; run daily by the quality team; the reporting was theirs</div>
+      </section>
+
+      <!-- 05 -->
+      <section class="section" id="s05">
+        <div class="spread">
+          <div class="spread__num">05</div>
+          <div><div class="spread__label">Keeping it honest</div><h2>I tested the judge, and re-audited the truth.</h2></div>
+        </div>
+        <p>Two things can rot underneath a quality number: a judge you never checked, and a ground truth you stopped questioning. I validated the LLM judges against 200 human-labeled tasks before trusting them. Once they cleared the bar, the planned 2,000-row vendor labeling wasn't justified, so it didn't happen. And I re-audited the ground truth blind, a fresh KEEP-or-DELETE call on every row with the original label hidden, so no one could anchor on the first answer.</p>
+        <div class="judge">
+          <div class="panel__label">Validating the judge, before trusting it</div>
+          <div class="judge__row">
+            <div class="jchip"><div class="jchip__head">LLM judge</div><div class="jchip__sub">cheap, fast, unproven</div></div>
+            <div class="jchip"><div class="jchip__head">200 tasks</div><div class="jchip__sub">human-labeled check</div></div>
+            <div class="jchip jchip--ok"><div class="jchip__head">Cleared the bar</div><div class="jchip__sub">judge vs. humans &check;</div></div>
+            <div class="jchip jchip--vio"><div class="jchip__head">2,000 rows</div><div class="jchip__sub">vendor labeling, now unnecessary</div></div>
+          </div>
+        </div>
+        <div class="art" style="margin-top:20px;">
           <div class="art__cap"><span class="mono">Re-auditing the ground truth &middot; original labels hidden</span><span class="mono" style="text-transform:uppercase;">wave one</span></div>
           <div class="audit">
             <span class="achip achip--keep">KEEP</span>
@@ -156,54 +192,38 @@
         </div>
       </section>
 
-      <!-- 05 -->
-      <section class="section" id="s05">
-        <div class="spread">
-          <div class="spread__num">05</div>
-          <div><div class="spread__label">The loop</div><h2>It's a loop, not a verdict.</h2></div>
-        </div>
-        <p>A model that grades how an answer reads will never catch the invented date. This loop tests for what fluent prose hides &mdash; and it runs on every skill, every release.</p>
-        <div class="loop">
-          <div class="loop__step"><div class="loop__n">01</div><div class="loop__head">Golden datasets</div><div class="loop__sub">correct answer + expected actions</div></div>
-          <div class="loop__step"><div class="loop__n">02</div><div class="loop__head">LLM judges</div><div class="loop__sub">validated against humans</div></div>
-          <div class="loop__step"><div class="loop__n">03</div><div class="loop__head">Simulators</div><div class="loop__sub">a bot plays the customer, 3 turns deep</div></div>
-          <div class="loop__step"><div class="loop__n">04</div><div class="loop__head">Regression</div><div class="loop__sub">last month's quality holds</div></div>
-          <div class="loop__step"><div class="loop__n">05</div><div class="loop__head">Release gate</div><div class="loop__sub">clear the bar, or don't ship</div></div>
-        </div>
-        <div class="loop__caption">&#8635; every skill, every release</div>
-      </section>
-
       <!-- 06 -->
       <section class="section" id="s06">
         <div class="spread spread--tight">
           <div class="spread__num">06</div>
-          <div><div class="spread__label">The record</div><h2>Quality became a release gate.</h2></div>
+          <div><div class="spread__label">The record</div><h2>What I owned, and what I didn't.</h2></div>
         </div>
         <div class="metrics">
-          <div class="metric"><div class="metric__v">+8&ndash;13</div><div class="metric__k">pts quality across three skills, once the gate held</div></div>
-          <div class="metric"><div class="metric__v">200</div><div class="metric__k">human-labeled tasks that validated the judges</div></div>
-          <div class="metric"><div class="metric__v">2,000</div><div class="metric__k">rows of vendor labeling the validation made unnecessary</div></div>
-          <div class="metric"><div class="metric__v">~4 hrs</div><div class="metric__k">to delete a ground-truth-overwrite bug caught in review</div></div>
+          <div class="metric"><div class="metric__v">+8&ndash;13</div><div class="metric__k">pts quality across three skills, measured against my ground truth</div></div>
+          <div class="metric"><div class="metric__v">3&rarr;1 wk</div><div class="metric__k">batch turnaround once the generators ran</div></div>
+          <div class="metric"><div class="metric__v">3,000+</div><div class="metric__k">ground-truth rows produced for review, no added headcount</div></div>
+          <div class="metric"><div class="metric__v">+1,590</div><div class="metric__k">lines shipped as reviewed platform code</div></div>
         </div>
         <div class="cols2">
           <div class="panel list-panel">
             <div class="panel__label">Mine, end to end</div>
             <ul>
-              <li>The golden datasets and their ground truth</li>
-              <li>Validating the LLM judges against human labels</li>
-              <li>The pre-fill pipeline, shipped as reviewed platform code</li>
-              <li>The blind re-audit of the ground truth</li>
+              <li>The offline ground truth that measured conversation quality across every skill</li>
+              <li>The generators that pre-fill it to spec, shipped as reviewed platform code</li>
+              <li>The simulator scripts the pipeline's bot follows</li>
+              <li>Validating the judges against human labels, and the blind re-audit</li>
             </ul>
           </div>
           <div class="panel panel--tint list-panel">
-            <div class="panel__label">What I'd do next</div>
+            <div class="panel__label">The team's, not mine</div>
             <ul>
-              <li>Push the gate earlier into the design cycle, not just before launch</li>
-              <li>Sample the blind audit continuously instead of in waves</li>
+              <li>The quality program itself, across PMs, designers, and data scientists</li>
+              <li>The daily pipeline that scored every skill and caught drift</li>
+              <li>Reporting the quality numbers out to the org</li>
             </ul>
           </div>
         </div>
-        <div class="closer"><p>A year spent defining what good looks like is why I now build to that bar myself.</p></div>
+        <div class="closer"><p>I spent a year defining what a good answer looks like, at the scale of a whole platform. That's why I now build to that bar myself.</p></div>
       </section>
 
     </div>
