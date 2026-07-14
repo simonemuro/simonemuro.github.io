@@ -61,3 +61,16 @@ a { color: var(--accent); }
 
 /* --- favicon-tinted bits / focus rings pick up the accent via tokens --- */
 :focus-visible { outline-color: var(--accent); }
+
+/* --- "Ask my agent" CTA: chat icon + live typing dots --- */
+.chat-cta { display: inline-flex; align-items: center; gap: 9px; }
+.chat-cta .cta-ic { flex: none; transition: transform .25s ease; }
+.chat-cta:hover .cta-ic { transform: scale(1.09); }
+.chat-cta .cta-dot { animation: ctaBlink 1.6s infinite both; }
+.chat-cta .cta-dot:nth-of-type(2) { animation-delay: .22s; }
+.chat-cta .cta-dot:nth-of-type(3) { animation-delay: .44s; }
+@keyframes ctaBlink { 0%, 72%, 100% { opacity: .45; } 36% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .chat-cta .cta-dot { animation: none; opacity: .9; }
+  .chat-cta:hover .cta-ic { transform: none; }
+}
