@@ -109,13 +109,13 @@
       <section class="section" id="s03">
         <div class="spread">
           <div class="spread__num">03</div>
-          <div><div class="spread__label">The build</div><h2>The infrastructure that produces it at scale.</h2></div>
+          <div><div class="spread__label">The build</div><h2>Agents draft. Human judgment validates and corrects.</h2></div>
         </div>
         <p>Written by hand, one row at a time, this never keeps up with a platform of dozens of skills. So the standard got encoded: a generator prompt that distills how the best labeler works, then a pipeline that splits the sheet into fifty-row chunks, drafts each with a parallel agent, and glues the results back into one sheet. The draft lands about seventy percent complete. Experts validate and correct from there, which is where their judgment belongs, including the calls on escalation and handoff. Simulator instructions get pre-filled too, teaching the bot how to ask the follow-up questions a real customer would, so multi-turn behavior gets exercised instead of assumed. The result is a golden dataset ready for offline evaluation. It shipped as platform code, reviewed like any other engineering work on the team.</p>
         <div class="loop" style="margin-bottom:22px;">
           <div class="loop__step"><div class="loop__n">01</div><div class="loop__head">Encode the standard</div><div class="loop__sub">the generator prompt: how the best labeler works</div></div>
           <div class="loop__step"><div class="loop__n">02</div><div class="loop__head">Draft the sheet</div><div class="loop__sub">split into chunks, parallel agents, glue back</div></div>
-          <div class="loop__step"><div class="loop__n">03</div><div class="loop__head">Human validation</div><div class="loop__sub">experts correct, judge escalation and handoff</div></div>
+          <div class="loop__step"><div class="loop__n">03</div><div class="loop__head">Human validation</div><div class="loop__sub">experts validate and correct, judge escalation and handoff</div></div>
           <div class="loop__step"><div class="loop__n">04</div><div class="loop__head">Simulator instructions</div><div class="loop__sub">teach the bot to ask the follow-ups</div></div>
           <div class="loop__step"><div class="loop__n">05</div><div class="loop__head">Offline eval</div><div class="loop__sub">bot runs the script, judge scores against ground truth</div></div>
         </div>
