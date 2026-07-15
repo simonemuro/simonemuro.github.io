@@ -62,18 +62,47 @@
       <section class="section" id="s02">
         <div class="spread">
           <div class="spread__num">02</div>
-          <div><div class="spread__label">The evolution</div><h2>Answer keys stopped being enough.</h2></div>
+          <div><div class="spread__label">Where it started</div><h2>An answer key, written by hand, one row at a time.</h2></div>
         </div>
-        <p>Ground truth started as an answer key: the words a skill should say. Then the skills stopped answering and started doing, and the answer key had to grow with them. A row now had to carry which action to take, the steps it required, the entities to capture before acting, and, when the action would change or move account data, whether the agent asked permission and confirmed before executing. Evaluating prose became evaluating behavior. That is also what made it hard: one row could need a conversation designer for the turns, a domain expert for the steps, and a data scientist for the chart spec a system scores.</p>
+        <p>The program began as an answer key. An expert took a seed question and wrote the ideal response, and that response became the ground truth the judge scored a skill against. Getting a single row right was a relay. A conversation designer drafted the ideal answer, shaped turn by turn. Domain experts checked it against the product, flagged what was wrong, and rewrote it. Then it went back to the designer to repair voice, tone, and the conversational turns the rewrite had flattened. Every row, by hand, around the loop twice before it ever reached the judge.</p>
+        <div class="loop" style="margin-bottom:14px;">
+          <div class="loop__step"><div class="loop__n">01</div><div class="loop__head">Seed question</div><div class="loop__sub">a real question a customer asked</div></div>
+          <div class="loop__step"><div class="loop__n">02</div><div class="loop__head">Designer drafts</div><div class="loop__sub">the ideal answer, turn by turn</div></div>
+          <div class="loop__step"><div class="loop__n">03</div><div class="loop__head">Experts validate</div><div class="loop__sub">check the product, flag, rewrite</div></div>
+          <div class="loop__step"><div class="loop__n">04</div><div class="loop__head">Back to the designer</div><div class="loop__sub">repair voice, tone, and turns</div></div>
+          <div class="loop__step"><div class="loop__n">05</div><div class="loop__head">Judge scores</div><div class="loop__sub">the skill's answer against the row</div></div>
+        </div>
+        <div class="loop__caption">&#8635; every row, by hand, before it ever reached the judge</div>
+        <div class="art" style="margin-top:24px;">
+          <div class="art__cap"><span class="mono">What the judge scored</span><span class="tag tag--neutral">Six dimensions</span></div>
+          <div class="gates">
+            <div class="gate"><span class="gate__mark gate__mark--ok">&rarr;</span><span class="txt"><strong>correctness</strong> &middot; factually right against the ground truth</span></div>
+            <div class="gate"><span class="gate__mark gate__mark--ok">&rarr;</span><span class="txt"><strong>no hallucination</strong> &middot; nothing fabricated</span></div>
+            <div class="gate"><span class="gate__mark gate__mark--ok">&rarr;</span><span class="txt"><strong>completeness</strong> &middot; every part of the question addressed</span></div>
+            <div class="gate"><span class="gate__mark gate__mark--ok">&rarr;</span><span class="txt"><strong>relevance</strong> &middot; on topic, no padding</span></div>
+            <div class="gate"><span class="gate__mark gate__mark--ok">&rarr;</span><span class="txt"><strong>content compliance</strong> &middot; nothing disallowed, no prompt leaks</span></div>
+            <div class="gate"><span class="gate__mark gate__mark--ok">&rarr;</span><span class="txt"><strong>voice and tone</strong> &middot; conversational, at the right reading level</span></div>
+          </div>
+        </div>
+        <p class="note">The weight sat on accuracy. That is the part everyone could agree on, and the part a judge could check most confidently.</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="section" id="s03">
+        <div class="spread">
+          <div class="spread__num">03</div>
+          <div><div class="spread__label">What changed</div><h2>Accurate wasn't the same as good.</h2></div>
+        </div>
+        <p>Internal dogfooding and voice-of-customer told a different story than the scores did: answers were right and still falling short. Customers didn't want a correct paragraph about their own account. They wanted the assistant to know them, and to do the work rather than narrate it. Personalized, and do-it-for-me: take the action on my behalf. That broke the answer key. A row could no longer hold only the words a skill should say. It had to carry which action to take, the steps it required, the entities to capture before acting, and, when the action would change or move account data, whether the agent asked permission and confirmed before executing. Evaluating prose became evaluating behavior, and the relay that already couldn't keep up now had several times as much to get right.</p>
         <div class="art" style="margin-bottom:22px;">
-          <div class="art__cap"><span class="mono">What the eval had to check</span><span class="tag tag--neutral">Then and now</span></div>
+          <div class="art__cap"><span class="mono">What the row had to carry</span><span class="tag tag--neutral">Then and now</span></div>
           <div class="compare">
             <div class="compare__pane">
-              <div class="compare__label compare__label--rec">Then &middot; evaluate the answer</div>
-              <div class="compare__said">Is the text factually right, complete, and relevant? One field held the whole standard.</div>
+              <div class="compare__label compare__label--rec">Then &middot; the answer</div>
+              <div class="compare__said">The words a skill should say. One field held the whole standard, and the judge mostly asked whether it was accurate.</div>
             </div>
             <div class="compare__pane">
-              <div class="compare__label compare__label--bad">Now &middot; evaluate the behavior</div>
+              <div class="compare__label compare__label--bad">Now &middot; the behavior</div>
               <div class="compare__said">Was the right action taken, in the right steps? Were the entities captured first? Was permission asked, and confirmation given, before anything changed?</div>
             </div>
           </div>
@@ -105,21 +134,22 @@
         <p class="note">That rule is the behavior design, and the ground truth is where it gets written down. If the answer key doesn't say the agent should ask first, nothing downstream will ever catch it when the agent doesn't.</p>
       </section>
 
-      <!-- 03 -->
-      <section class="section" id="s03">
+      <!-- 04 -->
+      <section class="section" id="s04">
         <div class="spread">
-          <div class="spread__num">03</div>
+          <div class="spread__num">04</div>
           <div><div class="spread__label">The build</div><h2>Agents draft. Human judgment validates and corrects.</h2></div>
         </div>
-        <p>Written by hand, one row at a time, this never keeps up with a platform of dozens of skills. So the standard got encoded: a generator prompt that distills how the best labeler works, then a pipeline that splits the sheet into fifty-row chunks, drafts each with a parallel agent, and glues the results back into one sheet. The draft lands about seventy percent complete. Experts validate and correct from there, which is where their judgment belongs, including the calls on escalation and handoff. Simulator instructions get pre-filled too, teaching the bot how to ask the follow-up questions a real customer would, so multi-turn behavior gets exercised instead of assumed. The result is a golden dataset ready for offline evaluation. It shipped as platform code, reviewed like any other engineering work on the team.</p>
-        <div class="loop" style="margin-bottom:22px;">
+        <p>A relay of specialists, one row at a time, was never going to cover a platform of dozens of skills. So the standard got encoded: a generator prompt that distills how the best labeler works, then a pipeline that splits the sheet into fifty-row chunks, drafts each with a parallel agent, and glues the results back into one sheet. The draft lands about seventy percent complete. Experts validate and correct from there, which is where their judgment belongs, including the calls on escalation and handoff. Simulator instructions get pre-filled too, teaching the bot how to ask the follow-up questions a real customer would, so multi-turn behavior gets exercised instead of assumed. The result is a golden dataset ready for offline evaluation. It shipped as platform code, reviewed like any other engineering work on the team.</p>
+        <div class="loop" style="margin-bottom:14px;">
           <div class="loop__step"><div class="loop__n">01</div><div class="loop__head">Encode the standard</div><div class="loop__sub">the generator prompt: how the best labeler works</div></div>
           <div class="loop__step"><div class="loop__n">02</div><div class="loop__head">Draft the sheet</div><div class="loop__sub">split into chunks, parallel agents, glue back</div></div>
           <div class="loop__step"><div class="loop__n">03</div><div class="loop__head">Human validation</div><div class="loop__sub">experts validate and correct, judge escalation and handoff</div></div>
           <div class="loop__step"><div class="loop__n">04</div><div class="loop__head">Simulator instructions</div><div class="loop__sub">teach the bot to ask the follow-ups</div></div>
           <div class="loop__step"><div class="loop__n">05</div><div class="loop__head">Offline eval</div><div class="loop__sub">bot runs the script, judge scores against ground truth</div></div>
         </div>
-        <div class="art">
+        <div class="loop__caption">&#8635; the same process, for any skill</div>
+        <div class="art" style="margin-top:24px;">
           <div class="art__cap"><span class="mono">A pre-filled golden-dataset row</span><span class="tag tag--neutral">Representative &middot; mock data</span></div>
           <div class="sheet-wrap">
             <table class="sheet">
@@ -169,13 +199,13 @@
         </div>
       </section>
 
-      <!-- 04 -->
-      <section class="section" id="s04">
+      <!-- 05 -->
+      <section class="section" id="s05">
         <div class="spread spread--tight">
-          <div class="spread__num">04</div>
+          <div class="spread__num">05</div>
           <div><div class="spread__label">The outcome</div><h2>The bar kept pace with the platform.</h2></div>
         </div>
-        <p>Offline evals ran across every skill instead of stalling behind manual authoring. A large batch that had taken about three weeks came down to about one. On the three skills measured through this work, quality rose 8 to 13 points.</p>
+        <p>Offline evals ran across every skill instead of stalling behind a manual relay. A large batch that had taken about three weeks came down to about one. On the three skills measured through this work, quality rose 8 to 13 points.</p>
         <div class="metrics" style="grid-template-columns:repeat(3,1fr);">
           <div class="metric"><div class="metric__v">~70%</div><div class="metric__k">of each row drafted to spec, so experts validate instead of author</div></div>
           <div class="metric"><div class="metric__v">3&rarr;1 wk</div><div class="metric__k">turnaround on a large batch, once the pipeline ran</div></div>
