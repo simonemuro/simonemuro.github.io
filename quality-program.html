@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="color-scheme" content="light">
-<meta name="description" content="A case study: an AI quality gate ran on ground truth, and a single row could take three kinds of expert to write. How that scaled, with a generator that drafts like the best labeler and a pipeline that runs it in parallel.">
-<meta property="og:title" content="Ground truth at scale &middot; Simone Muro">
-<meta property="og:description" content="The quality gate ran on ground truth, and one row could need three kinds of expert. Here is the system that let it scale across every skill.">
+<meta name="description" content="No skill shipped until it cleared the quality bar. The program decided what went live, got blocked, or rolled back, running on ground truth and LLM-as-judge evals. I built the infrastructure that produced that ground truth at scale.">
+<meta property="og:title" content="Ground truth and offline evals &middot; Simone Muro">
+<meta property="og:description" content="Agents that touch money have to know when to act, when to ask first, when to stop, and when to hand off. Here is the system that defined that and proved it at scale.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/quality-program.html">
 <meta name="twitter:card" content="summary">
@@ -30,17 +30,17 @@
 
   <!-- HERO -->
   <header class="wrap hero">
-    <div class="kicker">Case No. 03 &nbsp;&middot;&nbsp; Ground truth &nbsp;&middot;&nbsp; Intuit Intelligence &middot; quality team</div>
-    <h1>The answer key behind the gate <em>took three kinds of expert.</em></h1>
-    <p class="hero__lede">No skill shipped until it cleared the quality gate, and the gate ran on offline evals that scored every answer against ground truth: the ideal answer for a given scenario. Producing that ground truth was the upstream the whole program depended on, and it was hard, not slow. A single row could need a conversation designer, a domain expert, and a data scientist, each for a different part of the answer. Finding all three for every row, across a platform of dozens of skills, is what couldn't scale.</p>
+    <div class="kicker">Case No. 03 &nbsp;&middot;&nbsp; Ground truth &amp; offline evals &nbsp;&middot;&nbsp; Intuit Intelligence &middot; quality program</div>
+    <h1>Agents that touch money <em>have to know when to ask first.</em></h1>
+    <p class="hero__lede">No skill shipped until it cleared the quality bar. The program decided what went live, what got blocked, and what rolled back, and the whole thing ran on ground truth and LLM-as-judge evaluations. Agentic finance is where behavior design matters: an agent that can run payroll or change an account has to know when to act, when to ask first, when to stop, and when to hand off. The definition of what good looks like, and what it takes to get there, is what we built. I built the system infrastructure that delivers it at scale.</p>
   </header>
 
   <!-- VERDICT -->
   <section class="wrap verdict">
     <div class="verdict__grid">
-      <div class="verdict__cell"><div class="verdict__k">Problem</div><p>The gate ran on ground truth, and a single row could need three kinds of expert. Finding them for every row didn't scale.</p></div>
-      <div class="verdict__cell"><div class="verdict__k">Insight</div><p>The rare work is the correction, not the blank-page draft. Pre-draft to spec, then have experts fix it.</p></div>
-      <div class="verdict__cell"><div class="verdict__k">What shipped</div><p>A generator that drafts like the best labeler, a pipeline that runs it in parallel, and a team that validates.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">The bar</div><p>No skill shipped without clearing it. The program decided live, blocked, or rolled back.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">What it ran on</div><p>Ground truth and LLM-as-judge evals: the definition of what good looks like, and what it takes to get there.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">What I built</div><p>The infrastructure that produces it at scale: the generator, the pre-filled sheet, the simulator instructions, the pipeline.</p></div>
       <div class="verdict__cell"><div class="verdict__k">Outcome</div><p>Offline evals ran across every skill; quality rose +8 to 13 points across three.</p></div>
     </div>
   </section>
@@ -53,61 +53,115 @@
       <section class="section" id="s01">
         <div class="spread">
           <div class="spread__num">01</div>
-          <div><div class="spread__label">The problem</div><h2>One row could take three kinds of expert.</h2></div>
+          <div><div class="spread__label">The bar</div><h2>No skill shipped until it cleared it.</h2></div>
         </div>
-        <p>Quality was the gate: a skill went live, got blocked, or rolled back on its offline eval score, and every eval compared the skill's answer to ground truth, the ideal answer for a scenario. Writing one row was rarely one person's job. The text answer needed a conversation designer. The actions needed a domain expert. A chart or a widget needed a data scientist. A single row could need all three, which is why ground truth was hard to scale, not just slow: every row was a small act of cross-disciplinary judgment.</p>
-        <div class="judge">
-          <div class="panel__label">What one row can demand</div>
-          <div class="judge__row">
-            <div class="jchip"><div class="jchip__head">Conversation designer</div><div class="jchip__sub">how many turns before a customer drops, how much information is too much, the entities to collect before acting, what good sounds like</div></div>
-            <div class="jchip"><div class="jchip__head">Domain expert</div><div class="jchip__sub">knows the product cold, spots a wrong navigation step, and knows the shortest path to the action</div></div>
-            <div class="jchip"><div class="jchip__head">Data scientist</div><div class="jchip__sub">specifies the structured chart or widget a system scores, its type, axis, and series, not the picture a customer sees</div></div>
-          </div>
-        </div>
+        <p>The quality program was the gate. It decided what went live, what got blocked, and what rolled back, and it ran on two things: ground truth, the definition of what a good answer looks like for a given customer question, and LLM-as-judge evaluations that scored every skill against it. In a financial product the stakes are behavioral, not just factual. An agent that can run payroll, delete records, or change what a customer owes has to know when to act, when to ask first, when to stop, and when to hand off. Defining that, and everything it takes to get there, is what the ground truth had to carry.</p>
       </section>
 
       <!-- 02 -->
       <section class="section" id="s02">
         <div class="spread">
           <div class="spread__num">02</div>
-          <div><div class="spread__label">The insight</div><h2>The rare work is the correction, not the blank page.</h2></div>
+          <div><div class="spread__label">The evolution</div><h2>Answer keys stopped being enough.</h2></div>
         </div>
-        <p>Experts weren't slow because judgment is slow. They were slow because every row started empty, and the hardest, rarest work, the cross-disciplinary judgment, was trapped behind hours of drafting and formatting. The effort had to move. If a system could produce a first draft to spec, roughly seventy percent of the row, the expert's job would flip from authoring to correcting, and judgment would land only on the part that needed it.</p>
+        <p>Ground truth started as an answer key: the words a skill should say. Then the skills stopped answering and started doing, and the answer key had to grow with them. A row now had to carry which action to take, the steps it required, the entities to capture before acting, and, when the action would change or move account data, whether the agent asked permission and confirmed before executing. Evaluating prose became evaluating behavior. That is also what made it hard: one row could need a conversation designer for the turns, a domain expert for the steps, and a data scientist for the chart spec a system scores.</p>
+        <div class="art" style="margin-bottom:22px;">
+          <div class="art__cap"><span class="mono">What the eval had to check</span><span class="tag tag--neutral">Then and now</span></div>
+          <div class="compare">
+            <div class="compare__pane">
+              <div class="compare__label compare__label--rec">Then &middot; evaluate the answer</div>
+              <div class="compare__said">Is the text factually right, complete, and relevant? One field held the whole standard.</div>
+            </div>
+            <div class="compare__pane">
+              <div class="compare__label compare__label--bad">Now &middot; evaluate the behavior</div>
+              <div class="compare__said">Was the right action taken, in the right steps? Were the entities captured first? Was permission asked, and confirmation given, before anything changed?</div>
+            </div>
+          </div>
+          <div class="gates">
+            <div class="gate"><span class="gate__mark gate__mark--ok">&rarr;</span><span class="txt"><strong>The answer</strong> &middot; the words the skill should say</span></div>
+            <div class="gate"><span class="gate__mark gate__mark--ok">&rarr;</span><span class="txt"><strong>The action</strong> &middot; the operation, its inputs, and its steps</span></div>
+            <div class="gate"><span class="gate__mark gate__mark--ok">&rarr;</span><span class="txt"><strong>The widget or chart</strong> &middot; the structured spec a system scores, not the picture</span></div>
+            <div class="gate"><span class="gate__mark gate__mark--bad">&rarr;</span><span class="txt"><strong class="bad">The permission</strong> &middot; ask and confirm before account data changes</span></div>
+          </div>
+        </div>
         <div class="cols2">
           <div class="panel">
-            <div class="panel__label panel__label--bad">Before &middot; author every row from empty</div>
+            <div class="panel__label">Routine &middot; reversible</div>
             <ul class="checklist">
-              <li><span class="x">&times;</span>Write the text answer, turn by turn</li>
-              <li><span class="x">&times;</span>Write the actions and their steps</li>
-              <li><span class="x">&times;</span>Specify any chart or widget by hand</li>
-              <li><span class="x">&times;</span>Repeat for every row, every skill</li>
+              <li><span class="c">&check;</span>Create an invoice, add a vendor</li>
+              <li><span class="c">&check;</span>Collect the inputs, act, confirm it's done</li>
+              <li><span class="c">&check;</span>No confirmation turn required</li>
             </ul>
           </div>
           <div class="panel panel--tint">
-            <div class="panel__label">After &middot; validate a draft that's ~70% there</div>
+            <div class="panel__label panel__label--bad">Impactful &middot; changes or moves money</div>
             <ul class="checklist">
-              <li><span class="c">&check;</span>Text, actions, and chart specs arrive drafted</li>
-              <li><span class="c">&check;</span>Experts review and correct, not create</li>
-              <li><span class="c">&check;</span>Judgment lands only where it's needed</li>
-              <li><span class="c">&check;</span>The same process runs for any skill</li>
+              <li><span class="x">&times;</span>Run payroll, delete records, send a payment reminder</li>
+              <li><span class="x">&times;</span>State what will happen, then wait</li>
+              <li><span class="x">&times;</span>Execute only after the customer confirms</li>
             </ul>
           </div>
         </div>
+        <p class="note">That rule is the behavior design, and the ground truth is where it gets written down. If the answer key doesn't say the agent should ask first, nothing downstream will ever catch it when the agent doesn't.</p>
       </section>
 
       <!-- 03 -->
       <section class="section" id="s03">
         <div class="spread">
           <div class="spread__num">03</div>
-          <div><div class="spread__label">The solution</div><h2>A generator that drafts like the best labeler.</h2></div>
+          <div><div class="spread__label">The build</div><h2>The infrastructure that produces it at scale.</h2></div>
         </div>
-        <p>The generator distills how the team's most experienced labeler actually works, the rules for the text, the actions, and the chart and widget specs, into one prompt built on judgment over rules: when a row doesn't fit a pattern, do what the best labeler would do. Running a whole dataset through one model would be slow and lossy, so the pipeline splits the sheet into fifty-row chunks, drafts each with a parallel agent, and glues the results back into one sheet. The draft, about seventy percent complete, goes to the team for a coordinated final review, where experts validate and correct. The pipeline shipped as platform code, reviewed like any other engineering work on the team.</p>
-        <div class="loop">
-          <div class="loop__step"><div class="loop__n">01</div><div class="loop__head">Split</div><div class="loop__sub">the sheet into fifty-row chunks</div></div>
-          <div class="loop__step"><div class="loop__n">02</div><div class="loop__head">Draft in parallel</div><div class="loop__sub">one agent per chunk, to spec</div></div>
-          <div class="loop__step"><div class="loop__n">03</div><div class="loop__head">Glue</div><div class="loop__sub">merge the chunks back into one sheet</div></div>
-          <div class="loop__step"><div class="loop__n">04</div><div class="loop__head">Draft, ~70%</div><div class="loop__sub">text, actions, and chart specs filled</div></div>
-          <div class="loop__step"><div class="loop__n">05</div><div class="loop__head">Validate</div><div class="loop__sub">the team reviews and corrects</div></div>
+        <p>Written by hand, one row at a time, this never keeps up with a platform of dozens of skills. So the standard got encoded: a generator prompt that distills how the best labeler works, then a pipeline that splits the sheet into fifty-row chunks, drafts each with a parallel agent, and glues the results back into one sheet. The draft lands about seventy percent complete. Experts validate and correct from there, which is where their judgment belongs, including the calls on escalation and handoff. Simulator instructions get pre-filled too, teaching the bot how to ask the follow-up questions a real customer would, so multi-turn behavior gets exercised instead of assumed. The result is a golden dataset ready for offline evaluation. It shipped as platform code, reviewed like any other engineering work on the team.</p>
+        <div class="loop" style="margin-bottom:22px;">
+          <div class="loop__step"><div class="loop__n">01</div><div class="loop__head">Encode the standard</div><div class="loop__sub">the generator prompt: how the best labeler works</div></div>
+          <div class="loop__step"><div class="loop__n">02</div><div class="loop__head">Draft the sheet</div><div class="loop__sub">split into chunks, parallel agents, glue back</div></div>
+          <div class="loop__step"><div class="loop__n">03</div><div class="loop__head">Human validation</div><div class="loop__sub">experts correct, judge escalation and handoff</div></div>
+          <div class="loop__step"><div class="loop__n">04</div><div class="loop__head">Simulator instructions</div><div class="loop__sub">teach the bot to ask the follow-ups</div></div>
+          <div class="loop__step"><div class="loop__n">05</div><div class="loop__head">Offline eval</div><div class="loop__sub">bot runs the script, judge scores against ground truth</div></div>
+        </div>
+        <div class="art">
+          <div class="art__cap"><span class="mono">A pre-filled golden-dataset row</span><span class="tag tag--neutral">Representative &middot; mock data</span></div>
+          <div class="sheet-wrap">
+            <table class="sheet">
+              <thead>
+                <tr>
+                  <th scope="col">Customer question</th>
+                  <th scope="col">Ground-truth answer</th>
+                  <th scope="col">Expected action</th>
+                  <th scope="col">Ask first?</th>
+                  <th scope="col">Simulator instruction</th>
+                  <th scope="col">Turns</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>How do I add a contractor?</td>
+                  <td class="pre">Go to Payroll, then Contractors, then Add contractor.</td>
+                  <td class="pre dash">none, this is a how-to</td>
+                  <td class="pre dash">n/a</td>
+                  <td class="pre dash">none</td>
+                  <td class="pre m">1</td>
+                </tr>
+                <tr>
+                  <td>Add a contractor</td>
+                  <td class="pre">I've added [CONTRACTOR_NAME] as a contractor.</td>
+                  <td class="pre m">create_contractor<br>inputs: name<br>status: success</td>
+                  <td class="pre">No, reversible</td>
+                  <td class="pre">If agent asks for the name, say [CONTRACTOR_NAME]</td>
+                  <td class="pre m">2</td>
+                </tr>
+                <tr>
+                  <td>Run payroll for this period</td>
+                  <td class="pre">States what will happen and what it will cost, then asks the customer to confirm before running.</td>
+                  <td class="pre m">run_payroll<br>executes only after confirmation</td>
+                  <td class="pre req">Yes, confirmation widget</td>
+                  <td class="pre">If agent asks to confirm, say yes</td>
+                  <td class="pre m">3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="legend"><span><span class="legend__sw"></span>drafted by the generator, about 70% of the row</span><span>the expert validates, corrects, and signs off</span></div>
         </div>
         <div class="callout" style="margin-top:22px;">
           <div class="callout__label">The safeguard that mattered at scale</div>
@@ -119,15 +173,15 @@
       <section class="section" id="s04">
         <div class="spread spread--tight">
           <div class="spread__num">04</div>
-          <div><div class="spread__label">The outcome</div><h2>The gate kept pace with the platform.</h2></div>
+          <div><div class="spread__label">The outcome</div><h2>The bar kept pace with the platform.</h2></div>
         </div>
-        <p>With drafts arriving pre-filled, experts validated instead of authored, and offline evals ran across every skill instead of stalling behind manual work. A large batch that had taken about three weeks came down to about one. On the three skills measured through this work, quality rose 8 to 13 points.</p>
+        <p>Offline evals ran across every skill instead of stalling behind manual authoring. A large batch that had taken about three weeks came down to about one. On the three skills measured through this work, quality rose 8 to 13 points.</p>
         <div class="metrics" style="grid-template-columns:repeat(3,1fr);">
-          <div class="metric"><div class="metric__v">~70%</div><div class="metric__k">of each row pre-drafted to spec, so experts validate instead of author</div></div>
+          <div class="metric"><div class="metric__v">~70%</div><div class="metric__k">of each row drafted to spec, so experts validate instead of author</div></div>
           <div class="metric"><div class="metric__v">3&rarr;1 wk</div><div class="metric__k">turnaround on a large batch, once the pipeline ran</div></div>
           <div class="metric"><div class="metric__v">+8&ndash;13</div><div class="metric__k">points quality rose across three skills</div></div>
         </div>
-        <div class="closer"><p>A quality program is only as good as the answer key upstream of it. This is the system that produced that answer key, honest and current, as fast as the platform could grow.</p></div>
+        <div class="closer"><p>An agent is only as trustworthy as the standard it gets measured against. Writing that standard down, and building the system that keeps it current, is how an agent earns the right to touch money.</p></div>
       </section>
 
     </div>
