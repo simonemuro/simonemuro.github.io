@@ -1,399 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="Customers could see how much they were charged, never why. The Digital Assistant redesign that understood the question, kept the customer in the channel, and moved self-help acceptance from 25% to 39%. Conversation AI case study.">
+<meta name="description" content="Customers could see how much they were charged, never why. The NLU-era assistant redesign that understood the exact billing question, kept customers in the channel, and moved acceptance from 25% to 39%.">
 <meta property="og:title" content="Charge lookup &middot; Simone Muro">
-<meta property="og:description" content="Customers could see how much they were charged, never why. The redesign that understood the question, kept the customer in the channel, and moved the numbers.">
+<meta property="og:description" content="Every surface showed what was billed. None explained what changed. The redesign that understood the question and kept the customer in the channel.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/charge-lookup.html">
 <meta name="twitter:card" content="summary">
 <title>Charge lookup &middot; Simone Muro</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="v5.css">
-<link rel="stylesheet" href="v6.css">
-<script src="v5-proto.js?v=6" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&family=Newsreader:ital,opsz@0,6..72;1,6..72&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="theme-overhaul.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="charge-lookup.css">
 </head>
-<body class="v5">
+<body>
 
-<a class="skip-link" href="#main">Skip to content</a>
+  <!-- NAV -->
+  <div class="nav">
+    <div class="nav__inner">
+      <a class="wordmark" href="index.html">Simone Muro</a>
+      <nav class="nav__links"><a href="index.html#work">WORK</a><a href="resume.html">RESUME</a><a href="index.html#contact">CONTACT</a></nav>
+    </div>
+  </div>
 
-<header class="masthead" role="banner">
-  <div class="wrap masthead-inner">
-    <a class="brand" href="index.html">Simone Muro</a>
-    <nav class="mast-nav mono" aria-label="Primary">
-      <a href="index.html#work">Work</a>
-      <a href="resume.html">Resume</a>
-      <a href="index.html#contact">Contact</a>
+  <!-- HERO -->
+  <header class="wrap hero">
+    <div class="kicker">Case No. 02 &nbsp;&middot;&nbsp; Charge lookup &nbsp;&middot;&nbsp; Digital Assistant &middot; NLU era</div>
+    <h1>The bill jumped to $288. <em>Nothing said why.</em></h1>
+    <p class="hero__lede">Every surface a customer could reach showed what they were charged: settings, statements, the lookup tool. None explained what changed. I walked the journey myself, mined the expert transcripts, and redesigned the assistant to understand the exact billing question and keep the customer in the channel, with a phased PRD that shipped value while the billing APIs were still onboarding.</p>
+  </header>
+
+  <!-- VERDICT -->
+  <section class="verdict">
+    <div class="verdict__grid">
+      <div class="verdict__cell"><div class="verdict__k">Problem</div><p>Every surface showed customers what they were charged, never why the amount changed.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">What I did</div><p>Redesigned the assistant to classify the exact billing question and offer the lookup tool in the channel, on a hybrid NLU plus LLM route.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">Outcome</div><p>Voice self-help acceptance 25% to 39%; chat resolution up 12 points; about 61% of billing chat contained.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">Role</div><p>Conversation AI Design Lead: discovery, transcript synthesis, assistant behavior, and the phased PRD.</p></div>
+    </div>
+  </section>
+
+  <!-- BODY -->
+  <div class="wrap body">
+
+    <!-- RAIL -->
+    <nav class="rail">
+      <a class="rail-link" href="#s01" data-target="s01"><span class="rail-link__n">01</span><span class="rail-link__t">The problem</span></a>
+      <a class="rail-link" href="#s02" data-target="s02"><span class="rail-link__n">02</span><span class="rail-link__t">The research</span></a>
+      <a class="rail-link" href="#s03" data-target="s03"><span class="rail-link__n">03</span><span class="rail-link__t">The design</span></a>
+      <a class="rail-link" href="#s04" data-target="s04"><span class="rail-link__n">04</span><span class="rail-link__t">The build</span></a>
+      <a class="rail-link" href="#s05" data-target="s05"><span class="rail-link__n">05</span><span class="rail-link__t">What it moved</span></a>
+      <a class="rail-link" href="#s06" data-target="s06"><span class="rail-link__n">06</span><span class="rail-link__t">The target state</span></a>
     </nav>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- 01 -->
+      <section class="section" id="s01">
+        <div class="eyebrow">01 &middot; The problem</div>
+        <h2>I walked the journey myself.</h2>
+        <p>Billing and subscription was one of the top twenty drivers of a company-wide contact-reduction goal, with hundreds of thousands of contacts a year, and charge lookup was one of the highest-volume questions inside it. So I tested the real path a customer takes: chat, voice, in-product search, and Google. A $228 subscription could become $288 and no surface would say why. The supportability teams confirmed what the journey suggested: customers called for the explanation, some of those calls ended in downgrades or cancellations, and many transferred internally when a discount or refund needed a higher tier.</p>
+        <div class="art" style="margin-bottom:22px;">
+          <div class="art__cap"><span class="mono">the journey, before</span><span class="tag tag--neutral">As tested</span></div>
+          <div class="lane">
+            <div><b>Ask support</b><span>The assistant routes to settings or articles.</span></div>
+            <div><b>Open billing</b><span>The page shows subscriptions and charges.</span></div>
+            <div><b>Try lookup</b><span>The statement tool itemizes the amount.</span></div>
+            <div class="dead"><b>Call an expert</b><span>The person explains promo dates, seat math, and options.</span></div>
+          </div>
+          <div class="art__foot">Four surfaces deep, the only place a customer hears "why" is a phone call.</div>
+        </div>
+        <div class="art">
+          <div class="art__cap"><span class="mono">Digital Assistant &middot; the before experience</span><span class="tag tag--neutral">Recreated &middot; mock data</span></div>
+          <div class="chat">
+            <div class="chat__user">I see a $288 charge on my card I don't recognize. Can you help me understand it?</div>
+            <div class="chat__agent">
+              <p>You can view the subscriptions charged to your account in your account settings. Go to Settings, select Billing and Subscription, and open your account history to see your subscription charges.</p>
+              <p>If you still need help, you can browse articles in our support center.</p>
+            </div>
+          </div>
+          <div class="art__foot">Recreated from shipped work; interface simplified, the conversation shape is real. Directions, not an answer.</div>
+        </div>
+      </section>
+
+      <!-- 02 -->
+      <section class="section" id="s02">
+        <div class="eyebrow">02 &middot; The research</div>
+        <h2>The experts already had the answer. On the phone.</h2>
+        <p>I pulled phone and live-chat transcripts to learn how experts actually solved the problem: what they checked, what they explained, and what next step they offered. The transcripts were design material, not validation. The best answers the assistant could give were already being spoken on the phone, and the customer's own words told me the topic wasn't one question at all.</p>
+        <div class="board">
+          <div class="board__title"><span>transcript synthesis</span><span>public reconstruction &middot; themes from the real analysis</span></div>
+          <div class="stickies">
+            <div class="sticky"><b>Promo ended</b>Customer saw a larger charge after a welcome rate expired.</div>
+            <div class="sticky"><b>Seats changed</b>Payroll math changed when employees or users were added.</div>
+            <div class="sticky"><b>Tier jump</b>Discount extensions and refunds often needed a higher support tier.</div>
+            <div class="sticky"><b>Article gap</b>Generic instructions showed where to look, not what changed.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 -->
+      <section class="section" id="s03">
+        <div class="eyebrow">03 &middot; The design</div>
+        <h2>One billing topic is four customer questions.</h2>
+        <p>The trained intent could hear "billing." The customers were asking four different things, and each deserved a different response:</p>
+        <div class="chips" style="margin-bottom:28px;">
+          <span>price increase</span><span>unknown charge</span><span>double charge</span><span>how much am I paying</span>
+        </div>
+        <p>The target answer needed billing APIs that were months away. The MVP didn't wait: classify the question better, stop sending customers to articles, and offer the existing lookup tool inside the assistant. The routing is a hybrid of the eras, and it's the same shape my <a href="cancellation-saves.html">cancellation classifier</a> proved out: the intent platform catches the topic, a language model reads the nuance.</p>
+        <div class="art">
+          <div class="art__cap"><span class="mono">one question, routed</span><span class="tag tag--neutral">Simplified</span></div>
+          <div class="router">
+            <div class="router__row"><span class="router__n">01</span><div class="router__t"><code>NLU &rarr; billing intent</code> &middot; the platform's intent model catches the topic</div></div>
+            <div class="router__row"><span class="router__n">02</span><div class="router__t"><code>LLM &rarr; question type</code> &middot; price increase, double charge, unknown charge, or how much</div></div>
+            <div class="router__row"><span class="router__n">03</span><div class="router__t"><code>route &rarr; response</code> &middot; the right answer, or the charge lookup tool offered in the channel</div></div>
+          </div>
+          <div class="art__foot">The platform intent model plus a language model classifier. No vendor architecture shown.</div>
+        </div>
+      </section>
+
+      <!-- 04 -->
+      <section class="section" id="s04">
+        <div class="eyebrow">04 &middot; The build</div>
+        <h2>A phased PRD, because APIs take time.</h2>
+        <p>Full personalization needed billing APIs, and API onboarding is lengthy. I scoped the roadmap so the team shipped a better experience immediately and absorbed account data phase by phase, instead of waiting for the dependency to land.</p>
+        <div class="art">
+          <div class="art__cap"><span class="mono">the phased PRD</span><span class="tag tag--green">MVP shipped</span></div>
+          <div class="swim">
+            <div class="shipped"><span class="ph">MVP</span><b>Classify and offer lookup</b><p>Use the existing lookup tool, rewrite the offer, keep the customer in-channel.</p></div>
+            <div><span class="ph">V1</span><b>Separate question types</b><p>Price increase, duplicate, unknown charge, and how-much routes.</p></div>
+            <div><span class="ph">V2</span><b>Read account context</b><p>Plan, add-ons, promo dates, charges, permissions.</p></div>
+            <div><span class="ph">Target</span><b>Explain and ease</b><p>Show the math; offer a safe next action when one exists.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05 -->
+      <section class="section" id="s05">
+        <div class="eyebrow">05 &middot; What it moved</div>
+        <h2>Same question, kept in the channel.</h2>
+        <div class="art" style="margin-bottom:28px;">
+          <div class="art__cap"><span class="mono">Digital Assistant &middot; the shipped MVP</span><span class="tag tag--green">Recreated &middot; mock data</span></div>
+          <div class="chat">
+            <div class="chat__user">I see a $288 charge on my card I don't recognize. Can you help me understand it?</div>
+            <div class="chat__agent">
+              <p>A charge you weren't expecting is never fun. Let's find out what's behind that $288.00. The charge lookup tool shows you every charge on your statement and exactly what each one covers.</p>
+              <div class="offer">
+                <b>Look up this charge</b>
+                <p>Grab your statement, enter the amount and the date, and see what makes up that $288.00, item by item.</p>
+                <div class="offer__btns"><span class="pri">Open charge lookup</span><span class="gho">That's not my question</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="art__foot">Recreated from shipped work. The assistant classifies the exact question and offers the tool in the channel instead of linking articles.</div>
+        </div>
+        <div class="landing">
+          <div class="landing__cell"><div class="landing__v">25% &rarr; 39%</div><div class="verdict__k">Acceptance, voice</div><p>Customers accepting the self-help the voice assistant offers to send by text or email.</p></div>
+          <div class="landing__cell"><div class="landing__v">+12 pts</div><div class="verdict__k">Resolution, chat</div><p>Self-help resolution on billing questions in the chat assistant.</p></div>
+          <div class="landing__cell"><div class="landing__v">~61%</div><div class="verdict__k">Containment, chat</div><p>Billing questions resolved in chat without a human expert.</p></div>
+          <div class="landing__cell"><div class="landing__v">Top 20</div><div class="verdict__k">The driver</div><p>Billing and subscription's place among the company's contact-reduction drivers: hundreds of thousands of contacts a year.</p></div>
+        </div>
+      </section>
+
+      <!-- 06 -->
+      <section class="section" id="s06">
+        <div class="eyebrow">06 &middot; The target state</div>
+        <h2>The prototype that pointed past the platform.</h2>
+        <p>The MVP kept customers in the channel. The target state answers them: read the plan, explain what changed, and offer a safe next action when one exists. I built that target as a working prototype on mock data, and this is its run, unedited in shape.</p>
+        <div class="art">
+          <div class="art__cap"><span class="mono">demo billing agent &middot; pre-scripted run</span><span class="tag tag--neutral">Prototype &middot; mock data, no live model</span></div>
+          <div class="chat">
+            <div class="chat__user">I see a $288 charge on my card I don't recognize. Can you help me understand it?</div>
+            <div class="chat__agent">
+              <div class="work">
+                <div class="work__lab">&rsaquo; Work done</div>
+                <div class="work__step"><span>Reading your plan</span>&nbsp;<span class="res">Plus plan &middot; Payroll &middot; Payments</span></div>
+                <div class="work__step"><span>Counting your team</span>&nbsp;<span class="res">16 active &middot; 2 added this cycle</span></div>
+                <div class="work__step"><span>Pulling this cycle's charges</span>&nbsp;<span class="res">$288.00 &middot; $60 more than last month</span></div>
+                <div class="work__step"><span>Finding what changed</span>&nbsp;<span class="res">welcome rate ended +$48 &middot; 2 seats +$12</span></div>
+                <div class="work__step"><span>Checking what could ease it</span>&nbsp;<span class="res">welcome rate may extend</span></div>
+              </div>
+              <p>Two things changed it. You added 2 team members at $6 each, and your 6-month welcome rate finished this cycle, which had been taking $48 off your bill. Together those bring your monthly total from $228 to $288. Everything else is the same plan you already had.</p>
+              <div class="rows">
+                <div class="row"><span>Plus plan <span class="sub">base subscription, monthly</span></span><span class="amt">$99.00</span></div>
+                <div class="row"><span>Payroll <span class="sub">monthly subscription</span></span><span class="amt">$50.00</span></div>
+                <div class="row"><span>Team members <span class="sub">16 active, $6.00 each</span></span><span class="amt">$96.00</span></div>
+                <div class="row"><span>Payments processing <span class="sub">card fees this month</span></span><span class="amt">$43.00</span></div>
+                <div class="row row--total"><span>Total this cycle</span><span class="amt">$288.00</span></div>
+              </div>
+              <p>The welcome rate that just ended was the largest part of this change, so I checked whether it could continue. You may qualify to extend it, and I can request that for you now.</p>
+            </div>
+            <div class="chat__user">Yes, extend my welcome rate.</div>
+            <div class="chat__agent">
+              <div class="work">
+                <div class="work__lab">&rsaquo; Work done</div>
+                <div class="work__step"><span>Extending your welcome rate</span>&nbsp;<span class="res">through September</span></div>
+                <div class="work__step"><span>Crediting your card</span>&nbsp;<span class="res">$48.00 refunded &middot; card ending 4417</span></div>
+                <div class="work__step"><span>Setting your reminder</span>&nbsp;<span class="res">an email before the rate returns</span></div>
+              </div>
+              <p>Done. So about $240 a month while the discount holds. The extra $12 is your two new team members, and I'll email you before the rate returns in October.</p>
+            </div>
+          </div>
+          <div class="art__foot">The prototype I built, AI-paired: a pre-scripted agentic run, no live model, mock data only. This answer didn't ship in this program.</div>
+        </div>
+        <div class="settled">
+          <div class="verdict__k">What this settled</div>
+          <p>The roadblock was live data, and by then the successor agentic platform had made the old platform's ending visible. The right move wasn't to fight for buy-in; we banked the MVP gains and moved the billing experience forward. The prototype's heart, account-aware charge explanation, became a working read-only agent skill with its own eval: the <a href="billing-skill.html">billing skill</a>. Ship the useful slice, phase the product around the API reality, and know when to stop investing in a platform.</p>
+        </div>
+      </section>
+
+    </main>
   </div>
-</header>
 
-<main id="main">
-
-  <!-- ================= title block ================= -->
-  <section class="wrap titleblock" aria-labelledby="case-h">
-    <p class="kicker mono">
-      <span class="knum">Case No. 02</span>
-      <span>Charge lookup</span>
-      <span>Digital Assistant &middot; NLU era</span>
-    </p>
-    <h1 id="case-h">Helping QuickBooks customers understand their subscription charges.</h1>
-    <p class="lede">A high-volume billing question had a simple failure: every surface showed customers what they were charged, but not why the amount changed. I redesigned the assistant to classify the exact billing question, keep the customer in the help flow, and point the roadmap toward account-aware answers.</p>
-
-    <dl class="factrow">
-      <div><dt>Surface</dt><dd>The QuickBooks support assistant, chat and voice, subscription billing</dd></div>
-      <div><dt>Role</dt><dd>Conversation AI Design Lead. Discovery, transcript synthesis, assistant behavior, and the phased PRD &middot; 2025 to 2026</dd></div>
-      <div><dt>Context</dt><dd>Hundreds of thousands of billing and subscription contacts a year; one of the top twenty drivers of a company-wide contact-reduction goal</dd></div>
-      <div><dt>Results</dt><dd>Voice self-help acceptance 25% to 39%; chat self-help resolution up 12 points; chat containment about 61%</dd></div>
-    </dl>
-
-    <div class="proof-hero" aria-label="Charge Lookup case snapshot">
-      <div class="proof-copy">
-        <span class="visual-label">Case snapshot</span>
-        <h2>From deflection to explanation.</h2>
-        <p>The work is a product strategy story: find the real customer question, ship the useful slice, and use the prototype to show where the agent should go next.</p>
-        <ul class="snapshot-list">
-          <li><b>Best for</b><span>AI PM, product design, AI experience design.</span></li>
-          <li><b>I owned</b><span>Discovery, transcript synthesis, assistant behavior, and phased PRD.</span></li>
-          <li><b>Result</b><span>Voice self-help acceptance 25% to 39%; billing chat containment about 61%.</span></li>
-        </ul>
-      </div>
-      <div class="phone-gallery" aria-label="Before, shipped, and target-state product moments">
-        <div class="phone-shot alt-a">
-          <div class="phone-top" aria-hidden="true"></div>
-          <span class="phone-kicker">Before</span>
-          <div class="phone-card"><b>Directions, not an answer</b><p>Settings. Articles. Account history. The customer still had to infer what changed.</p></div>
-          <div class="mini-bars" aria-hidden="true"><span></span><span></span><span></span></div>
-        </div>
-        <div class="phone-shot alt-b">
-          <div class="phone-top" aria-hidden="true"></div>
-          <span class="phone-kicker">Shipped MVP</span>
-          <div class="phone-card"><b>Classify and offer lookup</b><p>The assistant recognizes the billing question and offers the charge lookup path in-channel.</p></div>
-          <div class="phone-card"><b>+12 pts</b><p>Self-help resolution lift in chat for billing questions.</p></div>
-        </div>
-        <div class="phone-shot alt-c">
-          <div class="phone-top" aria-hidden="true"></div>
-          <span class="phone-kicker">Target</span>
-          <div class="phone-card"><b>Explain what changed</b><p>Plan, add-ons, promo dates, and recent charges become an account-aware answer.</p></div>
-          <div class="phone-card"><b>Playable prototype</b><p><a href="#proto">Watch the billing agent run.</a></p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="wrap verdict-wrap io">
-    <dl class="verdict">
-      <dt>Problem</dt><dd>Every surface showed customers what they were charged, never why the amount changed.</dd>
-      <dt>What I did</dt><dd>Redesigned the assistant to classify the exact billing question and keep customers in the flow.</dd>
-      <dt>Outcome</dt><dd>Voice self-help acceptance moved 25% to 39%; chat resolution up 12 points, about 61% contained.</dd>
-      <dt>Role</dt><dd>I led Conversation AI design and owned discovery, assistant behavior, and the phased PRD.</dd>
-    </dl>
-  </section>
-
-  <!-- ================= 01 · background ================= -->
-  <section class="wrap part" id="background" aria-labelledby="p1-h">
-    <p class="kicker mono part-head"><span class="knum">01</span><span>Background</span></p>
-    <h2 id="p1-h">Finding the question worth solving.</h2>
-    <div class="prose">
-      <p>The organization had a company-wide contact-reduction goal. Billing and subscription was one of the top support drivers, and charge lookup was one of the highest-volume questions inside it.</p>
-      <p>The work was hands-on end to end: I tested the journeys, pulled transcripts, synthesized expert behavior, shaped the assistant strategy, and wrote the phased PRD.</p>
-      <p>This is the NLU-era half of the billing story. The agentic sequel, built after Intuit Intelligence replaced the Digital Assistant, is <a href="billing-skill.html">its own case</a>.</p>
-    </div>
-  </section>
-
-  <!-- ================= 02 · the problem ================= -->
-  <section class="wrap part" id="problem" aria-labelledby="p2-h">
-    <p class="kicker mono part-head"><span class="knum">02</span><span>The problem</span></p>
-    <h2 id="p2-h">I walked the journey myself.</h2>
-    <div class="prose">
-      <p>I tested the real path: chat, voice, in-product search, and Google.</p>
-      <p>The answer kept sending customers to settings, articles, or a card-charge lookup. Each surface could show what was billed. None could explain what changed.</p>
-      <p>A $228 subscription could become $288 and still show no reason. That was the problem: the page showed how much. Customers were calling to ask why.</p>
-      <p>Here&rsquo;s the before state, recreated.</p>
-    </div>
-
-    <div class="flow-lane" aria-label="Before journey: every self-help path shows amount, not reason">
-      <ol>
-        <li><b>Ask support</b><span>The assistant routes to settings or articles.</span></li>
-        <li><b>Open billing</b><span>The page shows subscriptions and charges.</span></li>
-        <li><b>Try lookup</b><span>The statement tool itemizes the amount.</span></li>
-        <li><b>Call expert</b><span>The person explains promo dates, seat math, and options.</span></li>
-      </ol>
-    </div>
-
-    <div class="mockwrap">
-      <div class="mock" role="img" aria-label="Recreated chat: the customer asks about a charge they do not recognize and the assistant replies with text directions to a settings page">
-        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Support assistant</span><span class="mtag">Recreation</span></div>
-        <div class="mock-body">
-          <div class="m-user">I see a $288 charge on my card I don&rsquo;t recognize. Can you help me understand it?</div>
-          <div class="m-agent">
-            <p>You can view the subscriptions charged to your account in your account settings. Go to Settings, select Billing and Subscription, and open your account history to see your subscription charges.</p>
-            <p>If you still need help, you can browse articles in our support center.</p>
-          </div>
-        </div>
-        <div class="m-composer" aria-hidden="true">Ask anything</div>
-        <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
-      </div>
-      <p class="mock-cap">The before experience. Recreated from shipped work. Interface simplified; the conversation shape is real. Business details invented; amounts illustrative of a real pattern.</p>
-    </div>
-  </section>
-
-  <!-- ================= 03 · why it mattered ================= -->
-  <section class="wrap part" id="why" aria-labelledby="p3-h">
-    <p class="kicker mono part-head"><span class="knum">03</span><span>Why it mattered</span></p>
-    <h2 id="p3-h">Calls that ended in downgrades and cancellations.</h2>
-    <div class="evidence-split">
-      <div class="prose">
-        <p>The supportability teams confirmed the core pattern: customers called because they wanted an explanation. Some calls turned into downgrades or cancellations, and many transferred internally when discount extensions or refunds required a higher tier.</p>
-      </div>
-      <div class="impact-panel" aria-label="Business scale and outcome context">
-        <div><span class="big">Top 20</span><span class="label">company contact-reduction driver</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 04 · exploring solutions ================= -->
-  <section class="wrap part" id="solutions" aria-labelledby="p4-h">
-    <p class="kicker mono part-head"><span class="knum">04</span><span>Exploring solutions</span></p>
-    <h2 id="p4-h">Transcripts, and how the experts actually did it.</h2>
-    <div class="evidence-split">
-      <div class="transcript-board" aria-label="Transcript synthesis board">
-        <div class="board-title"><span>Transcript synthesis</span><span>public reconstruction</span></div>
-        <div class="sticky-grid">
-          <div class="sticky"><b>Promo ended</b><span>Customer saw a larger charge after a welcome rate expired.</span></div>
-          <div class="sticky"><b>Seats changed</b><span>Payroll math changed when employees or users were added.</span></div>
-          <div class="sticky"><b>Tier jump</b><span>Discount extensions and refunds often needed a higher support tier.</span></div>
-          <div class="sticky"><b>Article gap</b><span>Generic instructions showed where to look, not what changed.</span></div>
-        </div>
-      </div>
-      <div class="artifact-copy">
-        <span class="visual-label">Research move</span>
-        <h2>Use expert calls as design material.</h2>
-        <p>I pulled phone and live-chat transcripts to learn how experts actually solved the problem: what they checked, what they explained, and what next step they offered.</p>
-        <ul class="artifact-list">
-          <li><b>Input</b><span>Expert transcripts, live support chat, self-help journey audit.</span></li>
-          <li><b>Output</b><span>Question types, response strategy, phased PRD.</span></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 05 · design decisions ================= -->
-  <section class="wrap part" id="design" aria-labelledby="p5-h">
-    <p class="kicker mono part-head"><span class="knum">05</span><span>Design decisions</span></p>
-    <h2 id="p5-h">Understand the question, keep them in the journey.</h2>
-    <div class="evidence-split">
-      <div class="deck-artifact" aria-label="Reconstructed PRD decision slide">
-        <div class="board-title"><span>PRD decision slide</span><span>public reconstruction</span></div>
-        <div class="deck-slide">
-          <h3>One billing topic is not one customer question.</h3>
-          <div class="deck-strip" aria-hidden="true">
-            <span>price increase</span>
-            <span>unknown charge</span>
-            <span>double charge</span>
-            <span>how much</span>
-          </div>
-        </div>
-      </div>
-      <div class="artifact-copy">
-        <span class="visual-label">Product call</span>
-        <h2>Ship the useful slice.</h2>
-        <p>The target answer needed billing APIs. The MVP did not wait for them: classify the question better, stop sending customers to articles, and offer the existing lookup tool inside the assistant.</p>
-        <ul class="artifact-list">
-          <li><b>Now</b><span>Hybrid NLU + language model routing.</span></li>
-          <li><b>Next</b><span>Account-aware explanation once billing data is available.</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <figure class="trace" aria-label="Simplified flow: how one billing question gets routed by the hybrid classifier">
-      <figcaption class="trace-hd mono"><span>flow &middot; one question, routed</span><span>simplified</span></figcaption>
-      <ol class="trace-rows">
-        <li><span class="t-time" aria-hidden="true">01</span><div><code>NLU &#8594; <b>billing intent</b></code> &middot; the platform&rsquo;s intent model catches the topic</div></li>
-        <li><span class="t-time" aria-hidden="true">02</span><div><code>LLM &#8594; <b>question type</b></code> &middot; price increase, double charge, a charge they do not understand, or how much am I paying</div></li>
-        <li><span class="t-time" aria-hidden="true">03</span><div><code>route &#8594; <b>bucket</b></code> &middot; the right response: information, or the charge lookup tool offered in the channel</div></li>
-      </ol>
-      <p class="trace-foot">simplified &middot; the platform intent model plus a language model classifier &middot; no vendor architecture shown</p>
-    </figure>
-  </section>
-
-  <!-- ================= 06 · the build ================= -->
-  <section class="wrap part" id="build" aria-labelledby="p6-h">
-    <p class="kicker mono part-head"><span class="knum">06</span><span>The build</span></p>
-    <h2 id="p6-h">A phased PRD, because APIs take time.</h2>
-    <div class="prose">
-      <p>Full personalization needed billing APIs. I scoped the roadmap so the team could ship a better experience before that dependency landed, then absorb account data phase by phase.</p>
-    </div>
-
-    <div class="roadmap-board" aria-label="Phased PRD roadmap">
-      <div class="board-title mono"><span>Phased PRD</span><span>ship value while data access catches up</span></div>
-      <div class="roadmap-swimlane">
-        <div><span>MVP</span><b>Classify and offer lookup</b><p>Use the existing lookup tool, rewrite the assistant offer, keep the customer in-channel.</p></div>
-        <div><span>V1</span><b>Separate question types</b><p>Price increase, duplicate charge, unknown charge, and how-much routes.</p></div>
-        <div><span>V2</span><b>Read account context</b><p>Plan, add-ons, promo dates, charges, permissions.</p></div>
-        <div><span>Target</span><b>Explain and ease</b><p>Show the math and offer a safe next action when one exists.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 07 · results ================= -->
-  <section class="wrap part" id="results" aria-labelledby="p7-h">
-    <p class="kicker mono part-head"><span class="knum">07</span><span>Results</span></p>
-    <h2 id="p7-h">What shipped, and what it moved.</h2>
-    <div class="prose">
-      <p>Same customer question, shipped MVP. The assistant now understands the billing question and offers the lookup tool without sending the customer away.</p>
-    </div>
-
-    <div class="mockwrap">
-      <div class="mock" role="img" aria-label="Recreated chat: the same question, now disambiguated, with the charge lookup tool offered inside the conversation">
-        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Support assistant</span><span class="mtag">Recreation</span></div>
-        <div class="mock-body">
-          <div class="m-user">I see a $288 charge on my card I don&rsquo;t recognize. Can you help me understand it?</div>
-          <div class="m-agent">
-            <p>A charge you weren&rsquo;t expecting is never fun. Let&rsquo;s find out what&rsquo;s behind that $288.00. The charge lookup tool shows you every charge on your statement and exactly what each one covers.</p>
-            <div class="m-handoff">
-              <p class="hff-t">Look up this charge</p>
-              <p class="hff-p">Grab your statement, enter the amount and the date, and see what makes up that $288.00, item by item.</p>
-              <div class="m-actions">
-                <span class="m-btn primary">Open charge lookup</span>
-                <span class="m-btn ghost">That&rsquo;s not my question</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="m-composer" aria-hidden="true">Ask anything</div>
-        <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
-      </div>
-      <p class="mock-cap">The shipped MVP. Recreated from shipped work. The assistant classifies the exact question and offers the existing lookup tool in the channel instead of linking articles. Interface simplified; business details invented; amounts illustrative of a real pattern.</p>
-    </div>
-
-    <div class="prose">
-      <p class="opens">Those updates moved both channels.</p>
-    </div>
-
-    <div class="stats" role="list" aria-label="Measured outcomes">
-      <div role="listitem"><span class="num">25% to 39%</span><span class="lab">self-help acceptance on the voice assistant: customers accepting the help it offers to send by text or email</span></div>
-      <div role="listitem"><span class="num">+12 pts</span><span class="lab">self-help resolution on billing questions in the chat assistant</span></div>
-      <div role="listitem"><span class="num">~61%</span><span class="lab">containment in the chat assistant: billing questions resolved without a human expert</span></div>
-    </div>
-
-    <div class="prose">
-      <p class="opens">The roadmap pointed beyond the MVP. The target state needed account data: read the plan, explain what changed, and offer a safe next action when one existed. I built that target as a working prototype with mock data.</p>
-    </div>
-
-    <div class="mockwrap">
-      <div class="mock proto" id="proto" aria-label="Working prototype of the target state: the agent plans its work, reads the account, explains the $288.00 charge, and extends the welcome rate after the customer agrees. Pre-scripted run on mock data.">
-        <div class="mock-hd"><span class="dot" aria-hidden="true"></span><span class="mname">Demo billing agent</span><span class="mtag mtag-proto">Target &middot; prototype</span></div>
-        <div class="mock-body" id="proto-body">
-          <div class="m-user">I see a $288 charge on my card I don&rsquo;t recognize. Can you help me understand it?</div>
-          <div class="m-agent">
-            <details class="m-work proto-work">
-              <summary><span class="chev" aria-hidden="true">&#8250;</span><span class="wlab">Work done</span></summary>
-              <div class="proto-workbody">
-                <p class="proto-plan">Let me confirm a few things before I open your billing, trace why this cycle looks different, and check whether any of it can be eased for you.</p>
-                <div class="proto-steps">
-                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Verifying account access</span><span class="pres">account owner &middot; verified</span></div>
-                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Reading your plan</span><span class="pres">Plus plan &middot; Payroll &middot; Payments</span></div>
-                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Counting your team</span><span class="pres">16 active &middot; 2 added this cycle</span></div>
-                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Pulling this cycle&rsquo;s charges</span><span class="pres">$288.00 &middot; $60 more than last month</span></div>
-                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Finding what changed</span><span class="pres">welcome rate ended <span class="em">+$48</span> &middot; 2 seats +$12</span></div>
-                  <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Checking what could ease the increase</span><span class="pres">welcome rate may extend &middot; annual billing available</span></div>
-                </div>
-              </div>
-            </details>
-            <p class="proto-lead">Here&rsquo;s what&rsquo;s behind the $288.00 this cycle.</p>
-            <p>Two things changed it. First, you added 2 team members at $6 each, which adds $12 and covers their payroll tax filings automatically. Second, your 6-month welcome rate finished this cycle, which had been taking $48 off your bill. Together those bring your monthly total from $228 to $288, an increase of $60. Everything else is the same plan you already had.</p>
-            <div class="m-rows" role="table" aria-label="Charge breakdown, this cycle">
-              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Plus plan</b><span class="rsub">base subscription, monthly</span></span><span class="ramt" role="cell">$99.00</span></div>
-              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Payroll</b><span class="rsub">monthly subscription</span></span><span class="ramt" role="cell">$50.00</span></div>
-              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Team members</b><span class="rsub">16 active, $6.00 each</span></span><span class="ramt" role="cell">$96.00</span></div>
-              <div class="m-row" role="row"><span class="rlab" role="cell"><b>Payments processing</b><span class="rsub">card fees this month</span></span><span class="ramt" role="cell">$43.00</span></div>
-              <div class="m-row total" role="row"><span class="rlab" role="cell">Total this cycle</span><span class="ramt" role="cell">$288.00</span></div>
-            </div>
-            <div class="proto-change">
-              <div class="pch-head"><span>Changed this cycle</span><span class="pch-amt">+$60.00</span></div>
-              <div class="pch-row"><span>2 team members added</span><span class="pch-amt">+$12.00</span></div>
-              <div class="pch-row"><span>6-month welcome rate ended</span><span class="pch-amt">+$48.00</span></div>
-            </div>
-            <p>One more thing I noticed while reviewing your account. The welcome rate that just ended was the largest part of this change, so I checked whether it could continue. You may qualify to extend it, and I can request that for you now.</p>
-          </div>
-          <div class="m-user">Yes, extend my welcome rate.</div>
-          <div class="m-agent">
-            <div class="proto-steps">
-              <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Extending your welcome rate</span><span class="pres">extended through September</span></div>
-              <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Crediting your card</span><span class="pres">$48.00 refunded &middot; card ending 4417</span></div>
-              <div class="proto-step ok"><span class="pnode" aria-hidden="true"></span><span class="pact">Setting your reminder</span><span class="pres">an email before the rate returns</span></div>
-            </div>
-            <p>Done. Here&rsquo;s what I changed and what to expect.</p>
-            <div class="proto-summary">
-              <div class="psec">
-                <p class="psec-h">What I did</p>
-                <div class="prow"><span>Refund to your card ending 4417</span><span class="pv">$48.00</span></div>
-                <div class="prow"><span>Welcome rate extended</span><span class="pv">through September</span></div>
-              </div>
-              <div class="psec">
-                <p class="psec-h">What to expect &middot; each cycle</p>
-                <div class="prow"><span>Subscription through September</span><span class="pv">$197.00</span></div>
-                <div class="prow"><span>Subscription from October</span><span class="pv">$245.00</span></div>
-                <div class="prow"><span>Payments processing</span><span class="pv">varies &middot; was $43.00</span></div>
-              </div>
-              <p class="pfoot">Mock data</p>
-            </div>
-            <p>So about $240 a month while the discount holds, a little more or less with your payments. The extra $12 is your two new team members. I&rsquo;ll email you before the rate returns in October.</p>
-          </div>
-          <div class="m-user">That&rsquo;s exactly what I was hoping for. Thank you.</div>
-          <div class="m-agent">
-            <p>Happy to help. You&rsquo;re all set.</p>
-          </div>
-        </div>
-        <div class="m-composer" aria-hidden="true">Ask anything</div>
-        <p class="m-foot">The assistant can make mistakes. Verify important information.</p>
-      </div>
-      <div class="proto-ctl" id="proto-ctl" hidden>
-        <button type="button" class="proto-play" id="proto-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg><span id="proto-play-lab">Play the prototype</span></button>
-      </div>
-      <p class="mock-cap">The target state, as the working prototype I built, AI-paired: a pre-scripted agentic run, no live model, mock data only. The full conversation reads above as it stands; play animates the run. This answer didn&rsquo;t ship in this program. The built version, as an agent skill on the successor agent platform, is the next case.</p>
-    </div>
-
-    <div class="prose">
-      <p class="opens">The roadblock was live data. The deeper answer belonged on Intuit&rsquo;s successor agentic support platform, so we banked the MVP gains and moved the billing experience there.</p>
-      <p>The next case turns the prototype&rsquo;s heart, account-aware charge explanation, into a working read-only agent skill with evals: <a href="billing-skill.html">billing skill</a>.</p>
-    </div>
-  </section>
-
-  <!-- ================= 08 · learnings ================= -->
-  <section class="wrap part" id="learnings" aria-labelledby="p8-h">
-    <p class="kicker mono part-head"><span class="knum">08</span><span>Learnings</span></p>
-    <h2 id="p8-h">What I learned, and what I keep doing.</h2>
-    <div class="prose">
-      <p>Walk in the customer&rsquo;s shoes first. Typing the real questions into chat, voice, in-product search, and Google gave me the problem faster and more honestly than any dashboard. The whole journey showed how much; nowhere showed why.</p>
-      <p>The experts&rsquo; transcripts were design material, not just validation. The best answers the assistant could give were already being spoken on the phone. The transcripts showed what questions the experts asked and what solutions worked, and I designed the responses closer to what the expert provided.</p>
-      <p>Phase the product around the API reality. API onboarding is lengthy, so the PRD shipped the minimum required capabilities immediately and let each phase absorb the data as it landed. The MVP moved the numbers while the harder work was still onboarding.</p>
-      <p>And know when to stop investing in a platform. When the successor agent platform made the old platform&rsquo;s ending visible, the right move was not to fight for buy-in. We banked the gains we&rsquo;d already produced and built on the successor.</p>
-    </div>
-  </section>
-
-  <!-- ================= next case ================= -->
-  <section class="wrap nextcase" aria-label="Next case">
-    <p class="kicker mono part-head"><span class="knum">Next</span><span>Billing skill</span></p>
-    <p><a href="billing-skill.html">billing skill</a>: the target state above, built working as an agent skill for the successor platform. The same question, answered read-only from account data: the skill, a local MCP tool server, and the 108-case eval that gates it.</p>
-  </section>
-
-</main>
-
-<footer class="footer" role="contentinfo">
-  <div class="wrap footer-inner mono">
-    <span>Simone Muro &middot; Portfolio &middot; 2026</span>
-    <span><a href="index.html">Home</a> &middot; <a href="index.html#work">Work</a> &middot; <a href="resume.html">Resume</a> &middot; <a href="colophon.html">Colophon</a></span>
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer__inner"><span>Simone Muro &middot; Portfolio &middot; 2026</span><span><a href="index.html">Home</a> &middot; <a href="index.html#work">Work</a> &middot; <a href="resume.html">Resume</a> &middot; <a href="colophon.html">Colophon</a></span></div>
   </div>
-</footer>
+
+  <!-- rail progress + smooth scroll -->
+  <script>
+    (function () {
+      var links = [].slice.call(document.querySelectorAll('.rail-link'));
+      var map = {}; links.forEach(function (l) { map[l.dataset.target] = l; });
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            links.forEach(function (l) { l.classList.remove('is-active'); });
+            if (map[e.target.id]) map[e.target.id].classList.add('is-active');
+          }
+        });
+      }, { rootMargin: '-40% 0px -55% 0px' });
+      document.querySelectorAll('section.section[id]').forEach(function (s) { obs.observe(s); });
+      links.forEach(function (l) {
+        l.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          var t = document.getElementById(l.dataset.target);
+          if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 88, behavior: 'smooth' });
+        });
+      });
+    })();
+  </script>
 
 </body>
 </html>
