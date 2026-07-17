@@ -159,6 +159,20 @@
 .chat-foot a{ color:var(--sub); text-underline-offset:2px; }
 .chat-foot a:hover{ color:var(--accent); }
 
+/* ---------- docked mode (wide viewports) ----------
+   When the drawer opens, the page shifts left instead of being covered:
+   body gets padding equal to the drawer width, so every part of the page
+   stays visible and interactive beside the panel. Scrim never shows. */
+@media (min-width:1000px){
+  body{ transition:padding-right .34s var(--ease); }
+  body.chat-docked{ padding-right:min(432px,42vw); }
+  body.chat-docked .chat-scrim{ display:none; }
+  body.chat-docked .chat-drawer{ width:min(432px,42vw); }
+}
+@media (prefers-reduced-motion:reduce){
+  body{ transition:none; }
+}
+
 /* ---------- mobile: bottom sheet ---------- */
 @media (max-width:560px){
   .chat-drawer{

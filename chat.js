@@ -69,17 +69,35 @@
     var pending = false;
     var lastFocus = null;
 
-    /* ---------- open / close ---------- */
+    /* ---------- open / close ----------
+       Two modes:
+       - DOCKED (wide viewports): the page gets padding-right and shifts
+         left so all content stays visible and interactive. No scrim, no
+         scroll lock, no focus trap: the drawer is a side panel, not a modal.
+       - MODAL (narrow viewports): the original overlay/bottom-sheet with
+         scrim, scroll lock, and focus trap. */
+    var DOCK = window.matchMedia("(min-width: 1000px)");
     function open() {
       if (drawer.classList.contains("open")) return;
       lastFocus = document.activeElement;
-      scrim.hidden = false; drawer.hidden = false;
-      requestAnimationFrame(function () { scrim.classList.add("open"); drawer.classList.add("open"); });
-      document.body.style.overflow = "hidden";
+      var dock = DOCK.matches;
+      drawer.hidden = false;
+      drawer.setAttribute("aria-modal", dock ? "false" : "true");
+      if (dock) {
+        document.body.classList.add("chat-docked");
+      } else {
+        scrim.hidden = false;
+        document.body.style.overflow = "hidden";
+      }
+      requestAnimationFrame(function () {
+        if (!DOCK.matches) scrim.classList.add("open");
+        drawer.classList.add("open");
+      });
       setTimeout(function () { input && input.focus(); }, 120);
     }
     function close() {
       scrim.classList.remove("open"); drawer.classList.remove("open");
+      document.body.classList.remove("chat-docked");
       document.body.style.overflow = "";
       setTimeout(function () { scrim.hidden = true; drawer.hidden = true; }, 340);
       if (lastFocus && lastFocus.focus) lastFocus.focus();
@@ -95,9 +113,11 @@
       if (e.key === "Escape" && drawer.classList.contains("open")) close();
     });
 
-    /* focus trap while open */
+    /* focus trap while open — modal mode only; a docked panel must not
+       trap focus, the rest of the page stays usable beside it */
     drawer.addEventListener("keydown", function (e) {
       if (e.key !== "Tab" || !drawer.classList.contains("open")) return;
+      if (drawer.getAttribute("aria-modal") !== "true") return;
       var f = drawer.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])');
       f = Array.prototype.filter.call(f, function (el) { return !el.disabled && el.offsetParent !== null; });
       if (!f.length) return;
