@@ -80,6 +80,16 @@
 .selwork .card__h a { color: inherit; text-decoration: none; }
 .selwork .card__h a:hover, .selwork .card__h a:focus-visible { color: var(--violet); }
 .selwork .card__p { font-size: 14.5px; line-height: 1.55; color: var(--body); margin: 0; }
+.selwork .card__listen {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 14px;
+  font-family: 'Spline Sans Mono', monospace; font-size: 11.5px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--violet); text-decoration: none;
+  border: 1px solid oklch(0.86 0.05 300); border-radius: 100px; padding: 7px 13px;
+  transition: border-color .2s, background .2s;
+  align-self: flex-start;
+}
+.selwork .card__listen:hover { border-color: var(--violet); background: oklch(0.96 0.02 300); }
 
 /* --- 3-up grid --- */
 .selwork .work__grid {

@@ -16,6 +16,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="billing-skill.css">
+<meta name="agent-endpoint" content="https://simone-portfolio-agent.simonemuro.workers.dev">
+<link rel="stylesheet" href="chat.css?v=7">
+<style>
+  /* tokens the shared chat drawer expects, mapped to this palette */
+  :root{ --card:#ffffff; --sub:oklch(0.50 0.03 300); --hair:oklch(0.92 0.010 300); --hair-strong:oklch(0.85 0.020 300); --accent:oklch(0.52 0.20 300); --accent-deep:oklch(0.42 0.20 300); --accent-soft:oklch(0.93 0.05 300); --serif:'Poppins',sans-serif; --sans:'Mulish',system-ui,sans-serif; --mono:'Spline Sans Mono',monospace; --ease:cubic-bezier(.22,.61,.21,1); }
+  .visually-hidden{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+</style>
 </head>
 <body>
 
@@ -240,6 +247,51 @@
       });
     })();
   </script>
+
+<!-- ================= chat drawer: first-person portfolio agent ================= -->
+<button class="chat-fab" type="button" data-chat-open aria-haspopup="dialog" aria-controls="chat-drawer">
+  <span class="fab-dot" aria-hidden="true"></span><span class="fab-label">Ask my agent</span>
+</button>
+
+<div class="chat-scrim" data-chat-scrim hidden></div>
+
+<aside class="chat-drawer" id="chat-drawer" role="dialog" aria-modal="true" aria-labelledby="chat-title" hidden>
+  <header class="chat-head">
+    <div class="chat-id">
+      <span class="chat-title" id="chat-title">Simone Muro</span>
+      <span class="chat-badge mono">AI agent &middot; grounded in my public work</span>
+    </div>
+    <div class="chat-head-actions">
+      <button class="chat-clear" type="button" data-chat-clear>clear</button>
+      <button class="chat-close" type="button" data-chat-close aria-label="Close chat">&times;</button>
+    </div>
+  </header>
+
+  <div class="chat-log" data-chat-log role="log" aria-live="polite" aria-label="Conversation with Simone's agent">
+    <div class="msg agent" data-keep>
+      <span class="role">Simone</span>
+      <div class="bubble">
+        <p>Hi there. Ask me what I've built, how I think about designing AI agents, or whether I'm a fit for your role.</p>
+        <p>For anything personal or off limits, I'll point you to the real me.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-suggest" data-chat-suggest>
+    <button class="chip" type="button">Why should I hire you?</button>
+    <button class="chip" type="button">What are your strongest eval results?</button>
+    <button class="chip" type="button">Walk me through BillingSkill.</button>
+  </div>
+
+  <form class="chat-compose" data-chat-form>
+    <label class="visually-hidden" for="chat-input">Ask Simone's agent a question</label>
+    <input class="chat-input" id="chat-input" data-chat-input type="text" autocomplete="off" maxlength="240" placeholder="Ask about my work&hellip;">
+    <button class="chat-send" data-chat-send type="submit">send</button>
+  </form>
+
+  <p class="chat-foot">This is my AI agent, built with Claude Code and grounded only in my public pages. It can be wrong; the real me replies fast at <a href="mailto:simonermuro@gmail.com">simonermuro@gmail.com</a>.</p>
+</aside>
+<script src="chat.js?v=7" defer></script>
 
 </body>
 </html>

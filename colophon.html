@@ -18,6 +18,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&family=Newsreader:ital,opsz@0,6..72;1,6..72&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="theme-overhaul.css">
+<meta name="agent-endpoint" content="https://simone-portfolio-agent.simonemuro.workers.dev">
+<link rel="stylesheet" href="chat.css?v=7">
 </head>
 <body class="v5">
 
@@ -68,13 +70,19 @@
     </div>
   </section>
 
-  <!-- Q&A box section publishes here when the curated widget is wired:
-       answers are curated, refusals are designed, there is no live model,
-       and the box says so in its own header. -->
+  <!-- ================= 03 · the agent ================= -->
+  <section class="wrap part" aria-labelledby="c-agent-h">
+    <p class="kicker mono part-head"><span class="knum">03</span><span>The agent</span></p>
+    <h2 id="c-agent-h">The chat answers as me, within limits I wrote.</h2>
+    <div class="prose">
+      <p>The "Ask my agent" chat on every page is a working agent I built: a small service that retrieves from these pages and answers in my voice, claiming only what the site claims. Every reply cites the pages it drew from. Some questions never reach the model at all: deterministic guardrails catch prompt injection, private matters, and out-of-scope asks, and answer them with rules instead. Before any change deploys, it has to pass a test suite, a golden set of graded questions, and adversarial cases that must fail closed.</p>
+      <p>It can be wrong, and it says so. When it is not sure, it hands off to the real me.</p>
+    </div>
+  </section>
 
-  <!-- ================= 03 · type and tech ================= -->
+  <!-- ================= 04 · type and tech ================= -->
   <section class="wrap part" aria-labelledby="c3-h">
-    <p class="kicker mono part-head"><span class="knum">03</span><span>Type and tech</span></p>
+    <p class="kicker mono part-head"><span class="knum">04</span><span>Type and tech</span></p>
     <h2 id="c3-h">Set in three faces, served as plain files.</h2>
     <div class="prose">
       <p>Instrument Serif for display, Instrument Sans for text, Fragment Mono for the working-file chrome, all self-hosted. The site is static HTML, CSS, and a little JavaScript: no framework, no build step. Hosted on GitHub Pages.</p>
@@ -89,6 +97,51 @@
     <span><a href="index.html">Home</a> &middot; <a href="index.html#work">Work</a> &middot; <a href="resume.html">Resume</a> &middot; <a href="mailto:simonermuro@gmail.com">Email</a></span>
   </div>
 </footer>
+
+<!-- ================= chat drawer: first-person portfolio agent ================= -->
+<button class="chat-fab" type="button" data-chat-open aria-haspopup="dialog" aria-controls="chat-drawer">
+  <span class="fab-dot" aria-hidden="true"></span><span class="fab-label">Ask my agent</span>
+</button>
+
+<div class="chat-scrim" data-chat-scrim hidden></div>
+
+<aside class="chat-drawer" id="chat-drawer" role="dialog" aria-modal="true" aria-labelledby="chat-title" hidden>
+  <header class="chat-head">
+    <div class="chat-id">
+      <span class="chat-title" id="chat-title">Simone Muro</span>
+      <span class="chat-badge mono">AI agent &middot; grounded in my public work</span>
+    </div>
+    <div class="chat-head-actions">
+      <button class="chat-clear" type="button" data-chat-clear>clear</button>
+      <button class="chat-close" type="button" data-chat-close aria-label="Close chat">&times;</button>
+    </div>
+  </header>
+
+  <div class="chat-log" data-chat-log role="log" aria-live="polite" aria-label="Conversation with Simone's agent">
+    <div class="msg agent" data-keep>
+      <span class="role">Simone</span>
+      <div class="bubble">
+        <p>Hi there. Ask me what I've built, how I think about designing AI agents, or whether I'm a fit for your role.</p>
+        <p>For anything personal or off limits, I'll point you to the real me.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-suggest" data-chat-suggest>
+    <button class="chip" type="button">Why should I hire you?</button>
+    <button class="chip" type="button">What are your strongest eval results?</button>
+    <button class="chip" type="button">How was this agent built?</button>
+  </div>
+
+  <form class="chat-compose" data-chat-form>
+    <label class="visually-hidden" for="chat-input">Ask Simone's agent a question</label>
+    <input class="chat-input" id="chat-input" data-chat-input type="text" autocomplete="off" maxlength="240" placeholder="Ask about my work&hellip;">
+    <button class="chat-send" data-chat-send type="submit">send</button>
+  </form>
+
+  <p class="chat-foot">This is my AI agent, built with Claude Code and grounded only in my public pages. It can be wrong; the real me replies fast at <a href="mailto:simonermuro@gmail.com">simonermuro@gmail.com</a>.</p>
+</aside>
+<script src="chat.js?v=7" defer></script>
 
 </body>
 </html>
