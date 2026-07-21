@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="Designing spoken answers for QuickBooks phone support: a snippet that proves the assistant understood before it offers help, the prompt rules that shape it, and a measured containment lift.">
+<meta name="description" content="Designing spoken answers for QuickBooks phone support: hear a real prototyping session, read the behavior spec and voice standards, and see the measured containment lift.">
 <meta property="og:title" content="Voice &middot; Simone Muro">
-<meta property="og:description" content="On the phone, help has to work when heard once. The behavior spec, the prompt rules, and the release plan behind a generated voice answer that moved containment.">
+<meta property="og:description" content="On the phone, help has to work when heard once. Hear a real prototyping session, then read the behavior spec, the voice standards, and the release plan behind a spoken answer that moved containment.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://simonemuro.github.io/voice.html">
 <meta name="twitter:card" content="summary">
@@ -51,10 +51,11 @@
     <nav class="rail">
       <a class="rail-link" href="#s01" data-target="s01"><span class="rail-link__n">01</span><span class="rail-link__t">The problem</span></a>
       <a class="rail-link" href="#s02" data-target="s02"><span class="rail-link__n">02</span><span class="rail-link__t">Why it mattered</span></a>
-      <a class="rail-link" href="#s03" data-target="s03"><span class="rail-link__n">03</span><span class="rail-link__t">The behavior spec</span></a>
-      <a class="rail-link" href="#s04" data-target="s04"><span class="rail-link__n">04</span><span class="rail-link__t">The prompt</span></a>
-      <a class="rail-link" href="#s05" data-target="s05"><span class="rail-link__n">05</span><span class="rail-link__t">The release</span></a>
-      <a class="rail-link" href="#s06" data-target="s06"><span class="rail-link__n">06</span><span class="rail-link__t">Where it landed</span></a>
+      <a class="rail-link" href="#listen" data-target="listen"><span class="rail-link__n">03</span><span class="rail-link__t">Out loud</span></a>
+      <a class="rail-link" href="#s04" data-target="s04"><span class="rail-link__n">04</span><span class="rail-link__t">The behavior spec</span></a>
+      <a class="rail-link" href="#s05" data-target="s05"><span class="rail-link__n">05</span><span class="rail-link__t">The standards</span></a>
+      <a class="rail-link" href="#s06" data-target="s06"><span class="rail-link__n">06</span><span class="rail-link__t">The release</span></a>
+      <a class="rail-link" href="#s07" data-target="s07"><span class="rail-link__n">07</span><span class="rail-link__t">Where it landed</span></a>
     </nav>
 
     <!-- CONTENT -->
@@ -85,9 +86,61 @@
         <p class="note">The insight the whole case rests on: the problem was never that the answer didn't exist. It was that the offer carried no proof of understanding. Put a piece of the answer in the caller's ear, and accepting help stops being an act of faith.</p>
       </section>
 
-      <!-- 03 -->
-      <section class="section" id="s03">
-        <div class="eyebrow">03 &middot; The behavior spec</div>
+      <!-- 03 · OUT LOUD -->
+      <section class="section" id="listen">
+        <div class="eyebrow">03 &middot; Out loud</div>
+        <h2>The patterns, out loud.</h2>
+        <p>Voice design reads fine on paper. It lives or dies in the ear. While designing this work I built a throwaway prototype in Vapi, an external voice tool, so I could hear the conversation patterns instead of reading them. This is one working session with it, unedited: I play the customer, and the assistant is the prototype's text to speech running on test content. Four minutes, twenty seconds.</p>
+        <div class="art">
+          <div class="art__cap"><span class="mono">prototyping session &middot; vapi &middot; invoices, fix a date</span><span class="tag tag--green">Real recording &middot; my voice</span></div>
+          <div class="player">
+            <audio id="sess-audio" controls preload="metadata" src="assets/audio/vapi-invoice-session.m4a"></audio>
+          </div>
+          <div class="chapters" role="group" aria-label="Jump to a moment in the recording">
+            <button class="chp" data-t="7" aria-label="Jump to 0:07, one question first"><b>0:07</b> one question first</button>
+            <button class="chp" data-t="56" aria-label="Jump to 0:56, the pacing repair"><b>0:56</b> the pacing repair</button>
+            <button class="chp" data-t="95" aria-label="Jump to 1:35, take your time"><b>1:35</b> take your time</button>
+            <button class="chp" data-t="120.7" aria-label="Jump to 2:00, the honest no"><b>2:00</b> the honest no</button>
+            <button class="chp" data-t="175.4" aria-label="Jump to 2:55, lost on the screen"><b>2:55</b> lost on the screen</button>
+          </div>
+          <div class="tx" id="tx">
+            <div class="callrow callrow--agent" data-t="0.9"><span class="callrow__who">Assistant</span><div class="callrow__said">Hello, this is the QuickBooks Assistant. How may I assist you today?</div></div>
+            <div class="callrow" data-t="7.0"><span class="callrow__who">Me</span><div class="callrow__said">I need help with invoices.</div></div>
+            <div class="tx__moment" data-t="11.7">moment 01 &middot; a bare noun gets one question first</div>
+            <div class="callrow callrow--agent" data-t="11.7"><span class="callrow__who">Assistant</span><div class="callrow__said">Of course, I'd be happy to assist you with your invoices. Could you please provide me with more details about the issue you're facing? For example, are you having trouble creating an invoice, sending one, or something else? Your clarification would help me to give you the most accurate guidance.</div></div>
+            <div class="callrow" data-t="25.6"><span class="callrow__who">Me</span><div class="callrow__said">I put the wrong date on the paid invoices and I'd like to change it.</div></div>
+            <div class="tx__moment" data-t="34.6">moment 02 &middot; every step in one breath, then the repair</div>
+            <div class="callrow callrow--agent" data-t="34.6"><span class="callrow__who">Assistant</span><div class="callrow__said">I understand you'd like to correct the dates on your paid invoices. Let's go through this process together. First, you'll need to locate the invoicing question. Open QuickBooks and click on the Sales or Invoicing tab on the left-hand side menu. Next, in the Customer section, you'll see a list of all your invoices. Find the invoice you want to change and click on it. You'll then see the invoice details. Here, you can edit the date by clicking on the date field and selecting the correct date from the calendar that pops up. Finally, remember to click Save and close at the bottom of the page to ensure your changes are saved. Before I proceed, could you please confirm if you're following along and that this information is helpful?</div></div>
+            <div class="callrow" data-t="72.7"><span class="callrow__who">Me</span><div class="callrow__said">I can't remember all of that. Can you give it to me step by step, one step at a time?</div></div>
+            <div class="callrow callrow--agent" data-t="79.6"><span class="callrow__who">Assistant</span><div class="callrow__said">Absolutely, I understand. Let's take it one step at a time. First, open QuickBooks and click on the Sales or Invoicing tab on the left-hand side menu. Let me know when you've done this and we'll move on to the next step.</div></div>
+            <div class="tx__moment" data-t="95.4">moment 03 &middot; the caller sets the pace</div>
+            <div class="callrow" data-t="95.4"><span class="callrow__who">Me</span><div class="callrow__said">Okay, hang on.</div></div>
+            <div class="callrow callrow--agent" data-t="98.3"><span class="callrow__who">Assistant</span><div class="callrow__said">Sure, take your time. I'm here when you're ready.</div></div>
+            <div class="callrow" data-t="104.4"><span class="callrow__who">Me</span><div class="callrow__said">Okay, I'm in QuickBooks right now.</div></div>
+            <div class="callrow callrow--agent" data-t="105.9"><span class="callrow__who">Assistant</span><div class="callrow__said">Great. Now in the Sales or Invoicing section, you should see a list of all your invoices. Can you find the invoice you want to change and click on it? Let me know once you've done this.</div></div>
+            <div class="tx__moment" data-t="120.7">moment 04 &middot; an honest no, then refocus</div>
+            <div class="callrow" data-t="120.7"><span class="callrow__who">Me</span><div class="callrow__said">There are multiple invoices that I need to change. I put the date on all of them, the wrong date on all of them. How do I change more than one at a time? Can I do that?</div></div>
+            <div class="callrow callrow--agent" data-t="132.7"><span class="callrow__who">Assistant</span><div class="callrow__said">I understand you have several invoices you need to modify. Unfortunately, QuickBooks does not currently support changing the date on multiple invoices simultaneously. You'll need to edit each invoice individually. To proceed, let's focus on one invoice first. Please find the invoice you want to change and click on it. Once you're able to see the invoice details, let me know. We'll continue with the next steps after that.</div></div>
+            <div class="callrow" data-t="156.6"><span class="callrow__who">Me</span><div class="callrow__said">Okay, I see that one of the invoices here.</div></div>
+            <div class="callrow callrow--agent" data-t="161.4"><span class="callrow__who">Assistant</span><div class="callrow__said">Great. Now that you have the invoice open, you should see the date field. Click on it and a calendar should pop up. From here, you can select the correct date. Let me know when you've done this and we can move on to the next step.</div></div>
+            <div class="tx__moment" data-t="175.4">moment 05 &middot; lost on the screen, so re-describe the screen</div>
+            <div class="callrow" data-t="175.4"><span class="callrow__who">Me</span><div class="callrow__said">Where's the date field again? I don't see it here.</div></div>
+            <div class="callrow callrow--agent" data-t="180.5"><span class="callrow__who">Assistant</span><div class="callrow__said">My apologies for any confusion. The date field is typically located near the top of the invoice details page, usually right under the customer's name or close to the invoice number. It might be labeled simply as date. If you hover over or click around the top section of the invoice, you should be able to find it. Once you locate it, click on the date to bring up the calendar for selection. Please take a moment to look for it and let me know if you're able to find and select the correct date.</div></div>
+            <div class="callrow" data-t="205.5"><span class="callrow__who">Me</span><div class="callrow__said">Yes, I see it.</div></div>
+            <div class="callrow callrow--agent" data-t="207.0"><span class="callrow__who">Assistant</span><div class="callrow__said">Fantastic. Now go ahead and click on the date field and then select the correct date from the calendar that pops up. After you've done that, remember to click Save and close at the bottom of the page to ensure your changes are saved. If you encounter any issues or have any more invoices to update, feel free to let me know. I'm here to help.</div></div>
+            <div class="callrow" data-t="230.5"><span class="callrow__who">Me</span><div class="callrow__said">Okay, I changed the date.</div></div>
+            <div class="callrow callrow--agent" data-t="236.1"><span class="callrow__who">Assistant</span><div class="callrow__said">Wonderful. I'm glad to hear you were able to change the date. Remember, you will need to follow these same steps for any other invoices you wish to update. If you have any other questions or need further assistance, feel free to ask. I'm here to help.</div></div>
+            <div class="callrow" data-t="251.0"><span class="callrow__who">Me</span><div class="callrow__said">I'm good. Thank you.</div></div>
+            <div class="callrow callrow--agent" data-t="256.1"><span class="callrow__who">Assistant</span><div class="callrow__said">You're welcome. If you ever need help in the future, don't hesitate to reach out. Have a great day.</div></div>
+          </div>
+          <div class="art__foot">Unedited session with a prototype I built in Vapi in February 2024, while designing this work. My voice as the customer; the assistant is the prototype's text to speech, on test content with no real account data. Transcript auto-generated, lightly punctuated. Click any line to jump the audio there.</div>
+        </div>
+        <p class="note">The second marker is the one to hear. The assistant reads out every step in one breath, and the customer answers the way real customers answer: I can't remember all of that. What it does next, one step at a time with each step confirmed before the next, is the same working-memory reality behind the teaser rule in the spec below.</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="section" id="s04">
+        <div class="eyebrow">04 &middot; The behavior spec</div>
         <h2>What it says, when it asks, and how it gets out.</h2>
         <p>I wrote the behavior as a spec before any prompt existed. The deliberate choice at the center of it: the spoken answer is about three short sentences, a teaser, and it will not fully answer the question. That is on purpose. Its job is to prove the assistant understood and make the offer worth taking. The full steps belong on a screen. The rest of the spec is the part that matters most on a phone line, which is what happens when things go wrong: every failure has a landing, and the caller can always get out.</p>
         <div class="art">
@@ -104,9 +157,9 @@
         <p class="note">Routing parity is the least glamorous line in the spec and the one I would defend hardest. A new experience that loses the caller's context on the way out is worse than no new experience, because it spends the caller's patience twice.</p>
       </section>
 
-      <!-- 04 -->
-      <section class="section" id="s04">
-        <div class="eyebrow">04 &middot; The prompt</div>
+      <!-- 05 -->
+      <section class="section" id="s05">
+        <div class="eyebrow">05 &middot; The prompt and the standards</div>
         <h2>The rules that make an answer sayable.</h2>
         <p>The prompt is where the content bar becomes enforceable. Steps that work on a screen are noise in the ear, so the rules ban lists, URLs, and numbered instructions outright, and make sequence ride on spoken connectives instead. A bare noun never gets an answer; it gets one clarifying question, with no apology padding the turn. This is the part of the work that translates directly: an instruction set is where a design decision either survives contact with a model or quietly doesn't.</p>
         <div class="art">
@@ -135,6 +188,28 @@ gerunds, and passive sentence constructions.</code></pre>
           </div>
           <div class="art__foot">Redacted excerpt of the shipped prompt. Employer and product names and safety rules removed; lightly normalized, meaning unchanged.</div>
         </div>
+        <p style="margin-top:28px;">Rules only earn their place when you can hear what they change. The same standards, as utterance pairs:</p>
+        <div class="art">
+          <div class="art__cap"><span class="mono">voice standards &middot; the rules as utterance pairs</span><span class="tag tag--neutral">Do and don't</span></div>
+          <div class="std">
+            <div class="std__row">
+              <div class="std__k">a bare noun gets one question, not a guess</div>
+              <div class="std__cell std__cell--no"><span class="std__src">don't &middot; the before experience</span><p>"I found an article that can help with invoices. Would you like me to text you a link?"</p></div>
+              <div class="std__cell std__cell--do"><span class="std__src">do &middot; from the session above</span><p>"Are you having trouble creating an invoice, sending one, or something else?"</p></div>
+            </div>
+            <div class="std__row">
+              <div class="std__k">no lists in the ear; sequence rides on connectives</div>
+              <div class="std__cell std__cell--no"><span class="std__src">don't &middot; written to rule 2</span><p>"Step one: open the Sales tab. Step two: select the invoice. Step three: click the date field."</p></div>
+              <div class="std__cell std__cell--do"><span class="std__src">do &middot; written to rule 4</span><p>"First, open the Sales tab. Then pick the invoice. Once it's open, look for the date near the top."</p></div>
+            </div>
+            <div class="std__row">
+              <div class="std__k">pace to a person actually doing the steps</div>
+              <div class="std__cell std__cell--no"><span class="std__src">don't &middot; the session, condensed</span><p>"Open QuickBooks and click on the Sales or Invoicing tab... find the invoice you want to change... edit the date... remember to click Save and close..."</p></div>
+              <div class="std__cell std__cell--do"><span class="std__src">do &middot; from the session above</span><p>"Let's take it one step at a time. First, open QuickBooks and click on the Sales or Invoicing tab. Let me know when you've done this."</p></div>
+            </div>
+          </div>
+          <div class="art__foot">Where a pair says session, the words come from the recording in section 03. The written pairs show the shapes the shipped rules ban and require.</div>
+        </div>
         <figure class="art shot" style="margin-top:22px;">
           <div class="art__cap"><span class="mono">the shipped experience, in production</span><span class="tag tag--green">Real screenshot &middot; cropped</span></div>
           <img src="assets/work/voice-snippet-real-ui.png" alt="QuickBooks voice assistant transcript showing a customer clarifying a connection error before receiving a targeted spoken answer" width="488" height="1162" loading="lazy">
@@ -142,9 +217,9 @@ gerunds, and passive sentence constructions.</code></pre>
         </figure>
       </section>
 
-      <!-- 05 -->
-      <section class="section" id="s05">
-        <div class="eyebrow">05 &middot; The release</div>
+      <!-- 06 -->
+      <section class="section" id="s06">
+        <div class="eyebrow">06 &middot; The release</div>
         <h2>One low-risk intent, then a throttle.</h2>
         <p>This was the phone line's first generative experience, so the release plan mattered as much as the design. It did not go straight to the full line. I recommended starting on a single low-risk intent: a small slice of call volume, mostly straightforward questions, no special expert tools required, and containment sitting below the assistant's average. Low risk, with room to move. From there, every step had to be earned by the one before it.</p>
         <div class="loop">
@@ -157,9 +232,9 @@ gerunds, and passive sentence constructions.</code></pre>
         <p class="note" style="margin-bottom:0;">That plan is what carried this from a prototype the platform couldn't support in 2023 to a live experiment on December 10, 2024. It reached significance, and the experience moved to full production shortly after.</p>
       </section>
 
-      <!-- 06 -->
-      <section class="section" id="s06">
-        <div class="eyebrow">06 &middot; Where it landed</div>
+      <!-- 07 -->
+      <section class="section" id="s07">
+        <div class="eyebrow">07 &middot; Where it landed</div>
         <h2>What shipped, and what it moved.</h2>
         <p>Here is the call the spec and the prompt produce: a teaser that proves the assistant understood, then the offer.</p>
         <div class="art" style="margin-bottom:28px;">
@@ -191,6 +266,36 @@ gerunds, and passive sentence constructions.</code></pre>
   <div class="footer">
     <div class="footer__inner"><span>Simone Muro &middot; Portfolio &middot; 2026</span><span><a href="index.html">Home</a> &middot; <a href="index.html#work">Work</a> &middot; <a href="resume.html">Resume</a> &middot; <a href="colophon.html">Colophon</a></span></div>
   </div>
+
+  <!-- call player: chapter seeks + transcript sync -->
+  <script>
+    (function () {
+      var audio = document.getElementById('sess-audio');
+      if (!audio) return;
+      var box = document.getElementById('tx');
+      var rows = [].slice.call(box.querySelectorAll('.callrow[data-t]'));
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function seek(t) { audio.currentTime = t; audio.play(); }
+      document.querySelectorAll('.chp').forEach(function (b) {
+        b.addEventListener('click', function () { seek(parseFloat(b.dataset.t)); });
+      });
+      box.querySelectorAll('[data-t]').forEach(function (r) {
+        r.addEventListener('click', function () { seek(parseFloat(r.dataset.t)); });
+      });
+      var current = null;
+      audio.addEventListener('timeupdate', function () {
+        var t = audio.currentTime, active = null;
+        for (var i = 0; i < rows.length; i++) {
+          if (parseFloat(rows[i].dataset.t) <= t + 0.3) active = rows[i]; else break;
+        }
+        if (active && active !== current) {
+          if (current) current.classList.remove('is-now');
+          active.classList.add('is-now'); current = active;
+          box.scrollTo({ top: Math.max(0, active.offsetTop - box.clientHeight * 0.35), behavior: reduce ? 'auto' : 'smooth' });
+        }
+      });
+    })();
+  </script>
 
   <!-- rail progress + smooth scroll -->
   <script>

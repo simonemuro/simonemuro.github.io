@@ -133,6 +133,29 @@ a:hover { text-decoration: underline; }
 .settled { margin-top: 28px; padding: 22px 24px; background: var(--tint); border-radius: 12px; }
 .settled p { font-size: 16px; line-height: 1.55; color: var(--ink-2); margin: 0; }
 
+/* call player */
+.player { padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.player audio { width: 100%; display: block; }
+.chapters { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+.chp { display: inline-flex; align-items: center; gap: 8px; font-family: 'Spline Sans Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--ink-2); background: oklch(0.97 0.01 300); border: 1px solid var(--line-2); border-radius: 100px; padding: 7px 12px; cursor: pointer; transition: border-color .2s, color .2s; }
+.chp:hover { border-color: var(--violet); color: var(--violet); }
+.chp b { font-weight: 600; color: var(--violet); }
+.tx { max-height: 400px; overflow-y: auto; position: relative; }
+.tx .callrow { cursor: pointer; }
+.tx .callrow.is-now { background: var(--tint); }
+.tx .callrow.is-now .callrow__who { color: var(--violet); font-weight: 600; }
+.tx__moment { padding: 9px 18px; font-family: 'Spline Sans Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--violet); background: oklch(0.975 0.012 300); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); cursor: pointer; }
+
+/* voice standards: do and don't pairs */
+.std__row { display: grid; grid-template-columns: 170px 1fr 1fr; gap: 16px; padding: 15px 18px; border-bottom: 1px solid oklch(0.95 0.006 300); }
+.std__row:last-child { border-bottom: none; }
+.std__k { font-family: 'Spline Sans Mono', monospace; font-size: 11.5px; color: var(--violet); line-height: 1.4; }
+.std__src { display: block; font-family: 'Spline Sans Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; color: var(--muted); }
+.std__cell--no .std__src { color: var(--amber); }
+.std__cell--do .std__src { color: var(--green); }
+.std__cell p { font-size: 13.5px; line-height: 1.5; color: var(--ink-2); margin: 0; }
+@media (max-width: 720px) { .std__row { grid-template-columns: 1fr; gap: 10px; } }
+
 /* footer */
 .footer { border-top: 1px solid var(--line); background: oklch(0.98 0.006 300); }
 .footer__inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 32px 40px; font-family: 'Spline Sans Mono', monospace; font-size: 12px; letter-spacing: 0.04em; color: var(--muted); }
