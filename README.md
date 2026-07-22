@@ -9,7 +9,7 @@ portfolio built around real working artifacts, receipts-backed numbers, and judg
 - Case studies: `billing-skill.html` (01, the working skill build; build facts only, no shipped
   metrics), `charge-lookup.html` (02, the shipped redesign and its numbers),
   `payroll-intelligence.html` (03), `quality-program.html` (04),
-  `cancellation-saves.html` (05), `voice.html` (06).
+  `cancellation-saves.html` (05), `voice.html` (06), `voice-troubleshooting.html` (07).
 - `colophon.html` · the artifacts disclosure, how the site was made, type and tech.
   `operate-with-ai.html` is a redirect stub to it (the old Case 08, retired).
 - `resume.html` · resume-request page. `404.html` · not-found page.

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="A Vapi prototype that troubleshoots QuickBooks invoice issues live on the call: the system instructions, the grounded product knowledge, and the real session recording.">
+<meta property="og:title" content="Voice troubleshooting POC &middot; Simone Muro">
+<meta property="og:description" content="Self-help sends the answer. This prototype stayed on the line and fixed the problem: system instructions, grounded knowledge, a live voice loop, and the recording to prove it.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simonemuro.github.io/voice-troubleshooting.html">
+<meta name="twitter:card" content="summary">
+<title>Voice troubleshooting POC &middot; Simone Muro</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238a3c1c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='27' fill='%23fffdf7' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="voice-troubleshooting.css">
+<meta name="agent-endpoint" content="https://simone-portfolio-agent.simonemuro.workers.dev">
+<link rel="stylesheet" href="chat.css?v=7">
+<style>
+  /* tokens the shared chat drawer expects, mapped to this palette */
+  :root{ --card:#ffffff; --sub:oklch(0.50 0.03 300); --hair:oklch(0.92 0.010 300); --hair-strong:oklch(0.85 0.020 300); --accent:oklch(0.52 0.20 300); --accent-deep:oklch(0.42 0.20 300); --accent-soft:oklch(0.93 0.05 300); --serif:'Poppins',sans-serif; --sans:'Mulish',system-ui,sans-serif; --mono:'Spline Sans Mono',monospace; --ease:cubic-bezier(.22,.61,.21,1); }
+  .visually-hidden{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <div class="nav">
+    <div class="nav__inner">
+      <a class="wordmark" href="index.html">Simone Muro</a>
+      <nav class="nav__links"><a href="index.html#work">WORK</a><a href="resume.html">RESUME</a><a href="index.html#contact">CONTACT</a></nav>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="wrap hero">
+    <div class="kicker">Case No. 07 &nbsp;&middot;&nbsp; Voice troubleshooting POC &nbsp;&middot;&nbsp; QuickBooks invoices</div>
+    <h1>Fixed on the call, <em>not after it.</em></h1>
+    <p class="hero__lede">Self-help, even when a customer accepts it, defers the fix: steps travel to an inbox, and the work happens later, alone. This prototype asked the next question. Could the model stay on the line and walk a customer through the fix, step by step, until it's done? I wrote the system instructions, grounded the model in QuickBooks product content, personalized it to the customer's product profile, and put it on a live voice loop in Vapi. The session on this page is me testing it with my own voice. The problem is fixed before the goodbye.</p>
+  </header>
+
+  <!-- VERDICT -->
+  <section class="wrap verdict">
+    <div class="verdict__grid">
+      <div class="verdict__cell"><div class="verdict__k">Problem</div><p>Sending help is not the same as helping. Even accepted self-help ends the call with the problem still there.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">What I did</div><p>Wrote the system instructions, grounded the model in product content, personalized by product profile, and prototyped the full voice loop in Vapi.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">Outcome</div><p>A working POC that carries a customer to resolution live on the call. Proof the model could be the help, not just send it.</p></div>
+      <div class="verdict__cell"><div class="verdict__k">Role</div><p>Solo prototype: the instructions, the grounding, the personalization rules, and the test calls.</p></div>
+    </div>
+  </section>
+
+  <!-- BODY -->
+  <div class="wrap body">
+
+    <!-- RAIL -->
+    <nav class="rail">
+      <a class="rail-link" href="#s01" data-target="s01"><span class="rail-link__n">01</span><span class="rail-link__t">The problem</span></a>
+      <a class="rail-link" href="#s02" data-target="s02"><span class="rail-link__n">02</span><span class="rail-link__t">The build</span></a>
+      <a class="rail-link" href="#s03" data-target="s03"><span class="rail-link__n">03</span><span class="rail-link__t">The instructions</span></a>
+      <a class="rail-link" href="#session" data-target="session"><span class="rail-link__n">04</span><span class="rail-link__t">The session</span></a>
+      <a class="rail-link" href="#s05" data-target="s05"><span class="rail-link__n">05</span><span class="rail-link__t">What it proved</span></a>
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- 01 -->
+      <section class="section" id="s01">
+        <div class="eyebrow">01 &middot; The problem</div>
+        <h2>Sending help still leaves the customer alone with the fix.</h2>
+        <p>The <a href="voice.html">voice snippet work</a> is a separate case with a different job: prove the assistant understood, so more callers accept self-help. It moved its numbers. But its best ending is still a handoff: the full steps travel by text or email, the call ends, and the customer does the work later, by themselves. This prototype chased a different measure. Not acceptance. Resolution: is the problem gone when the call ends?</p>
+        <div class="art">
+          <div class="art__cap"><span class="mono">two different problems &middot; side by side</span><span class="tag tag--neutral">The framing</span></div>
+          <div class="lanes">
+            <div class="lane lane--send">
+              <div class="lane__head">Send help &middot; the snippet's job</div>
+              <ol>
+                <li>Caller states the problem.</li>
+                <li>Assistant speaks a teaser that proves it understood.</li>
+                <li>Caller accepts; the full steps go to text or email.</li>
+                <li>Call ends. The fix happens later, alone.</li>
+              </ol>
+            </div>
+            <div class="lane lane--live">
+              <div class="lane__head">Be the help &middot; this POC's job</div>
+              <ol>
+                <li>Caller states the problem.</li>
+                <li>Model clarifies until the action is specific.</li>
+                <li>One step at a time, each confirmed, live.</li>
+                <li>Call ends with the problem fixed.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="art__foot">Same channel, different finish line. The snippet optimizes acceptance of help; this prototype optimizes resolution on the call.</div>
+        </div>
+      </section>
+
+      <!-- 02 -->
+      <section class="section" id="s02">
+        <div class="eyebrow">02 &middot; The build</div>
+        <h2>Five steps from question to a working voice loop.</h2>
+        <p>Built in Vapi, an external voice platform, in February 2024, while I was designing the voice work. No engineering team, no roadmap slot: a prototype whose whole job was to answer one question out loud.</p>
+        <div class="art">
+          <div class="art__cap"><span class="mono">the prototyping method</span><span class="tag tag--neutral">As built</span></div>
+          <div class="ladder">
+            <div class="rung"><div class="rung__n">1</div><div class="rung__head">Pick a real workflow</div><p class="rung__sub">A common, concrete ask: fix the date on paid invoices. Multi-step, screen-dependent, exactly the kind of task self-help normally defers.</p></div>
+            <div class="rung"><div class="rung__n">2</div><div class="rung__head">Write the system instructions</div><p class="rung__sub">Behavior as law: a written persona, clarify before guiding, one step at a time with confirmation, honest limits, recovery when the customer gets lost. The full excerpt is in section 03.</p></div>
+            <div class="rung"><div class="rung__n">3</div><div class="rung__head">Ground it</div><p class="rung__sub">The model answers from QuickBooks product content supplied as context, not from memory. <span class="q">"If the answer is not contained within the Context, ask a clarifying question..."</span></p></div>
+            <div class="rung"><div class="rung__n">4</div><div class="rung__head">Personalize it</div><p class="rung__sub">The customer's product profile travels with the call. <span class="q">"If the user doesn't have the required products based on profile, explain that before giving the answer."</span></p></div>
+            <div class="rung"><div class="rung__n">5</div><div class="rung__head">Put it on the phone</div><p class="rung__sub">A live voice loop in Vapi, tested with my own voice, session after session, tuning the instructions against what the ear caught.</p></div>
+          </div>
+          <div class="art__foot">Steps 3 and 4 quote the prototype's system instructions verbatim.</div>
+        </div>
+      </section>
+
+      <!-- 03 -->
+      <section class="section" id="s03">
+        <div class="eyebrow">03 &middot; The instructions</div>
+        <h2>A persona, a pace, and the rules that hold both.</h2>
+        <p>The instructions open with who the agent is, because identity carries behavior further than a rule list alone. Then the step-by-step section sets the pace: start from "are you logged in," one step at a time, confirm before moving, never bluff. Grounding and personalization are rules here too, not features bolted on later.</p>
+        <div class="art">
+          <div class="art__cap"><span class="mono">system instructions &middot; vapi prototype</span><span class="tag tag--green">Real artifact &middot; condensed</span></div>
+          <div class="pre-wrap">
+<pre class="artifact-pre"><code>You are a QuickBooks customer support AI assistant, crafted by experts in
+customer support and AI development. You are a voice-only agent in a
+voice-only device. Designed with the persona of a seasoned customer support
+expert in her early 30s, you combine deep technical knowledge with a strong
+sense of emotional intelligence. [...] Your voice is clear, warm, and
+engaging. [...] You will be presented with user context and profile, all of
+which you should pay attention in order to personalize your response.
+
+<span class="hl">**step-by-step guidance**</span>
+2.  Step-by-step should always start from are you logged in to the product/app
+3.  Step-by-step needs to be each step at a time.
+7.  If providing multiple steps, first confirm the customer is following
+    before proceeding with additional steps.
+10. You are truthful and never lie. Never make up facts and if you are not
+    100% sure, reply with why you cannot answer in a truthful way.
+13. If the answer is not contained within the Context, ask a clarifying
+    question to collect missing information in the question to provide a
+    response.
+16. Do NOT suggest a solution before understanding the underlying issue
+17. If the user doesn't have the required products based on profile, explain
+    that before giving the answer.
+21. Show that you understand and provide the WHY before providing an answer.
+22. When done with step-by-step instruction, offer to send the steps via
+    text or email as well.</code></pre>
+          </div>
+          <div class="art__foot">Verbatim excerpts from the prototype's system instructions; rule numbering is the original, gaps mark elisions. Written for the prototype and iterated after; the file carries later edits. One template placeholder removed.</div>
+        </div>
+        <p class="note">The instructions even keep the prototype honest about being a prototype. When it offers to email the full steps, a rule tells it to simulate the send: "This is for a demo, so you should pretend to send it." A prototype that fakes quietly teaches you the wrong things.</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="section" id="session">
+        <div class="eyebrow">04 &middot; The session</div>
+        <h2>Four minutes, unedited, my voice as the customer.</h2>
+        <p>One full session with the prototype: a wrong date on paid invoices, fixed live. The assistant is the prototype's text to speech on test content. Five moments carry the design; jump to them with the chips, or click any transcript line. The map under the player ties each moment to the instruction behind it.</p>
+        <div class="art">
+          <div class="art__cap"><span class="mono">prototyping session &middot; vapi &middot; invoices, fix a date</span><span class="tag tag--green">Real recording &middot; my voice</span></div>
+          <div class="player">
+            <audio id="sess-audio" controls preload="metadata" src="assets/audio/vapi-invoice-session.m4a"></audio>
+          </div>
+          <div class="chapters" role="group" aria-label="Jump to a moment in the recording">
+            <button class="chp" data-t="7" aria-label="Jump to 0:07, one question first"><b>0:07</b> one question first</button>
+            <button class="chp" data-t="56" aria-label="Jump to 0:56, the pacing repair"><b>0:56</b> the pacing repair</button>
+            <button class="chp" data-t="95" aria-label="Jump to 1:35, take your time"><b>1:35</b> take your time</button>
+            <button class="chp" data-t="120.7" aria-label="Jump to 2:00, the honest no"><b>2:00</b> the honest no</button>
+            <button class="chp" data-t="175.4" aria-label="Jump to 2:55, lost on the screen"><b>2:55</b> lost on the screen</button>
+          </div>
+          <div class="tx" id="tx">
+            <div class="callrow callrow--agent" data-t="0.9"><span class="callrow__who">Assistant</span><div class="callrow__said">Hello, this is the QuickBooks Assistant. How may I assist you today?</div></div>
+            <div class="callrow" data-t="7.0"><span class="callrow__who">Me</span><div class="callrow__said">I need help with invoices.</div></div>
+            <div class="tx__moment" data-t="11.7">moment 01 &middot; a bare noun gets one question first</div>
+            <div class="callrow callrow--agent" data-t="11.7"><span class="callrow__who">Assistant</span><div class="callrow__said">Of course, I'd be happy to assist you with your invoices. Could you please provide me with more details about the issue you're facing? For example, are you having trouble creating an invoice, sending one, or something else? Your clarification would help me to give you the most accurate guidance.</div></div>
+            <div class="callrow" data-t="25.6"><span class="callrow__who">Me</span><div class="callrow__said">I put the wrong date on the paid invoices and I'd like to change it.</div></div>
+            <div class="tx__moment" data-t="34.6">moment 02 &middot; every step in one breath, then the repair</div>
+            <div class="callrow callrow--agent" data-t="34.6"><span class="callrow__who">Assistant</span><div class="callrow__said">I understand you'd like to correct the dates on your paid invoices. Let's go through this process together. First, you'll need to locate the invoicing question. Open QuickBooks and click on the Sales or Invoicing tab on the left-hand side menu. Next, in the Customer section, you'll see a list of all your invoices. Find the invoice you want to change and click on it. You'll then see the invoice details. Here, you can edit the date by clicking on the date field and selecting the correct date from the calendar that pops up. Finally, remember to click Save and close at the bottom of the page to ensure your changes are saved. Before I proceed, could you please confirm if you're following along and that this information is helpful?</div></div>
+            <div class="callrow" data-t="72.7"><span class="callrow__who">Me</span><div class="callrow__said">I can't remember all of that. Can you give it to me step by step, one step at a time?</div></div>
+            <div class="callrow callrow--agent" data-t="79.6"><span class="callrow__who">Assistant</span><div class="callrow__said">Absolutely, I understand. Let's take it one step at a time. First, open QuickBooks and click on the Sales or Invoicing tab on the left-hand side menu. Let me know when you've done this and we'll move on to the next step.</div></div>
+            <div class="tx__moment" data-t="95.4">moment 03 &middot; the caller sets the pace</div>
+            <div class="callrow" data-t="95.4"><span class="callrow__who">Me</span><div class="callrow__said">Okay, hang on.</div></div>
+            <div class="callrow callrow--agent" data-t="98.3"><span class="callrow__who">Assistant</span><div class="callrow__said">Sure, take your time. I'm here when you're ready.</div></div>
+            <div class="callrow" data-t="104.4"><span class="callrow__who">Me</span><div class="callrow__said">Okay, I'm in QuickBooks right now.</div></div>
+            <div class="callrow callrow--agent" data-t="105.9"><span class="callrow__who">Assistant</span><div class="callrow__said">Great. Now in the Sales or Invoicing section, you should see a list of all your invoices. Can you find the invoice you want to change and click on it? Let me know once you've done this.</div></div>
+            <div class="tx__moment" data-t="120.7">moment 04 &middot; an honest no, then refocus</div>
+            <div class="callrow" data-t="120.7"><span class="callrow__who">Me</span><div class="callrow__said">There are multiple invoices that I need to change. I put the date on all of them, the wrong date on all of them. How do I change more than one at a time? Can I do that?</div></div>
+            <div class="callrow callrow--agent" data-t="132.7"><span class="callrow__who">Assistant</span><div class="callrow__said">I understand you have several invoices you need to modify. Unfortunately, QuickBooks does not currently support changing the date on multiple invoices simultaneously. You'll need to edit each invoice individually. To proceed, let's focus on one invoice first. Please find the invoice you want to change and click on it. Once you're able to see the invoice details, let me know. We'll continue with the next steps after that.</div></div>
+            <div class="callrow" data-t="156.6"><span class="callrow__who">Me</span><div class="callrow__said">Okay, I see that one of the invoices here.</div></div>
+            <div class="callrow callrow--agent" data-t="161.4"><span class="callrow__who">Assistant</span><div class="callrow__said">Great. Now that you have the invoice open, you should see the date field. Click on it and a calendar should pop up. From here, you can select the correct date. Let me know when you've done this and we can move on to the next step.</div></div>
+            <div class="tx__moment" data-t="175.4">moment 05 &middot; lost on the screen, so re-describe the screen</div>
+            <div class="callrow" data-t="175.4"><span class="callrow__who">Me</span><div class="callrow__said">Where's the date field again? I don't see it here.</div></div>
+            <div class="callrow callrow--agent" data-t="180.5"><span class="callrow__who">Assistant</span><div class="callrow__said">My apologies for any confusion. The date field is typically located near the top of the invoice details page, usually right under the customer's name or close to the invoice number. It might be labeled simply as date. If you hover over or click around the top section of the invoice, you should be able to find it. Once you locate it, click on the date to bring up the calendar for selection. Please take a moment to look for it and let me know if you're able to find and select the correct date.</div></div>
+            <div class="callrow" data-t="205.5"><span class="callrow__who">Me</span><div class="callrow__said">Yes, I see it.</div></div>
+            <div class="callrow callrow--agent" data-t="207.0"><span class="callrow__who">Assistant</span><div class="callrow__said">Fantastic. Now go ahead and click on the date field and then select the correct date from the calendar that pops up. After you've done that, remember to click Save and close at the bottom of the page to ensure your changes are saved. If you encounter any issues or have any more invoices to update, feel free to let me know. I'm here to help.</div></div>
+            <div class="callrow" data-t="230.5"><span class="callrow__who">Me</span><div class="callrow__said">Okay, I changed the date.</div></div>
+            <div class="callrow callrow--agent" data-t="236.1"><span class="callrow__who">Assistant</span><div class="callrow__said">Wonderful. I'm glad to hear you were able to change the date. Remember, you will need to follow these same steps for any other invoices you wish to update. If you have any other questions or need further assistance, feel free to ask. I'm here to help.</div></div>
+            <div class="callrow" data-t="251.0"><span class="callrow__who">Me</span><div class="callrow__said">I'm good. Thank you.</div></div>
+            <div class="callrow callrow--agent" data-t="256.1"><span class="callrow__who">Assistant</span><div class="callrow__said">You're welcome. If you ever need help in the future, don't hesitate to reach out. Have a great day.</div></div>
+          </div>
+          <div class="art__foot">Unedited session, February 2024. My voice as the customer; the assistant is the prototype's text to speech, on test content with no real account data. Transcript auto-generated, lightly punctuated. Click any line to jump the audio there.</div>
+        </div>
+
+        <div class="art" style="margin-top:22px;">
+          <div class="art__cap"><span class="mono">what you hear, and the instruction behind it</span><span class="tag tag--neutral">Rules quoted verbatim</span></div>
+          <div class="rulemap">
+            <div class="rm__row">
+              <div class="rm__t" data-t="11.7">0:11</div>
+              <div class="rm__heard"><b>One question before any answer</b>"Invoices" alone gets a clarifying question, not a guess: creating, sending, or something else.</div>
+              <div class="rm__rule">"You handle complex or vague customer queries by asking open-ended questions for clarification, without appearing repetitive or artificial."</div>
+            </div>
+            <div class="rm__row">
+              <div class="rm__t" data-t="56">0:56</div>
+              <div class="rm__heard"><b>The failure and the save</b>Every step in one breath, and the customer says what real customers say: "I can't remember all of that." The model switches to one step at a time. Sessions like this are why the pacing rules are written the way they are.</div>
+              <div class="rm__rule">"Step-by-step needs to be each step at a time." &middot; "If providing multiple steps, first confirm the customer is following before proceeding with additional steps."</div>
+            </div>
+            <div class="rm__row">
+              <div class="rm__t" data-t="95.4">1:35</div>
+              <div class="rm__heard"><b>The caller sets the pace</b>"Okay, hang on" gets patience, not a repeat of the step.</div>
+              <div class="rm__rule">"You are engineered to recognize and adapt to the emotional tone of conversations."</div>
+            </div>
+            <div class="rm__row">
+              <div class="rm__t" data-t="120.7">2:00</div>
+              <div class="rm__heard"><b>An honest no</b>Can several invoices change at once? No, and the model says so plainly, then refocuses on one.</div>
+              <div class="rm__rule">"You are truthful and never lie. Never make up facts and if you are not 100% sure, reply with why you cannot answer in a truthful way."</div>
+            </div>
+            <div class="rm__row">
+              <div class="rm__t" data-t="175.4">2:55</div>
+              <div class="rm__heard"><b>Lost on the screen</b>"Where's the date field again?" The model re-describes the screen from landmarks the caller can see, and recovers the thread.</div>
+              <div class="rm__rule">"If the customer requests clarification or has follow-up questions, you should engage in an iterative process of providing further explanations, examples, or guidance until the customer's understanding is satisfactory."</div>
+            </div>
+          </div>
+          <div class="art__foot">Timestamps jump the audio. The right column quotes the prototype's system instructions verbatim.</div>
+        </div>
+      </section>
+
+      <!-- 05 -->
+      <section class="section" id="s05">
+        <div class="eyebrow">05 &middot; What it proved</div>
+        <h2>The model could be the help.</h2>
+        <p>A prototype, on test content, with sends simulated by design, and no production claim anywhere on this page. What it proved still stands: given written instructions, grounded content, and a product profile, the model could clarify a vague ask, pace itself to a person doing real steps, admit a limit without bluffing, recover a lost customer, and land the fix before the goodbye. That is a different product than self-help. It resolves calls instead of deflecting them.</p>
+        <div class="settled">
+          <div class="verdict__k">What this settled</div>
+          <p>Sending help was a ceiling, not a destination. Once the model could stay on the line and finish the job, the design question changed from "how do we get customers to accept help" to "what should the agent be allowed to do, and when should it hand off." The <a href="voice.html">voice snippet case</a> shows what shipped on that line; this POC is the out-loud proof of where it could go.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer__inner"><span>Simone Muro &middot; Portfolio &middot; 2026</span><span><a href="index.html">Home</a> &middot; <a href="index.html#work">Work</a> &middot; <a href="resume.html">Resume</a> &middot; <a href="colophon.html">Colophon</a></span></div>
+  </div>
+
+  <!-- call player: chapter seeks + transcript sync -->
+  <script>
+    (function () {
+      var audio = document.getElementById('sess-audio');
+      if (!audio) return;
+      var box = document.getElementById('tx');
+      var rows = [].slice.call(box.querySelectorAll('.callrow[data-t]'));
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function seek(t) { audio.currentTime = t; audio.play(); }
+      document.querySelectorAll('.chp, .rm__t').forEach(function (b) {
+        b.addEventListener('click', function () { seek(parseFloat(b.dataset.t)); });
+      });
+      box.querySelectorAll('[data-t]').forEach(function (r) {
+        r.addEventListener('click', function () { seek(parseFloat(r.dataset.t)); });
+      });
+      var current = null;
+      audio.addEventListener('timeupdate', function () {
+        var t = audio.currentTime, active = null;
+        for (var i = 0; i < rows.length; i++) {
+          if (parseFloat(rows[i].dataset.t) <= t + 0.3) active = rows[i]; else break;
+        }
+        if (active && active !== current) {
+          if (current) current.classList.remove('is-now');
+          active.classList.add('is-now'); current = active;
+          box.scrollTo({ top: Math.max(0, active.offsetTop - box.clientHeight * 0.35), behavior: reduce ? 'auto' : 'smooth' });
+        }
+      });
+    })();
+  </script>
+
+  <!-- rail progress + smooth scroll -->
+  <script>
+    (function () {
+      var links = [].slice.call(document.querySelectorAll('.rail-link'));
+      var map = {}; links.forEach(function (l) { map[l.dataset.target] = l; });
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            links.forEach(function (l) { l.classList.remove('is-active'); });
+            if (map[e.target.id]) map[e.target.id].classList.add('is-active');
+          }
+        });
+      }, { rootMargin: '-40% 0px -55% 0px' });
+      document.querySelectorAll('section.section[id]').forEach(function (s) { obs.observe(s); });
+      links.forEach(function (l) {
+        l.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          var t = document.getElementById(l.dataset.target);
+          if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 88, behavior: 'smooth' });
+        });
+      });
+    })();
+  </script>
+
+<!-- ================= chat drawer: first-person portfolio agent ================= -->
+<button class="chat-fab" type="button" data-chat-open aria-haspopup="dialog" aria-controls="chat-drawer">
+  <span class="fab-dot" aria-hidden="true"></span><span class="fab-label">Ask my agent</span>
+</button>
+
+<div class="chat-scrim" data-chat-scrim hidden></div>
+
+<aside class="chat-drawer" id="chat-drawer" role="dialog" aria-modal="true" aria-labelledby="chat-title" hidden>
+  <header class="chat-head">
+    <div class="chat-id">
+      <span class="chat-title" id="chat-title">Simone Muro</span>
+      <span class="chat-badge mono">AI agent &middot; grounded in my public work</span>
+    </div>
+    <div class="chat-head-actions">
+      <button class="chat-clear" type="button" data-chat-clear>clear</button>
+      <button class="chat-close" type="button" data-chat-close aria-label="Close chat">&times;</button>
+    </div>
+  </header>
+
+  <div class="chat-log" data-chat-log role="log" aria-live="polite" aria-label="Conversation with Simone's agent">
+    <div class="msg agent" data-keep>
+      <span class="role">Simone</span>
+      <div class="bubble">
+        <p>Hi there. Ask me what I've built, how I think about designing AI agents, or whether I'm a fit for your role.</p>
+        <p>For anything personal or off limits, I'll point you to the real me.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-suggest" data-chat-suggest>
+    <button class="chip" type="button">Why should I hire you?</button>
+    <button class="chip" type="button">What are your strongest eval results?</button>
+    <button class="chip" type="button">Walk me through the voice troubleshooting POC.</button>
+  </div>
+
+  <form class="chat-compose" data-chat-form>
+    <label class="visually-hidden" for="chat-input">Ask Simone's agent a question</label>
+    <input class="chat-input" id="chat-input" data-chat-input type="text" autocomplete="off" maxlength="240" placeholder="Ask about my work&hellip;">
+    <button class="chat-send" data-chat-send type="submit">send</button>
+  </form>
+
+  <p class="chat-foot">This is my AI agent, built with Claude Code and grounded only in my public pages. It can be wrong; the real me replies fast at <a href="mailto:simonermuro@gmail.com">simonermuro@gmail.com</a>.</p>
+</aside>
+<script src="chat.js?v=7" defer></script>
+
+</body>
+</html>
